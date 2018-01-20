@@ -1,0 +1,44 @@
+{
+  "name": "webextension-polyfill-ts",
+  "version": "0.8.0",
+  "description": "webextension-polyfill for TypeScript",
+  "keywords": [
+    "TypeScript",
+    "webextension",
+    "polyfill"
+  ],
+  "author": "Santo Pfingsten",
+  "license": "Zlib",
+  "homepage": "https://github.com/Lusito/webextension-polyfill-ts",
+  "bugs": {
+    "url": "https://github.com/Lusito/webextension-polyfill-ts/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lusito/webextension-polyfill-ts.git"
+  },
+  "files": [
+    "dist/",
+    "schemas/",
+    "src/",
+    "tsconfig.json"
+  ],
+  "main": "dist/generated/index.js",
+  "types": "src/generated/index.ts",
+  "scripts": {
+    "fetch": "node dist/commands/fetch.js",
+    "validate": "node dist/commands/validate.js",
+    "generate": "node dist/commands/generate.js"
+  },
+  "dependencies": {
+    "webextension-polyfill": "^0.2.1"
+  },
+  "devDependencies": {
+    "@types/got": "^7.1.6",
+    "got": "^8.0.1",
+    "@types/node": "^8.0.53",
+    "@types/rimraf": "^2.0.2",
+    "rimraf": "^2.6.2",
+    "typescript": "^2.6.2"
+  }
+}

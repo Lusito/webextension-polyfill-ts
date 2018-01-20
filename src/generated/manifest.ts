@@ -1,0 +1,1208 @@
+/**
+ * Namespace: browser.manifest
+ * Generated from Mozilla sources
+ *
+ * Permissions: -
+ *
+ * Comments found in source JSON schema files:
+ * Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Copyright 2014 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ * Copyright 2013 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+import { ExtensionTypes } from "./ExtensionTypes";
+import { Experiments } from "./Experiments";
+
+export namespace Manifest {
+
+    /**
+     * Common properties for all manifest.json files
+     */
+    export interface ManifestBase {
+        manifest_version: number;
+
+        /**
+         * Optional.
+         */
+        applications?: ManifestBaseApplicationsType;
+
+        /**
+         * Optional.
+         */
+        browser_specific_settings?: ManifestBaseBrowserSpecificSettingsType;
+
+        name: string;
+
+        /**
+         * Optional.
+         */
+        short_name?: string;
+
+        /**
+         * Optional.
+         */
+        description?: string;
+
+        /**
+         * Optional.
+         */
+        author?: string;
+
+        version: string;
+
+        /**
+         * Optional.
+         */
+        homepage_url?: string;
+    }
+
+    /**
+     * Represents a WebExtension manifest.json file
+     */
+    export interface WebExtensionManifest {
+
+        /**
+         * Optional.
+         */
+        minimum_chrome_version?: string;
+
+        /**
+         * Optional.
+         */
+        minimum_opera_version?: string;
+
+        /**
+         * Optional.
+         */
+        icons?: WebExtensionManifestIconsType;
+
+        /**
+         * Optional.
+         */
+        incognito?: WebExtensionManifestIncognitoEnum;
+
+        /**
+         * Optional.
+         */
+        background?: WebExtensionManifestBackgroundC1Type | WebExtensionManifestBackgroundC2Type;
+
+        /**
+         * Optional.
+         */
+        options_ui?: WebExtensionManifestOptionsUiType;
+
+        /**
+         * Optional.
+         */
+        content_scripts?: ContentScript[];
+
+        /**
+         * Optional.
+         */
+        content_security_policy?: string;
+
+        /**
+         * Optional.
+         */
+        permissions?: PermissionOrOrigin[];
+
+        /**
+         * Optional.
+         */
+        optional_permissions?: OptionalPermissionOrOrigin[];
+
+        /**
+         * Optional.
+         */
+        web_accessible_resources?: string[];
+
+        /**
+         * Optional.
+         */
+        developer?: WebExtensionManifestDeveloperType;
+
+        /**
+         * Optional.
+         */
+        browser_action?: WebExtensionManifestBrowserActionType;
+
+        /**
+         * Optional.
+         */
+        chrome_settings_overrides?: WebExtensionManifestChromeSettingsOverridesType;
+
+        /**
+         * Optional.
+         */
+        commands?: WebExtensionManifestCommandsType;
+
+        /**
+         * Optional.
+         */
+        devtools_page?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        experiment_apis?: WebExtensionManifestExperimentApisType;
+
+        /**
+         * A list of protocol handler definitions.
+         * Optional.
+         */
+        protocol_handlers?: ProtocolHandler[];
+
+        /**
+         * Optional.
+         */
+        default_locale?: string;
+
+        /**
+         * Optional.
+         */
+        omnibox?: WebExtensionManifestOmniboxType;
+
+        /**
+         * Optional.
+         */
+        page_action?: WebExtensionManifestPageActionType;
+
+        /**
+         * Optional.
+         */
+        sidebar_action?: WebExtensionManifestSidebarActionType;
+
+        /**
+         * Optional.
+         */
+        chrome_url_overrides?: WebExtensionManifestChromeUrlOverridesType;
+    }
+
+    /**
+     * Represents a WebExtension language pack manifest.json file
+     */
+    export interface WebExtensionLangpackManifest {
+
+        /**
+         * Optional.
+         */
+        homepage_url?: string;
+
+        langpack_id: string;
+
+        languages: WebExtensionLangpackManifestLanguagesType;
+
+        /**
+         * Optional.
+         */
+        sources?: WebExtensionLangpackManifestSourcesType;
+    }
+
+    export interface ThemeIcons {
+
+        /**
+         * A light icon to use for dark themes
+         */
+        light: ExtensionURL;
+
+        /**
+         * The dark icon to use for light themes
+         */
+        dark: ExtensionURL;
+
+        /**
+         * The size of the icons
+         */
+        size: number;
+    }
+
+    export type OptionalPermission = OptionalPermissionC1Enum | OptionalPermissionC2Enum | OptionalPermissionC3Enum | OptionalPermissionC4Enum | OptionalPermissionC5Enum | OptionalPermissionC6Enum | OptionalPermissionC7Enum | OptionalPermissionC8Enum | OptionalPermissionC9Enum | OptionalPermissionC10Enum;
+
+    export type OptionalPermissionOrOrigin = OptionalPermission | MatchPattern;
+
+    export type Permission = OptionalPermission | PermissionC2Enum | PermissionC3Enum | PermissionC4Enum | PermissionC5Enum | PermissionC6Enum | string | PermissionC8Enum | PermissionC9Enum | PermissionC10Enum | PermissionC11Enum | PermissionC12Enum | PermissionC13Enum | PermissionC14Enum | PermissionC15Enum | PermissionC16Enum | PermissionC17Enum;
+
+    export type PermissionOrOrigin = Permission | MatchPattern;
+
+    export type HttpURL = string;
+
+    export type ExtensionURL = string;
+
+    export type ImageDataOrExtensionURL = string;
+
+    export type ExtensionID = string;
+
+    export interface FirefoxSpecificProperties {
+
+        /**
+         * Optional.
+         */
+        id?: ExtensionID;
+
+        /**
+         * Optional.
+         */
+        update_url?: string;
+
+        /**
+         * Optional.
+         */
+        strict_min_version?: string;
+
+        /**
+         * Optional.
+         */
+        strict_max_version?: string;
+    }
+
+    export type MatchPattern = MatchPatternC1Enum | string;
+
+    /**
+     * Same as MatchPattern above, but includes moz-extension protocol
+     */
+    export type MatchPatternInternal = MatchPatternInternalC1Enum | string;
+
+    /**
+     * Details of the script or CSS to inject. Either the code or the file property must be set, but both may not be set at the same time. Based on InjectDetails, but using underscore rather than camel case naming conventions.
+     */
+    export interface ContentScript {
+        matches: [MatchPattern];
+
+        /**
+         * Optional.
+         */
+        exclude_matches?: [MatchPattern];
+
+        /**
+         * Optional.
+         */
+        include_globs?: string[];
+
+        /**
+         * Optional.
+         */
+        exclude_globs?: string[];
+
+        /**
+         * The list of CSS files to inject
+         * Optional.
+         */
+        css?: ExtensionURL[];
+
+        /**
+         * The list of JS files to inject
+         * Optional.
+         */
+        js?: ExtensionURL[];
+
+        /**
+         * If allFrames is <code>true</code>, implies that the JavaScript or CSS should be injected into all frames of current page. By default, it's <code>false</code> and is only injected into the top frame.
+         * Optional.
+         */
+        all_frames?: boolean;
+
+        /**
+         * If matchAboutBlank is true, then the code is also injected in about:blank and about:srcdoc frames if your extension has access to its parent document. Code cannot be inserted in top-level about:-frames. By default it is <code>false</code>.
+         * Optional.
+         */
+        match_about_blank?: boolean;
+
+        /**
+         * The soonest that the JavaScript or CSS will be injected into the tab. Defaults to "document_idle".
+         * Optional.
+         */
+        run_at?: ExtensionTypes.RunAt;
+    }
+
+    export type IconPath = IconPathC1Type | ExtensionURL;
+
+    export type IconImageData = IconImageDataC1Type | ImageData;
+
+    export interface ImageData {
+    }
+
+    export type KeyName = string;
+
+    /**
+     * Represents a protocol handler definition.
+     */
+    export interface ProtocolHandler {
+
+        /**
+         * A user-readable title string for the protocol handler. This will be displayed to the user in interface objects as needed.
+         */
+        name: string;
+
+        /**
+         * The protocol the site wishes to handle, specified as a string. For example, you can register to handle SMS text message links by registering to handle the "sms" scheme.
+         */
+        protocol: ProtocolHandlerProtocolC1Enum | string;
+
+        /**
+         * The URL of the handler, as a string. This string should include "%s" as a placeholder which will be replaced with the escaped URL of the document to be handled. This URL might be a true URL, or it could be a phone number, email address, or so forth.
+         */
+        uriTemplate: ExtensionURL | HttpURL;
+    }
+
+    export type ThemeColor = string | [number, number, number] | [number, number, number, number];
+
+    export interface ThemeType {
+
+        /**
+         * Optional.
+         */
+        images?: ThemeTypeImagesType;
+
+        /**
+         * Optional.
+         */
+        colors?: ThemeTypeColorsType;
+
+        /**
+         * Optional.
+         */
+        icons?: ThemeTypeIconsType;
+
+        /**
+         * Optional.
+         */
+        properties?: ThemeTypePropertiesType;
+    }
+
+    /**
+     * Contents of manifest.json for a static theme
+     */
+    export interface ThemeManifest {
+        theme: ThemeType;
+
+        /**
+         * Optional.
+         */
+        icons?: ThemeManifestIconsType;
+    }
+
+    export interface ManifestBaseApplicationsType {
+
+        /**
+         * Optional.
+         */
+        gecko?: FirefoxSpecificProperties;
+    }
+
+    export interface ManifestBaseBrowserSpecificSettingsType {
+
+        /**
+         * Optional.
+         */
+        gecko?: FirefoxSpecificProperties;
+    }
+
+    export interface WebExtensionManifestIconsType {
+    }
+
+    export type WebExtensionManifestIncognitoEnum = "spanning";
+
+    export interface WebExtensionManifestBackgroundC1Type {
+        page: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        persistent?: any;
+    }
+
+    export interface WebExtensionManifestBackgroundC2Type {
+        scripts: ExtensionURL[];
+
+        /**
+         * Optional.
+         */
+        persistent?: any;
+    }
+
+    export interface WebExtensionManifestOptionsUiType {
+        page: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        browser_style?: boolean;
+
+        /**
+         * Optional.
+         */
+        chrome_style?: boolean;
+
+        /**
+         * Optional.
+         */
+        open_in_tab?: boolean;
+    }
+
+    export interface WebExtensionManifestDeveloperType {
+
+        /**
+         * Optional.
+         */
+        name?: string;
+
+        /**
+         * Optional.
+         */
+        url?: string;
+    }
+
+    /**
+     * Defines the location the browserAction will appear by default.  The default location is navbar.
+     */
+    export type WebExtensionManifestBrowserActionDefaultAreaEnum = "navbar" | "menupanel" | "tabstrip" | "personaltoolbar";
+
+    export interface WebExtensionManifestBrowserActionType {
+
+        /**
+         * Optional.
+         */
+        default_title?: string;
+
+        /**
+         * Optional.
+         */
+        default_icon?: IconPath;
+
+        /**
+         * Specifies icons to use for dark and light themes
+         * Optional.
+         */
+        theme_icons?: [ThemeIcons];
+
+        /**
+         * Optional.
+         */
+        default_popup?: string;
+
+        /**
+         * Optional.
+         */
+        browser_style?: boolean;
+
+        /**
+         * Defines the location the browserAction will appear by default.  The default location is navbar.
+         * Optional.
+         */
+        default_area?: WebExtensionManifestBrowserActionDefaultAreaEnum;
+    }
+
+    export interface WebExtensionManifestChromeSettingsOverridesSearchProviderType {
+        name: string;
+
+        /**
+         * Optional.
+         */
+        keyword?: string;
+
+        search_url: string;
+
+        /**
+         * Optional.
+         */
+        favicon_url?: string;
+
+        /**
+         * Optional.
+         */
+        suggest_url?: string;
+
+        /**
+         * Sets the default engine to a built-in engine only.
+         * Optional.
+         */
+        is_default?: boolean;
+    }
+
+    export interface WebExtensionManifestChromeSettingsOverridesType {
+
+        /**
+         * Optional.
+         */
+        homepage?: string;
+
+        /**
+         * Optional.
+         */
+        search_provider?: WebExtensionManifestChromeSettingsOverridesSearchProviderType;
+    }
+
+    export interface WebExtensionManifestCommandsType {
+
+        /**
+         * Optional.
+         */
+        suggested_key?: object;
+
+        /**
+         * Optional.
+         */
+        description?: string;
+    }
+
+    export interface WebExtensionManifestExperimentApisType extends Experiments.ExperimentAPI {
+    }
+
+    export interface WebExtensionManifestOmniboxType {
+        keyword: string;
+    }
+
+    export interface WebExtensionManifestPageActionType {
+
+        /**
+         * Optional.
+         */
+        default_title?: string;
+
+        /**
+         * Optional.
+         */
+        default_icon?: IconPath;
+
+        /**
+         * Optional.
+         */
+        default_popup?: string;
+
+        /**
+         * Optional.
+         */
+        browser_style?: boolean;
+
+        /**
+         * Optional.
+         */
+        show_matches?: [MatchPattern];
+
+        /**
+         * Optional.
+         */
+        hide_matches?: [MatchPattern];
+    }
+
+    export interface WebExtensionManifestSidebarActionType {
+
+        /**
+         * Optional.
+         */
+        default_title?: string;
+
+        /**
+         * Optional.
+         */
+        default_icon?: IconPath;
+
+        /**
+         * Optional.
+         */
+        browser_style?: boolean;
+
+        default_panel: string;
+    }
+
+    export interface WebExtensionManifestChromeUrlOverridesType {
+
+        /**
+         * Optional.
+         */
+        newtab?: ExtensionURL;
+    }
+
+    export interface WebExtensionLangpackManifestLanguagesType {
+    }
+
+    export interface WebExtensionLangpackManifestSourcesType {
+    }
+
+    export type OptionalPermissionC1Enum = "clipboardRead" | "clipboardWrite" | "geolocation" | "idle" | "notifications";
+
+    export type OptionalPermissionC2Enum = "bookmarks";
+
+    export type OptionalPermissionC3Enum = "browserSettings";
+
+    export type OptionalPermissionC4Enum = "cookies";
+
+    export type OptionalPermissionC5Enum = "find";
+
+    export type OptionalPermissionC6Enum = "history";
+
+    export type OptionalPermissionC7Enum = "activeTab" | "tabs" | "tabHide";
+
+    export type OptionalPermissionC8Enum = "topSites";
+
+    export type OptionalPermissionC9Enum = "webNavigation";
+
+    export type OptionalPermissionC10Enum = "webRequest" | "webRequestBlocking";
+
+    export type PermissionC2Enum = "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage";
+
+    export type PermissionC3Enum = "browsingData";
+
+    export type PermissionC4Enum = "contextualIdentities";
+
+    export type PermissionC5Enum = "devtools";
+
+    export type PermissionC6Enum = "downloads" | "downloads.open";
+
+    export type PermissionC8Enum = "geckoProfiler";
+
+    export type PermissionC9Enum = "identity";
+
+    export type PermissionC10Enum = "management";
+
+    export type PermissionC11Enum = "menus" | "contextMenus";
+
+    export type PermissionC12Enum = "pkcs11";
+
+    export type PermissionC13Enum = "privacy";
+
+    export type PermissionC14Enum = "proxy";
+
+    export type PermissionC15Enum = "nativeMessaging";
+
+    export type PermissionC16Enum = "sessions";
+
+    export type PermissionC17Enum = "theme";
+
+    export type MatchPatternC1Enum = "<all_urls>";
+
+    export type MatchPatternInternalC1Enum = "<all_urls>";
+
+    export interface IconPathC1Type {
+    }
+
+    export interface IconImageDataC1Type {
+    }
+
+    export type ProtocolHandlerProtocolC1Enum = "bitcoin" | "dat" | "dweb" | "geo" | "gopher" | "im" | "ipfs" | "ipns" | "irc" | "ircs" | "magnet" | "mailto" | "mms" | "news" | "nntp" | "sip" | "sms" | "smsto" | "ssb" | "ssh" | "tel" | "urn" | "webcal" | "wtai" | "xmpp";
+
+    export interface ThemeTypeImagesType {
+
+        /**
+         * Optional.
+         */
+        additional_backgrounds?: ImageDataOrExtensionURL[];
+
+        /**
+         * Optional.
+         */
+        headerURL?: ImageDataOrExtensionURL;
+
+        /**
+         * Optional.
+         */
+        theme_frame?: ImageDataOrExtensionURL;
+    }
+
+    export interface ThemeTypeColorsType {
+
+        /**
+         * Optional.
+         */
+        accentcolor?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        frame?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        textcolor?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        background_tab_text?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        tab_text?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        toolbar?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        toolbar_text?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        bookmark_text?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        toolbar_field?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        toolbar_field_text?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        toolbar_field_border?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        toolbar_top_separator?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        toolbar_bottom_separator?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        toolbar_vertical_separator?: ThemeColor;
+    }
+
+    export interface ThemeTypeIconsType {
+
+        /**
+         * Optional.
+         */
+        back?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        forward?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        reload?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        stop?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        bookmark_star?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        bookmark_menu?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        downloads?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        home?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        app_menu?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        cut?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        copy?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        paste?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        new_window?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        new_private_window?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        save_page?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        print?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        history?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        full_screen?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        find?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        options?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        addons?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        developer?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        synced_tabs?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        open_file?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        sidebars?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        subscribe?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        text_encoding?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        email_link?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        forget?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        pocket?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        getmsg?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        newmsg?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        address?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        reply?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        replyall?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        replylist?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        forwarding?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        delete?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        junk?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        file?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        nextUnread?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        prevUnread?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        mark?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        tag?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        compact?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        archive?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        chat?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        nextMsg?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        prevMsg?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        QFB?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        conversation?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        newcard?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        newlist?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        editcard?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        newim?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        send?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        spelling?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        attach?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        security?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        save?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        quote?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        buddy?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        join_chat?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        chat_accounts?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        calendar?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        tasks?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        synchronize?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        newevent?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        newtask?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        editevent?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        today?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        category?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        complete?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        priority?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        saveandclose?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        attendees?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        privacy?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        status?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        freebusy?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        timezones?: ExtensionURL;
+    }
+
+    export type ThemeTypePropertiesAdditionalBackgroundsAlignmentItemEnum = "bottom" | "center" | "left" | "right" | "top" | "center bottom" | "center center" | "center top" | "left bottom" | "left center" | "left top" | "right bottom" | "right center" | "right top";
+
+    export type ThemeTypePropertiesAdditionalBackgroundsTilingItemEnum = "no-repeat" | "repeat" | "repeat-x" | "repeat-y";
+
+    export interface ThemeTypePropertiesType {
+
+        /**
+         * Optional.
+         */
+        additional_backgrounds_alignment?: ThemeTypePropertiesAdditionalBackgroundsAlignmentItemEnum[];
+
+        /**
+         * Optional.
+         */
+        additional_backgrounds_tiling?: ThemeTypePropertiesAdditionalBackgroundsTilingItemEnum[];
+    }
+
+    export interface ThemeManifestIconsType {
+    }
+
+    export interface Static {
+    }
+}

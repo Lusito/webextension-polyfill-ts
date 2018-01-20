@@ -1,0 +1,43 @@
+{
+    "storage.types.$StorageArea.functions.%get.parameters.%keys.choices.#0.type": "null | string",
+    "storage.types.$StorageArea.functions.%get.parameters.%keys.choices.#2.type": "{[s:string] : any}",
+    "storage.types.$StorageArea.functions.%get.parameters.%keys.choices.#2.additionalProperties": null,
+    "storage.types.$StorageArea.functions.%get.parameters.%callback.parameters.%items.type": "{[s:string] : any}",
+    "storage.types.$StorageArea.functions.%get.parameters.%callback.parameters.%items.additionalProperties": null,
+    "cookies.functions.%getAll.parameters.%details.properties.firstPartyDomain.type": "string | null",
+    "runtime.functions.%getManifest.returns": {
+        "$ref": "Manifest.ManifestBase",
+        "description": "The manifest details."
+    },
+    "runtime.types.$Port.properties.onDisconnect": {
+        "isEvent": true,
+        "name": "onDisconnect",
+        "type": "function",
+        "description": "",
+        "parameters": [
+            {
+                "$ref": "Port",
+                "name": "port"
+            }
+        ]
+    },
+    "runtime.types.$Port.properties.onMessage": {
+        "isEvent": true,
+        "name": "onMessage",
+        "type": "function",
+        "description": "",
+        "parameters": [
+            {
+                "name": "message",
+                "type": "any"
+            },
+            {
+                "$ref": "Port",
+                "name": "port"
+            }
+        ]
+    },
+    "extensionTypes.types.$Date.id": "DateType",
+    "menus.functions.%create.parameters.%createProperties.properties.onclick.parameters.%info.$ref": "OnClickData",
+    "menus.functions.%update.parameters.%updateProperties.properties.onclick.parameters.%info.$ref": "OnClickData"
+}
