@@ -154,7 +154,7 @@ export namespace Menus {
          * @param info Information about the item clicked and the context where the click happened.
          * @param tab The details of the tab where the click took place. Note: this parameter only present for extensions.
          */
-        onclick(info: OnClickData, tab: Tabs.Tab): void;
+        onclick?(info: OnClickData, tab: Tabs.Tab): void;
 
         /**
          * The ID of a parent menu item; this makes the item a child of a previously added item.
@@ -216,7 +216,7 @@ export namespace Menus {
          * @param info
          * @param tab The details of the tab where the click took place. Note: this parameter only present for extensions.
          */
-        onclick(info: OnClickData, tab: Tabs.Tab): void;
+        onclick?(info: OnClickData, tab: Tabs.Tab): void;
 
         /**
          * Note: You cannot change an item to be a child of one of its own descendants.

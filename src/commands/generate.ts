@@ -196,7 +196,8 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
         returnType = getType(func.returns);
         writer.comment('@returns ' + returnType + description);
     }
-    writer.code(func.name + '(' + getParameters(parameters, true) + '): ' + returnType + ';');
+    const optionalPart = func.optional ? '?' : '';
+    writer.code(func.name + optionalPart + '(' + getParameters(parameters, true) + '): ' + returnType + ';');
     writer.emptyLine();
 }
 
