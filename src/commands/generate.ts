@@ -345,8 +345,7 @@ try {
 
 //Fixme: manifest.ts needs lots of optimizations
 //fixme: make enums real enums if possible
-//fixme: name enum/array object extractions name by value if possible
+//fixme: enum/array object extractions: name by value if possible
 //fixme: remove export namespace?
-//fixme: undefined, object, any, Function, empty interfaces
-//fixme: remember better name for extracted parameter objects and use if no conflicts exist after extraction
+//fixme: remember shorter/better name for extracted parameter objects and when all types are extracted, use the better name if no conflicts exist
 //fixme: descriptions might include refs: $(ref:runtime.lastError)
