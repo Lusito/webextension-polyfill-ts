@@ -898,7 +898,7 @@ export namespace WebRequest {
     /**
      * Fired when an authentication failure is received. The listener has three options: it can provide authentication credentials, it can cancel the request and display the error page, or it can take no action on the challenge. If bad user credentials are provided, this may be called multiple times for the same request.
      */
-    export interface onAuthRequiredEvent extends Events.Event<(details: OnAuthRequiredDetailsType, callback: Function | undefined) => void> {
+    export interface onAuthRequiredEvent extends Events.Event<(details: OnAuthRequiredDetailsType, callback: ((response: BlockingResponse) => void) | undefined) => void> {
 
         /**
          * Registers an event listener <em>callback</em> to an event.
@@ -907,7 +907,7 @@ export namespace WebRequest {
          * @param filter Optional. A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnAuthRequiredDetailsType, callback: Function | undefined) => void, filter?: RequestFilter, extraInfoSpec?: OnAuthRequiredOptions[]): void;
+        addListener(callback: (details: OnAuthRequiredDetailsType, callback: ((response: BlockingResponse) => void) | undefined) => void, filter?: RequestFilter, extraInfoSpec?: OnAuthRequiredOptions[]): void;
     }
 
     /**

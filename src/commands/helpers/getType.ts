@@ -44,7 +44,11 @@ export function getType(e: SchemaProperty): string {
         propType = fixRef(e.$ref);
     if (propType === 'Function' && currentTypeId === 'Event')
         propType = 'T';
-    if (e.type === 'array' && e.items) {
+    else if(e.type === 'function') {
+        const returnType = e.returns ? getType(e.returns) : 'void';
+        propType = '(' + getParameters(e.parameters, true) + ') => ' + returnType;
+    }
+    else if (e.type === 'array' && e.items) {
         if (e.items.type === 'choices' && e.items.choices)
             propType = getUnionType(e.items.choices);
         else {
@@ -78,12 +82,14 @@ export function getType(e: SchemaProperty): string {
 
 
 export function getProperty(name: string, prop: SchemaProperty, allowOptional: boolean) {
-    const propType = getType(prop);
+    let propType = getType(prop);
     const isOptional = (prop.optional && prop.optional !== 'false');
     if (!isOptional)
         return name + ': ' + propType;
     if (allowOptional)
         return name + '?' + ': ' + propType;
+    if(propType.indexOf('=>') >= 0)
+        propType = '(' + propType + ')';
     return name + ': ' + propType + ' | undefined';
 }
 

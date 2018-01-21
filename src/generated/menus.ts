@@ -254,7 +254,7 @@ export namespace Menus {
          * @param callback Optional. Called when the item has been created in the browser. If there were any problems creating the item, details will be available in $(ref:runtime.lastError).
          * @returns number | string The ID of the newly created item.
          */
-        create(createProperties: CreateCreatePropertiesType, callback?: Function): number | string;
+        create(createProperties: CreateCreatePropertiesType, callback?: () => void): number | string;
 
         /**
          * Updates a previously created context menu item.
