@@ -82,10 +82,16 @@ function extractParameterObjectType<T extends SchemaBaseProperty>(prop: SchemaPr
         modifyArray(prop.functions, (func) => extractParameterObjectType(func, combineNamePrefix(namePrefix, func.name), false, entry));
 
         if (!isRoot && !prop.isInstanceOf) {
-            if (!namePrefix)
-                throw ErrorMessage.MISSING_NAME;
-            const id = namePrefix + 'Type';
-            prop = convertToRef(prop, id, entry);
+            if ((!prop.properties || Object.getOwnPropertyNames(prop.properties).length === 0)
+                && prop.additionalProperties && prop.additionalProperties !== true && prop.additionalProperties.type === 'array'
+                && prop.additionalProperties.items && prop.additionalProperties.items.type) {
+                    //special case for a map type.. not extracted, will be handled in getType
+            } else {
+                if (!namePrefix)
+                    throw ErrorMessage.MISSING_NAME;
+                const id = namePrefix + 'Type';
+                prop = convertToRef(prop, id, entry);
+            }
         }
     }
     else if (prop.type === 'string' && prop.enum) {

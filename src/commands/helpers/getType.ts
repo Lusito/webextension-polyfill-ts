@@ -29,8 +29,8 @@ export function getEnumType(list: EnumValue[]) {
         return JSON.stringify(e.name);
     }).join(' | ');
 }
-export function fixRef(ref:string) {
-    if(ref.indexOf('.') >= 0)
+export function fixRef(ref: string) {
+    if (ref.indexOf('.') >= 0)
         return ref[0].toUpperCase() + ref.substr(1);
     return ref;
 }
@@ -44,7 +44,7 @@ export function getType(e: SchemaProperty): string {
         propType = fixRef(e.$ref);
     if (propType === 'Function' && currentTypeId === 'Event')
         propType = 'T';
-    else if(e.type === 'function') {
+    else if (e.type === 'function') {
         const returnType = e.returns ? getType(e.returns) : 'void';
         propType = '(' + getParameters(e.parameters, true) + ') => ' + returnType;
     }
@@ -61,7 +61,7 @@ export function getType(e: SchemaProperty): string {
                 propType = typeMap[e.items.type] || e.items.type;
             if (e.minItems) {
                 const items = [];
-                for(let i=0; i<e.minItems; i++)
+                for (let i = 0; i < e.minItems; i++)
                     items.push(propType);
                 propType = '[' + items.join(', ') + ']';
             }
@@ -77,6 +77,11 @@ export function getType(e: SchemaProperty): string {
     }
     else if (e.type === 'value')
         return e.value;
+    else if (e.type === 'object' && (!e.properties || Object.getOwnPropertyNames(e.properties).length === 0)
+        && e.additionalProperties && e.additionalProperties !== true && e.additionalProperties.type === 'array'
+        && e.additionalProperties.items && e.additionalProperties.items.type) {
+        return `{[s:string]:${e.additionalProperties.items.type}}`;
+    }
     return propType;
 }
 
@@ -88,7 +93,7 @@ export function getProperty(name: string, prop: SchemaProperty, allowOptional: b
         return name + ': ' + propType;
     if (allowOptional)
         return name + '?' + ': ' + propType;
-    if(propType.indexOf('=>') >= 0)
+    if (propType.indexOf('=>') >= 0)
         propType = '(' + propType + ')';
     return name + ': ' + propType + ' | undefined';
 }
