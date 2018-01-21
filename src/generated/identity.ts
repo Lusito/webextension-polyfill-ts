@@ -38,7 +38,7 @@ export namespace Identity {
         scopes?: string[];
     }
 
-    export interface GetProfileUserInfoCallbackuserinfoType {
+    export interface GetProfileUserInfoCallbackUserinfoType {
         email: string;
 
         id: string;
@@ -48,7 +48,7 @@ export namespace Identity {
         token: string;
     }
 
-    export interface RemoveCachedAuthTokenCallbackuserinfoType {
+    export interface RemoveCachedAuthTokenCallbackUserinfoType {
         email: string;
 
         id: string;

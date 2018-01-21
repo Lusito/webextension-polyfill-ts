@@ -143,13 +143,13 @@ export namespace Runtime {
     /**
      * The JavaScript 'window' object for the background page.
      */
-    export interface GetBackgroundPageCallbackbackgroundPageType {
+    export interface GetBackgroundPageCallbackBackgroundPageType {
     }
 
     /**
      * If an update is available, this contains more information about the available update.
      */
-    export interface RequestUpdateCheckCallbackdetailsType {
+    export interface RequestUpdateCheckCallbackDetailsType {
 
         /**
          * The version of the available update.
@@ -181,7 +181,7 @@ export namespace Runtime {
         toProxyScript?: boolean;
     }
 
-    export interface GetPackageDirectoryEntryCallbackdirectoryEntryType {
+    export interface GetPackageDirectoryEntryCallbackDirectoryEntryType {
     }
 
     export interface OnInstalledDetailsType {
@@ -231,9 +231,9 @@ export namespace Runtime {
         /**
          * Retrieves the JavaScript 'window' object for the background page running inside the current extension/app. If the background page is an event page, the system will ensure it is loaded before calling the callback. If there is no background page, an error is set.
          *
-         * @returns Promise<GetBackgroundPageCallbackbackgroundPageType>
+         * @returns Promise<GetBackgroundPageCallbackBackgroundPageType>
          */
-        getBackgroundPage(): Promise<GetBackgroundPageCallbackbackgroundPageType>;
+        getBackgroundPage(): Promise<GetBackgroundPageCallbackBackgroundPageType>;
 
         /**
          * <p>Open your Extension's options page, if possible.</p><p>The precise behavior may depend on your manifest's <code>$(topic:optionsV2)[options_ui]</code> or <code>$(topic:options)[options_page]</code> key, or what the browser happens to support at the time.</p><p>If your Extension does not declare an options page, or the browser failed to create one for some other reason, the callback will set $(ref:lastError).</p>

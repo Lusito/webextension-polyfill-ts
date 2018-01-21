@@ -48,11 +48,14 @@ function convertToRefIfObject(prop: SchemaProperty, propName: string, namePrefix
             return convertToRefIfObject(choice, propName + 'C' + (i + 1), namePrefix, entry);
         });
     }
+    else if (prop.type === 'array' && prop.items && (prop.items.type !== 'object' || !prop.items.isInstanceOf)) {
+        prop.items = convertToRefIfObject(prop.items, propName + 'Item', namePrefix, entry);
+    }
     else if (prop.type === 'function') {
         modifyArray(prop.parameters, (param, i) => {
             if (!param.name)
                 throw ErrorMessage.MISSING_NAME;
-            return convertToRefIfObject(param, propName + param.name, namePrefix, entry);
+            return convertToRefIfObject(param, propName + toUpperCamelCase(param.name), namePrefix, entry);
         });
     }
     return prop;

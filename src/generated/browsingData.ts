@@ -110,7 +110,7 @@ export namespace BrowsingData {
         serviceWorkers?: boolean;
     }
 
-    export interface SettingsCallbackresultType {
+    export interface SettingsCallbackResultType {
         options: RemovalOptions;
 
         /**
@@ -153,9 +153,9 @@ export namespace BrowsingData {
         /**
          * Reports which types of data are currently selected in the 'Clear browsing data' settings UI.  Note: some of the data types included in this API are not available in the settings UI, and some UI settings control more than one data type listed here.
          *
-         * @returns Promise<SettingsCallbackresultType>
+         * @returns Promise<SettingsCallbackResultType>
          */
-        settings(): Promise<SettingsCallbackresultType>;
+        settings(): Promise<SettingsCallbackResultType>;
 
         /**
          * Clears various types of browsing data stored in a user's profile.

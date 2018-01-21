@@ -50,7 +50,7 @@ export namespace WebNavigation {
     /**
      * Information about the requested frame, null if the specified frame ID and/or tab ID are invalid.
      */
-    export interface GetFrameCallbackdetailsType {
+    export interface GetFrameCallbackDetailsType {
 
         /**
          * True if the last navigation in this frame was interrupted by an error, i.e. the onErrorOccurred event fired.
@@ -88,6 +88,35 @@ export namespace WebNavigation {
          * The ID of the tab.
          */
         tabId: number;
+    }
+
+    export interface GetAllFramesCallbackDetailsItemType {
+
+        /**
+         * True if the last navigation in this frame was interrupted by an error, i.e. the onErrorOccurred event fired.
+         * Optional.
+         */
+        errorOccurred?: boolean;
+
+        /**
+         * The ID of the tab in which the frame is.
+         */
+        tabId: number;
+
+        /**
+         * The ID of the frame. 0 indicates that this is the main frame; a positive value indicates the ID of a subframe.
+         */
+        frameId: number;
+
+        /**
+         * ID of frame that wraps the frame. Set to -1 of no parent frame exists.
+         */
+        parentFrameId: number;
+
+        /**
+         * The URL currently associated with this frame.
+         */
+        url: string;
     }
 
     export interface OnBeforeNavigateDetailsType {
@@ -404,17 +433,17 @@ export namespace WebNavigation {
          * Retrieves information about the given frame. A frame refers to an &lt;iframe&gt; or a &lt;frame&gt; of a web page and is identified by a tab ID and a frame ID.
          *
          * @param details Information about the frame to retrieve information about.
-         * @returns Promise<GetFrameCallbackdetailsType>
+         * @returns Promise<GetFrameCallbackDetailsType>
          */
-        getFrame(details: GetFrameDetailsType): Promise<GetFrameCallbackdetailsType>;
+        getFrame(details: GetFrameDetailsType): Promise<GetFrameCallbackDetailsType>;
 
         /**
          * Retrieves information about all frames of a given tab.
          *
          * @param details Information about the tab to retrieve all frames from.
-         * @returns Promise<object[]>
+         * @returns Promise<GetAllFramesCallbackDetailsItemType[]>
          */
-        getAllFrames(details: GetAllFramesDetailsType): Promise<object[]>;
+        getAllFrames(details: GetAllFramesDetailsType): Promise<GetAllFramesCallbackDetailsItemType[]>;
 
         /**
          * Fired when a navigation is about to occur.

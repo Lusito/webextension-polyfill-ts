@@ -19,7 +19,7 @@ export namespace I18n {
     /**
      * LanguageDetectionResult object that holds detected langugae reliability and array of DetectedLanguage
      */
-    export interface DetectLanguageCallbackresultType {
+    export interface DetectLanguageCallbackResultType {
 
         /**
          * CLD detected language reliability
@@ -29,13 +29,13 @@ export namespace I18n {
         /**
          * array of detectedLanguage
          */
-        languages: DetectLanguageCallbackresultTypeLanguagesItemType[];
+        languages: DetectLanguageCallbackResultTypeLanguagesItemType[];
     }
 
     /**
      * DetectedLanguage object that holds detected ISO language code and its percentage in the input string
      */
-    export interface DetectLanguageCallbackresultTypeLanguagesItemType {
+    export interface DetectLanguageCallbackResultTypeLanguagesItemType {
         language: LanguageCode;
 
         /**
@@ -73,8 +73,8 @@ export namespace I18n {
          * Detects the language of the provided text using CLD.
          *
          * @param text User input string to be translated.
-         * @returns Promise<DetectLanguageCallbackresultType>
+         * @returns Promise<DetectLanguageCallbackResultType>
          */
-        detectLanguage(text: string): Promise<DetectLanguageCallbackresultType>;
+        detectLanguage(text: string): Promise<DetectLanguageCallbackResultType>;
     }
 }

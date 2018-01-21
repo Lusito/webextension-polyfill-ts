@@ -280,7 +280,7 @@ export namespace Cookies {
     /**
      * Contains details about the cookie that's been removed.  If removal failed for any reason, this will be "null", and $(ref:runtime.lastError) will be set.
      */
-    export interface RemoveCallbackdetailsType {
+    export interface RemoveCallbackDetailsType {
 
         /**
          * The URL associated with the cookie that's been removed.
@@ -351,9 +351,9 @@ export namespace Cookies {
          * Deletes a cookie by name.
          *
          * @param details Information to identify the cookie to remove.
-         * @returns Promise<RemoveCallbackdetailsType>
+         * @returns Promise<RemoveCallbackDetailsType>
          */
-        remove(details: RemoveDetailsType): Promise<RemoveCallbackdetailsType>;
+        remove(details: RemoveDetailsType): Promise<RemoveCallbackDetailsType>;
 
         /**
          * Lists all existing cookie stores.

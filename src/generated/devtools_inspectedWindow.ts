@@ -31,7 +31,7 @@ export namespace DevtoolsInspectedWindow {
     /**
      * An object providing details if an exception occurred while evaluating the expression.
      */
-    export interface EvalCallbackexceptionInfoType {
+    export interface EvalCallbackExceptionInfoType {
 
         /**
          * Set if the error occurred on the DevTools side before the expression is evaluated.
@@ -98,9 +98,9 @@ export namespace DevtoolsInspectedWindow {
          *
          * @param expression An expression to evaluate.
          * @param options Optional. The options parameter can contain one or more options.
-         * @returns Promise<[any, EvalCallbackexceptionInfoType]> A function called when evaluation completes.
+         * @returns Promise<[any, EvalCallbackExceptionInfoType]> A function called when evaluation completes.
          */
-        eval(expression: string, options?: EvalOptionsType): Promise<[any, EvalCallbackexceptionInfoType]>;
+        eval(expression: string, options?: EvalOptionsType): Promise<[any, EvalCallbackExceptionInfoType]>;
 
         /**
          * Reloads the inspected page.

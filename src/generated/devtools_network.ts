@@ -29,7 +29,7 @@ export namespace DevtoolsNetwork {
     /**
      * A HAR log. See HAR specification for details.
      */
-    export interface GetHARCallbackharLogType {
+    export interface GetHARCallbackHarLogType {
     }
 
     export interface Static {
