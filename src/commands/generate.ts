@@ -9,6 +9,8 @@ import { getProperty, getEnumType, getUnionType, getType, getParameters, setCurr
 
 function getImports(entry: SchemaEntry, subNamespaces: string[]) {
     const imports: string[] = [];
+    if(entry.$import)
+        imports.push(toUpperCamelCase(entry.$import));
     subNamespaces.forEach((ns) => imports.push(ns.replace(/\./g, '_')));
     function checkAndAddImport(ref?: string) {
         if (ref && !ref.startsWith(entry.namespace + '.') && ref.indexOf('.') > 0 && !ref.startsWith('menusInternal'))
@@ -269,7 +271,8 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
 
         writer.begin('export namespace ' + toUpperCamelCase(entry.namespace) +  ' {');
         workArray(entry.types, (type) => addType(type, writer));
-        writer.begin('export interface Static {');
+        const extendsPart = entry.$import ? ` extends ${toUpperCamelCase(entry.$import)}.Static` : '';
+        writer.begin('export interface Static' + extendsPart + ' {');
         if (workArray(entry.functions, (func) => addFunction(func, func.parameters, writer))) {
             if (entry.events)
                 writer.emptyLine();

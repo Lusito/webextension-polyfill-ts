@@ -10,6 +10,8 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
+import { Menus } from "./Menus";
+
 export namespace ContextMenus {
 
     /**
@@ -17,6 +19,6 @@ export namespace ContextMenus {
      */
     export type ContextType = "all" | "page" | "frame" | "selection" | "link" | "editable" | "password" | "image" | "video" | "audio" | "launcher" | "bookmark" | "browser_action" | "page_action" | "tab";
 
-    export interface Static {
+    export interface Static extends Menus.Static {
     }
 }
