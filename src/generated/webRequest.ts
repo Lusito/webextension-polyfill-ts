@@ -123,7 +123,74 @@ export namespace WebRequest {
         file?: string;
     }
 
-    export interface FilterResponseDataReturnType {
+    /**
+     * "uninitialized": The StreamFilter is not fully initialized. No methods may be called until a "start" event has been received.
+     * "transferringdata": The underlying channel is currently transferring data, which will be dispatched via "data" events.
+     * "finishedtransferringdata": The underlying channel has finished transferring data. Data may still be written via write() calls at this point.
+     * "suspended": Data transfer is currently suspended. It may be resumed by a call to resume(). Data may still be written via write() calls in this state.
+     * "closed": The channel has been closed by a call to close(). No further data wlil be delivered via "data" events, and no further data may be written via write() calls.
+     * "disconnected": The channel has been disconnected by a call to disconnect(). All further data will be delivered directly, without passing through the filter. No further events will be dispatched, and no further data may be written by write() calls.
+     * "failed": An error has occurred and the channel is disconnected. The `error`, property contains the details of the error.
+     */
+    export type StreamFilterStatus = "uninitialized" | "transferringdata" | "finishedtransferringdata" | "suspended" | "closed" | "disconnected" | "failed";
+
+    /**
+     * An interface which allows an extension to intercept, and optionally modify, response data from an HTTP request.
+     */
+    export interface StreamFilter {
+
+        /**
+         * Returns the current status of the stream.
+         */
+        status: StreamFilterStatus;
+
+        /**
+         * After an "error" event has been dispatched, this contains a message describing the error.
+         */
+        error: string;
+
+        /**
+         * Creates a stream filter for the given add-on and the given extension ID.
+         *
+         * @param requestId
+         * @param addonId
+         */
+        create(requestId: number, addonId: string): void;
+
+        /**
+         * Suspends processing of the request. After this is called, no further data will be delivered until the request is resumed.
+         */
+        suspend(): void;
+
+        /**
+         * Resumes delivery of data for a suspended request.
+         */
+        resume(): void;
+
+        /**
+         * Closes the request. After this is called, no more data may be written to the stream, and no further data will be delivered. This *must* be called after the consumer is finished writing data, unless disconnect() has already been called.
+         */
+        close(): void;
+
+        /**
+         * Disconnects the stream filter from the request. After this is called, no further data will be delivered to the filter, and any unprocessed data will be written directly to the output stream.
+         */
+        disconnect(): void;
+
+        /**
+         * Writes a chunk of data to the output stream. This may not be called before the "start" event has been received.
+         *
+         * @param data
+         */
+        write(data: ArrayBuffer | Uint8Array): void;
+    }
+
+    export interface StreamFilterEventData {
+
+        /**
+         * Contains a chunk of data read from the input stream.
+         */
+        data: ArrayBuffer;
     }
 
     export interface OnBeforeRequestDetailsType {
@@ -982,9 +1049,9 @@ export namespace WebRequest {
          * ...
          *
          * @param requestId
-         * @returns FilterResponseDataReturnType
+         * @returns StreamFilter
          */
-        filterResponseData(requestId: string): FilterResponseDataReturnType;
+        filterResponseData(requestId: string): StreamFilter;
 
         /**
          * Fired when a request is about to occur.

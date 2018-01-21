@@ -27,7 +27,7 @@ function combineNamePrefix(namePrefix: string, suffix?: string) {
 }
 
 function convertToRefIfObject(prop: SchemaProperty, propName: string, namePrefix: string | undefined, entry: SchemaEntry) {
-    if (prop.type === 'object') {
+    if (prop.type === 'object' && !prop.isInstanceOf) {
         if (!namePrefix)
             throw ErrorMessage.MISSING_NAME;
         const name = combineNamePrefix(namePrefix, propName);
@@ -81,7 +81,7 @@ function extractParameterObjectType<T extends SchemaBaseProperty>(prop: SchemaPr
         modifyArray(prop.events, (evt) => extractParameterObjectType(evt, combineNamePrefix(namePrefix, evt.name), false, entry));
         modifyArray(prop.functions, (func) => extractParameterObjectType(func, combineNamePrefix(namePrefix, func.name), false, entry));
 
-        if (!isRoot) {
+        if (!isRoot && !prop.isInstanceOf) {
             if (!namePrefix)
                 throw ErrorMessage.MISSING_NAME;
             const id = namePrefix + 'Type';

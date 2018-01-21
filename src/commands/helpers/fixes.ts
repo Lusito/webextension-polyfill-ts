@@ -22,7 +22,7 @@ function fixPropertyType(prop: SchemaProperty) {
         fixPropertyType(prop.items);
     else if (prop.type === 'function') {
         workArray(prop.parameters, fixPropertyType);
-        if(prop.returns)
+        if (prop.returns)
             fixPropertyType(prop.returns);
     } else if (prop.type === 'object') {
         workMap(prop.properties, fixPropertyType);
@@ -43,7 +43,7 @@ export const fixes: Fix[] = [{
             workArray(namespace.entry.functions, (f) => {
                 if (f.parameters)
                     f.parameters.forEach(fixPropertyType);
-                if(f.returns)
+                if (f.returns)
                     fixPropertyType(f.returns);
             });
             workMap(namespace.entry.properties, fixPropertyType);
@@ -117,7 +117,7 @@ export const fixes: Fix[] = [{
                 } else if (part[0] === '#') {
                     assertType(base, 'array');
                     const index = parseInt(part.substr(1));
-                    if(index >= base.length || index < 0)
+                    if (index >= base.length || index < 0)
                         throw 'Index out of bounds';
                     base = base[index];
                     assertType(base, 'array', 'object');
@@ -127,51 +127,58 @@ export const fixes: Fix[] = [{
                 }
             }
             const lastPart = parts[parts.length - 1];
-            base[lastPart] = fixes[path];
+            const value = fixes[path];
+            if (lastPart === '+[]') {
+                assertType(base, 'array');
+                assertType(value, 'array');
+                value.forEach((e: any) => base.push(e));
+            } else {
+                base[lastPart] = value;
+            }
         }
     }
 }, {
     name: 'extracting inline content',
-    apply: (namespaces)=> {
+    apply: (namespaces) => {
         workMap(namespaces.namespaces, (ns) => extractInlineContent(ns.entry));
     }
 }, {
     name: 'remove unsupported and deprecated content',
-    apply: (namespaces)=> {
+    apply: (namespaces) => {
         workMap(namespaces.namespaces, (ns) => stripUnusedContent(ns.entry));
     }
 }, {
     name: 'extend events if needed',
-    apply: (namespaces)=> {
+    apply: (namespaces) => {
         const types = namespaces.namespaces.events.entry.types;
-        if(!types)
+        if (!types)
             throw 'Missing events types';
         const eventType = types.find((t) => t.id === 'Event');
-        if(!eventType)
+        if (!eventType)
             throw 'Missing Events.Event';
-        if(eventType.type !== 'object')
+        if (eventType.type !== 'object')
             throw 'Events.Event should be object';
         const eventFunctions = eventType.functions;
-        if(!eventFunctions)
+        if (!eventFunctions)
             throw 'Events.Event.functions missing';
-            
+
         const addListener = eventFunctions.find((f) => f.name === 'addListener');
-        if(!addListener)
+        if (!addListener)
             throw 'Missing addListener in Event type';
         workMap(namespaces.namespaces, (ns) => {
             workArray(ns.entry.events, (e) => {
-                if(e.extraParameters) {
+                if (e.extraParameters) {
                     const id = e.name + 'Event';
                     const extendedAddListener = JSON.parse(JSON.stringify(addListener));
-                    const extended:SchemaObjectProperty = {
+                    const extended: SchemaObjectProperty = {
                         id,
                         type: "object",
-                        additionalProperties: { $ref: 'Events.Event<(' + getParameters(e.parameters, false) + ') => void>', type: 'ref'},
+                        additionalProperties: { $ref: 'Events.Event<(' + getParameters(e.parameters, false) + ') => void>', type: 'ref' },
                         description: e.description,
                         functions: [extendedAddListener]
                     };
                     const params = extendedAddListener.parameters;
-                    if(!params)
+                    if (!params)
                         throw 'Missing addListener.parameters in Event type';
                     params[0].type = '(' + getParameters(e.parameters, false) + ') => void';
                     e.extraParameters.forEach((p) => {
@@ -180,7 +187,7 @@ export const fixes: Fix[] = [{
                     });
                     e.$extend = id;
                     delete e.parameters;
-                    if(!ns.entry.types)
+                    if (!ns.entry.types)
                         ns.entry.types = [];
                     ns.entry.types.push(extended);
                 }

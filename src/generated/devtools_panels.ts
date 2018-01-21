@@ -72,18 +72,6 @@ export namespace DevtoolsPanels {
 
     export type CreateIconPathC1Enum = "";
 
-    /**
-     * The JavaScript <code>window</code> object of panel's page.
-     */
-    export interface ExtensionPanelOnShownWindowType {
-    }
-
-    /**
-     * The JavaScript <code>window</code> object of the sidebar page, if one was set with the <code>setPage()</code> method.
-     */
-    export interface ExtensionSidebarPaneOnShownWindowType {
-    }
-
     export interface Static {
 
         /**

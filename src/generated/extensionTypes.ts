@@ -92,10 +92,7 @@ export namespace ExtensionTypes {
         cssOrigin?: CSSOrigin;
     }
 
-    export type DateType = string | number | DateTypeC3Type;
-
-    export interface DateTypeC3Type {
-    }
+    export type DateType = string | number | Date;
 
     export interface Static {
     }

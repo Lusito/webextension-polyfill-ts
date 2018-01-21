@@ -8,12 +8,6 @@
 export namespace Clipboard {
 
     /**
-     * The image data to be copied.
-     */
-    export interface SetImageDataImageDataType {
-    }
-
-    /**
      * The type of imageData.
      */
     export type SetImageDataImageTypeEnum = "jpeg" | "png";
@@ -26,6 +20,6 @@ export namespace Clipboard {
          * @param imageData The image data to be copied.
          * @param imageType The type of imageData.
          */
-        setImageData(imageData: SetImageDataImageDataType, imageType: SetImageDataImageTypeEnum): void;
+        setImageData(imageData: ArrayBuffer, imageType: SetImageDataImageTypeEnum): void;
     }
 }

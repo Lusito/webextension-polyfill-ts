@@ -37,9 +37,6 @@ export namespace Extension {
         tabId?: number;
     }
 
-    export interface GetBackgroundPageReturnType {
-    }
-
     /**
      * Set for the lifetime of a callback if an ansychronous extension api has resulted in an error. If no error has occured lastError will be <var>undefined</var>.
      */
@@ -72,9 +69,9 @@ export namespace Extension {
         /**
          * Returns the JavaScript 'window' object for the background page running inside the current extension. Returns null if the extension has no background page.
          *
-         * @returns GetBackgroundPageReturnType
+         * @returns Window
          */
-        getBackgroundPage(): GetBackgroundPageReturnType;
+        getBackgroundPage(): Window;
 
         /**
          * Retrieves the state of the extension's access to Incognito-mode (as determined by the user-controlled 'Allowed in Incognito' checkbox.
