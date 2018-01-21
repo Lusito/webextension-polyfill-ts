@@ -416,7 +416,7 @@ export namespace Manifest {
         /**
          * Optional.
          */
-        persistent?: any;
+        persistent?: boolean;
     }
 
     export interface WebExtensionManifestBackgroundC2Type {
@@ -425,7 +425,7 @@ export namespace Manifest {
         /**
          * Optional.
          */
-        persistent?: any;
+        persistent?: boolean;
     }
 
     export interface WebExtensionManifestOptionsUiType {

@@ -11,8 +11,10 @@ function stripUnusedPropertiesFromProperty(val: SchemaProperty) {
         val.parameters = stripUnusedProperties(val.parameters);
     if (val.$ref === 'contextMenusInternal.OnClickData')
         val.$ref = 'OnClickData';
-    else if (val.$ref === 'UnrecognizedProperty' || val.$ref === 'PersistentBackgroundProperty')
+    else if (val.$ref === 'UnrecognizedProperty')
         val.$ref = 'any';
+    else if (val.$ref === 'PersistentBackgroundProperty')
+        val.$ref = 'boolean';
 }
 
 function stripUnusedProperties<T extends SchemaProperty>(values?: T[]) {
