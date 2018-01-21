@@ -51,6 +51,8 @@ export function getType(e: SchemaProperty): string {
             //Fixme:minItems, maxItems
             if (e.items.$ref)
                 propType = fixRef(e.items.$ref);
+            else if (e.items.type === 'object' && e.items.isInstanceOf)
+                propType = e.items.isInstanceOf;
             else
                 propType = typeMap[e.items.type] || e.items.type;
             if (e.minItems) {

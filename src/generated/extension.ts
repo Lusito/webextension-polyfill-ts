@@ -65,9 +65,9 @@ export namespace Extension {
          * Returns an array of the JavaScript 'window' objects for each of the pages running inside the current extension.
          *
          * @param fetchProperties Optional.
-         * @returns object[] Array of global objects
+         * @returns Window[] Array of global objects
          */
-        getViews(fetchProperties?: GetViewsFetchPropertiesType): object[];
+        getViews(fetchProperties?: GetViewsFetchPropertiesType): Window[];
 
         /**
          * Returns the JavaScript 'window' object for the background page running inside the current extension. Returns null if the extension has no background page.
