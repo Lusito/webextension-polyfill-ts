@@ -67,7 +67,7 @@ export namespace Manifest {
     /**
      * Represents a WebExtension manifest.json file
      */
-    export interface WebExtensionManifest {
+    export interface WebExtensionManifest extends ManifestBase {
 
         /**
          * Optional.
@@ -189,7 +189,7 @@ export namespace Manifest {
     /**
      * Represents a WebExtension language pack manifest.json file
      */
-    export interface WebExtensionLangpackManifest {
+    export interface WebExtensionLangpackManifest extends ManifestBase {
 
         /**
          * Optional.
@@ -380,7 +380,7 @@ export namespace Manifest {
     /**
      * Contents of manifest.json for a static theme
      */
-    export interface ThemeManifest {
+    export interface ThemeManifest extends Manifest.ManifestBase {
         theme: ThemeType;
 
         /**

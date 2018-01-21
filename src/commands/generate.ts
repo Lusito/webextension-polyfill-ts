@@ -88,7 +88,9 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
     if (type.type === 'object') {
         const templateParam = type.id === 'Event' ? '<T extends Function>' : '';
         let extendsClass = '';
-        if (type.additionalProperties && typeof (type.additionalProperties) === 'object') {
+        if(type.$import) {
+            extendsClass = ' extends ' + fixRef(type.$import);
+        } else if (type.additionalProperties && typeof (type.additionalProperties) === 'object') {
             if (type.additionalProperties.$ref && type.additionalProperties.$ref !== 'UnrecognizedProperty')
                 extendsClass = ' extends ' + fixRef(type.additionalProperties.$ref);
         }
