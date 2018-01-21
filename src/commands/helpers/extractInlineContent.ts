@@ -72,15 +72,12 @@ function extractParameterObjectFunction(func: SchemaFunctionProperty, entry: Sch
 }
 
 function extractParameterObjectType<T extends SchemaBaseProperty>(prop: SchemaProperty, namePrefix: string, isRoot: boolean, entry: SchemaEntry): T {
-    if (isRoot) {
-        if (!prop.id)
-            throw 'Gotta have an id, dude!';
-        namePrefix = toUpperCamelCase(prop.id);
-    }
-
     if (prop.type === 'object') {
+        if(prop.additionalProperties && prop.additionalProperties !== true
+            && prop.additionalProperties.type === 'object' && !prop.additionalProperties.$ref) {
+            extractParameterObjectType(prop.additionalProperties, namePrefix, true, entry);
+        }
         modifyMap(prop.properties, (prop, key) => extractParameterObjectType(prop, combineNamePrefix(namePrefix, key), false, entry));
-        //fixme: prop.additionalProperties
         modifyArray(prop.events, (evt) => extractParameterObjectType(evt, combineNamePrefix(namePrefix, evt.name), false, entry));
         modifyArray(prop.functions, (func) => extractParameterObjectType(func, combineNamePrefix(namePrefix, func.name), false, entry));
 
@@ -135,5 +132,9 @@ export function extractInlineContent(entry: SchemaEntry) {
 
     // slice array, since array will be modified during work
     const entryTypes = entry.types && entry.types.slice();
-    workArray(entryTypes, (type) => extractParameterObjectType(type, '', true, entry));
+    workArray(entryTypes, (type) => {
+        if (!type.id)
+            throw 'Gotta have a prefix, dude!';
+        extractParameterObjectType(type, toUpperCamelCase(type.id), true, entry);
+    });
 }

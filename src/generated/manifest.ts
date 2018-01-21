@@ -540,12 +540,50 @@ export namespace Manifest {
         search_provider?: WebExtensionManifestChromeSettingsOverridesSearchProviderType;
     }
 
+    export interface WebExtensionManifestCommandsSuggestedKeyType {
+
+        /**
+         * Optional.
+         */
+        default?: KeyName;
+
+        /**
+         * Optional.
+         */
+        mac?: KeyName;
+
+        /**
+         * Optional.
+         */
+        linux?: KeyName;
+
+        /**
+         * Optional.
+         */
+        windows?: KeyName;
+
+        /**
+         * Optional.
+         */
+        chromeos?: string;
+
+        /**
+         * Optional.
+         */
+        android?: string;
+
+        /**
+         * Optional.
+         */
+        ios?: string;
+    }
+
     export interface WebExtensionManifestCommandsType {
 
         /**
          * Optional.
          */
-        suggested_key?: object;
+        suggested_key?: WebExtensionManifestCommandsSuggestedKeyType;
 
         /**
          * Optional.
