@@ -20,9 +20,11 @@ function fixPropertyType(prop: SchemaProperty) {
         prop.type = 'value';
     if (prop.type === 'array' && prop.items)
         fixPropertyType(prop.items);
-    else if (prop.type === 'function')
+    else if (prop.type === 'function') {
         workArray(prop.parameters, fixPropertyType);
-    else if (prop.type === 'object') {
+        if(prop.returns)
+            fixPropertyType(prop.returns);
+    } else if (prop.type === 'object') {
         workMap(prop.properties, fixPropertyType);
         workArray(prop.functions, fixPropertyType);
     }
@@ -41,6 +43,8 @@ export const fixes: Fix[] = [{
             workArray(namespace.entry.functions, (f) => {
                 if (f.parameters)
                     f.parameters.forEach(fixPropertyType);
+                if(f.returns)
+                    fixPropertyType(f.returns);
             });
             workMap(namespace.entry.properties, fixPropertyType);
         });
@@ -185,4 +189,3 @@ export const fixes: Fix[] = [{
     }
 }];
 //Fixme: copy permissions from ns to subns
-//fixme: resolve "$import"s
