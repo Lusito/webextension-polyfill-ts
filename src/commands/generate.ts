@@ -343,7 +343,6 @@ try {
     console.error(e);
 }
 
-//Fixme: manifest.ts needs lots of optimizations
 //fixme: remove export namespace?
 //fixme: remember shorter/better name for extracted parameter objects and when all types are extracted, use the better name if no conflicts exist
 //fixme: descriptions might include refs: $(ref:runtime.lastError)

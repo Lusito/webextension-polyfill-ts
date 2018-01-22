@@ -118,9 +118,8 @@ function extractParameterObjectType<T extends SchemaBaseProperty>(prop: SchemaPr
             modifyArray(prop.choices, (choice, i) => extractParameterObjectType(choice, namePrefix + 'C' + (i + 1), false, entry));
     }
     else if (prop.type === 'function') {
-        //fixme: extract/make ref/type
-        //Fixme: prop.extraParameters
         modifyArray(prop.parameters, (param, i) => extractParameterObjectType(param, combineNamePrefix(namePrefix, param.name), false, entry));
+        modifyArray(prop.extraParameters, (param, i) => extractParameterObjectType(param, combineNamePrefix(namePrefix, param.name), false, entry));
         if (prop.returns)
             prop.returns = extractParameterObjectType<SchemaProperty>(prop.returns, 'Return', false, entry);
     }

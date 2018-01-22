@@ -52,7 +52,6 @@ export function getType(e: SchemaProperty): string {
         if (e.items.type === 'choices' && e.items.choices)
             propType = getUnionType(e.items.choices);
         else {
-            //Fixme:minItems, maxItems
             if (e.items.$ref)
                 propType = fixRef(e.items.$ref);
             else if (e.items.type === 'object' && e.items.isInstanceOf)
