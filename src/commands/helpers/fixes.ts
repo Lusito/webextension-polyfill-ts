@@ -26,6 +26,7 @@ function fixPropertyType(prop: SchemaProperty) {
             fixPropertyType(prop.returns);
     } else if (prop.type === 'object') {
         workMap(prop.properties, fixPropertyType);
+        workMap(prop.patternProperties, fixPropertyType);
         workArray(prop.functions, fixPropertyType);
     }
 }

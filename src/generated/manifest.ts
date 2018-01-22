@@ -82,7 +82,7 @@ export namespace Manifest {
         /**
          * Optional.
          */
-        icons?: WebExtensionManifestIconsType;
+        icons?: {[s:string]:string};
 
         /**
          * Optional.
@@ -198,12 +198,12 @@ export namespace Manifest {
 
         langpack_id: string;
 
-        languages: WebExtensionLangpackManifestLanguagesType;
+        languages: {[s:string]:WebExtensionLangpackManifestLanguagesPatternType};
 
         /**
          * Optional.
          */
-        sources?: WebExtensionLangpackManifestSourcesType;
+        sources?: {[s:string]:WebExtensionLangpackManifestSourcesPatternType};
     }
 
     export interface ThemeIcons {
@@ -322,12 +322,9 @@ export namespace Manifest {
         run_at?: ExtensionTypes.RunAt;
     }
 
-    export type IconPath = IconPathC1Type | ExtensionURL;
+    export type IconPath = {[s:string]:ExtensionURL} | ExtensionURL;
 
-    export type IconImageData = IconImageDataC1Type | ImageData;
-
-    export interface ImageData {
-    }
+    export type IconImageData = {[s:string]:ImageData} | ImageData;
 
     export type KeyName = string;
 
@@ -386,7 +383,7 @@ export namespace Manifest {
         /**
          * Optional.
          */
-        icons?: ThemeManifestIconsType;
+        icons?: {[s:string]:string};
     }
 
     export interface ManifestBaseApplicationsType {
@@ -403,9 +400,6 @@ export namespace Manifest {
          * Optional.
          */
         gecko?: FirefoxSpecificProperties;
-    }
-
-    export interface WebExtensionManifestIconsType {
     }
 
     export type WebExtensionManifestIncognitoEnum = "spanning";
@@ -659,16 +653,19 @@ export namespace Manifest {
         newtab?: ExtensionURL;
     }
 
-    export interface WebExtensionLangpackManifestLanguagesType {
+    export interface WebExtensionLangpackManifestLanguagesPatternType {
+        chrome_resources: {[s:string]:ExtensionURL | {[s:string]:ExtensionURL}};
+
+        version: string;
     }
 
-    export interface WebExtensionLangpackManifestSourcesType {
-    }
+    export interface WebExtensionLangpackManifestSourcesPatternType {
+        base_path: ExtensionURL;
 
-    export interface IconPathC1Type {
-    }
-
-    export interface IconImageDataC1Type {
+        /**
+         * Optional.
+         */
+        paths?: string[];
     }
 
     export interface ThemeTypeImagesType {
@@ -1180,9 +1177,6 @@ export namespace Manifest {
          * Optional.
          */
         additional_backgrounds_tiling?: ThemeTypePropertiesAdditionalBackgroundsTilingItemEnum[];
-    }
-
-    export interface ThemeManifestIconsType {
     }
 
     export interface Static {

@@ -128,7 +128,7 @@ export namespace Menus {
         /**
          * Optional.
          */
-        icons?: CreateCreatePropertiesTypeIconsType;
+        icons?: {[s:string]:string};
 
         /**
          * The text to be displayed in the item; this is <em>required</em> unless <code>type</code> is 'separator'. When the context is 'selection', you can use <code>%s</code> within the string to show the selected text. For example, if this parameter's value is "Translate '%s' to Pig Latin" and the user selects the word "cool", the context menu item for the selection is "Translate 'cool' to Pig Latin".
@@ -241,9 +241,6 @@ export namespace Menus {
     }
 
     export type OnClickDataModifiersItemEnum = "Shift" | "Alt" | "Command" | "Ctrl" | "MacCtrl";
-
-    export interface CreateCreatePropertiesTypeIconsType {
-    }
 
     export interface Static {
 

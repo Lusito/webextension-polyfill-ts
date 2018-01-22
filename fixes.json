@@ -1,4 +1,5 @@
 {
+    "manifest.types.$ImageData.unsupported": true,
     "storage.types.$StorageArea.functions.%get.parameters.%keys.choices.#0.type": "null | string",
     "storage.types.$StorageArea.functions.%get.parameters.%keys.choices.#2.type": "{[s:string] : any}",
     "storage.types.$StorageArea.functions.%get.parameters.%keys.choices.#2.additionalProperties": null,

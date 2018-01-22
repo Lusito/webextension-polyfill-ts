@@ -27,7 +27,7 @@ function combineNamePrefix(namePrefix: string, suffix?: string) {
 }
 
 function convertToRefIfObject(prop: SchemaProperty, propName: string, namePrefix: string | undefined, entry: SchemaEntry) {
-    if (prop.type === 'object' && !prop.isInstanceOf) {
+    if (prop.type === 'object' && !prop.isInstanceOf && !prop.patternProperties) {
         if (!namePrefix)
             throw ErrorMessage.MISSING_NAME;
         const name = combineNamePrefix(namePrefix, propName);
@@ -82,6 +82,7 @@ function extractParameterObjectType<T extends SchemaBaseProperty>(prop: SchemaPr
             extractParameterObjectType(prop.additionalProperties, namePrefix, true, entry);
         }
         modifyMap(prop.properties, (prop, key) => extractParameterObjectType(prop, combineNamePrefix(namePrefix, key), false, entry));
+        modifyMap(prop.patternProperties, (prop, key) => extractParameterObjectType(prop, namePrefix + "Pattern", false, entry));
         modifyArray(prop.events, (evt) => extractParameterObjectType(evt, combineNamePrefix(namePrefix, evt.name), false, entry));
         modifyArray(prop.functions, (func) => extractParameterObjectType(func, combineNamePrefix(namePrefix, func.name), false, entry));
 
@@ -89,6 +90,8 @@ function extractParameterObjectType<T extends SchemaBaseProperty>(prop: SchemaPr
             if ((!prop.properties || Object.getOwnPropertyNames(prop.properties).length === 0)
                 && prop.additionalProperties && prop.additionalProperties !== true && prop.additionalProperties.type === 'array'
                 && prop.additionalProperties.items && prop.additionalProperties.items.type) {
+                    //special case for a map type.. not extracted, will be handled in getType
+            } else if (prop.patternProperties) {
                     //special case for a map type.. not extracted, will be handled in getType
             } else {
                 if (!namePrefix)

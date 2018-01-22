@@ -80,7 +80,16 @@ export function getType(e: SchemaProperty): string {
     else if (e.type === 'object' && (!e.properties || Object.getOwnPropertyNames(e.properties).length === 0)
         && e.additionalProperties && e.additionalProperties !== true && e.additionalProperties.type === 'array'
         && e.additionalProperties.items && e.additionalProperties.items.type) {
-        return `{[s:string]:${e.additionalProperties.items.type}}`;
+        const type = getType(e.additionalProperties.items);
+        return `{[s:string]:${type}}`;
+    }
+    else if (e.type === 'object' && e.patternProperties) {
+        const names = Object.getOwnPropertyNames(e.patternProperties);
+        if(names.length !== 1)
+            throw 'Pattern properties expected to be 1 in length';
+        const patternProp = e.patternProperties[names[0]];
+        const type = getType(patternProp);
+        return `{[s:string]:${type}}`;
     }
     return propType;
 }
