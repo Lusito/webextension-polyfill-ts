@@ -559,7 +559,7 @@ export namespace Tabs {
          * True for any screen sharing, or a string to specify type of screen sharing.
          * Optional.
          */
-        screen?: QueryQueryInfoTypeScreenC1Enum | boolean;
+        screen?: "Screen" | "Window" | "Application" | boolean;
 
         /**
          * True if the tab is using the camera.
@@ -795,8 +795,6 @@ export namespace Tabs {
 
         zoomSettings: ZoomSettings;
     }
-
-    export type QueryQueryInfoTypeScreenC1Enum = "Screen" | "Window" | "Application";
 
     export interface Static {
 

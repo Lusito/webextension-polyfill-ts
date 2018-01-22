@@ -1,10 +1,10 @@
 import { ImportedNamespaces } from "./importNormalized";
-import { workMap, workArray, readJsonFile } from './utils';
-import { SchemaProperty, SchemaObjectProperty } from './types';
+import { workMap, workArray, readJsonFile, modifyArray } from './utils';
+import { SchemaProperty, SchemaObjectProperty, SchemaValueProperty, SchemaStringProperty } from './types';
 import { assertValidOjectKeys, assertType } from './assert';
 import { stripUnusedContent } from "./stripUnusedContent";
 import { extractInlineContent } from "./extractInlineContent";
-import { getParameters } from "./getType";
+import { getParameters, getEnumType } from "./getType";
 
 interface Fix {
     name: string;
@@ -29,7 +29,45 @@ function fixPropertyType(prop: SchemaProperty) {
         workArray(prop.functions, fixPropertyType);
     }
 }
-
+function flattenChoiceEnum(prop: SchemaProperty, types: SchemaProperty[]) {
+    if(prop.type === 'object') {
+        workMap(prop.properties, (p) => flattenChoiceEnum(p, types));
+        return;
+    }
+    if(prop.type === 'function') {
+        workArray(prop.parameters, (p) => flattenChoiceEnum(p, types));
+        return;
+    }
+    const choices = prop.type === 'choices' && prop.choices;
+    const choice0 = choices && choices.length === 1 && choices[0];
+    if(choice0 && choice0.$ref && choice0.$ref.endsWith('Enum')) {
+        const extended = types.find((t2) => t2.id === choice0.$ref);
+        if(!extended)
+            throw 'Could not find extended';
+        //@ts-ignore
+        const stringProp:SchemaStringProperty = prop;
+        stringProp.type = 'string';
+        if(extended.type !== 'string')
+            throw 'error flattening single choice, both must be string';
+        stringProp.enum = extended.enum;
+        extended.deprecated = true; // so it gets removed in the next step
+    } else if(choices) {
+        modifyArray(choices, (c) => {
+            if(c.$ref && c.$ref.endsWith('Enum')) {
+                const extended = types.find((t2) => t2.id === c.$ref);
+                if(!extended)
+                    throw 'Could not find extended';
+                if(extended.type !== 'string')
+                    throw 'error flattening single choice, both must be string';
+                if(extended.enum) {
+                    extended.deprecated = true; // so it gets removed in the next step
+                    return { type: 'value', value: getEnumType(extended.enum) } as SchemaValueProperty;
+                }
+            }
+            return c;
+        });
+    }
+}
 export const fixes: Fix[] = [{
     name: 'removing unused namespaces',
     apply: (namespaces) => {
@@ -83,7 +121,17 @@ export const fixes: Fix[] = [{
 
                 if (t.type === 'choices' && t.choices && extended.type === 'choices' && extended.choices) {
                     const choices = extended.choices;
-                    t.choices.forEach((c) => choices.push(c));
+                    const onlyEnums = t.choices.findIndex((c) => c.type !== 'string' || !c.enum) === -1;
+                    const enumToExtend = choices.find((c) => c.type === 'string' && !!c.enum);
+                    if(onlyEnums && enumToExtend && enumToExtend.type === 'string' && enumToExtend.enum) {
+                        const enumArray = enumToExtend.enum;
+                        t.choices.forEach((c) => {
+                            if(c.type === 'string' && c.enum)
+                                c.enum.forEach((e) => enumArray.push(e));
+                        });
+                    }else {
+                        t.choices.forEach((c) => choices.push(c));
+                    }
                 } else if (t.type === 'object' && t.properties && extended.type === 'object' && extended.properties) {
                     const properties = extended.properties;
                     for (const key in t.properties)
@@ -141,6 +189,20 @@ export const fixes: Fix[] = [{
     name: 'extracting inline content',
     apply: (namespaces) => {
         workMap(namespaces.namespaces, (ns) => extractInlineContent(ns.entry));
+    }
+}, {
+    name: 'flatten choice enum',
+    apply: (namespaces) => {
+        //fixme: improve this further if possible
+        workMap(namespaces.namespaces, (ns) => {
+            const types = ns.entry.types;
+            if(!types)
+                return;
+            workArray(ns.entry.functions, (t) => flattenChoiceEnum(t, types));
+            workArray(ns.entry.events, (t) => flattenChoiceEnum(t, types));
+            workArray(ns.entry.types, (t) => flattenChoiceEnum(t, types));
+            workMap(ns.entry.properties, (p) => flattenChoiceEnum(p, types));
+        });
     }
 }, {
     name: 'remove unsupported and deprecated content',

@@ -70,8 +70,6 @@ export namespace DevtoolsPanels {
     export interface Button {
     }
 
-    export type CreateIconPathC1Enum = "";
-
     export interface Static {
 
         /**
@@ -82,7 +80,7 @@ export namespace DevtoolsPanels {
          * @param pagePath Path of the panel's HTML page relative to the extension directory.
          * @returns Promise<ExtensionPanel> A function that is called when the panel is created.
          */
-        create(title: string, iconPath: CreateIconPathC1Enum | Manifest.ExtensionURL, pagePath: Manifest.ExtensionURL): Promise<ExtensionPanel>;
+        create(title: string, iconPath: "" | Manifest.ExtensionURL, pagePath: Manifest.ExtensionURL): Promise<ExtensionPanel>;
 
         /**
          * Fired when the devtools theme changes.

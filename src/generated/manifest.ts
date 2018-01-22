@@ -224,11 +224,11 @@ export namespace Manifest {
         size: number;
     }
 
-    export type OptionalPermission = OptionalPermissionC1Enum | OptionalPermissionC2Enum | OptionalPermissionC3Enum | OptionalPermissionC4Enum | OptionalPermissionC5Enum | OptionalPermissionC6Enum | OptionalPermissionC7Enum | OptionalPermissionC8Enum | OptionalPermissionC9Enum | OptionalPermissionC10Enum;
+    export type OptionalPermission = "clipboardRead" | "clipboardWrite" | "geolocation" | "idle" | "notifications" | "bookmarks" | "browserSettings" | "cookies" | "find" | "history" | "activeTab" | "tabs" | "tabHide" | "topSites" | "webNavigation" | "webRequest" | "webRequestBlocking";
 
     export type OptionalPermissionOrOrigin = OptionalPermission | MatchPattern;
 
-    export type Permission = OptionalPermission | PermissionC2Enum | PermissionC3Enum | PermissionC4Enum | PermissionC5Enum | PermissionC6Enum | string | PermissionC8Enum | PermissionC9Enum | PermissionC10Enum | PermissionC11Enum | PermissionC12Enum | PermissionC13Enum | PermissionC14Enum | PermissionC15Enum | PermissionC16Enum | PermissionC17Enum;
+    export type Permission = OptionalPermission | "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage" | "browsingData" | "contextualIdentities" | "devtools" | "downloads" | "downloads.open" | "geckoProfiler" | "identity" | "management" | "menus" | "contextMenus" | "pkcs11" | "privacy" | "proxy" | "nativeMessaging" | "sessions" | "theme" | string;
 
     export type PermissionOrOrigin = Permission | MatchPattern;
 
@@ -263,12 +263,12 @@ export namespace Manifest {
         strict_max_version?: string;
     }
 
-    export type MatchPattern = MatchPatternC1Enum | string;
+    export type MatchPattern = "<all_urls>" | string;
 
     /**
      * Same as MatchPattern above, but includes moz-extension protocol
      */
-    export type MatchPatternInternal = MatchPatternInternalC1Enum | string;
+    export type MatchPatternInternal = "<all_urls>" | string;
 
     /**
      * Details of the script or CSS to inject. Either the code or the file property must be set, but both may not be set at the same time. Based on InjectDetails, but using underscore rather than camel case naming conventions.
@@ -344,7 +344,7 @@ export namespace Manifest {
         /**
          * The protocol the site wishes to handle, specified as a string. For example, you can register to handle SMS text message links by registering to handle the "sms" scheme.
          */
-        protocol: ProtocolHandlerProtocolC1Enum | string;
+        protocol: "bitcoin" | "dat" | "dweb" | "geo" | "gopher" | "im" | "ipfs" | "ipns" | "irc" | "ircs" | "magnet" | "mailto" | "mms" | "news" | "nntp" | "sip" | "sms" | "smsto" | "ssb" | "ssh" | "tel" | "urn" | "webcal" | "wtai" | "xmpp" | string;
 
         /**
          * The URL of the handler, as a string. This string should include "%s" as a placeholder which will be replaced with the escaped URL of the document to be handled. This URL might be a true URL, or it could be a phone number, email address, or so forth.
@@ -665,67 +665,11 @@ export namespace Manifest {
     export interface WebExtensionLangpackManifestSourcesType {
     }
 
-    export type OptionalPermissionC1Enum = "clipboardRead" | "clipboardWrite" | "geolocation" | "idle" | "notifications";
-
-    export type OptionalPermissionC2Enum = "bookmarks";
-
-    export type OptionalPermissionC3Enum = "browserSettings";
-
-    export type OptionalPermissionC4Enum = "cookies";
-
-    export type OptionalPermissionC5Enum = "find";
-
-    export type OptionalPermissionC6Enum = "history";
-
-    export type OptionalPermissionC7Enum = "activeTab" | "tabs" | "tabHide";
-
-    export type OptionalPermissionC8Enum = "topSites";
-
-    export type OptionalPermissionC9Enum = "webNavigation";
-
-    export type OptionalPermissionC10Enum = "webRequest" | "webRequestBlocking";
-
-    export type PermissionC2Enum = "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage";
-
-    export type PermissionC3Enum = "browsingData";
-
-    export type PermissionC4Enum = "contextualIdentities";
-
-    export type PermissionC5Enum = "devtools";
-
-    export type PermissionC6Enum = "downloads" | "downloads.open";
-
-    export type PermissionC8Enum = "geckoProfiler";
-
-    export type PermissionC9Enum = "identity";
-
-    export type PermissionC10Enum = "management";
-
-    export type PermissionC11Enum = "menus" | "contextMenus";
-
-    export type PermissionC12Enum = "pkcs11";
-
-    export type PermissionC13Enum = "privacy";
-
-    export type PermissionC14Enum = "proxy";
-
-    export type PermissionC15Enum = "nativeMessaging";
-
-    export type PermissionC16Enum = "sessions";
-
-    export type PermissionC17Enum = "theme";
-
-    export type MatchPatternC1Enum = "<all_urls>";
-
-    export type MatchPatternInternalC1Enum = "<all_urls>";
-
     export interface IconPathC1Type {
     }
 
     export interface IconImageDataC1Type {
     }
-
-    export type ProtocolHandlerProtocolC1Enum = "bitcoin" | "dat" | "dweb" | "geo" | "gopher" | "im" | "ipfs" | "ipns" | "irc" | "ircs" | "magnet" | "mailto" | "mms" | "news" | "nntp" | "sip" | "sms" | "smsto" | "ssb" | "ssh" | "tel" | "urn" | "webcal" | "wtai" | "xmpp";
 
     export interface ThemeTypeImagesType {
 

@@ -43,10 +43,14 @@ function convertToRefIfObject(prop: SchemaProperty, propName: string, namePrefix
         const id = toUpperCamelCase(name) + 'Enum';
         return convertToRef(prop, id, entry);
     }
-    else if (prop.type === 'choices') {
-        modifyArray(prop.choices, (choice, i) => {
-            return convertToRefIfObject(choice, propName + 'C' + (i + 1), namePrefix, entry);
-        });
+    else if (prop.type === 'choices' && prop.choices) {
+        if(prop.choices.length === 1)
+            prop.choices[0] = convertToRefIfObject(prop.choices[0], propName, namePrefix, entry);
+        else {
+            modifyArray(prop.choices, (choice, i) => {
+                return convertToRefIfObject(choice, propName + 'C' + (i + 1), namePrefix, entry);
+            });
+        }
     }
     else if (prop.type === 'array' && prop.items && (prop.items.type !== 'object' || !prop.items.isInstanceOf)) {
         prop.items = convertToRefIfObject(prop.items, propName + 'Item', namePrefix, entry);
@@ -104,8 +108,11 @@ function extractParameterObjectType<T extends SchemaBaseProperty>(prop: SchemaPr
     else if (prop.type === 'array' && prop.items) {
         prop.items = convertToRefIfObject(prop.items, "item", namePrefix, entry);
     }
-    else if (prop.type === 'choices') {
-        modifyArray(prop.choices, (choice, i) => extractParameterObjectType(choice, namePrefix + 'C' + (i + 1), false, entry));
+    else if (prop.type === 'choices' && prop.choices) {
+        if(prop.choices.length === 1)
+            prop.choices[0] = extractParameterObjectType(prop.choices[0], namePrefix, false, entry);
+        else
+            modifyArray(prop.choices, (choice, i) => extractParameterObjectType(choice, namePrefix + 'C' + (i + 1), false, entry));
     }
     else if (prop.type === 'function') {
         //fixme: extract/make ref/type
