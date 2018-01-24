@@ -48,10 +48,8 @@ Run these commands:
 ## Help
 If you have problems, questions or other feedback, please [create an issue](https://github.com/Lusito/webextension-polyfill-ts/issues) here on Github.
 
-If you like it, please [write a review](https://addons.mozilla.org/firefox/addon/forget_me_not/).
-
 ## License
-My generator code of this project has been released under the [zlib/libpng License](https://github.com/Lusito/forget-me-not/blob/master/LICENSE)
+My generator code of this project has been released under the [zlib/libpng License](https://github.com/Lusito/webextension-polyfill-ts/blob/master/LICENSE)
 
 The schema files from mozilla however have defined their own licences, which will be exported to the generated .ts files as well.
 For example, there are files under the Mozilla Public License and some under a BSD style license.
