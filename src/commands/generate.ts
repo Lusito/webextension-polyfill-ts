@@ -2,7 +2,7 @@
 import * as fs from 'fs';
 import { SchemaEntry, SchemaProperty, SchemaFunctionProperty } from './helpers/types';
 import { importAndFixAll, ImportedNamespace, ImportedNamespaces } from './helpers/importNormalized';
-import { filterUnique, workMap, workArray, toUpperCamelCase } from './helpers/utils';
+import { filterUnique, workMap, workArray, toUpperCamelCase, toLowerCamelCase } from './helpers/utils';
 import { CodeWriter } from './helpers/CodeWriter';
 import { ErrorMessage, assertSupported } from './helpers/assert';
 import { getProperty, getEnumType, getUnionType, getType, getParameters, setCurrentTypeId, fixRef } from './helpers/getType';
@@ -267,7 +267,7 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
         }
 
         getImports(entry, subNamespaces)
-            .map((e) => 'import { ' + toUpperCamelCase(e) + ' } from "./' + e + '";')
+            .map((e) => 'import { ' + toUpperCamelCase(e) + ' } from "./' + toLowerCamelCase(e) + '";')
             .forEach((e) => writer.code(e));
         writer.emptyLine();
 

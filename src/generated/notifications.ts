@@ -9,7 +9,7 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
-import { Events } from "./Events";
+import { Events } from "./events";
 
 export namespace Notifications {
     export type TemplateType = "basic" | "image" | "list" | "progress";

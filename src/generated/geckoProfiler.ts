@@ -5,7 +5,7 @@
  * Exposes the browser's profiler.
  * Permissions: "geckoProfiler"
  */
-import { Events } from "./Events";
+import { Events } from "./events";
 
 export namespace GeckoProfiler {
     export type ProfilerFeature = "java" | "js" | "leaf" | "mainthreadio" | "memory" | "privacy" | "restyle" | "stackwalk" | "tasktracer" | "threads";

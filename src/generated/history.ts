@@ -10,8 +10,8 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
-import { ExtensionTypes } from "./ExtensionTypes";
-import { Events } from "./Events";
+import { ExtensionTypes } from "./extensionTypes";
+import { Events } from "./events";
 
 export namespace History {
 

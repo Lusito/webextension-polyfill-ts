@@ -10,8 +10,8 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
-import { Tabs } from "./Tabs";
-import { Events } from "./Events";
+import { Tabs } from "./tabs";
+import { Events } from "./events";
 
 export namespace BrowserAction {
     export type ColorArray = number[];

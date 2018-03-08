@@ -9,7 +9,7 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
-import { Events } from "./Events";
+import { Events } from "./events";
 
 export namespace DevtoolsNetwork {
 
@@ -33,6 +33,20 @@ export namespace DevtoolsNetwork {
     }
 
     export interface Static {
+
+        /**
+         * Returns HAR log that contains all known network requests.
+         *
+         * @returns Promise<GetHARCallbackHarLogType> A function that receives the HAR log when the request completes.
+         */
+        getHAR(): Promise<GetHARCallbackHarLogType>;
+
+        /**
+         * Fired when a network request is finished and all request data are available.
+         *
+         * @param request Description of a network request in the form of a HAR entry. See HAR specification for details.
+         */
+        onRequestFinished: Events.Event<(request: Request) => void>;
 
         /**
          * Fired when the inspected window navigates to a new page.

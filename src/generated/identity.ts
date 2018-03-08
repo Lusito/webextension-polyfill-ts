@@ -5,7 +5,7 @@
  * Use the chrome.identity API to get OAuth2 access tokens. 
  * Permissions: "identity"
  */
-import { Manifest } from "./Manifest";
+import { Manifest } from "./manifest";
 
 export namespace Identity {
 

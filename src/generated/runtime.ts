@@ -9,9 +9,9 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
-import { Tabs } from "./Tabs";
-import { Manifest } from "./Manifest";
-import { Events } from "./Events";
+import { Tabs } from "./tabs";
+import { Manifest } from "./manifest";
+import { Events } from "./events";
 
 export namespace Runtime {
 
