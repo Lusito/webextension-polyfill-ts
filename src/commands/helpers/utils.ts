@@ -4,11 +4,8 @@ export function toUpperCamelCase(value: string) {
     return value[0].toUpperCase() + value.substr(1).replace(/[\-|_\.][a-z]/g, (m) => m[1].toUpperCase());
 }
 
-export function toLowerCamelCase(value: string) {
-    console.log(`value is ${value}!`);
-    const out = value[0].toLowerCase() + value.substr(1);
-    console.log(`out is ${out}`);
-    return out;
+export function lowerFirstChar(value: string) {
+    return value[0].toLowerCase() + value.substr(1);
 }
 
 
