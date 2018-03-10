@@ -10,8 +10,8 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
-import { Tabs } from "./Tabs";
-import { Events } from "./Events";
+import { Tabs } from "./tabs";
+import { Events } from "./events";
 
 export namespace Menus {
 
@@ -240,6 +240,59 @@ export namespace Menus {
         enabled?: boolean;
     }
 
+    /**
+     * Information about the context of the menu action and the created menu items. For more information about each property, see contextMenusInternal.OnClickData. The following properties are only set if the extension has host permissions for the given context: linkUrl, linkText, srcUrl, pageUrl, frameUrl, selectionText.
+     */
+    export interface OnShownInfoType {
+
+        /**
+         * A list of IDs of the menu items that were shown.
+         */
+        menuIds: undefined[];
+
+        /**
+         * A list of all contexts that apply to the menu.
+         */
+        contexts: ContextType[];
+
+        editable: boolean;
+
+        /**
+         * Optional.
+         */
+        mediaType?: string;
+
+        /**
+         * Optional.
+         */
+        linkUrl?: string;
+
+        /**
+         * Optional.
+         */
+        linkText?: string;
+
+        /**
+         * Optional.
+         */
+        srcUrl?: string;
+
+        /**
+         * Optional.
+         */
+        pageUrl?: string;
+
+        /**
+         * Optional.
+         */
+        frameUrl?: string;
+
+        /**
+         * Optional.
+         */
+        selectionText?: string;
+    }
+
     export type OnClickDataModifiersItemEnum = "Shift" | "Alt" | "Command" | "Ctrl" | "MacCtrl";
 
     export interface Static {
@@ -278,12 +331,30 @@ export namespace Menus {
         removeAll(): Promise<void>;
 
         /**
+         * Updates the extension items in the shown menu, including changes that have been made since the menu was shown. Has no effect if the menu is hidden. Rebuilding a shown menu is an expensive operation, only invoke this method when necessary.
+         */
+        refresh(): void;
+
+        /**
          * Fired when a context menu item is clicked.
          *
          * @param info Information about the item clicked and the context where the click happened.
          * @param tab Optional. The details of the tab where the click took place. If the click did not take place in a tab, this parameter will be missing.
          */
         onClicked: Events.Event<(info: OnClickData, tab: Tabs.Tab | undefined) => void>;
+
+        /**
+         * Fired when a menu is shown. The extension can add, modify or remove menu items and call menus.refresh() to update the menu.
+         *
+         * @param info Information about the context of the menu action and the created menu items. For more information about each property, see contextMenusInternal.OnClickData. The following properties are only set if the extension has host permissions for the given context: linkUrl, linkText, srcUrl, pageUrl, frameUrl, selectionText.
+         * @param tab The details of the tab where the menu was opened.
+         */
+        onShown: Events.Event<(info: OnShownInfoType, tab: Tabs.Tab) => void>;
+
+        /**
+         * Fired when a menu is hidden. This event is only fired if onShown has fired before.
+         */
+        onHidden: Events.Event<() => void>;
 
         /**
          * The maximum number of top level extension items that can be added to an extension action context menu. Any items beyond this limit will be ignored.

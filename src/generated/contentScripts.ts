@@ -7,8 +7,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { Manifest } from "./Manifest";
-import { ExtensionTypes } from "./ExtensionTypes";
+import { Manifest } from "./manifest";
+import { ExtensionTypes } from "./extensionTypes";
 
 export namespace ContentScripts {
     export type ExtensionFileOrCode = ExtensionFileOrCodeC1Type | ExtensionFileOrCodeC2Type;

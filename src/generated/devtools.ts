@@ -2,7 +2,7 @@
  * Namespace: browser.devtools
  * Generated from Mozilla sources
  *
- * Permissions: "devtools"
+ * Permissions: "manifest:devtools_page"
  */
 import { DevtoolsInspectedWindow } from "./devtools_inspectedWindow";
 import { DevtoolsNetwork } from "./devtools_network";

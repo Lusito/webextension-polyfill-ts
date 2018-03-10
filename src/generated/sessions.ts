@@ -10,9 +10,9 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
-import { Tabs } from "./Tabs";
-import { Windows } from "./Windows";
-import { Events } from "./Events";
+import { Tabs } from "./tabs";
+import { Windows } from "./windows";
+import { Events } from "./events";
 
 export namespace Sessions {
     export interface Filter {

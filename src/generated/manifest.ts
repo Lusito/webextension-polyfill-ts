@@ -18,8 +18,8 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
-import { ExtensionTypes } from "./ExtensionTypes";
-import { Experiments } from "./Experiments";
+import { ExtensionTypes } from "./extensionTypes";
+import { Experiments } from "./experiments";
 
 export namespace Manifest {
 
@@ -224,11 +224,11 @@ export namespace Manifest {
         size: number;
     }
 
-    export type OptionalPermission = "clipboardRead" | "clipboardWrite" | "geolocation" | "idle" | "notifications" | "bookmarks" | "browserSettings" | "cookies" | "find" | "history" | "activeTab" | "tabs" | "tabHide" | "topSites" | "webNavigation" | "webRequest" | "webRequestBlocking";
+    export type OptionalPermission = "clipboardRead" | "clipboardWrite" | "geolocation" | "idle" | "notifications" | "bookmarks" | "browserSettings" | "cookies" | "downloads" | "downloads.open" | "find" | "history" | "activeTab" | "tabs" | "tabHide" | "topSites" | "webNavigation" | "webRequest" | "webRequestBlocking";
 
     export type OptionalPermissionOrOrigin = OptionalPermission | MatchPattern;
 
-    export type Permission = OptionalPermission | "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage" | "browsingData" | "contextualIdentities" | "devtools" | "downloads" | "downloads.open" | "geckoProfiler" | "identity" | "management" | "menus" | "contextMenus" | "pkcs11" | "privacy" | "proxy" | "nativeMessaging" | "sessions" | "theme" | string;
+    export type Permission = OptionalPermission | "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage" | "browsingData" | "contextualIdentities" | "devtools" | "dns" | "geckoProfiler" | "identity" | "management" | "menus" | "contextMenus" | "pkcs11" | "privacy" | "proxy" | "nativeMessaging" | "sessions" | "theme" | string;
 
     export type PermissionOrOrigin = Permission | MatchPattern;
 
@@ -263,7 +263,12 @@ export namespace Manifest {
         strict_max_version?: string;
     }
 
-    export type MatchPattern = "<all_urls>" | string;
+    export type MatchPattern = "<all_urls>" | MatchPatternRestricted;
+
+    /**
+     * Same as MatchPattern above, but excludes <all_urls>
+     */
+    export type MatchPatternRestricted = string;
 
     /**
      * Same as MatchPattern above, but includes moz-extension protocol
@@ -622,7 +627,7 @@ export namespace Manifest {
         /**
          * Optional.
          */
-        hide_matches?: [MatchPattern];
+        hide_matches?: [MatchPatternRestricted];
     }
 
     export interface WebExtensionManifestSidebarActionType {
@@ -691,6 +696,11 @@ export namespace Manifest {
         /**
          * Optional.
          */
+        tab_selected?: ThemeColor;
+
+        /**
+         * Optional.
+         */
         accentcolor?: ThemeColor;
 
         /**
@@ -701,17 +711,32 @@ export namespace Manifest {
         /**
          * Optional.
          */
+        frame_inactive?: ThemeColor;
+
+        /**
+         * Optional.
+         */
         textcolor?: ThemeColor;
 
         /**
          * Optional.
          */
-        background_tab_text?: ThemeColor;
+        tab_background_text?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        tab_loading?: ThemeColor;
 
         /**
          * Optional.
          */
         tab_text?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        tab_line?: ThemeColor;
 
         /**
          * Optional.
@@ -746,6 +771,11 @@ export namespace Manifest {
         /**
          * Optional.
          */
+        toolbar_field_separator?: ThemeColor;
+
+        /**
+         * Optional.
+         */
         toolbar_top_separator?: ThemeColor;
 
         /**
@@ -757,6 +787,41 @@ export namespace Manifest {
          * Optional.
          */
         toolbar_vertical_separator?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        icons?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        icons_attention?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        button_background_hover?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        button_background_active?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        popup?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        popup_text?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        popup_border?: ThemeColor;
     }
 
     export interface ThemeTypeIconsType {

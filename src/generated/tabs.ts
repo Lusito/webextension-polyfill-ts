@@ -9,9 +9,9 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
-import { Runtime } from "./Runtime";
-import { ExtensionTypes } from "./ExtensionTypes";
-import { Events } from "./Events";
+import { Runtime } from "./runtime";
+import { ExtensionTypes } from "./extensionTypes";
+import { Events } from "./events";
 
 export namespace Tabs {
 
@@ -258,6 +258,24 @@ export namespace Tabs {
     export interface PageSettings {
 
         /**
+         * The page size unit: 0 = inches, 1 = millimeters. Default: 0.
+         * Optional.
+         */
+        paperSizeUnit?: number;
+
+        /**
+         * The paper width in paper size units. Default: 8.5.
+         * Optional.
+         */
+        paperWidth?: number;
+
+        /**
+         * The paper height in paper size units. Default: 11.0.
+         * Optional.
+         */
+        paperHeight?: number;
+
+        /**
          * The page content orientation: 0 = portrait, 1 = landscape. Default: 0.
          * Optional.
          */
@@ -288,22 +306,52 @@ export namespace Tabs {
         showBackgroundImages?: boolean;
 
         /**
-         * The page size unit: 0 = inches, 1 = millimeters. Default: 0.
+         * The spacing between the left header/footer and the left edge of the paper (inches). Default: 0.
          * Optional.
          */
-        paperSizeUnit?: number;
+        edgeLeft?: number;
 
         /**
-         * The paper width in paper size units. Default: 8.5.
+         * The spacing between the right header/footer and the right edge of the paper (inches). Default: 0.
          * Optional.
          */
-        paperWidth?: number;
+        edgeRight?: number;
 
         /**
-         * The paper height in paper size units. Default: 11.0.
+         * The spacing between the top of the headers and the top edge of the paper (inches). Default: 0
          * Optional.
          */
-        paperHeight?: number;
+        edgeTop?: number;
+
+        /**
+         * The spacing between the bottom of the footers and the bottom edge of the paper (inches). Default: 0.
+         * Optional.
+         */
+        edgeBottom?: number;
+
+        /**
+         * The margin between the page content and the left edge of the paper (inches). Default: 0.5.
+         * Optional.
+         */
+        marginLeft?: number;
+
+        /**
+         * The margin between the page content and the right edge of the paper (inches). Default: 0.5.
+         * Optional.
+         */
+        marginRight?: number;
+
+        /**
+         * The margin between the page content and the top edge of the paper (inches). Default: 0.5.
+         * Optional.
+         */
+        marginTop?: number;
+
+        /**
+         * The margin between the page content and the bottom edge of the paper (inches). Default: 0.5.
+         * Optional.
+         */
+        marginBottom?: number;
 
         /**
          * The text for the page's left header. Default: '&T'.
@@ -340,30 +388,6 @@ export namespace Tabs {
          * Optional.
          */
         footerRight?: string;
-
-        /**
-         * The margin between the page content and the left edge of the paper (inches). Default: 0.5.
-         * Optional.
-         */
-        marginLeft?: number;
-
-        /**
-         * The margin between the page content and the right edge of the paper (inches). Default: 0.5.
-         * Optional.
-         */
-        marginRight?: number;
-
-        /**
-         * The margin between the page content and the top edge of the paper (inches). Default: 0.5.
-         * Optional.
-         */
-        marginTop?: number;
-
-        /**
-         * The margin between the page content and the bottom edge of the paper (inches). Default: 0.5.
-         * Optional.
-         */
-        marginBottom?: number;
     }
 
     /**

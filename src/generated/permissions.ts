@@ -4,7 +4,7 @@
  *
  * Permissions: "manifest:optional_permissions"
  */
-import { Manifest } from "./Manifest";
+import { Manifest } from "./manifest";
 
 export namespace Permissions {
     export interface Permissions {

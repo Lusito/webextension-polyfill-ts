@@ -10,7 +10,8 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
-import { Events } from "./Events";
+import { Manifest } from "./manifest";
+import { Events } from "./events";
 
 export namespace Commands {
     export interface Command {
@@ -34,7 +35,43 @@ export namespace Commands {
         shortcut?: string;
     }
 
+    /**
+     * The new description for the command.
+     */
+    export interface UpdateDetailType {
+
+        /**
+         * The name of the command.
+         */
+        name: string;
+
+        /**
+         * The new description for the command.
+         * Optional.
+         */
+        description?: string;
+
+        /**
+         * Optional.
+         */
+        shortcut?: Manifest.KeyName;
+    }
+
     export interface Static {
+
+        /**
+         * Update the details of an already defined command.
+         *
+         * @param detail The new description for the command.
+         */
+        update(detail: UpdateDetailType): void;
+
+        /**
+         * Reset a command's details to what is specified in the manifest.
+         *
+         * @param name The name of the command.
+         */
+        reset(name: string): void;
 
         /**
          * Returns all the registered extension commands for this extension and their shortcut (if active).
