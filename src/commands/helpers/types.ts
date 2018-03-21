@@ -111,7 +111,7 @@ function validateSchemaPropertyWithoutExtend(json: any) {
 }
 
 export class SchemaChoicesProperty extends SchemaBaseProperty {
-    public type: 'choices'; //fixme
+    public type: 'choices' = 'choices'; //fixme
     public choices?: SchemaProperty[];
     public preprocess?: 'localize';
 
@@ -131,7 +131,7 @@ export class SchemaChoicesProperty extends SchemaBaseProperty {
 }
 
 export class SchemaAnyProperty extends SchemaBaseProperty {
-    public type: 'any';
+    public type: 'any' = 'any';
 
     public static getValidKeys() {
         return super.getValidKeys().concat([
@@ -147,7 +147,7 @@ export class SchemaAnyProperty extends SchemaBaseProperty {
 }
 
 export class SchemaRefProperty extends SchemaBaseProperty {
-    public type: 'ref';
+    public type: 'ref' = 'ref';
 
     public static getValidKeys() {
         return super.getValidKeys().concat([
@@ -163,7 +163,7 @@ export class SchemaRefProperty extends SchemaBaseProperty {
 }
 
 export class SchemaNullProperty extends SchemaBaseProperty {
-    public type: 'null';
+    public type: 'null' = 'null';
 
     public static getValidKeys() {
         return super.getValidKeys().concat([
@@ -179,7 +179,7 @@ export class SchemaNullProperty extends SchemaBaseProperty {
 }
 
 export class SchemaValueProperty extends SchemaBaseProperty {
-    public type: 'value'; //fixme
+    public type: 'value' = 'value'; //fixme
     public value: any;
 
     public static getValidKeys() {
@@ -208,7 +208,7 @@ function validateEnumValue(json: any) {
 }
 
 export class SchemaStringProperty extends SchemaBaseProperty {
-    public type: 'string';
+    public type: 'string' = 'string';
     public preprocess?: 'localize';
     public enum?: EnumValue[];
     public minLength?: number;
@@ -246,7 +246,7 @@ export class SchemaStringProperty extends SchemaBaseProperty {
 }
 
 export class SchemaObjectProperty extends SchemaBaseProperty {
-    public type: 'object';
+    public type: 'object' = 'object';
     public properties?: { [s: string]: SchemaProperty };
     public additionalProperties?: SchemaProperty | boolean;
     public patternProperties?: { [s: string]: SchemaProperty };
@@ -295,7 +295,7 @@ export class SchemaObjectProperty extends SchemaBaseProperty {
 }
 
 export class SchemaNumberProperty extends SchemaBaseProperty {
-    public type: 'number' | 'integer';
+    public type: 'number' | 'integer' = 'number';
     public minimum?: number;
     public maximum?: number;
 
@@ -317,7 +317,7 @@ export class SchemaNumberProperty extends SchemaBaseProperty {
 }
 
 export class SchemaBooleanProperty extends SchemaBaseProperty {
-    public type: 'boolean';
+    public type: 'boolean' = 'boolean';
     public default?: boolean;
 
     public static getValidKeys() {
@@ -336,7 +336,7 @@ export class SchemaBooleanProperty extends SchemaBaseProperty {
 }
 
 export class SchemaArrayProperty extends SchemaBaseProperty {
-    public type: 'array';
+    public type: 'array' = 'array';
     public items?: SchemaProperty;
     public minItems?: number;
     public maxItems?: number;
@@ -368,7 +368,7 @@ export class SchemaArrayProperty extends SchemaBaseProperty {
 }
 
 export class SchemaFunctionProperty extends SchemaBaseProperty {
-    public type: 'function';
+    public type: 'function' = 'function';
     public async?: 'callback' | 'responseCallback' | boolean;
     public requireUserInput?: boolean;
     public parameters?: SchemaProperty[];
@@ -422,7 +422,7 @@ export type SchemaProperty = SchemaChoicesProperty
     | SchemaFunctionProperty;
 
 export class SchemaEntry {
-    public namespace: string;
+    public namespace: string = '';
     public description?: string;
     public permissions?: string[];
     public types?: SchemaProperty[];
