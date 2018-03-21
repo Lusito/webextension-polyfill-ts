@@ -9,9 +9,9 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
+import { Events } from "./events";
 import { Runtime } from "./runtime";
 import { ExtensionTypes } from "./extensionTypes";
-import { Events } from "./events";
 
 export namespace Tabs {
 
@@ -399,6 +399,39 @@ export namespace Tabs {
      * The type of window.
      */
     export type WindowType = "normal" | "popup" | "panel" | "app" | "devtools";
+
+    /**
+     * Event names supported in onUpdated.
+     */
+    export type UpdatePropertyName = "audible" | "discarded" | "favIconUrl" | "hidden" | "isarticle" | "mutedInfo" | "pinned" | "sharingState" | "status" | "title";
+
+    /**
+     * An object describing filters to apply to tabs.onUpdated events.
+     */
+    export interface UpdateFilter {
+
+        /**
+         * A list of URLs or URL patterns. Events that cannot match any of the URLs will be filtered out.  Filtering with urls requires the <code>"tabs"</code> or  <code>"activeTab"</code> permission.
+         * Optional.
+         */
+        urls?: [string];
+
+        /**
+         * A list of property names. Events that do not match any of the names will be filtered out.
+         * Optional.
+         */
+        properties?: [UpdatePropertyName];
+
+        /**
+         * Optional.
+         */
+        tabId?: number;
+
+        /**
+         * Optional.
+         */
+        windowId?: number;
+    }
 
     export interface ConnectConnectInfoType {
 
@@ -820,6 +853,20 @@ export namespace Tabs {
         zoomSettings: ZoomSettings;
     }
 
+    /**
+     * Fired when a tab is updated.
+     */
+    export interface onUpdatedEvent extends Events.Event<(tabId: number, changeInfo: OnUpdatedChangeInfoType, tab: Tab) => void> {
+
+        /**
+         * Registers an event listener <em>callback</em> to an event.
+         *
+         * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
+         * @param filter Optional. A set of filters that restricts the events that will be sent to this listener.
+         */
+        addListener(callback: (tabId: number, changeInfo: OnUpdatedChangeInfoType, tab: Tab) => void, filter?: UpdateFilter): void;
+    }
+
     export interface Static {
 
         /**
@@ -1106,12 +1153,8 @@ export namespace Tabs {
 
         /**
          * Fired when a tab is updated.
-         *
-         * @param tabId
-         * @param changeInfo Lists the changes to the state of the tab that was updated.
-         * @param tab Gives the state of the tab that was updated.
          */
-        onUpdated: Events.Event<(tabId: number, changeInfo: OnUpdatedChangeInfoType, tab: Tab) => void>;
+        onUpdated: onUpdatedEvent;
 
         /**
          * Fired when a tab is moved within a window. Only one move event is fired, representing the tab the user directly moved. Move events are not fired for the other tabs that must move in response. This event is not fired when a tab is moved between windows. For that, see $(ref:tabs.onDetached).
