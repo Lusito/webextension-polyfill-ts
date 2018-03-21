@@ -267,7 +267,7 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
         }
 
         getImports(entry, subNamespaces)
-            .map((e) => 'import { ' + e + ' } from "./' + lowerFirstChar(e) + '";')
+            .map((e) => 'import { ' + toUpperCamelCase(e) + ' } from "./' + lowerFirstChar(e) + '";')
             .forEach((e) => writer.code(e));
         writer.emptyLine();
 
