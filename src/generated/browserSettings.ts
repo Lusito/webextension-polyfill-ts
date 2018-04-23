@@ -114,6 +114,11 @@ export namespace BrowserSettings {
         cacheEnabled: Types.Setting;
 
         /**
+         * This boolean setting controls whether the selected tab can be closed with a double click.
+         */
+        closeTabsByDoubleClick: Types.Setting;
+
+        /**
          * Controls after which mouse event context menus popup. This setting's value is of type ContextMenuMouseEvent, which has possible values of <code>mouseup</code> and <code>mousedown</code>.
          */
         contextMenuShowEvent: Types.Setting;
@@ -134,6 +139,11 @@ export namespace BrowserSettings {
         newTabPageOverride: Types.Setting;
 
         /**
+         * Controls where new tabs are opened. `afterCurrent` will open all new tabs next to the current tab, `relatedAfterCurrent` will open only related tabs next to the current tab, and `atEnd` will open all tabs at the end of the tab strip. The default is `relatedAfterCurrent`.
+         */
+        newTabPosition: Types.Setting;
+
+        /**
          * This boolean setting controls whether bookmarks are opened in the current tab or in a new tab.
          */
         openBookmarksInNewTabs: Types.Setting;
@@ -144,6 +154,11 @@ export namespace BrowserSettings {
         openSearchResultsInNewTabs: Types.Setting;
 
         /**
+         * This boolean setting controls whether urlbar results are opened in the current tab or in a new tab.
+         */
+        openUrlbarResultsInNewTabs: Types.Setting;
+
+        /**
          * Configures proxy settings. This setting's value is an object of type ProxyConfig.
          */
         proxyConfig: Types.Setting;
@@ -152,5 +167,15 @@ export namespace BrowserSettings {
          * Disables webAPI notifications.
          */
         webNotificationsDisabled: Types.Setting;
+
+        /**
+         * This setting controls whether the user-chosen colors override the page's colors.
+         */
+        overrideDocumentColors: Types.Setting;
+
+        /**
+         * This setting controls whether the document's fonts are used.
+         */
+        useDocumentFonts: Types.Setting;
     }
 }

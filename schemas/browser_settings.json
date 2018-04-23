@@ -117,6 +117,10 @@
         "$ref": "types.Setting",
         "description": "Enables or disables the browser cache."
       },
+      "closeTabsByDoubleClick": {
+        "$ref": "types.Setting",
+        "description": "This boolean setting controls whether the selected tab can be closed with a double click."
+      },
       "contextMenuShowEvent": {
         "$ref": "types.Setting",
         "description": "Controls after which mouse event context menus popup. This setting's value is of type ContextMenuMouseEvent, which has possible values of <code>mouseup</code> and <code>mousedown</code>."
@@ -133,6 +137,10 @@
         "$ref": "types.Setting",
         "description": "Returns the value of the overridden new tab page. Read-only."
       },
+      "newTabPosition": {
+        "$ref": "types.Setting",
+        "description": "Controls where new tabs are opened. `afterCurrent` will open all new tabs next to the current tab, `relatedAfterCurrent` will open only related tabs next to the current tab, and `atEnd` will open all tabs at the end of the tab strip. The default is `relatedAfterCurrent`."
+      },
       "openBookmarksInNewTabs": {
         "$ref": "types.Setting",
         "description": "This boolean setting controls whether bookmarks are opened in the current tab or in a new tab."
@@ -141,6 +149,10 @@
         "$ref": "types.Setting",
         "description": "This boolean setting controls whether search results are opened in the current tab or in a new tab."
       },
+      "openUrlbarResultsInNewTabs": {
+        "$ref": "types.Setting",
+        "description": "This boolean setting controls whether urlbar results are opened in the current tab or in a new tab."
+      },
       "proxyConfig": {
         "$ref": "types.Setting",
         "description": "Configures proxy settings. This setting's value is an object of type ProxyConfig."
@@ -148,6 +160,14 @@
       "webNotificationsDisabled": {
         "$ref": "types.Setting",
         "description": "Disables webAPI notifications."
+      },
+      "overrideDocumentColors": {
+        "$ref": "types.Setting",
+        "description": "This setting controls whether the user-chosen colors override the page's colors."
+      },
+      "useDocumentFonts": {
+        "$ref": "types.Setting",
+        "description": "This setting controls whether the document's fonts are used."
       }
     }
   }

@@ -822,6 +822,31 @@ export namespace Manifest {
          * Optional.
          */
         popup_border?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        toolbar_field_focus?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        toolbar_field_text_focus?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        toolbar_field_border_focus?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        popup_highlight?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        popup_highlight_text?: ThemeColor;
     }
 
     export interface ThemeTypeIconsType {
