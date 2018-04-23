@@ -176,12 +176,6 @@ export namespace Notifications {
         isClickable?: boolean;
     }
 
-    /**
-     * The set of notifications currently in the system.
-     */
-    export interface GetAllCallbackNotificationsType extends CreateNotificationOptions {
-    }
-
     export interface CreateNotificationOptionsButtonsItemType {
         title: string;
 
@@ -230,9 +224,9 @@ export namespace Notifications {
         /**
          * Retrieves all the notifications.
          *
-         * @returns Promise<GetAllCallbackNotificationsType>
+         * @returns Promise<{[s:string]:CreateNotificationOptions}>
          */
-        getAll(): Promise<GetAllCallbackNotificationsType>;
+        getAll(): Promise<{[s:string]:CreateNotificationOptions}>;
 
         /**
          * Fired when the notification closed, either by the system or by user action.

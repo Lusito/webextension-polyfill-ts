@@ -82,6 +82,9 @@ export function getType(e: SchemaProperty): string {
         const type = getType(e.additionalProperties.items);
         return `{[s:string]:${type}}`;
     }
+    else if(e.type === 'object' && e.additionalProperties && e.additionalProperties !== true && e.additionalProperties.$ref && !e.properties) {
+        return `{[s:string]:${e.additionalProperties.$ref}}`;
+    }
     else if (e.type === 'object' && e.patternProperties) {
         const names = Object.getOwnPropertyNames(e.patternProperties);
         if(names.length !== 1)

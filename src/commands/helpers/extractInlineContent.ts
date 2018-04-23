@@ -27,7 +27,10 @@ function combineNamePrefix(namePrefix: string, suffix?: string) {
 }
 
 function convertToRefIfObject(prop: SchemaProperty, propName: string, namePrefix: string | undefined, entry: SchemaEntry) {
-    if (prop.type === 'object' && !prop.isInstanceOf && !prop.patternProperties) {
+    if(prop.type === 'object' && prop.additionalProperties && prop.additionalProperties !== true && prop.additionalProperties.$ref && !prop.properties) {
+        //special case for a map type.. not extracted, will be handled in getType
+    }
+    else if (prop.type === 'object' && !prop.isInstanceOf && !prop.patternProperties) {
         if (!namePrefix)
             throw ErrorMessage.MISSING_NAME;
         const name = combineNamePrefix(namePrefix, propName);

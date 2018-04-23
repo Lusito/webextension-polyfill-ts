@@ -62,12 +62,6 @@ export namespace Storage {
         clear(): Promise<void>;
     }
 
-    /**
-     * Object mapping each key that changed to its corresponding $(ref:storage.StorageChange) for that item.
-     */
-    export interface OnChangedChangesType extends StorageChange {
-    }
-
     export interface SyncStorageArea extends StorageArea {
 
         /**
@@ -126,7 +120,7 @@ export namespace Storage {
          * @param changes Object mapping each key that changed to its corresponding $(ref:storage.StorageChange) for that item.
          * @param areaName The name of the storage area (<code>"sync"</code>, <code>"local"</code> or <code>"managed"</code>) the changes are for.
          */
-        onChanged: Events.Event<(changes: OnChangedChangesType, areaName: string) => void>;
+        onChanged: Events.Event<(changes: {[s:string]:StorageChange}, areaName: string) => void>;
 
         sync: SyncStorageArea;
 
