@@ -182,13 +182,16 @@ export namespace BrowserAction {
          * Checks whether the browser action is enabled.
          *
          * @param details
+         * @returns Promise<boolean>
          */
-        isEnabled(details: Details): void;
+        isEnabled(details: Details): Promise<boolean>;
 
         /**
          * Opens the extension popup window in the active window.
+         *
+         * @returns Promise<void>
          */
-        openPopup(): void;
+        openPopup(): Promise<void>;
 
         /**
          * Fired when a browser action icon is clicked.  This event will not fire if the browser action has a popup.

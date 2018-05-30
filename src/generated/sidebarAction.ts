@@ -133,52 +133,62 @@ export namespace SidebarAction {
          * Sets the title of the sidebar action. This shows up in the tooltip.
          *
          * @param details
+         * @returns Promise<void>
          */
-        setTitle(details: SetTitleDetailsType): void;
+        setTitle(details: SetTitleDetailsType): Promise<void>;
 
         /**
          * Gets the title of the sidebar action.
          *
          * @param details
+         * @returns Promise<string>
          */
-        getTitle(details: GetTitleDetailsType): void;
+        getTitle(details: GetTitleDetailsType): Promise<string>;
 
         /**
          * Sets the icon for the sidebar action. The icon can be specified either as the path to an image file or as the pixel data from a canvas element, or as dictionary of either one of those. Either the <strong>path</strong> or the <strong>imageData</strong> property must be specified.
          *
          * @param details
+         * @returns Promise<void>
          */
-        setIcon(details: SetIconDetailsType): void;
+        setIcon(details: SetIconDetailsType): Promise<void>;
 
         /**
          * Sets the url to the html document to be opened in the sidebar when the user clicks on the sidebar action's icon.
          *
          * @param details
+         * @returns Promise<void>
          */
-        setPanel(details: SetPanelDetailsType): void;
+        setPanel(details: SetPanelDetailsType): Promise<void>;
 
         /**
          * Gets the url to the html document set as the panel for this sidebar action.
          *
          * @param details
+         * @returns Promise<string>
          */
-        getPanel(details: GetPanelDetailsType): void;
+        getPanel(details: GetPanelDetailsType): Promise<string>;
 
         /**
          * Opens the extension sidebar in the active window.
+         *
+         * @returns Promise<void>
          */
-        open(): void;
+        open(): Promise<void>;
 
         /**
          * Closes the extension sidebar in the active window if the sidebar belongs to the extension.
+         *
+         * @returns Promise<void>
          */
-        close(): void;
+        close(): Promise<void>;
 
         /**
          * Checks whether the sidebar action is open.
          *
          * @param details
+         * @returns Promise<boolean>
          */
-        isOpen(details: IsOpenDetailsType): void;
+        isOpen(details: IsOpenDetailsType): Promise<boolean>;
     }
 }

@@ -1202,8 +1202,9 @@ export namespace WebRequest {
          *
          * @param requestId
          * @param options Optional.
+         * @returns Promise<SecurityInfo>
          */
-        getSecurityInfo(requestId: string, options?: GetSecurityInfoOptionsType): void;
+        getSecurityInfo(requestId: string, options?: GetSecurityInfoOptionsType): Promise<SecurityInfo>;
 
         /**
          * Fired when a request is about to occur.

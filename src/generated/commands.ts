@@ -63,15 +63,17 @@ export namespace Commands {
          * Update the details of an already defined command.
          *
          * @param detail The new description for the command.
+         * @returns Promise<void>
          */
-        update(detail: UpdateDetailType): void;
+        update(detail: UpdateDetailType): Promise<void>;
 
         /**
          * Reset a command's details to what is specified in the manifest.
          *
          * @param name The name of the command.
+         * @returns Promise<void>
          */
-        reset(name: string): void;
+        reset(name: string): Promise<void>;
 
         /**
          * Returns all the registered extension commands for this extension and their shortcut (if active).

@@ -11,6 +11,102 @@
  * found in the LICENSE file.
  */
 export namespace Find {
+    export interface RangeData {
+
+        /**
+         * The index of the frame containing the match. 0 corresponds to the parent window. Note that the order of objects in the rangeData array will sequentially line up with the order of frame indexes: for example, framePos for the first sequence of rangeData objects will be 0, framePos for the next sequence will be 1, and so on.
+         */
+        framePos: number;
+
+        /**
+         * The ordinal position of the text node in which the match started.
+         */
+        startTextNodePos: number;
+
+        /**
+         * The ordinal position of the text node in which the match ended.
+         */
+        endTextNodePos: number;
+
+        /**
+         * The ordinal string position of the start of the matched word within start text node.If match word include in single text node, Extension can get match word between startOffset and endOffset string index in the single text node.
+         */
+        startOffset: number;
+
+        /**
+         * The ordinal string position of the end of the matched word within end text node.
+         */
+        endOffset: number;
+    }
+
+    export interface Rectangle {
+
+        /**
+         * Pixels from the top.
+         */
+        top: number;
+
+        /**
+         * Pixels from the left.
+         */
+        left: number;
+
+        /**
+         * Pixels from the bottom.
+         */
+        bottom: number;
+
+        /**
+         * Pixels from the right.
+         */
+        right: number;
+    }
+
+    export interface RectsAndTexts {
+
+        /**
+         * Rectangles relative to the top-left of the viewport.
+         */
+        rectList: Rectangle[];
+
+        /**
+         * an array of strings, corresponding to the rectList array. The entry at textList[i] contains the part of the match bounded by the rectangle at rectList[i].
+         */
+        textList: string[];
+    }
+
+    export interface RectData {
+
+        /**
+         * The index of the frame containing the match. 0 corresponds to the parent window. Note that the order of objects in the rangeData array will sequentially line up with the order of frame indexes: for example, framePos for the first sequence of rangeData objects will be 0, framePos for the next sequence will be 1, and so on.
+         */
+        rectsAndTexts: RectsAndTexts;
+
+        /**
+         * The complete text of the match.
+         */
+        text: string;
+    }
+
+    export interface FindResult {
+
+        /**
+         * The number of results found.
+         */
+        count: number;
+
+        /**
+         * If includeRangeData was given in the options parameter, then this property will be included. It is provided as an array of RangeData objects, one for each match. Each RangeData object describes where in the DOM tree the match was found. This would enable, for example, an extension to get the text surrounding each match, so as to display context for the matches. The items correspond to the items given in rectData, so rangeData[i] describes the same match as rectData[i].
+         * Optional.
+         */
+        rangeData?: RangeData[];
+
+        /**
+         *  If includeRectData was given in the options parameter, then this property will be included. It is an array of RectData objects. It contains client rectangles for all the text matched in the search, relative to the top-left of the viewport. Extensions can use this to provide custom highlighting of the results.
+         * Optional.
+         */
+        rectData?: RectData[];
+    }
 
     /**
      * Search parameters.
@@ -79,21 +175,24 @@ export namespace Find {
          *
          * @param queryphrase The string to search for.
          * @param params Optional. Search parameters.
+         * @returns Promise<FindResult>
          */
-        find(queryphrase: string, params?: FindParamsType): void;
+        find(queryphrase: string, params?: FindParamsType): Promise<FindResult>;
 
         /**
          * Highlight a range
          *
          * @param params Optional. highlightResults parameters
+         * @returns Promise<void>
          */
-        highlightResults(params?: HighlightResultsParamsType): void;
+        highlightResults(params?: HighlightResultsParamsType): Promise<void>;
 
         /**
          * Remove all highlighting from previous searches.
          *
          * @param tabId Optional. Tab to highlight. Defaults to the active tab.
+         * @returns Promise<void>
          */
-        removeHighlighting(tabId?: number): void;
+        removeHighlighting(tabId?: number): Promise<void>;
     }
 }

@@ -332,8 +332,10 @@ export namespace Menus {
 
         /**
          * Updates the extension items in the shown menu, including changes that have been made since the menu was shown. Has no effect if the menu is hidden. Rebuilding a shown menu is an expensive operation, only invoke this method when necessary.
+         *
+         * @returns Promise<void>
          */
-        refresh(): void;
+        refresh(): Promise<void>;
 
         /**
          * Fired when a context menu item is clicked.

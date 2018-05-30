@@ -184,13 +184,16 @@ export namespace Proxy {
          * Registers the proxy script for the extension.
          *
          * @param url
+         * @returns Promise<void>
          */
-        register(url: string): void;
+        register(url: string): Promise<void>;
 
         /**
          * Unregisters the proxy script for the extension.
+         *
+         * @returns Promise<void>
          */
-        unregister(): void;
+        unregister(): Promise<void>;
 
         /**
          * Fired when proxy data is needed for a request.

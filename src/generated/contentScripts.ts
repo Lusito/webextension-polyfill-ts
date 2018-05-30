@@ -72,8 +72,10 @@ export namespace ContentScripts {
 
         /**
          * Unregister a content script registered programmatically
+         *
+         * @returns Promise<void>
          */
-        unregister(): void;
+        unregister(): Promise<void>;
     }
 
     export interface ExtensionFileOrCodeC1Type {
@@ -90,7 +92,8 @@ export namespace ContentScripts {
          * Register a content script programmatically
          *
          * @param contentScriptOptions
+         * @returns Promise<RegisteredContentScript>
          */
-        register(contentScriptOptions: RegisteredContentScriptOptions): void;
+        register(contentScriptOptions: RegisteredContentScriptOptions): Promise<RegisteredContentScript>;
     }
 }

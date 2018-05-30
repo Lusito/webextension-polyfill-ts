@@ -1,5 +1,200 @@
 {
     "manifest.types.$ImageData.unsupported": true,
+    "browserAction.functions.%isEnabled.!fixAsync": "enabled:boolean",
+    "browserAction.functions.%openPopup.!fixAsync": null,
+    "clipboard.functions.%setImageData.!fixAsync": null,
+    "commands.functions.%update.!fixAsync": null,
+    "commands.functions.%reset.!fixAsync": null,
+    "contentScripts.functions.%register.!fixAsync": "handle:RegisteredContentScript",
+    "contentScripts.types.$RegisteredContentScript.functions.%unregister.!fixAsync": null,
+    "contextualIdentities.functions.%get.!fixAsync": "contextualIdentity:ContextualIdentity",
+    "contextualIdentities.functions.%query.!fixAsync": "contextualIdentity:ContextualIdentity[]",
+    "contextualIdentities.functions.%create.!fixAsync": "contextualIdentity:ContextualIdentity",
+    "contextualIdentities.functions.%update.!fixAsync": "contextualIdentity:ContextualIdentity",
+    "contextualIdentities.functions.%remove.!fixAsync": "contextualIdentity:ContextualIdentity",
+    "find.functions.%highlightResults.!fixAsync": null,
+    "find.functions.%removeHighlighting.!fixAsync": null,
+    "find.types": [{
+        "id": "RangeData",
+        "type": "object",
+        "properties": {
+            "framePos": {
+                "type": "integer",
+                "description": "The index of the frame containing the match. 0 corresponds to the parent window. Note that the order of objects in the rangeData array will sequentially line up with the order of frame indexes: for example, framePos for the first sequence of rangeData objects will be 0, framePos for the next sequence will be 1, and so on.",
+                "minimum": 0
+            },
+            "startTextNodePos": {
+                "type": "integer",
+                "description": "The ordinal position of the text node in which the match started.",
+                "minimum": 0
+            },
+            "endTextNodePos": {
+                "type": "integer",
+                "description": "The ordinal position of the text node in which the match ended.",
+                "minimum": 0
+            },
+            "startOffset": {
+                "type": "integer",
+                "description": "The ordinal string position of the start of the matched word within start text node.If match word include in single text node, Extension can get match word between startOffset and endOffset string index in the single text node.",
+                "minimum": 0
+            },
+            "endOffset": {
+                "type": "integer",
+                "description": "The ordinal string position of the end of the matched word within end text node.",
+                "minimum": 0
+            }
+        }
+    }, {
+        "id": "Rectangle",
+        "type": "object",
+        "properties": {
+            "top": {
+                "type": "number",
+                "description": "Pixels from the top."
+            },
+            "left": {
+                "type": "number",
+                "description": "Pixels from the left."
+            },
+            "bottom": {
+                "type": "number",
+                "description": "Pixels from the bottom."
+            },
+            "right": {
+                "type": "number",
+                "description": "Pixels from the right."
+            }
+        }
+    }, {
+        "id": "RectsAndTexts",
+        "type": "object",
+        "properties": {
+            "rectList": {
+                "type": "array",
+                "items": { "$ref": "Rectangle" },
+                "description": "Rectangles relative to the top-left of the viewport."
+            },
+            "textList": {
+                "type": "array",
+                "items": { "$ref": "string" },
+                "description": "an array of strings, corresponding to the rectList array. The entry at textList[i] contains the part of the match bounded by the rectangle at rectList[i]."
+            }
+        }
+    }, {
+        "id": "RectData",
+        "type": "object",
+        "properties": {
+            "rectsAndTexts": {
+                "type": "RectsAndTexts",
+                "description": "The index of the frame containing the match. 0 corresponds to the parent window. Note that the order of objects in the rangeData array will sequentially line up with the order of frame indexes: for example, framePos for the first sequence of rangeData objects will be 0, framePos for the next sequence will be 1, and so on."
+            },
+            "text": {
+                "type": "string",
+                "description": "The complete text of the match."
+            }
+        }
+    }, {
+        "id": "FindResult",
+        "type": "object",
+        "properties": {
+            "count": {
+                "type": "integer",
+                "description": "The number of results found.",
+                "minimum": 0
+            },
+            "rangeData": {
+                "type": "array",
+                "items": { "$ref": "RangeData" },
+                "description": "If includeRangeData was given in the options parameter, then this property will be included. It is provided as an array of RangeData objects, one for each match. Each RangeData object describes where in the DOM tree the match was found. This would enable, for example, an extension to get the text surrounding each match, so as to display context for the matches. The items correspond to the items given in rectData, so rangeData[i] describes the same match as rectData[i].",
+                "optional": true
+            },
+            "rectData": {
+                "type": "array",
+                "items": { "$ref": "RectData" },
+                "description": " If includeRectData was given in the options parameter, then this property will be included. It is an array of RectData objects. It contains client rectangles for all the text matched in the search, relative to the top-left of the viewport. Extensions can use this to provide custom highlighting of the results.",
+                "optional": true
+            }
+        }
+    }],
+    "find.functions.%find.!fixAsync": "result:FindResult",
+    "menus.functions.%refresh.!fixAsync": null,
+    "pageAction.functions.%isShown.!fixAsync": "shown:boolean",
+    "pageAction.functions.%setPopup.!fixAsync": null,
+    "pageAction.functions.%openPopup.!fixAsync": null,
+    "pkcs11.types": [{
+        "id": "Token",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "description": "Name of the token."
+            },
+            "manufacturer": {
+                "type": "string",
+                "description": "Name of the token's manufacturer."
+            },
+            "HWVersion": {
+                "type": "string",
+                "description": "Hardware version, as a PKCS #11 version number (two 32-bit integers separated with a dot, like \"1.0\"."
+            },
+            "FWVersion": {
+                "type": "string",
+                "description": "Firmware version, as a PKCS #11 version number (two 32-bit integers separated with a dot, like \"1.0\"."
+            },
+            "serial": {
+                "type": "string",
+                "description": "Serial number, whose format is defined by the token specification."
+            },
+            "isLoggedIn": {
+                "type": "boolean",
+                "description": "true if the token is logged on already, false otherwise."
+            }
+        }
+    }, {
+        "id": "ModuleSlot",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "description": "The name of the slot."
+            },
+            "token": {
+                "type": "Token|null",
+                "description": "The token of the slot."
+            }
+        }
+    }],
+    "pkcs11.functions.%getModuleSlots.!fixAsync": "ModuleSlot[]",
+    "pkcs11.functions.%isModuleInstalled.!fixAsync": "shown:boolean",
+    "pkcs11.functions.%installModule.!fixAsync": null,
+    "pkcs11.functions.%uninstallModule.!fixAsync": null,
+    "proxy.functions.%register.!fixAsync": null,
+    "proxy.functions.%unregister.!fixAsync": null,
+    "sessions.functions.%forgetClosedTab.!fixAsync": null,
+    "sessions.functions.%forgetClosedWindow.!fixAsync": null,
+    "sessions.functions.%setTabValue.!fixAsync": null,
+    "sessions.functions.%getTabValue.!fixAsync": "value:any",
+    "sessions.functions.%removeTabValue.!fixAsync": null,
+    "sessions.functions.%setWindowValue.!fixAsync": null,
+    "sessions.functions.%getWindowValue.!fixAsync": "value:any",
+    "sessions.functions.%removeWindowValue.!fixAsync": null,
+    "sidebarAction.functions.%setTitle.!fixAsync": null,
+    "sidebarAction.functions.%getTitle.!fixAsync": "title:string",
+    "sidebarAction.functions.%setIcon.!fixAsync": null,
+    "sidebarAction.functions.%setPanel.!fixAsync": null,
+    "sidebarAction.functions.%getPanel.!fixAsync": "url:string",
+    "sidebarAction.functions.%open.!fixAsync": null,
+    "sidebarAction.functions.%close.!fixAsync": null,
+    "sidebarAction.functions.%isOpen.!fixAsync": "open:boolean",
+    "tabs.functions.%discard.!fixAsync": null,
+    "tabs.functions.%toggleReaderMode.!fixAsync": null,
+    "tabs.functions.%captureTab.!fixAsync": "dataUrl:string",
+    "tabs.functions.%show.!fixAsync": null,
+    "tabs.functions.%hide.!fixAsync": "hiddenTabIds:number[]",
+    "theme.functions.%getCurrent.!fixAsync": "theme:any",
+    "theme.functions.%update.!fixAsync": null,
+    "theme.functions.%reset.!fixAsync": null,
+    "webRequest.functions.%getSecurityInfo.!fixAsync": "info:SecurityInfo",
     "storage.types.$StorageArea.functions.%get.parameters.%keys.choices.#0.type": "null | string",
     "storage.types.$StorageArea.functions.%get.parameters.%keys.choices.#2.type": "{[s:string] : any}",
     "storage.types.$StorageArea.functions.%get.parameters.%keys.choices.#2.additionalProperties": null,

@@ -113,8 +113,9 @@ export namespace PageAction {
          * Checks whether the page action is shown.
          *
          * @param details
+         * @returns Promise<boolean>
          */
-        isShown(details: IsShownDetailsType): void;
+        isShown(details: IsShownDetailsType): Promise<boolean>;
 
         /**
          * Sets the title of the page action. This is displayed in a tooltip over the page action.
@@ -143,8 +144,9 @@ export namespace PageAction {
          * Sets the html document to be opened as a popup when the user clicks on the page action's icon.
          *
          * @param details
+         * @returns Promise<void>
          */
-        setPopup(details: SetPopupDetailsType): void;
+        setPopup(details: SetPopupDetailsType): Promise<void>;
 
         /**
          * Gets the html document set as the popup for this page action.
@@ -156,8 +158,10 @@ export namespace PageAction {
 
         /**
          * Opens the extension page action in the active window.
+         *
+         * @returns Promise<void>
          */
-        openPopup(): void;
+        openPopup(): Promise<void>;
 
         /**
          * Fired when a page action icon is clicked.  This event will not fire if the page action has a popup.

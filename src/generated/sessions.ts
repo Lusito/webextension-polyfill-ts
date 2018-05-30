@@ -65,15 +65,17 @@ export namespace Sessions {
          *
          * @param windowId The windowId of the window to which the recently closed tab to be forgotten belongs.
          * @param sessionId The sessionId (closedId) of the recently closed tab to be forgotten.
+         * @returns Promise<void>
          */
-        forgetClosedTab(windowId: number, sessionId: string): void;
+        forgetClosedTab(windowId: number, sessionId: string): Promise<void>;
 
         /**
          * Forget a recently closed window.
          *
          * @param sessionId The sessionId (closedId) of the recently closed window to be forgotten.
+         * @returns Promise<void>
          */
-        forgetClosedWindow(sessionId: string): void;
+        forgetClosedWindow(sessionId: string): Promise<void>;
 
         /**
          * Gets the list of recently closed tabs and/or windows.
@@ -97,24 +99,27 @@ export namespace Sessions {
          * @param tabId The id of the tab that the key/value pair is being set on.
          * @param key The key which corresponds to the value being set.
          * @param value The value being set.
+         * @returns Promise<void>
          */
-        setTabValue(tabId: number, key: string, value: any): void;
+        setTabValue(tabId: number, key: string, value: any): Promise<void>;
 
         /**
          * Retrieve a value that was set for a given key on a given tab.
          *
          * @param tabId The id of the tab whose value is being retrieved from.
          * @param key The key which corresponds to the value.
+         * @returns Promise<any>
          */
-        getTabValue(tabId: number, key: string): void;
+        getTabValue(tabId: number, key: string): Promise<any>;
 
         /**
          * Remove a key/value pair that was set on a given tab.
          *
          * @param tabId The id of the tab whose key/value pair is being removed.
          * @param key The key which corresponds to the value.
+         * @returns Promise<void>
          */
-        removeTabValue(tabId: number, key: string): void;
+        removeTabValue(tabId: number, key: string): Promise<void>;
 
         /**
          * Set a key/value pair on a given window.
@@ -122,24 +127,27 @@ export namespace Sessions {
          * @param windowId The id of the window that the key/value pair is being set on.
          * @param key The key which corresponds to the value being set.
          * @param value The value being set.
+         * @returns Promise<void>
          */
-        setWindowValue(windowId: number, key: string, value: any): void;
+        setWindowValue(windowId: number, key: string, value: any): Promise<void>;
 
         /**
          * Retrieve a value that was set for a given key on a given window.
          *
          * @param windowId The id of the window whose value is being retrieved from.
          * @param key The key which corresponds to the value.
+         * @returns Promise<any>
          */
-        getWindowValue(windowId: number, key: string): void;
+        getWindowValue(windowId: number, key: string): Promise<any>;
 
         /**
          * Remove a key/value pair that was set on a given window.
          *
          * @param windowId The id of the window whose key/value pair is being removed.
          * @param key The key which corresponds to the value.
+         * @returns Promise<void>
          */
-        removeWindowValue(windowId: number, key: string): void;
+        removeWindowValue(windowId: number, key: string): Promise<void>;
 
         /**
          * Fired when recently closed tabs and/or windows are changed. This event does not monitor synced sessions changes.

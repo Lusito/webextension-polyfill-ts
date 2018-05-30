@@ -19,7 +19,8 @@ export namespace Clipboard {
          *
          * @param imageData The image data to be copied.
          * @param imageType The type of imageData.
+         * @returns Promise<void>
          */
-        setImageData(imageData: ArrayBuffer, imageType: SetImageDataImageTypeEnum): void;
+        setImageData(imageData: ArrayBuffer, imageType: SetImageDataImageTypeEnum): Promise<void>;
     }
 }

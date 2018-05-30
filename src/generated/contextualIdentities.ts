@@ -137,37 +137,42 @@ export namespace ContextualIdentities {
          * Retrieves information about a single contextual identity.
          *
          * @param cookieStoreId The ID of the contextual identity cookie store. 
+         * @returns Promise<ContextualIdentity>
          */
-        get(cookieStoreId: string): void;
+        get(cookieStoreId: string): Promise<ContextualIdentity>;
 
         /**
          * Retrieves all contextual identities
          *
          * @param details Information to filter the contextual identities being retrieved.
+         * @returns Promise<ContextualIdentity[]>
          */
-        query(details: QueryDetailsType): void;
+        query(details: QueryDetailsType): Promise<ContextualIdentity[]>;
 
         /**
          * Creates a contextual identity with the given data.
          *
          * @param details Details about the contextual identity being created.
+         * @returns Promise<ContextualIdentity>
          */
-        create(details: CreateDetailsType): void;
+        create(details: CreateDetailsType): Promise<ContextualIdentity>;
 
         /**
          * Updates a contextual identity with the given data.
          *
          * @param cookieStoreId The ID of the contextual identity cookie store. 
          * @param details Details about the contextual identity being created.
+         * @returns Promise<ContextualIdentity>
          */
-        update(cookieStoreId: string, details: UpdateDetailsType): void;
+        update(cookieStoreId: string, details: UpdateDetailsType): Promise<ContextualIdentity>;
 
         /**
          * Deletes a contetual identity by its cookie Store ID.
          *
          * @param cookieStoreId The ID of the contextual identity cookie store. 
+         * @returns Promise<ContextualIdentity>
          */
-        remove(cookieStoreId: string): void;
+        remove(cookieStoreId: string): Promise<ContextualIdentity>;
 
         /**
          * Fired when a container is updated.

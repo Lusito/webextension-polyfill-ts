@@ -998,8 +998,9 @@ export namespace Tabs {
          * discards one or more tabs.
          *
          * @param tabIds The tab or list of tabs to discard.
+         * @returns Promise<void>
          */
-        discard(tabIds: number | number[]): void;
+        discard(tabIds: number | number[]): Promise<void>;
 
         /**
          * Detects the primary language of the content in a tab.
@@ -1013,16 +1014,18 @@ export namespace Tabs {
          * Toggles reader mode for the document in the tab.
          *
          * @param tabId Optional. Defaults to the active tab of the $(topic:current-window)[current window].
+         * @returns Promise<void>
          */
-        toggleReaderMode(tabId?: number): void;
+        toggleReaderMode(tabId?: number): Promise<void>;
 
         /**
          * Captures the visible area of a specified tab. You must have $(topic:declare_permissions)[&lt;all_urls&gt;] permission to use this method.
          *
          * @param tabId Optional. The tab to capture. Defaults to the active tab of the current window.
          * @param options Optional.
+         * @returns Promise<string>
          */
-        captureTab(tabId?: number, options?: ExtensionTypes.ImageDetails): void;
+        captureTab(tabId?: number, options?: ExtensionTypes.ImageDetails): Promise<string>;
 
         /**
          * Captures the visible area of the currently active tab in the specified window. You must have $(topic:declare_permissions)[&lt;all_urls&gt;] permission to use this method.
@@ -1158,15 +1161,17 @@ export namespace Tabs {
          * Shows one or more tabs.
          *
          * @param tabIds The TAB ID or list of TAB IDs to show.
+         * @returns Promise<void>
          */
-        show(tabIds: number | number[]): void;
+        show(tabIds: number | number[]): Promise<void>;
 
         /**
          * Hides one or more tabs. The <code>"tabHide"</code> permission is required to hide tabs.  Not all tabs are hidable.  Returns an array of hidden tabs.
          *
          * @param tabIds The TAB ID or list of TAB IDs to hide.
+         * @returns Promise<number[]>
          */
-        hide(tabIds: number | number[]): void;
+        hide(tabIds: number | number[]): Promise<number[]>;
 
         /**
          * Fired when a tab is created. Note that the tab's URL may not be set at the time this event fired, but you can listen to onUpdated events to be notified when a URL is set.

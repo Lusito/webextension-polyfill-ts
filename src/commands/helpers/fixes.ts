@@ -1,7 +1,7 @@
 import { ImportedNamespaces } from "./importNormalized";
 import { workMap, workArray, readJsonFile, modifyArray } from './utils';
 import { SchemaProperty, SchemaObjectProperty, SchemaValueProperty, SchemaStringProperty } from './types';
-import { assertValidOjectKeys, assertType } from './assert';
+import { assertValidOjectKeys, assertType, assertEqual } from './assert';
 import { stripUnusedContent } from "./stripUnusedContent";
 import { extractInlineContent } from "./extractInlineContent";
 import { getParameters, getEnumType } from "./getType";
@@ -31,36 +31,36 @@ function fixPropertyType(prop: SchemaProperty) {
     }
 }
 function flattenChoiceEnum(prop: SchemaProperty, types: SchemaProperty[]) {
-    if(prop.type === 'object') {
+    if (prop.type === 'object') {
         workMap(prop.properties, (p) => flattenChoiceEnum(p, types));
         return;
     }
-    if(prop.type === 'function') {
+    if (prop.type === 'function') {
         workArray(prop.parameters, (p) => flattenChoiceEnum(p, types));
         return;
     }
     const choices = prop.type === 'choices' && prop.choices;
     const choice0 = choices && choices.length === 1 && choices[0];
-    if(choice0 && choice0.$ref && choice0.$ref.endsWith('Enum')) {
+    if (choice0 && choice0.$ref && choice0.$ref.endsWith('Enum')) {
         const extended = types.find((t2) => t2.id === choice0.$ref);
-        if(!extended)
+        if (!extended)
             throw 'Could not find extended';
         //@ts-ignore
-        const stringProp:SchemaStringProperty = prop;
+        const stringProp: SchemaStringProperty = prop;
         stringProp.type = 'string';
-        if(extended.type !== 'string')
+        if (extended.type !== 'string')
             throw 'error flattening single choice, both must be string';
         stringProp.enum = extended.enum;
         extended.deprecated = true; // so it gets removed in the next step
-    } else if(choices) {
+    } else if (choices) {
         modifyArray(choices, (c) => {
-            if(c.$ref && c.$ref.endsWith('Enum')) {
+            if (c.$ref && c.$ref.endsWith('Enum')) {
                 const extended = types.find((t2) => t2.id === c.$ref);
-                if(!extended)
+                if (!extended)
                     throw 'Could not find extended';
-                if(extended.type !== 'string')
+                if (extended.type !== 'string')
                     throw 'error flattening single choice, both must be string';
-                if(extended.enum) {
+                if (extended.enum) {
                     extended.deprecated = true; // so it gets removed in the next step
                     return { type: 'value', value: getEnumType(extended.enum) } as SchemaValueProperty;
                 }
@@ -124,13 +124,13 @@ export const fixes: Fix[] = [{
                     const choices = extended.choices;
                     const onlyEnums = t.choices.findIndex((c) => c.type !== 'string' || !c.enum) === -1;
                     const enumToExtend = choices.find((c) => c.type === 'string' && !!c.enum);
-                    if(onlyEnums && enumToExtend && enumToExtend.type === 'string' && enumToExtend.enum) {
+                    if (onlyEnums && enumToExtend && enumToExtend.type === 'string' && enumToExtend.enum) {
                         const enumArray = enumToExtend.enum;
                         t.choices.forEach((c) => {
-                            if(c.type === 'string' && c.enum)
+                            if (c.type === 'string' && c.enum)
                                 c.enum.forEach((e) => enumArray.push(e));
                         });
-                    }else {
+                    } else {
                         t.choices.forEach((c) => choices.push(c));
                     }
                 } else if (t.type === 'object' && t.properties && extended.type === 'object' && extended.properties) {
@@ -181,6 +181,20 @@ export const fixes: Fix[] = [{
                 assertType(base, 'array');
                 assertType(value, 'array');
                 value.forEach((e: any) => base.push(e));
+            } else if (lastPart === "!fixAsync") {
+                assertEqual(base.async, true);
+                assertType(base.parameters, 'array');
+                base.async = "callback";
+                const params = [];
+                if (value) {
+                    const [name, type] = value.split(":");
+                    params.push({ name, type });
+                }
+                base.parameters.push({
+                    "type": "function",
+                    "name": "callback",
+                    "parameters": params
+                });
             } else {
                 base[lastPart] = value;
             }
@@ -197,7 +211,7 @@ export const fixes: Fix[] = [{
         //fixme: improve this further if possible
         workMap(namespaces.namespaces, (ns) => {
             const types = ns.entry.types;
-            if(!types)
+            if (!types)
                 return;
             workArray(ns.entry.functions, (t) => flattenChoiceEnum(t, types));
             workArray(ns.entry.events, (t) => flattenChoiceEnum(t, types));

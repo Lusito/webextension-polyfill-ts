@@ -44,30 +44,34 @@ export namespace Theme {
          * Returns the current theme for the specified window or the last focused window.
          *
          * @param windowId Optional. The window for which we want the theme.
+         * @returns Promise<any>
          */
-        getCurrent(windowId?: number): void;
+        getCurrent(windowId?: number): Promise<any>;
 
         /**
          * Make complete updates to the theme. Resolves when the update has completed.
          *
          * @param windowId The id of the window to update. No id updates all windows.
          * @param details The properties of the theme to update.
+         * @returns Promise<void>
          */
-        update(windowId: number, details: Manifest.ThemeType): void;
+        update(windowId: number, details: Manifest.ThemeType): Promise<void>;
 
         /**
          * Make complete updates to the theme. Resolves when the update has completed.
          *
          * @param details The properties of the theme to update.
+         * @returns Promise<void>
          */
-        update(details: Manifest.ThemeType): void;
+        update(details: Manifest.ThemeType): Promise<void>;
 
         /**
          * Removes the updates made to the theme.
          *
          * @param windowId Optional. The id of the window to reset. No id resets all windows.
+         * @returns Promise<void>
          */
-        reset(windowId?: number): void;
+        reset(windowId?: number): Promise<void>;
 
         /**
          * Fired when a new theme has been applied
