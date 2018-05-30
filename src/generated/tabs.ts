@@ -713,10 +713,10 @@ export namespace Tabs {
     export interface OnUpdatedChangeInfoType {
 
         /**
-         * The status of the tab. Can be either <em>loading</em> or <em>complete</em>.
+         * The tab's new audible state.
          * Optional.
          */
-        status?: string;
+        audible?: boolean;
 
         /**
          * True while the tab is not loaded with content.
@@ -725,22 +725,22 @@ export namespace Tabs {
         discarded?: boolean;
 
         /**
-         * The tab's URL if it has changed.
+         * The tab's new favicon URL. This property is only present if the extension's manifest includes the <code>"tabs"</code> permission.
          * Optional.
          */
-        url?: string;
+        favIconUrl?: string;
 
         /**
-         * The tab's new pinned state.
+         * The tab's new hidden state.
          * Optional.
          */
-        pinned?: boolean;
+        hidden?: boolean;
 
         /**
-         * The tab's new audible state.
+         * Whether the document in the tab can be rendered in reader mode.
          * Optional.
          */
-        audible?: boolean;
+        isArticle?: boolean;
 
         /**
          * The tab's new muted state and the reason for the change.
@@ -749,10 +749,34 @@ export namespace Tabs {
         mutedInfo?: MutedInfo;
 
         /**
-         * The tab's new favicon URL.
+         * The tab's new pinned state.
          * Optional.
          */
-        favIconUrl?: string;
+        pinned?: boolean;
+
+        /**
+         * The tab's new sharing state for screen, microphone and camera.
+         * Optional.
+         */
+        sharingState?: SharingState;
+
+        /**
+         * The status of the tab. Can be either <em>loading</em> or <em>complete</em>.
+         * Optional.
+         */
+        status?: string;
+
+        /**
+         * The title of the tab if it has changed. This property is only present if the extension's manifest includes the <code>"tabs"</code> permission.
+         * Optional.
+         */
+        title?: string;
+
+        /**
+         * The tab's URL if it has changed. This property is only present if the extension's manifest includes the <code>"tabs"</code> permission.
+         * Optional.
+         */
+        url?: string;
     }
 
     export interface OnMovedMoveInfoType {

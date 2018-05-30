@@ -30,6 +30,12 @@
                 "type": "string",
                 "format": "strictRelativeUrl",
                 "preprocess": "localize"
+              },
+              "open_at_install": {
+                "type": "boolean",
+                "optional": true,
+                "default": true,
+                "description": "Whether or not the sidebar is opened at install. Default is <code>true</code>."
               }
             },
             "optional": true
@@ -74,6 +80,12 @@
                 "type": "integer",
                 "optional": true,
                 "description": "Sets the sidebar title for the tab specified by tabId. Automatically resets when the tab is closed."
+              },
+              "windowId": {
+                "type": "integer",
+                "optional": true,
+                "minimum": -2,
+                "description": "Sets the sidebar title for the window specified by windowId."
               }
             }
           }
@@ -92,7 +104,13 @@
               "tabId": {
                 "type": "integer",
                 "optional": true,
-                "description": "Specify the tab to get the title from. If no tab is specified, the non-tab-specific title is returned."
+                "description": "Specify the tab to get the title from. If no tab nor window is specified, the global title is returned."
+              },
+              "windowId": {
+                "type": "integer",
+                "optional": true,
+                "minimum": -2,
+                "description": "Specify the window to get the title from. If no tab nor window is specified, the global title is returned."
               }
             }
           }
@@ -137,6 +155,12 @@
                 "type": "integer",
                 "optional": true,
                 "description": "Sets the sidebar icon for the tab specified by tabId. Automatically resets when the tab is closed."
+              },
+              "windowId": {
+                "type": "integer",
+                "optional": true,
+                "minimum": -2,
+                "description": "Sets the sidebar icon for the window specified by windowId."
               }
             }
           }
@@ -157,6 +181,12 @@
                 "optional": true,
                 "minimum": 0,
                 "description": "Sets the sidebar url for the tab specified by tabId. Automatically resets when the tab is closed."
+              },
+              "windowId": {
+                "type": "integer",
+                "optional": true,
+                "minimum": -2,
+                "description": "Sets the sidebar url for the window specified by windowId."
               },
               "panel": {
                 "choices": [
@@ -182,7 +212,13 @@
               "tabId": {
                 "type": "integer",
                 "optional": true,
-                "description": "Specify the tab to get the sidebar from. If no tab is specified, the non-tab-specific sidebar is returned."
+                "description": "Specify the tab to get the panel from. If no tab nor window is specified, the global panel is returned."
+              },
+              "windowId": {
+                "type": "integer",
+                "optional": true,
+                "minimum": -2,
+                "description": "Specify the window to get the panel from. If no tab nor window is specified, the global panel is returned."
               }
             }
           }

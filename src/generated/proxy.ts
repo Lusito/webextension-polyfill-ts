@@ -7,8 +7,82 @@
  */
 import { WebRequest } from "./webRequest";
 import { Events } from "./events";
+import { Types } from "./types";
 
 export namespace Proxy {
+
+    /**
+     * An object which describes proxy settings.
+     */
+    export interface ProxyConfig {
+
+        /**
+         * The type of proxy to use.
+         * Optional.
+         */
+        proxyType?: ProxyConfigProxyTypeEnum;
+
+        /**
+         * The address of the http proxy, can include a port.
+         * Optional.
+         */
+        http?: string;
+
+        /**
+         * Use the http proxy server for all protocols.
+         * Optional.
+         */
+        httpProxyAll?: boolean;
+
+        /**
+         * The address of the ftp proxy, can include a port.
+         * Optional.
+         */
+        ftp?: string;
+
+        /**
+         * The address of the ssl proxy, can include a port.
+         * Optional.
+         */
+        ssl?: string;
+
+        /**
+         * The address of the socks proxy, can include a port.
+         * Optional.
+         */
+        socks?: string;
+
+        /**
+         * The version of the socks proxy.
+         * Optional.
+         */
+        socksVersion?: number;
+
+        /**
+         * A list of hosts which should not be proxied.
+         * Optional.
+         */
+        passthrough?: string;
+
+        /**
+         * A URL to use to configure the proxy.
+         * Optional.
+         */
+        autoConfigUrl?: string;
+
+        /**
+         * Do not prompt for authentication if password is saved.
+         * Optional.
+         */
+        autoLogin?: boolean;
+
+        /**
+         * Proxy DNS when using SOCKS v5.
+         * Optional.
+         */
+        proxyDNS?: boolean;
+    }
+
     export interface OnRequestDetailsType {
 
         /**
@@ -85,6 +159,11 @@ export namespace Proxy {
     }
 
     /**
+     * The type of proxy to use.
+     */
+    export type ProxyConfigProxyTypeEnum = "none" | "autoDetect" | "system" | "manual" | "autoConfig";
+
+    /**
      * Fired when proxy data is needed for a request.
      */
     export interface onRequestEvent extends Events.Event<(details: OnRequestDetailsType) => void> {
@@ -131,5 +210,10 @@ export namespace Proxy {
          * @param error
          */
         onProxyError: Events.Event<(error: OnProxyErrorErrorType) => void>;
+
+        /**
+         * Configures proxy settings. This setting's value is an object of type ProxyConfig.
+         */
+        settings: Types.Setting;
     }
 }

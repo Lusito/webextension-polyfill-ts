@@ -107,58 +107,22 @@ export namespace Windows {
      */
     export type CreateType = "normal" | "popup" | "panel" | "detached_panel";
 
-    export interface GetGetInfoType {
+    /**
+     * Specifies whether the $(ref:windows.Window) returned should contain a list of the $(ref:tabs.Tab) objects.
+     */
+    export interface GetInfo {
 
         /**
-         * If true, the $(ref:windows.Window) object will have a <var>tabs</var> property that contains a list of the $(ref:tabs.Tab) objects. The <code>Tab</code> objects only contain the <code>url</code>, <code>title</code> and <code>favIconUrl</code> properties if the extension's manifest file includes the <code>"tabs"</code> permission.
+         * If true, the $(ref:windows.Window) returned will have a <var>tabs</var> property that contains a list of the $(ref:tabs.Tab) objects. The <code>Tab</code> objects only contain the <code>url</code>, <code>title</code> and <code>favIconUrl</code> properties if the extension's manifest file includes the <code>"tabs"</code> permission.
          * Optional.
          */
         populate?: boolean;
-
-        /**
-         * If set, the $(ref:windows.Window) returned will be filtered based on its type. If unset the default filter is set to <code>['app', 'normal', 'panel', 'popup']</code>, with <code>'app'</code> and <code>'panel'</code> window types limited to the extension's own windows.
-         * Optional.
-         */
-        windowTypes?: WindowType[];
     }
 
-    export interface GetCurrentGetInfoType {
-
-        /**
-         * If true, the $(ref:windows.Window) object will have a <var>tabs</var> property that contains a list of the $(ref:tabs.Tab) objects. The <code>Tab</code> objects only contain the <code>url</code>, <code>title</code> and <code>favIconUrl</code> properties if the extension's manifest file includes the <code>"tabs"</code> permission.
-         * Optional.
-         */
-        populate?: boolean;
-
-        /**
-         * If set, the $(ref:windows.Window) returned will be filtered based on its type. If unset the default filter is set to <code>['app', 'normal', 'panel', 'popup']</code>, with <code>'app'</code> and <code>'panel'</code> window types limited to the extension's own windows.
-         * Optional.
-         */
-        windowTypes?: WindowType[];
-    }
-
-    export interface GetLastFocusedGetInfoType {
-
-        /**
-         * If true, the $(ref:windows.Window) object will have a <var>tabs</var> property that contains a list of the $(ref:tabs.Tab) objects. The <code>Tab</code> objects only contain the <code>url</code>, <code>title</code> and <code>favIconUrl</code> properties if the extension's manifest file includes the <code>"tabs"</code> permission.
-         * Optional.
-         */
-        populate?: boolean;
-
-        /**
-         * If set, the $(ref:windows.Window) returned will be filtered based on its type. If unset the default filter is set to <code>['app', 'normal', 'panel', 'popup']</code>, with <code>'app'</code> and <code>'panel'</code> window types limited to the extension's own windows.
-         * Optional.
-         */
-        windowTypes?: WindowType[];
-    }
-
-    export interface GetAllGetInfoType {
-
-        /**
-         * If true, each $(ref:windows.Window) object will have a <var>tabs</var> property that contains a list of the $(ref:tabs.Tab) objects for that window. The <code>Tab</code> objects only contain the <code>url</code>, <code>title</code> and <code>favIconUrl</code> properties if the extension's manifest file includes the <code>"tabs"</code> permission.
-         * Optional.
-         */
-        populate?: boolean;
+    /**
+     * Specifies properties used to filter the $(ref:windows.Window) returned and to determine whether they should contain a list of the $(ref:tabs.Tab) objects.
+     */
+    export interface GetAllGetInfoType extends GetInfo {
 
         /**
          * If set, the $(ref:windows.Window) returned will be filtered based on its type. If unset the default filter is set to <code>['app', 'normal', 'panel', 'popup']</code>, with <code>'app'</code> and <code>'panel'</code> window types limited to the extension's own windows.
@@ -296,7 +260,7 @@ export namespace Windows {
          * @param getInfo Optional.
          * @returns Promise<Window>
          */
-        get(windowId: number, getInfo?: GetGetInfoType): Promise<Window>;
+        get(windowId: number, getInfo?: GetInfo): Promise<Window>;
 
         /**
          * Gets the $(topic:current-window)[current window].
@@ -304,7 +268,7 @@ export namespace Windows {
          * @param getInfo Optional.
          * @returns Promise<Window>
          */
-        getCurrent(getInfo?: GetCurrentGetInfoType): Promise<Window>;
+        getCurrent(getInfo?: GetInfo): Promise<Window>;
 
         /**
          * Gets the window that was most recently focused &mdash; typically the window 'on top'.
@@ -312,12 +276,12 @@ export namespace Windows {
          * @param getInfo Optional.
          * @returns Promise<Window>
          */
-        getLastFocused(getInfo?: GetLastFocusedGetInfoType): Promise<Window>;
+        getLastFocused(getInfo?: GetInfo): Promise<Window>;
 
         /**
          * Gets all windows.
          *
-         * @param getInfo Optional.
+         * @param getInfo Optional. Specifies properties used to filter the $(ref:windows.Window) returned and to determine whether they should contain a list of the $(ref:tabs.Tab) objects.
          * @returns Promise<Window[]>
          */
         getAll(getInfo?: GetAllGetInfoType): Promise<Window[]>;

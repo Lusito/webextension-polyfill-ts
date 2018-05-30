@@ -106,6 +106,115 @@ export namespace WebRequest {
     }
 
     /**
+     * Contains the certificate properties of the request if it is a secure request.
+     */
+    export interface CertificateInfo {
+        subject: string;
+
+        issuer: string;
+
+        /**
+         * Contains start and end dates in GMT.
+         */
+        validity: CertificateInfoValidityType;
+
+        fingerprint: CertificateInfoFingerprintType;
+
+        serialNumber: string;
+
+        isBuiltInRoot: boolean;
+
+        subjectPublicKeyInfoDigest: CertificateInfoSubjectPublicKeyInfoDigestType;
+
+        keyUsages: string;
+
+        /**
+         * Optional.
+         */
+        rawDER?: number[];
+    }
+
+    export type CertificateTransparencyStatus = "not_applicable" | "policy_compliant" | "policy_not_enough_scts" | "policy_not_diverse_scts";
+
+    export type TransportWeaknessReasons = "cipher";
+
+    /**
+     * Contains the security properties of the request (ie. SSL/TLS information).
+     */
+    export interface SecurityInfo {
+        state: SecurityInfoStateEnum;
+
+        /**
+         * Error message if state is "broken"
+         * Optional.
+         */
+        errorMessage?: string;
+
+        /**
+         * Protocol version if state is "secure"
+         * Optional.
+         */
+        protocolVersion?: SecurityInfoProtocolVersionEnum;
+
+        /**
+         * The cipher suite used in this request if state is "secure".
+         * Optional.
+         */
+        cipherSuite?: string;
+
+        /**
+         * Certificate data if state is "secure".  Will only contain one entry unless <code>certificateChain</code> is passed as an option.
+         */
+        certificates: CertificateInfo[];
+
+        /**
+         * The domain name does not match the certificate domain.
+         * Optional.
+         */
+        isDomainMismatch?: boolean;
+
+        /**
+         * Optional.
+         */
+        isExtendedValidation?: boolean;
+
+        /**
+         * The certificate is either expired or is not yet valid.  See <code>CertificateInfo.validity</code> for start and end dates.
+         * Optional.
+         */
+        isNotValidAtThisTime?: boolean;
+
+        /**
+         * Optional.
+         */
+        isUntrusted?: boolean;
+
+        /**
+         * Certificate transparency compliance per RFC 6962.  See <code>https://www.certificate-transparency.org/what-is-ct</code> for more information.
+         * Optional.
+         */
+        certificateTransparencyStatus?: CertificateTransparencyStatus;
+
+        /**
+         * True if host uses Strict Transport Security and state is "secure".
+         * Optional.
+         */
+        hsts?: boolean;
+
+        /**
+         * True if host uses Public Key Pinning and state is "secure".
+         * Optional.
+         */
+        hpkp?: string;
+
+        /**
+         * list of reasons that cause the request to be considered weak, if state is "weak"
+         * Optional.
+         */
+        weaknessReasons?: TransportWeaknessReasons[];
+    }
+
+    /**
      * Contains data uploaded in a URL request.
      */
     export interface UploadData {
@@ -191,6 +300,21 @@ export namespace WebRequest {
          * Contains a chunk of data read from the input stream.
          */
         data: ArrayBuffer;
+    }
+
+    export interface GetSecurityInfoOptionsType {
+
+        /**
+         * Include the entire certificate chain.
+         * Optional.
+         */
+        certificateChain?: boolean;
+
+        /**
+         * Include raw certificate data for processing by the extension.
+         * Optional.
+         */
+        rawDER?: boolean;
     }
 
     export interface OnBeforeRequestDetailsType {
@@ -864,6 +988,32 @@ export namespace WebRequest {
     }
 
     /**
+     * Contains start and end dates in GMT.
+     */
+    export interface CertificateInfoValidityType {
+        startGMT: string;
+
+        endGMT: string;
+    }
+
+    export interface CertificateInfoFingerprintType {
+        sha1: string;
+
+        sha256: string;
+    }
+
+    export interface CertificateInfoSubjectPublicKeyInfoDigestType {
+        sha256: string;
+    }
+
+    export type SecurityInfoStateEnum = "insecure" | "weak" | "broken" | "secure";
+
+    /**
+     * Protocol version if state is "secure"
+     */
+    export type SecurityInfoProtocolVersionEnum = "TLSv1" | "TLSv1.1" | "TLSv1.2" | "TLSv1.3" | "unknown";
+
+    /**
      * Contains the HTTP request body data. Only provided if extraInfoSpec contains 'requestBody'.
      */
     export interface OnBeforeRequestDetailsTypeRequestBodyType {
@@ -1046,6 +1196,14 @@ export namespace WebRequest {
          * @returns StreamFilter
          */
         filterResponseData(requestId: string): StreamFilter;
+
+        /**
+         * Retrieves the security information for the request.  Returns a promise that will resolve to a SecurityInfo object.
+         *
+         * @param requestId
+         * @param options Optional.
+         */
+        getSecurityInfo(requestId: string, options?: GetSecurityInfoOptionsType): void;
 
         /**
          * Fired when a request is about to occur.

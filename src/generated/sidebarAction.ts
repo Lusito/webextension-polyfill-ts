@@ -30,15 +30,27 @@ export namespace SidebarAction {
          * Optional.
          */
         tabId?: number;
+
+        /**
+         * Sets the sidebar title for the window specified by windowId.
+         * Optional.
+         */
+        windowId?: number;
     }
 
     export interface GetTitleDetailsType {
 
         /**
-         * Specify the tab to get the title from. If no tab is specified, the non-tab-specific title is returned.
+         * Specify the tab to get the title from. If no tab nor window is specified, the global title is returned.
          * Optional.
          */
         tabId?: number;
+
+        /**
+         * Specify the window to get the title from. If no tab nor window is specified, the global title is returned.
+         * Optional.
+         */
+        windowId?: number;
     }
 
     export interface SetIconDetailsType {
@@ -60,6 +72,12 @@ export namespace SidebarAction {
          * Optional.
          */
         tabId?: number;
+
+        /**
+         * Sets the sidebar icon for the window specified by windowId.
+         * Optional.
+         */
+        windowId?: number;
     }
 
     export interface SetPanelDetailsType {
@@ -71,6 +89,12 @@ export namespace SidebarAction {
         tabId?: number;
 
         /**
+         * Sets the sidebar url for the window specified by windowId.
+         * Optional.
+         */
+        windowId?: number;
+
+        /**
          * The url to the html file to show in a sidebar.  If set to the empty string (''), no sidebar is shown.
          */
         panel: string | null;
@@ -79,10 +103,16 @@ export namespace SidebarAction {
     export interface GetPanelDetailsType {
 
         /**
-         * Specify the tab to get the sidebar from. If no tab is specified, the non-tab-specific sidebar is returned.
+         * Specify the tab to get the panel from. If no tab nor window is specified, the global panel is returned.
          * Optional.
          */
         tabId?: number;
+
+        /**
+         * Specify the window to get the panel from. If no tab nor window is specified, the global panel is returned.
+         * Optional.
+         */
+        windowId?: number;
     }
 
     export interface IsOpenDetailsType {

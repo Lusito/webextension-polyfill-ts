@@ -206,6 +206,19 @@ export namespace Manifest {
         sources?: {[s:string]:WebExtensionLangpackManifestSourcesPatternType};
     }
 
+    /**
+     * Represents a WebExtension dictionary manifest.json file
+     */
+    export interface WebExtensionDictionaryManifest extends ManifestBase {
+
+        /**
+         * Optional.
+         */
+        homepage_url?: string;
+
+        dictionaries: {[s:string]:string};
+    }
+
     export interface ThemeIcons {
 
         /**
@@ -263,12 +276,17 @@ export namespace Manifest {
         strict_max_version?: string;
     }
 
-    export type MatchPattern = "<all_urls>" | MatchPatternRestricted;
+    export type MatchPattern = "<all_urls>" | MatchPatternRestricted | MatchPatternUnestricted;
 
     /**
      * Same as MatchPattern above, but excludes <all_urls>
      */
     export type MatchPatternRestricted = string;
+
+    /**
+     * Mostly unrestricted match patterns for privileged add-ons. This should technically be rejected for unprivileged add-ons, but, reasons. The MatchPattern class will still refuse privileged schemes for those extensions.
+     */
+    export type MatchPatternUnestricted = string;
 
     /**
      * Same as MatchPattern above, but includes moz-extension protocol
@@ -384,6 +402,11 @@ export namespace Manifest {
      */
     export interface ThemeManifest extends Manifest.ManifestBase {
         theme: ThemeType;
+
+        /**
+         * Optional.
+         */
+        default_locale?: string;
 
         /**
          * Optional.
@@ -648,6 +671,12 @@ export namespace Manifest {
         browser_style?: boolean;
 
         default_panel: string;
+
+        /**
+         * Whether or not the sidebar is opened at install. Default is <code>true</code>.
+         * Optional.
+         */
+        open_at_install?: boolean;
     }
 
     export interface WebExtensionManifestChromeUrlOverridesType {

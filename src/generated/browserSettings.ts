@@ -24,83 +24,6 @@ export namespace BrowserSettings {
      */
     export type ContextMenuMouseEvent = "mouseup" | "mousedown";
 
-    /**
-     * An object which describes proxy settings.
-     */
-    export interface ProxyConfig {
-
-        /**
-         * The type of proxy to use.
-         * Optional.
-         */
-        proxyType?: ProxyConfigProxyTypeEnum;
-
-        /**
-         * The address of the http proxy, can include a port.
-         * Optional.
-         */
-        http?: string;
-
-        /**
-         * Use the http proxy server for all protocols.
-         * Optional.
-         */
-        httpProxyAll?: boolean;
-
-        /**
-         * The address of the ftp proxy, can include a port.
-         * Optional.
-         */
-        ftp?: string;
-
-        /**
-         * The address of the ssl proxy, can include a port.
-         * Optional.
-         */
-        ssl?: string;
-
-        /**
-         * The address of the socks proxy, can include a port.
-         * Optional.
-         */
-        socks?: string;
-
-        /**
-         * The version of the socks proxy.
-         * Optional.
-         */
-        socksVersion?: number;
-
-        /**
-         * A list of hosts which should not be proxied.
-         * Optional.
-         */
-        passthrough?: string;
-
-        /**
-         * A URL to use to configure the proxy.
-         * Optional.
-         */
-        autoConfigUrl?: string;
-
-        /**
-         * Do not prompt for authentication if password is saved.
-         * Optional.
-         */
-        autoLogin?: boolean;
-
-        /**
-         * Proxy DNS when using SOCKS v5.
-         * Optional.
-         */
-        proxyDNS?: boolean;
-    }
-
-    /**
-     * The type of proxy to use.
-     */
-    export type ProxyConfigProxyTypeEnum = "none" | "autoDetect" | "system" | "manual" | "autoConfig";
-
     export interface Static {
 
         /**
@@ -157,11 +80,6 @@ export namespace BrowserSettings {
          * This boolean setting controls whether urlbar results are opened in the current tab or in a new tab.
          */
         openUrlbarResultsInNewTabs: Types.Setting;
-
-        /**
-         * Configures proxy settings. This setting's value is an object of type ProxyConfig.
-         */
-        proxyConfig: Types.Setting;
 
         /**
          * Disables webAPI notifications.
