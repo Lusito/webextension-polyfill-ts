@@ -34,7 +34,12 @@ export namespace Runtime {
          */
         onMessage: Events.Event<(message: any, port: Port) => void>;
 
-        postMessage(): void;
+        /**
+         * Send a message to the other end. This takes one argument, which is a JSON object representing the message to send. It will be delivered to any script listening to the port's onMessage event, or to the native application if this port is connected to a native application.
+         *
+         * @param message
+         */
+        postMessage(message: any): void;
 
         /**
          * This property will <b>only</b> be present on ports passed to onConnect/onConnectExternal listeners.
