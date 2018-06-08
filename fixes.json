@@ -233,6 +233,17 @@
             }
         ]
     },
+    "runtime.types.$Port.properties.postMessage": {
+        "name": "postMessage",
+        "type": "function",
+        "description": "Send a message to the other end. This takes one argument, which is a JSON object representing the message to send. It will be delivered to any script listening to the port's onMessage event, or to the native application if this port is connected to a native application.",
+        "parameters": [
+            {
+                "name": "message",
+                "type": "any"
+            }
+        ]
+    },
     "extensionTypes.types.$Date.id": "DateType",
     "menus.functions.%create.parameters.%createProperties.properties.onclick.parameters.%info.$ref": "OnClickData",
     "menus.functions.%update.parameters.%updateProperties.properties.onclick.parameters.%info.$ref": "OnClickData",
