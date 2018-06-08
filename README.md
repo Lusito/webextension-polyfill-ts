@@ -34,19 +34,9 @@ There are still some issues left:
 * Some of the schema files are incomplete.. for example in some places, a null value is allowed, yet the schema file doesn't say anything about it. I have fixed some of these, but there are probably more.
 * Not every API has been tested.
 
-## Updating/generating from source:
+## Contributing Guidelines:
 
-This is only for those who want to help work on the project by improving the generator or by updating the project with the latest schema files.
-
-You will need npm and an up to date typescript compiler installed (2.7.2 at the time of this writing).
-
-Run these commands:
-* `tsc` -> to transpile the command sources (for the npm run commands as seen below).
-* `npm install` -> only needs to happen once to get all dependencies
-* `npm run fetch` -> grabs the latest schema files from mozilla
-* `npm run validate` -> validates that all the assumptions I made about the .json files are still true
-* `npm run generate` -> generates one .ts per namespace and one index.ts file.
-* `tsc` -> to test if the generated files transpile correctly.
+See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Help
 If you have problems, questions or other feedback, please [create an issue](https://github.com/Lusito/webextension-polyfill-ts/issues) here on Github.
