@@ -146,7 +146,7 @@ export namespace Menus {
          * List of contexts this menu item will appear in. Defaults to ['page'] if not specified.
          * Optional.
          */
-        contexts?: [ContextType];
+        contexts?: ContextType[];
 
         /**
          * A function that will be called back when the menu item is clicked. Event pages cannot use this; instead, they should register a listener for $(ref:contextMenus.onClicked).
@@ -210,7 +210,7 @@ export namespace Menus {
         /**
          * Optional.
          */
-        contexts?: [ContextType];
+        contexts?: ContextType[];
 
         /**
          * @param info

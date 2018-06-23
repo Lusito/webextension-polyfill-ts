@@ -22,7 +22,7 @@ export namespace WebNavigation {
     export type TransitionQualifier = "client_redirect" | "server_redirect" | "forward_back" | "from_address_bar";
 
     export interface EventUrlFilters {
-        url: [Events.UrlFilter];
+        url: Events.UrlFilter[];
     }
 
     /**

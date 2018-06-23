@@ -297,12 +297,12 @@ export namespace Manifest {
      * Details of the script or CSS to inject. Either the code or the file property must be set, but both may not be set at the same time. Based on InjectDetails, but using underscore rather than camel case naming conventions.
      */
     export interface ContentScript {
-        matches: [MatchPattern];
+        matches: MatchPattern[];
 
         /**
          * Optional.
          */
-        exclude_matches?: [MatchPattern];
+        exclude_matches?: MatchPattern[];
 
         /**
          * Optional.
@@ -503,7 +503,7 @@ export namespace Manifest {
          * Specifies icons to use for dark and light themes
          * Optional.
          */
-        theme_icons?: [ThemeIcons];
+        theme_icons?: ThemeIcons[];
 
         /**
          * Optional.
@@ -645,12 +645,12 @@ export namespace Manifest {
         /**
          * Optional.
          */
-        show_matches?: [MatchPattern];
+        show_matches?: MatchPattern[];
 
         /**
          * Optional.
          */
-        hide_matches?: [MatchPatternRestricted];
+        hide_matches?: MatchPatternRestricted[];
     }
 
     export interface WebExtensionManifestSidebarActionType {

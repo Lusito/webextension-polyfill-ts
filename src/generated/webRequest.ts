@@ -39,13 +39,13 @@ export namespace WebRequest {
         /**
          * A list of URLs or URL patterns. Requests that cannot match any of the URLs will be filtered out.
          */
-        urls: [string];
+        urls: string[];
 
         /**
          * A list of request types. Requests that cannot match any of the types will be filtered out.
          * Optional.
          */
-        types?: [ResourceType];
+        types?: ResourceType[];
 
         /**
          * Optional.

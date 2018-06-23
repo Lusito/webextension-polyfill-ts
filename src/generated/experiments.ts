@@ -56,7 +56,7 @@ export namespace Experiments {
 
         script: ExperimentURL;
 
-        scopes: [APIChildScope];
+        scopes: APIChildScope[];
     }
 
     export interface Static {

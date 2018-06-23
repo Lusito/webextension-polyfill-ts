@@ -17,12 +17,12 @@ export namespace ContentScripts {
      * Details of a content script registered programmatically
      */
     export interface RegisteredContentScriptOptions {
-        matches: [Manifest.MatchPattern];
+        matches: Manifest.MatchPattern[];
 
         /**
          * Optional.
          */
-        excludeMatches?: [Manifest.MatchPattern];
+        excludeMatches?: Manifest.MatchPattern[];
 
         /**
          * Optional.

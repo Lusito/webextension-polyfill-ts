@@ -5,7 +5,7 @@ import { importAndFixAll, ImportedNamespace, ImportedNamespaces } from './helper
 import { filterUnique, workMap, workArray, toUpperCamelCase, lowerFirstChar } from './helpers/utils';
 import { CodeWriter } from './helpers/CodeWriter';
 import { ErrorMessage, assertSupported } from './helpers/assert';
-import { getProperty, getEnumType, getUnionType, getType, getParameters, setCurrentTypeId, fixRef, getReturnType } from './helpers/getType';
+import { getProperty, getEnumType, getUnionType, getType, getParameters, setCurrentTypeId, fixRef, getReturnType, getArrayType } from './helpers/getType';
 
 function getImports(entry: SchemaEntry, subNamespaces: string[]) {
     const imports: string[] = [];
@@ -114,8 +114,8 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
     } else if (type.type === 'choices' && type.choices) {
         writer.code('export type ' + type.id + ' = ' + getUnionType(type.choices) + ';');
     } else if (type.type === 'array' && type.items) {
-        const suffix = type.optional ? '[]|undefined;' : '[];';
-        writer.code('export type ' + type.id + ' = ' + getType(type.items) + suffix);
+        const suffix = type.optional ? "|undefined;" : ";";
+        writer.code('export type ' + type.id + ' = ' + getArrayType(type) + suffix);
     } else {
         writer.code('// unknown type: ' + type.type);
     }

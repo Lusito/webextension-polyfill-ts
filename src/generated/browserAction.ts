@@ -33,7 +33,7 @@ export namespace BrowserAction {
         windowId?: number;
     }
 
-    export type ColorArray = number[];
+    export type ColorArray = [number, number, number, number];
 
     /**
      * Pixel data for an image. Must be an ImageData object (for example, from a <code>canvas</code> element).

@@ -210,7 +210,7 @@ export namespace Bookmarks {
          * @param idOrIdList A single string-valued id, or an array of string-valued ids
          * @returns Promise<BookmarkTreeNode[]>
          */
-        get(idOrIdList: string | [string]): Promise<BookmarkTreeNode[]>;
+        get(idOrIdList: string | string[]): Promise<BookmarkTreeNode[]>;
 
         /**
          * Retrieves the children of the specified BookmarkTreeNode id.

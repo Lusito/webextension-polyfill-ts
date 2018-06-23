@@ -1,4 +1,4 @@
-import { SchemaProperty, EnumValue, SchemaFunctionProperty } from "./types";
+import { SchemaProperty, EnumValue, SchemaFunctionProperty, SchemaArrayProperty } from "./types";
 import { ErrorMessage } from "./assert";
 import { filterUnique } from "./utils";
 
@@ -48,25 +48,8 @@ export function getType(e: SchemaProperty): string {
         const returnType = e.returns ? getType(e.returns) : 'void';
         propType = '(' + getParameters(e.parameters, true) + ') => ' + returnType;
     }
-    else if (e.type === 'array' && e.items) {
-        if (e.items.type === 'choices' && e.items.choices)
-            propType = getUnionType(e.items.choices);
-        else {
-            if (e.items.$ref)
-                propType = fixRef(e.items.$ref);
-            else if (e.items.type === 'object' && e.items.isInstanceOf)
-                propType = e.items.isInstanceOf;
-            else
-                propType = typeMap[e.items.type] || e.items.type;
-            if (e.minItems) {
-                const items = [];
-                for (let i = 0; i < e.minItems; i++)
-                    items.push(propType);
-                propType = '[' + items.join(', ') + ']';
-            }
-            else
-                propType += '[]';
-        }
+    else if (e.type === 'array') {
+        propType = getArrayType(e);
     }
     else if (e.type === 'choices' && e.choices) {
         return getUnionType(e.choices);
@@ -101,6 +84,38 @@ export function getReturnType(e: SchemaFunctionProperty): string {
     if(e.returns && e.returns.optional)
         returnType += " | void";
     return returnType;
+}
+
+export interface MinimumTuple<T> extends Array<T> {
+    0: T;
+}
+
+const test:Array<string> = ["", ""];
+
+console.log(test);
+
+export function getArrayType(e: SchemaArrayProperty): string {
+    if(e.items) {
+        let propType:string;
+        if (e.items.type === 'choices' && e.items.choices)
+            propType = getUnionType(e.items.choices);
+        else {
+            if (e.items.$ref)
+                propType = fixRef(e.items.$ref);
+            else if (e.items.type === 'object' && e.items.isInstanceOf)
+                propType = e.items.isInstanceOf;
+            else
+                propType = typeMap[e.items.type] || e.items.type;
+            // fixme: arrays of minimum size can't be done easily anymore since TypeScript 2.7.. find another way.
+            // fixed size:
+            if (e.minItems && e.maxItems === e.minItems)
+                propType = '[' + Array(e.minItems).fill(propType).join(', ') + ']';
+            else
+                propType += '[]';
+        }
+        return propType;
+    }
+    return typeMap[e.type] || e.type;
 }
 
 export function getProperty(name: string, prop: SchemaProperty, allowOptional: boolean) {
