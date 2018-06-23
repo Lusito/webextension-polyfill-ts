@@ -755,6 +755,11 @@ export namespace Manifest {
         /**
          * Optional.
          */
+        tab_background_separator?: ThemeColor;
+
+        /**
+         * Optional.
+         */
         tab_loading?: ThemeColor;
 
         /**

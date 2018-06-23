@@ -3,7 +3,6 @@
  * Generated from Mozilla sources
  *
  * The theme API allows customizing of visual elements of the browser.
- * Permissions: "theme"
  *
  * Comments found in source JSON schema files:
  * This Source Code Form is subject to the terms of the Mozilla Public
