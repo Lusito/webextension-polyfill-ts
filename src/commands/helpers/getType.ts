@@ -1,4 +1,4 @@
-import { SchemaProperty, EnumValue } from "./types";
+import { SchemaProperty, EnumValue, SchemaFunctionProperty } from "./types";
 import { ErrorMessage } from "./assert";
 import { filterUnique } from "./utils";
 
@@ -96,6 +96,12 @@ export function getType(e: SchemaProperty): string {
     return propType;
 }
 
+export function getReturnType(e: SchemaFunctionProperty): string {
+    let returnType = e.returns ? getType(e.returns) : "void";
+    if(e.returns && e.returns.optional)
+        returnType += " | void";
+    return returnType;
+}
 
 export function getProperty(name: string, prop: SchemaProperty, allowOptional: boolean) {
     let propType = getType(prop);

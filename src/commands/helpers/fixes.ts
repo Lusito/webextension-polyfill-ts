@@ -4,7 +4,7 @@ import { SchemaProperty, SchemaObjectProperty, SchemaValueProperty, SchemaString
 import { assertValidOjectKeys, assertType, assertEqual } from './assert';
 import { stripUnusedContent } from "./stripUnusedContent";
 import { extractInlineContent } from "./extractInlineContent";
-import { getParameters, getEnumType } from "./getType";
+import { getParameters, getEnumType, getReturnType } from "./getType";
 
 interface Fix {
     name: string;
@@ -250,14 +250,14 @@ export const fixes: Fix[] = [{
                     const extended: SchemaObjectProperty = {
                         id,
                         type: "object",
-                        additionalProperties: { $ref: 'Events.Event<(' + getParameters(e.parameters, false) + ') => void>', type: 'ref' },
+                        additionalProperties: { $ref: 'Events.Event<(' + getParameters(e.parameters, false) + ') => ' + getReturnType(e) + '>', type: 'ref' },
                         description: e.description,
                         functions: [extendedAddListener]
                     };
                     const params = extendedAddListener.parameters;
                     if (!params)
                         throw 'Missing addListener.parameters in Event type';
-                    params[0].type = '(' + getParameters(e.parameters, false) + ') => void';
+                    params[0].type = '(' + getParameters(e.parameters, false) + ') => ' + getReturnType(e);
                     e.extraParameters.forEach((p) => {
                         p.optional = true;
                         params.push(p);

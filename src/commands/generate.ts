@@ -5,7 +5,7 @@ import { importAndFixAll, ImportedNamespace, ImportedNamespaces } from './helper
 import { filterUnique, workMap, workArray, toUpperCamelCase, lowerFirstChar } from './helpers/utils';
 import { CodeWriter } from './helpers/CodeWriter';
 import { ErrorMessage, assertSupported } from './helpers/assert';
-import { getProperty, getEnumType, getUnionType, getType, getParameters, setCurrentTypeId, fixRef } from './helpers/getType';
+import { getProperty, getEnumType, getUnionType, getType, getParameters, setCurrentTypeId, fixRef, getReturnType } from './helpers/getType';
 
 function getImports(entry: SchemaEntry, subNamespaces: string[]) {
     const imports: string[] = [];
@@ -143,7 +143,7 @@ function addEvent(event: SchemaFunctionProperty, writer: CodeWriter) {
     if(event.$extend) {
         writer.code(event.name + ': ' + event.$extend + ';');
     } else {
-        writer.code(event.name + ': Events.Event<(' + getParameters(event.parameters, false) + ') => void>;');
+        writer.code(event.name + ': Events.Event<(' + getParameters(event.parameters, false) + ') => ' + getReturnType(event) + '>;');
     }
     writer.emptyLine();
 }
