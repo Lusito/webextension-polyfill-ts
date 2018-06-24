@@ -18,13 +18,13 @@ export class CodeWriter {
 
     public end(line: string) {
         if (this.commentLines > 0)
-            throw 'Comment before block end';
+            throw new Error('Comment before block end');
         if (this.lastIsEmpty) {
             this.lines.pop();
             this.lastIsEmpty = false;
         }
         if (this.indentation.length < 4)
-            throw 'Indentation too low';
+            throw new Error('Indentation too low');
         this.indentation = this.indentation.substr(0, this.indentation.length-4);
         this.lines.push(this.indentation + line);
         this.emptyLine();

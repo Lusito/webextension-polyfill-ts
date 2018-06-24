@@ -44,12 +44,12 @@ function flattenChoiceEnum(prop: SchemaProperty, types: SchemaProperty[]) {
     if (choice0 && choice0.$ref && choice0.$ref.endsWith('Enum')) {
         const extended = types.find((t2) => t2.id === choice0.$ref);
         if (!extended)
-            throw 'Could not find extended';
+            throw new Error('Could not find extended');
         //@ts-ignore
         const stringProp: SchemaStringProperty = prop;
         stringProp.type = 'string';
         if (extended.type !== 'string')
-            throw 'error flattening single choice, both must be string';
+            throw new Error('error flattening single choice, both must be string');
         stringProp.enum = extended.enum;
         extended.deprecated = true; // so it gets removed in the next step
     } else if (choices) {
@@ -57,9 +57,9 @@ function flattenChoiceEnum(prop: SchemaProperty, types: SchemaProperty[]) {
             if (c.$ref && c.$ref.endsWith('Enum')) {
                 const extended = types.find((t2) => t2.id === c.$ref);
                 if (!extended)
-                    throw 'Could not find extended';
+                    throw new Error('Could not find extended');
                 if (extended.type !== 'string')
-                    throw 'error flattening single choice, both must be string';
+                    throw new Error('error flattening single choice, both must be string');
                 if (extended.enum) {
                     extended.deprecated = true; // so it gets removed in the next step
                     return { type: 'value', value: getEnumType(extended.enum) } as SchemaValueProperty;
@@ -94,10 +94,10 @@ export const fixes: Fix[] = [{
         namespaces.namespaceExtensions.forEach((e) => {
             const namespace = namespaces.namespaces[e.entry.namespace];
             if (!namespace)
-                throw 'Missing namespace to extend: ' + e.entry.namespace;
+                throw new Error('Missing namespace to extend: ' + e.entry.namespace);
             const types = namespace.entry.types;
             if (!types)
-                throw 'Extended namespace does not have types';
+                throw new Error('Extended namespace does not have types');
             namespace.appendComments(e.comments);
             workArray(e.entry.types, (t) => {
                 if (!t.$extend) {
@@ -108,7 +108,7 @@ export const fixes: Fix[] = [{
 
                 const extended = types.find((t2) => t2.id === t.$extend);
                 if (!extended)
-                    throw 'Could not find type to extend: ' + t.$extend;
+                    throw new Error('Could not find type to extend: ' + t.$extend);
 
                 if ((t as any).choices) {
                     assertValidOjectKeys(t, ['$extend', 'choices']);
@@ -117,7 +117,7 @@ export const fixes: Fix[] = [{
                     assertValidOjectKeys(t, ['$extend', 'properties']);
                     t.type = 'object';
                 } else {
-                    throw 'Unknown extension type ' + t.$extend;
+                    throw new Error('Unknown extension type ' + t.$extend);
                 }
 
                 if (t.type === 'choices' && t.choices && extended.type === 'choices' && extended.choices) {
@@ -138,7 +138,7 @@ export const fixes: Fix[] = [{
                     for (const key in t.properties)
                         properties[key] = t.properties[key];
                 } else {
-                    throw 'Bad $extend';
+                    throw new Error('Bad $extend');
                 }
             });
         });
@@ -167,7 +167,7 @@ export const fixes: Fix[] = [{
                     assertType(base, 'array');
                     const index = parseInt(part.substr(1));
                     if (index >= base.length || index < 0)
-                        throw 'Index out of bounds';
+                        throw new Error('Index out of bounds');
                     base = base[index];
                     assertType(base, 'array', 'object');
                 } else {
@@ -229,19 +229,19 @@ export const fixes: Fix[] = [{
     apply: (namespaces) => {
         const types = namespaces.namespaces.events.entry.types;
         if (!types)
-            throw 'Missing events types';
+            throw new Error('Missing events types');
         const eventType = types.find((t) => t.id === 'Event');
         if (!eventType)
-            throw 'Missing Events.Event';
+            throw new Error('Missing Events.Event');
         if (eventType.type !== 'object')
-            throw 'Events.Event should be object';
+            throw new Error('Events.Event should be object');
         const eventFunctions = eventType.functions;
         if (!eventFunctions)
-            throw 'Events.Event.functions missing';
+            throw new Error('Events.Event.functions missing');
 
         const addListener = eventFunctions.find((f) => f.name === 'addListener');
         if (!addListener)
-            throw 'Missing addListener in Event type';
+            throw new Error('Missing addListener in Event type');
         workMap(namespaces.namespaces, (ns) => {
             workArray(ns.entry.events, (e) => {
                 if (e.extraParameters) {
@@ -256,7 +256,7 @@ export const fixes: Fix[] = [{
                     };
                     const params = extendedAddListener.parameters;
                     if (!params)
-                        throw 'Missing addListener.parameters in Event type';
+                        throw new Error('Missing addListener.parameters in Event type');
                     params[0].type = '(' + getParameters(e.parameters, false) + ') => ' + getReturnType(e);
                     e.extraParameters.forEach((p) => {
                         p.optional = true;

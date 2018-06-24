@@ -99,7 +99,7 @@ function validateSchemaProperty(json: any) {
             case 'null':
                 return SchemaNullProperty.validate(json);
             default:
-                throw 'unknown type: ' + json.type;
+                throw new Error('unknown type: ' + json.type);
         }
     }
 }
@@ -107,7 +107,7 @@ function validateSchemaProperty(json: any) {
 function validateSchemaPropertyWithoutExtend(json: any) {
     validateSchemaProperty(json);
     if (json.$extend)
-        throw 'Only types may contain $extend';
+        throw new Error('Only types may contain $extend');
 }
 
 export class SchemaChoicesProperty extends SchemaBaseProperty {
@@ -192,7 +192,7 @@ export class SchemaValueProperty extends SchemaBaseProperty {
         super.validate(json);
         assertValidOjectKeys(json, this.getValidKeys());
         if (typeof (json.value) === "undefined")
-            throw 'Value expected';
+            throw new Error('Value expected');
     }
 }
 

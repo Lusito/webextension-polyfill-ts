@@ -100,7 +100,7 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
             if (type.additionalProperties.type === 'object')
                 addProperties(type.additionalProperties.properties, writer);
             // else if(type.additionalProperties.type !== 'any')
-            //     throw 'what now?';
+            //     throw new Error('what now?');
         }
         addProperties(type.properties, writer);
         workArray(type.functions, (func) => addFunction(func, func.parameters, writer));
@@ -169,9 +169,9 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
         if (func.async === 'callback' || func.async === 'responseCallback') {
             const lastParam = parameters.length && parameters[parameters.length - 1];
             if (!lastParam || lastParam.name !== func.async)
-                throw 'Last param expected to be callback';
+                throw new Error('Last param expected to be callback');
             if (lastParam.type !== 'function')
-                throw 'async param is expected to be function';
+                throw new Error('async param is expected to be function');
             parameters = parameters.slice(0, parameters.length - 1);
             asyncParam = lastParam;
         }
@@ -184,7 +184,7 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
     let returnType = 'void';
     if (asyncParam) {
         if (func.returns)
-            throw 'Error: conflict between return value and async';
+            throw new Error('Error: conflict between return value and async');
         const description = (asyncParam.description) ? ' ' + asyncParam.description : '';
         if (!asyncParam.parameters || !asyncParam.parameters.length)
             returnType = 'void';

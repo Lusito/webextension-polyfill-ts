@@ -32,7 +32,7 @@ export class ImportedNamespace {
             else if(line === '')
                 return '';
             else
-                throw 'Unknown comment style:' + line + comments;
+                throw new Error('Unknown comment style:' + line + comments);
         }).join('\n');
     }
 
@@ -67,7 +67,7 @@ export class ImportedNamespaces {
                 return;
             }
             if (this.namespaces.hasOwnProperty(entry.namespace))
-                throw 'Namespace already exists: ' + entry.namespace;
+                throw new Error('Namespace already exists: ' + entry.namespace);
             this.namespaces[entry.namespace] = new ImportedNamespace(data.file, data.comments, entry);
         });
     }

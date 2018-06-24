@@ -152,7 +152,7 @@ export function extractInlineContent(entry: SchemaEntry) {
     const entryTypes = entry.types && entry.types.slice();
     workArray(entryTypes, (type) => {
         if (!type.id)
-            throw 'Gotta have a prefix, dude!';
+            throw new Error('Gotta have a prefix, dude!');
         extractParameterObjectType(type, toUpperCamelCase(type.id), true, entry);
     });
 }
