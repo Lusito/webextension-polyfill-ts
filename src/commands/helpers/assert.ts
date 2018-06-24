@@ -17,7 +17,7 @@ function getType(json: any): ObjectTypes {
 
 export function assertEqual(a: any, b: any) {
     if (a !== b)
-        throw `'${JSON.stringify(a)}' is not ${JSON.stringify(b)}`;
+        throw new Error(`'${JSON.stringify(a)}' is not ${JSON.stringify(b)}`);
 }
 
 export function assertSupported(prop: SchemaProperty) {
@@ -27,7 +27,7 @@ export function assertSupported(prop: SchemaProperty) {
 
 export function assertOneOfX(value: any, validValues: any[]) {
     if (validValues.indexOf(value) === -1)
-        throw `'${value}' is not one of ${JSON.stringify(validValues)}`;
+        throw new Error(`'${value}' is not one of ${JSON.stringify(validValues)}`);
 }
 
 export function assertOneOf(value: any, ...validValues: any[]) {

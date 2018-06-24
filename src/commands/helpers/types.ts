@@ -56,7 +56,7 @@ function getReducedRefJson(json: any, attr: string) {
     const normalizedId = id.indexOf('.') >= 0 ? id : (currentNamespace + '.' + id);
     const inherit = typeById[normalizedId];
     if (!inherit)
-        throw `Could not find id '${normalizedId}' in registry`;
+        throw new Error(`Could not find id '${normalizedId}' in registry`);
     const result = { ...json };
     if (inherit.choices)
         result.choices = inherit.choices;
