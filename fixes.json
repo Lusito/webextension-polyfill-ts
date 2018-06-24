@@ -244,6 +244,18 @@
             }
         ]
     },
+    "runtime.events.%onMessage.parameters.%sendResponse": null,
+    "runtime.events.%onMessage.returns": {
+        "type": "Promise<any>",
+        "optional": true,
+        "description": "Return a <code>Promise</code> from the listener function and resolve the promise when the response is ready."
+    },
+    "runtime.events.%onMessageExternal.parameters.%sendResponse": null,
+    "runtime.events.%onMessageExternal.returns": {
+        "type": "Promise<any>",
+        "optional": true,
+        "description": "Return a <code>Promise</code> from the listener function and resolve the promise when the response is ready."
+    },
     "extensionTypes.types.$Date.id": "DateType",
     "menus.functions.%create.parameters.%createProperties.properties.onclick.parameters.%info.$ref": "OnClickData",
     "menus.functions.%update.parameters.%updateProperties.properties.onclick.parameters.%info.$ref": "OnClickData",

@@ -196,7 +196,23 @@ export const fixes: Fix[] = [{
                     "parameters": params
                 });
             } else {
-                base[lastPart] = value;
+                if(value === null && Array.isArray(base)) {
+                    let index;
+                    if (lastPart[0] === '$') {
+                        const id = lastPart.substr(1);
+                        index = base.findIndex((e: any) => e.id === id);
+                    } else if (lastPart[0] === '%') {
+                        const name = lastPart.substr(1);
+                        index = base.findIndex((e: any) => e.name === name);
+                    } else {
+                        throw new Error('Unknown method to remove from array: ' + lastPart);
+                    }
+                    if(index === -1)
+                        throw new Error("Could not find " + lastPart);
+                    base.splice(index, 1);
+                } else {
+                    base[lastPart] = value;
+                }
             }
         }
     }
