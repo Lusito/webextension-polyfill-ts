@@ -172,10 +172,10 @@ export namespace Proxy {
          * Registers an event listener <em>callback</em> to an event.
          *
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
-         * @param filter Optional. A set of filters that restricts the events that will be sent to this listener.
+         * @param filter A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnRequestDetailsType) => void, filter?: WebRequest.RequestFilter, extraInfoSpec?: string[]): void;
+        addListener(callback: (details: OnRequestDetailsType) => void, filter: WebRequest.RequestFilter, extraInfoSpec?: string[]): void;
     }
 
     export interface Static {

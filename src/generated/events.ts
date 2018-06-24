@@ -54,8 +54,9 @@ export namespace Events {
          * Registers an event listener <em>callback</em> to an event.
          *
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
+         * @param ...params Further parameters, depending on the event.
          */
-        addListener(callback: T): void;
+        addListener(callback: T, ...params: any[]): void;
 
         /**
          * Deregisters an event listener <em>callback</em> from an event.

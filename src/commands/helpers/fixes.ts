@@ -274,10 +274,8 @@ export const fixes: Fix[] = [{
                     if (!params)
                         throw new Error('Missing addListener.parameters in Event type');
                     params[0].type = '(' + getParameters(e.parameters, false) + ') => ' + getReturnType(e);
-                    e.extraParameters.forEach((p) => {
-                        p.optional = true;
-                        params.push(p);
-                    });
+                    params.pop();
+                    e.extraParameters.forEach((p) => params.push(p));
                     e.$extend = id;
                     delete e.parameters;
                     if (!ns.entry.types)

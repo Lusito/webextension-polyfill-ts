@@ -1,4 +1,9 @@
 {
+    "events.types.$Event.functions.%addListener.parameters.+[]": [{
+        "name": "...params",
+        "type": "any[]",
+        "description": "Further parameters, depending on the event."
+    }],
     "manifest.types.$ImageData.unsupported": true,
     "browserAction.functions.%isEnabled.!fixAsync": "enabled:boolean",
     "browserAction.functions.%openPopup.!fixAsync": null,

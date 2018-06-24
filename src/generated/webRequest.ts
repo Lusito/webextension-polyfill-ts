@@ -1055,10 +1055,10 @@ export namespace WebRequest {
          * Registers an event listener <em>callback</em> to an event.
          *
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
-         * @param filter Optional. A set of filters that restricts the events that will be sent to this listener.
+         * @param filter A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnBeforeRequestDetailsType) => BlockingResponse | void, filter?: RequestFilter, extraInfoSpec?: OnBeforeRequestOptions[]): void;
+        addListener(callback: (details: OnBeforeRequestDetailsType) => BlockingResponse | void, filter: RequestFilter, extraInfoSpec?: OnBeforeRequestOptions[]): void;
     }
 
     /**
@@ -1070,10 +1070,10 @@ export namespace WebRequest {
          * Registers an event listener <em>callback</em> to an event.
          *
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
-         * @param filter Optional. A set of filters that restricts the events that will be sent to this listener.
+         * @param filter A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnBeforeSendHeadersDetailsType) => BlockingResponse | void, filter?: RequestFilter, extraInfoSpec?: OnBeforeSendHeadersOptions[]): void;
+        addListener(callback: (details: OnBeforeSendHeadersDetailsType) => BlockingResponse | void, filter: RequestFilter, extraInfoSpec?: OnBeforeSendHeadersOptions[]): void;
     }
 
     /**
@@ -1085,10 +1085,10 @@ export namespace WebRequest {
          * Registers an event listener <em>callback</em> to an event.
          *
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
-         * @param filter Optional. A set of filters that restricts the events that will be sent to this listener.
+         * @param filter A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnSendHeadersDetailsType) => void, filter?: RequestFilter, extraInfoSpec?: OnSendHeadersOptions[]): void;
+        addListener(callback: (details: OnSendHeadersDetailsType) => void, filter: RequestFilter, extraInfoSpec?: OnSendHeadersOptions[]): void;
     }
 
     /**
@@ -1100,10 +1100,10 @@ export namespace WebRequest {
          * Registers an event listener <em>callback</em> to an event.
          *
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
-         * @param filter Optional. A set of filters that restricts the events that will be sent to this listener.
+         * @param filter A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnHeadersReceivedDetailsType) => BlockingResponse | void, filter?: RequestFilter, extraInfoSpec?: OnHeadersReceivedOptions[]): void;
+        addListener(callback: (details: OnHeadersReceivedDetailsType) => BlockingResponse | void, filter: RequestFilter, extraInfoSpec?: OnHeadersReceivedOptions[]): void;
     }
 
     /**
@@ -1115,10 +1115,10 @@ export namespace WebRequest {
          * Registers an event listener <em>callback</em> to an event.
          *
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
-         * @param filter Optional. A set of filters that restricts the events that will be sent to this listener.
+         * @param filter A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnAuthRequiredDetailsType, callback: ((response: BlockingResponse) => void) | undefined) => BlockingResponse | void, filter?: RequestFilter, extraInfoSpec?: OnAuthRequiredOptions[]): void;
+        addListener(callback: (details: OnAuthRequiredDetailsType, callback: ((response: BlockingResponse) => void) | undefined) => BlockingResponse | void, filter: RequestFilter, extraInfoSpec?: OnAuthRequiredOptions[]): void;
     }
 
     /**
@@ -1130,10 +1130,10 @@ export namespace WebRequest {
          * Registers an event listener <em>callback</em> to an event.
          *
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
-         * @param filter Optional. A set of filters that restricts the events that will be sent to this listener.
+         * @param filter A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnResponseStartedDetailsType) => void, filter?: RequestFilter, extraInfoSpec?: OnResponseStartedOptions[]): void;
+        addListener(callback: (details: OnResponseStartedDetailsType) => void, filter: RequestFilter, extraInfoSpec?: OnResponseStartedOptions[]): void;
     }
 
     /**
@@ -1145,10 +1145,10 @@ export namespace WebRequest {
          * Registers an event listener <em>callback</em> to an event.
          *
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
-         * @param filter Optional. A set of filters that restricts the events that will be sent to this listener.
+         * @param filter A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnBeforeRedirectDetailsType) => void, filter?: RequestFilter, extraInfoSpec?: OnBeforeRedirectOptions[]): void;
+        addListener(callback: (details: OnBeforeRedirectDetailsType) => void, filter: RequestFilter, extraInfoSpec?: OnBeforeRedirectOptions[]): void;
     }
 
     /**
@@ -1160,10 +1160,10 @@ export namespace WebRequest {
          * Registers an event listener <em>callback</em> to an event.
          *
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
-         * @param filter Optional. A set of filters that restricts the events that will be sent to this listener.
+         * @param filter A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnCompletedDetailsType) => void, filter?: RequestFilter, extraInfoSpec?: OnCompletedOptions[]): void;
+        addListener(callback: (details: OnCompletedDetailsType) => void, filter: RequestFilter, extraInfoSpec?: OnCompletedOptions[]): void;
     }
 
     /**
@@ -1175,9 +1175,9 @@ export namespace WebRequest {
          * Registers an event listener <em>callback</em> to an event.
          *
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
-         * @param filter Optional. A set of filters that restricts the events that will be sent to this listener.
+         * @param filter A set of filters that restricts the events that will be sent to this listener.
          */
-        addListener(callback: (details: OnErrorOccurredDetailsType) => void, filter?: RequestFilter): void;
+        addListener(callback: (details: OnErrorOccurredDetailsType) => void, filter: RequestFilter): void;
     }
 
     export interface Static {
