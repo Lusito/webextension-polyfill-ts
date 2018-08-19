@@ -31,7 +31,7 @@
     "generate": "node dist/commands/generate.js"
   },
   "dependencies": {
-    "webextension-polyfill": "^0.2.1"
+    "webextension-polyfill": "^0.3.0"
   },
   "devDependencies": {
     "@types/got": "^7.1.6",
