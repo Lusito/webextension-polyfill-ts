@@ -1,6 +1,6 @@
 {
   "name": "webextension-polyfill-ts",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "description": "webextension-polyfill for TypeScript",
   "keywords": [
     "TypeScript",
