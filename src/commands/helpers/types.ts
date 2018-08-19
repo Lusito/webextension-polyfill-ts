@@ -298,12 +298,14 @@ export class SchemaNumberProperty extends SchemaBaseProperty {
     public type: 'number' | 'integer' = 'number';
     public minimum?: number;
     public maximum?: number;
+    public default?: number;
 
     public static getValidKeys() {
         return super.getValidKeys().concat([
             'type',
             'minimum',
-            'maximum'
+            'maximum',
+            'default'
         ]);
     }
 
@@ -313,6 +315,7 @@ export class SchemaNumberProperty extends SchemaBaseProperty {
         assertOneOf(json.type, 'integer', 'number');
         assertType(json.minimum, 'number', 'undefined');
         assertType(json.maximum, 'number', 'undefined');
+        assertType(json.default, 'number', 'undefined');
     }
 }
 

@@ -7,7 +7,7 @@ async function getJsonFileList(url: string) {
     try {
         const response = await got(url);
         const lines = response.body.split('\n');
-        return lines.filter((l) => l.endsWith('.json')).map((l) => url + l.split(' ')[2]);
+        return lines.filter((l) => l.endsWith('.json') && !l.endsWith(" telemetry.json")).map((l) => url + l.split(' ')[2]);
     } catch (error) {
         console.error(error.response.body);
         return null;

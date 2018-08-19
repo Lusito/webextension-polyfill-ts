@@ -62,7 +62,7 @@ export class ImportedNamespaces {
         data.json.forEach((entry) => {
             if (entry.namespace === 'test')
                 return;
-            if (isExtensionNamespace(entry)) {
+            if (isExtensionNamespace(entry) || data.file === 'menus_child.json') {
                 this.namespaceExtensions.push(new ImportedNamespace(data.file, data.comments, entry));
                 return;
             }

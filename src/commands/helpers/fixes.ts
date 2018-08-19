@@ -95,10 +95,12 @@ export const fixes: Fix[] = [{
             const namespace = namespaces.namespaces[e.entry.namespace];
             if (!namespace)
                 throw new Error('Missing namespace to extend: ' + e.entry.namespace);
-            const types = namespace.entry.types;
-            if (!types)
-                throw new Error('Extended namespace does not have types');
             namespace.appendComments(e.comments);
+
+            if (!namespace.entry.types)
+                namespace.entry.types = [];
+            const types = namespace.entry.types;
+
             workArray(e.entry.types, (t) => {
                 if (!t.$extend) {
                     fixPropertyType(t);
@@ -141,6 +143,11 @@ export const fixes: Fix[] = [{
                     throw new Error('Bad $extend');
                 }
             });
+
+            if (!namespace.entry.functions)
+                namespace.entry.functions = [];
+            const functions = namespace.entry.functions;
+            workArray(e.entry.functions, (t) => functions.push(t));
         });
     }
 }, {

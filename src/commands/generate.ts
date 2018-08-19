@@ -7,6 +7,12 @@ import { CodeWriter } from './helpers/CodeWriter';
 import { ErrorMessage, assertSupported } from './helpers/assert';
 import { getProperty, getEnumType, getUnionType, getType, getParameters, setCurrentTypeId, fixRef, getReturnType, getArrayType } from './helpers/getType';
 
+const IGNORE_ADDITIONAL_PROPERTIES = [
+    'UnrecognizedProperty',
+    'ImageDataOrExtensionURL',
+    'ThemeColor'
+];
+
 function getImports(entry: SchemaEntry, subNamespaces: string[]) {
     const imports: string[] = [];
     if(entry.$import)
@@ -27,7 +33,7 @@ function getImports(entry: SchemaEntry, subNamespaces: string[]) {
             workMap(prop.properties, addFromProperty);
             
             if (prop.additionalProperties && typeof (prop.additionalProperties) === 'object') {
-                if (prop.additionalProperties.$ref && prop.additionalProperties.$ref !== 'UnrecognizedProperty')
+                if (prop.additionalProperties.$ref && IGNORE_ADDITIONAL_PROPERTIES.indexOf(prop.additionalProperties.$ref) === -1)
                     checkAndAddImport(prop.additionalProperties.$ref);
             }
         }
@@ -91,7 +97,7 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
         if(type.$import) {
             extendsClass = ' extends ' + fixRef(type.$import);
         } else if (type.additionalProperties && typeof (type.additionalProperties) === 'object') {
-            if (type.additionalProperties.$ref && type.additionalProperties.$ref !== 'UnrecognizedProperty')
+            if (type.additionalProperties.$ref && IGNORE_ADDITIONAL_PROPERTIES.indexOf(type.additionalProperties.$ref) === -1)
                 extendsClass = ' extends ' + fixRef(type.additionalProperties.$ref);
         }
         writer.begin('export interface ' + type.id + templateParam + extendsClass + ' {');
