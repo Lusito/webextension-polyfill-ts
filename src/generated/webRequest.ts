@@ -13,7 +13,7 @@
 import { Events } from "./events";
 
 export namespace WebRequest {
-    export type ResourceType = "main_frame" | "sub_frame" | "stylesheet" | "script" | "image" | "object" | "object_subrequest" | "xmlhttprequest" | "xbl" | "xslt" | "ping" | "beacon" | "xml_dtd" | "font" | "media" | "websocket" | "csp_report" | "imageset" | "web_manifest" | "other";
+    export type ResourceType = "main_frame" | "sub_frame" | "stylesheet" | "script" | "image" | "object" | "object_subrequest" | "xmlhttprequest" | "xbl" | "xslt" | "ping" | "beacon" | "xml_dtd" | "font" | "media" | "websocket" | "csp_report" | "imageset" | "web_manifest" | "speculative" | "other";
 
     export type OnBeforeRequestOptions = "blocking" | "requestBody";
 
@@ -114,7 +114,7 @@ export namespace WebRequest {
         issuer: string;
 
         /**
-         * Contains start and end dates in GMT.
+         * Contains start and end timestamps.
          */
         validity: CertificateInfoValidityType;
 
@@ -125,8 +125,6 @@ export namespace WebRequest {
         isBuiltInRoot: boolean;
 
         subjectPublicKeyInfoDigest: CertificateInfoSubjectPublicKeyInfoDigestType;
-
-        keyUsages: string;
 
         /**
          * Optional.
@@ -161,6 +159,18 @@ export namespace WebRequest {
          * Optional.
          */
         cipherSuite?: string;
+
+        /**
+         * The key exchange algorithm used in this request if state is "secure".
+         * Optional.
+         */
+        keaGroupName?: string;
+
+        /**
+         * The signature scheme used in this request if state is "secure".
+         * Optional.
+         */
+        signatureSchemeName?: string;
 
         /**
          * Certificate data if state is "secure".  Will only contain one entry unless <code>certificateChain</code> is passed as an option.
@@ -988,12 +998,12 @@ export namespace WebRequest {
     }
 
     /**
-     * Contains start and end dates in GMT.
+     * Contains start and end timestamps.
      */
     export interface CertificateInfoValidityType {
-        startGMT: string;
+        start: number;
 
-        endGMT: string;
+        end: number;
     }
 
     export interface CertificateInfoFingerprintType {

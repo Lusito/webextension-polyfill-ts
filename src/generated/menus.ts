@@ -109,6 +109,12 @@ export namespace Menus {
          * An array of keyboard modifiers that were held while the menu item was clicked.
          */
         modifiers: OnClickDataModifiersItemEnum[];
+
+        /**
+         * An identifier of the clicked element, if any. Use menus.getTargetElement in the page to find the corresponding element.
+         * Optional.
+         */
+        targetElementId?: number;
     }
 
     export interface CreateCreatePropertiesType {
@@ -241,7 +247,7 @@ export namespace Menus {
     }
 
     /**
-     * Information about the context of the menu action and the created menu items. For more information about each property, see contextMenusInternal.OnClickData. The following properties are only set if the extension has host permissions for the given context: linkUrl, linkText, srcUrl, pageUrl, frameUrl, selectionText.
+     * Information about the context of the menu action and the created menu items. For more information about each property, see OnClickData. The following properties are only set if the extension has host permissions for the given context: linkUrl, linkText, srcUrl, pageUrl, frameUrl, selectionText.
      */
     export interface OnShownInfoType {
 
@@ -291,6 +297,11 @@ export namespace Menus {
          * Optional.
          */
         selectionText?: string;
+
+        /**
+         * Optional.
+         */
+        targetElementId?: number;
     }
 
     export type OnClickDataModifiersItemEnum = "Shift" | "Alt" | "Command" | "Ctrl" | "MacCtrl";
@@ -338,6 +349,14 @@ export namespace Menus {
         refresh(): Promise<void>;
 
         /**
+         * Retrieve the element that was associated with a recent contextmenu event.
+         *
+         * @param targetElementId The identifier of the clicked element, available as info.targetElementId in the menus.onShown, onClicked or onclick event.
+         * @returns Element
+         */
+        getTargetElement(targetElementId: number): Element;
+
+        /**
          * Fired when a context menu item is clicked.
          *
          * @param info Information about the item clicked and the context where the click happened.
@@ -348,7 +367,7 @@ export namespace Menus {
         /**
          * Fired when a menu is shown. The extension can add, modify or remove menu items and call menus.refresh() to update the menu.
          *
-         * @param info Information about the context of the menu action and the created menu items. For more information about each property, see contextMenusInternal.OnClickData. The following properties are only set if the extension has host permissions for the given context: linkUrl, linkText, srcUrl, pageUrl, frameUrl, selectionText.
+         * @param info Information about the context of the menu action and the created menu items. For more information about each property, see OnClickData. The following properties are only set if the extension has host permissions for the given context: linkUrl, linkText, srcUrl, pageUrl, frameUrl, selectionText.
          * @param tab The details of the tab where the menu was opened.
          */
         onShown: Events.Event<(info: OnShownInfoType, tab: Tabs.Tab) => void>;

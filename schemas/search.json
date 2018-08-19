@@ -1,0 +1,80 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [{
+          "type": "string",
+          "enum": [
+            "search"
+          ]
+        }]
+      }
+    ]
+  },
+  {
+    "namespace": "search",
+    "description": "Use browser.search to interact with search engines.",
+    "permissions": ["search"],
+    "types": [
+      {
+        "id": "SearchEngine",
+        "type": "object",
+        "description": "An object encapsulating a search engine",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "alias": {
+            "type": "string",
+            "optional": true
+          },
+          "favIconUrl": {
+            "type": "string",
+            "optional": true,
+            "format": "url"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "get",
+        "type": "function",
+        "description": "Gets a list of search engines.",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "search",
+        "type": "function",
+        "requireUserInput": true,
+        "description": "Perform a search.",
+        "async": true,
+        "parameters": [
+          {
+            "name": "engineName",
+            "type": "string"
+          },
+          {
+            "name": "searchTerms",
+            "type": "string"
+          },
+          {
+            "type": "integer",
+            "name": "tabId",
+            "optional": true
+          }
+        ]
+      }
+    ]
+  }
+]

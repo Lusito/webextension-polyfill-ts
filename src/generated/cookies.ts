@@ -15,6 +15,11 @@ import { Events } from "./events";
 export namespace Cookies {
 
     /**
+     * A cookie's 'SameSite' state (https://tools.ietf.org/html/draft-west-first-party-cookies). 'no_restriction' corresponds to a cookie set without a 'SameSite' attribute, 'lax' to 'SameSite=Lax', and 'strict' to 'SameSite=Strict'.
+     */
+    export type SameSiteStatus = "no_restriction" | "lax" | "strict";
+
+    /**
      * Represents information about an HTTP cookie.
      */
     export interface Cookie {
@@ -53,6 +58,11 @@ export namespace Cookies {
          * True if the cookie is marked as HttpOnly (i.e. the cookie is inaccessible to client-side scripts).
          */
         httpOnly: boolean;
+
+        /**
+         * The cookie's same-site status (i.e. whether the cookie is sent with cross-site requests).
+         */
+        sameSite: SameSiteStatus;
 
         /**
          * True if the cookie is a session cookie, as opposed to a persistent cookie with an expiration date.
@@ -229,6 +239,12 @@ export namespace Cookies {
          * Optional.
          */
         httpOnly?: boolean;
+
+        /**
+         * The cookie's same-site status.
+         * Optional.
+         */
+        sameSite?: SameSiteStatus;
 
         /**
          * The expiration date of the cookie as the number of seconds since the UNIX epoch. If omitted, the cookie becomes a session cookie.

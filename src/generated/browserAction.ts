@@ -41,6 +41,11 @@ export namespace BrowserAction {
     export interface ImageDataType {
     }
 
+    /**
+     * An array of four integers in the range [0,255] that make up the RGBA color of the badge. For example, opaque red is <code>[255, 0, 0, 255]</code>. Can also be a string with a CSS value, with opaque red being <code>#FF0000</code> or <code>#F00</code>.
+     */
+    export type ColorValue = string | ColorArray | null;
+
     export interface SetTitleDetailsType extends Details {
 
         /**
@@ -81,11 +86,11 @@ export namespace BrowserAction {
     }
 
     export interface SetBadgeBackgroundColorDetailsType extends Details {
+        color: ColorValue;
+    }
 
-        /**
-         * An array of four integers in the range [0,255] that make up the RGBA color of the badge. For example, opaque red is <code>[255, 0, 0, 255]</code>. Can also be a string with a CSS value, with opaque red being <code>#FF0000</code> or <code>#F00</code>.
-         */
-        color: string | ColorArray | null;
+    export interface SetBadgeTextColorDetailsType extends Details {
+        color: ColorValue;
     }
 
     export interface Static {
@@ -155,12 +160,26 @@ export namespace BrowserAction {
         setBadgeBackgroundColor(details: SetBadgeBackgroundColorDetailsType): Promise<void>;
 
         /**
-         * Gets the background color of the browser action.
+         * Gets the background color of the browser action badge.
          *
          * @param details
          * @returns Promise<ColorArray>
          */
         getBadgeBackgroundColor(details: Details): Promise<ColorArray>;
+
+        /**
+         * Sets the text color for the badge.
+         *
+         * @param details
+         */
+        setBadgeTextColor(details: SetBadgeTextColorDetailsType): void;
+
+        /**
+         * Gets the text color of the browser action badge.
+         *
+         * @param details
+         */
+        getBadgeTextColor(details: Details): void;
 
         /**
          * Enables the browser action for a tab. By default, browser actions are enabled.

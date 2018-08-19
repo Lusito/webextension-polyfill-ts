@@ -132,6 +132,11 @@ export namespace Manifest {
         /**
          * Optional.
          */
+        hidden?: boolean;
+
+        /**
+         * Optional.
+         */
         browser_action?: WebExtensionManifestBrowserActionType;
 
         /**
@@ -179,6 +184,11 @@ export namespace Manifest {
          * Optional.
          */
         sidebar_action?: WebExtensionManifestSidebarActionType;
+
+        /**
+         * Optional.
+         */
+        theme_experiment?: ThemeExperiment;
 
         /**
          * Optional.
@@ -237,7 +247,7 @@ export namespace Manifest {
         size: number;
     }
 
-    export type OptionalPermission = "clipboardRead" | "clipboardWrite" | "geolocation" | "idle" | "notifications" | "bookmarks" | "browserSettings" | "cookies" | "downloads" | "downloads.open" | "find" | "history" | "activeTab" | "tabs" | "tabHide" | "topSites" | "webNavigation" | "webRequest" | "webRequestBlocking";
+    export type OptionalPermission = "clipboardRead" | "clipboardWrite" | "geolocation" | "idle" | "notifications" | "bookmarks" | "browserSettings" | "cookies" | "downloads" | "downloads.open" | "find" | "history" | "search" | "activeTab" | "tabs" | "tabHide" | "topSites" | "webNavigation" | "webRequest" | "webRequestBlocking";
 
     export type OptionalPermissionOrOrigin = OptionalPermission | MatchPattern;
 
@@ -374,6 +384,29 @@ export namespace Manifest {
 
     export type ThemeColor = string | [number, number, number] | [number, number, number, number];
 
+    export interface ThemeExperiment {
+
+        /**
+         * Optional.
+         */
+        stylesheet?: ExtensionURL;
+
+        /**
+         * Optional.
+         */
+        images?: ThemeExperimentImagesType;
+
+        /**
+         * Optional.
+         */
+        colors?: ThemeExperimentColorsType;
+
+        /**
+         * Optional.
+         */
+        properties?: ThemeExperimentPropertiesType;
+    }
+
     export interface ThemeType {
 
         /**
@@ -407,6 +440,11 @@ export namespace Manifest {
          * Optional.
          */
         default_locale?: string;
+
+        /**
+         * Optional.
+         */
+        theme_experiment?: ThemeExperiment;
 
         /**
          * Optional.
@@ -702,6 +740,15 @@ export namespace Manifest {
         paths?: string[];
     }
 
+    export interface ThemeExperimentImagesType {
+    }
+
+    export interface ThemeExperimentColorsType {
+    }
+
+    export interface ThemeExperimentPropertiesType {
+    }
+
     export interface ThemeTypeImagesType {
 
         /**
@@ -881,6 +928,16 @@ export namespace Manifest {
          * Optional.
          */
         popup_highlight_text?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        ntp_background?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        ntp_text?: ThemeColor;
     }
 
     export interface ThemeTypeIconsType {

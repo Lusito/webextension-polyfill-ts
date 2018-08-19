@@ -27,15 +27,39 @@ export namespace TopSites {
          * Optional.
          */
         title?: string;
+
+        /**
+         * Data URL for the favicon, if available.
+         * Optional.
+         */
+        favicon?: string;
     }
 
     export interface GetOptionsType {
 
         /**
-         * Which providers to get top sites from. Possible values are "places" and "activityStream".
+         * The number of top sites to return, defaults to the value used by Firefox
          * Optional.
          */
-        providers?: string[];
+        limit?: number;
+
+        /**
+         * Limit the result to a single top site link per domain
+         * Optional.
+         */
+        onePerDomain?: boolean;
+
+        /**
+         * Include sites that the user has blocked from appearing on the Firefox new tab.
+         * Optional.
+         */
+        includeBlocked?: boolean;
+
+        /**
+         * Include sites favicon if available.
+         * Optional.
+         */
+        includeFavicon?: boolean;
     }
 
     export interface Static {

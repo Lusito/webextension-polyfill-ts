@@ -11,6 +11,7 @@
  */
 import { Events } from "./events";
 import { Runtime } from "./runtime";
+import { Windows } from "./windows";
 import { ExtensionTypes } from "./extensionTypes";
 
 export namespace Tabs {
@@ -403,7 +404,7 @@ export namespace Tabs {
     /**
      * Event names supported in onUpdated.
      */
-    export type UpdatePropertyName = "audible" | "discarded" | "favIconUrl" | "hidden" | "isarticle" | "mutedInfo" | "pinned" | "sharingState" | "status" | "title";
+    export type UpdatePropertyName = "audible" | "discarded" | "favIconUrl" | "hidden" | "isarticle" | "isArticle" | "mutedInfo" | "pinned" | "sharingState" | "status" | "title";
 
     /**
      * An object describing filters to apply to tabs.onUpdated events.
@@ -506,6 +507,18 @@ export namespace Tabs {
          * Optional.
          */
         openInReaderMode?: boolean;
+
+        /**
+         * Whether the tab is marked as 'discarded' when created.
+         * Optional.
+         */
+        discarded?: boolean;
+
+        /**
+         * The title used for display if the tab is created in discarded mode.
+         * Optional.
+         */
+        title?: string;
     }
 
     export interface QueryQueryInfoType {
@@ -950,6 +963,14 @@ export namespace Tabs {
          * @returns Promise<Tab[]>
          */
         query(queryInfo: QueryQueryInfoType): Promise<Tab[]>;
+
+        /**
+         * Highlights the given tabs.
+         *
+         * @param highlightInfo
+         * @returns Promise<Windows.Window>
+         */
+        highlight(highlightInfo: HighlightHighlightInfoType): Promise<Windows.Window>;
 
         /**
          * Modifies the properties of a tab. Properties that are not specified in <var>updateProperties</var> are not modified.

@@ -42,6 +42,37 @@
         ]
       },
       {
+        "id": "ThemeExperiment",
+        "type": "object",
+        "properties": {
+          "stylesheet": {
+            "optional": true,
+            "$ref": "ExtensionURL"
+          },
+          "images": {
+            "type": "object",
+            "optional": true,
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "colors": {
+            "type": "object",
+            "optional": true,
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "properties": {
+            "type": "object",
+            "optional": true,
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      {
         "id": "ThemeType",
         "type": "object",
         "properties": {
@@ -52,6 +83,7 @@
               "additional_backgrounds": {
                 "type": "array",
                 "items": { "$ref": "ImageDataOrExtensionURL" },
+                "maxItems": 15,
                 "optional": true
               },
               "headerURL": {
@@ -63,7 +95,7 @@
                 "optional": true
               }
             },
-            "additionalProperties": { "$ref": "UnrecognizedProperty" }
+            "additionalProperties": { "$ref": "ImageDataOrExtensionURL" }
           },
           "colors": {
             "type": "object",
@@ -196,9 +228,17 @@
               "popup_highlight_text": {
                 "$ref": "ThemeColor",
                 "optional": true
+              },
+              "ntp_background": {
+                "$ref": "ThemeColor",
+                "optional": true
+              },
+              "ntp_text": {
+                "$ref": "ThemeColor",
+                "optional": true
               }
             },
-            "additionalProperties": { "$ref": "UnrecognizedProperty" }
+            "additionalProperties": { "$ref": "ThemeColor" }
           },
           "icons": {
             "type": "object",
@@ -542,6 +582,7 @@
                     "right bottom", "right center", "right top"
                   ]
                 },
+                "maxItems": 15,
                 "optional": true
               },
               "additional_backgrounds_tiling": {
@@ -550,10 +591,11 @@
                   "type": "string",
                   "enum": ["no-repeat", "repeat", "repeat-x", "repeat-y"]
                 },
+                "maxItems": 15,
                 "optional": true
               }
             },
-            "additionalProperties": { "$ref": "UnrecognizedProperty" }
+            "additionalProperties": { "type": "string" }
           }
         },
         "additionalProperties": { "$ref": "UnrecognizedProperty" }
@@ -569,7 +611,11 @@
           },
           "default_locale": {
             "type": "string",
-            "optional": "true"
+            "optional": true
+          },
+          "theme_experiment": {
+            "$ref": "ThemeExperiment",
+            "optional": true
           },
           "icons": {
             "type": "object",
@@ -577,6 +623,15 @@
             "patternProperties": {
               "^[1-9]\\d*$": { "type": "string" }
             }
+          }
+        }
+      },
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "theme_experiment": {
+            "$ref": "ThemeExperiment",
+            "optional": true
           }
         }
       }

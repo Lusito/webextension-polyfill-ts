@@ -52,6 +52,7 @@
           "csp_report",
           "imageset",
           "web_manifest",
+          "speculative",
           "other"
         ]
       },
@@ -189,10 +190,10 @@
           },
           "validity": {
             "type": "object",
-            "description": "Contains start and end dates in GMT.",
+            "description": "Contains start and end timestamps.",
             "properties": {
-              "startGMT": { "type": "string" },
-              "endGMT": { "type": "string" }
+              "start": { "type": "integer" },
+              "end": { "type": "integer" }
             }
           },
           "fingerprint": {
@@ -213,9 +214,6 @@
             "properties": {
               "sha256": { "type": "string" }
             }
-          },
-          "keyUsages": {
-            "type": "string"
           },
           "rawDER": {
             "optional": true,
@@ -270,6 +268,16 @@
           "cipherSuite": {
             "type": "string",
             "description": "The cipher suite used in this request if state is \"secure\".",
+            "optional": true
+          },
+          "keaGroupName": {
+            "type": "string",
+            "description": "The key exchange algorithm used in this request if state is \"secure\".",
+            "optional": true
+          },
+          "signatureSchemeName": {
+            "type": "string",
+            "description": "The signature scheme used in this request if state is \"secure\".",
             "optional": true
           },
           "certificates": {
