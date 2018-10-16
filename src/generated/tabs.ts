@@ -975,11 +975,11 @@ export namespace Tabs {
         /**
          * Modifies the properties of a tab. Properties that are not specified in <var>updateProperties</var> are not modified.
          *
-         * @param tabId Defaults to the selected tab of the $(topic:current-window)[current window].
+         * @param tabId Optional. Defaults to the selected tab of the $(topic:current-window)[current window].
          * @param updateProperties
          * @returns Promise<Tab>
          */
-        update(tabId: number, updateProperties: UpdateUpdatePropertiesType): Promise<Tab>;
+        update(tabId: number | undefined, updateProperties: UpdateUpdatePropertiesType): Promise<Tab>;
 
         /**
          * Modifies the properties of a tab. Properties that are not specified in <var>updateProperties</var> are not modified.
@@ -1060,11 +1060,11 @@ export namespace Tabs {
         /**
          * Injects JavaScript code into a page. For details, see the $(topic:content_scripts)[programmatic injection] section of the content scripts doc.
          *
-         * @param tabId The ID of the tab in which to run the script; defaults to the active tab of the current window.
+         * @param tabId Optional. The ID of the tab in which to run the script; defaults to the active tab of the current window.
          * @param details Details of the script to run.
          * @returns Promise<any[]> Called after all the JavaScript has been executed.
          */
-        executeScript(tabId: number, details: ExtensionTypes.InjectDetails): Promise<any[]>;
+        executeScript(tabId: number | undefined, details: ExtensionTypes.InjectDetails): Promise<any[]>;
 
         /**
          * Injects JavaScript code into a page. For details, see the $(topic:content_scripts)[programmatic injection] section of the content scripts doc.
@@ -1077,11 +1077,11 @@ export namespace Tabs {
         /**
          * Injects CSS into a page. For details, see the $(topic:content_scripts)[programmatic injection] section of the content scripts doc.
          *
-         * @param tabId The ID of the tab in which to insert the CSS; defaults to the active tab of the current window.
+         * @param tabId Optional. The ID of the tab in which to insert the CSS; defaults to the active tab of the current window.
          * @param details Details of the CSS text to insert.
          * @returns Promise<void> Called when all the CSS has been inserted.
          */
-        insertCSS(tabId: number, details: ExtensionTypes.InjectDetails): Promise<void>;
+        insertCSS(tabId: number | undefined, details: ExtensionTypes.InjectDetails): Promise<void>;
 
         /**
          * Injects CSS into a page. For details, see the $(topic:content_scripts)[programmatic injection] section of the content scripts doc.
@@ -1094,11 +1094,11 @@ export namespace Tabs {
         /**
          * Removes injected CSS from a page. For details, see the $(topic:content_scripts)[programmatic injection] section of the content scripts doc.
          *
-         * @param tabId The ID of the tab from which to remove the injected CSS; defaults to the active tab of the current window.
+         * @param tabId Optional. The ID of the tab from which to remove the injected CSS; defaults to the active tab of the current window.
          * @param details Details of the CSS text to remove.
          * @returns Promise<void> Called when all the CSS has been removed.
          */
-        removeCSS(tabId: number, details: ExtensionTypes.InjectDetails): Promise<void>;
+        removeCSS(tabId: number | undefined, details: ExtensionTypes.InjectDetails): Promise<void>;
 
         /**
          * Removes injected CSS from a page. For details, see the $(topic:content_scripts)[programmatic injection] section of the content scripts doc.
@@ -1111,11 +1111,11 @@ export namespace Tabs {
         /**
          * Zooms a specified tab.
          *
-         * @param tabId The ID of the tab to zoom; defaults to the active tab of the current window.
+         * @param tabId Optional. The ID of the tab to zoom; defaults to the active tab of the current window.
          * @param zoomFactor The new zoom factor. Use a value of 0 here to set the tab to its current default zoom factor. Values greater than zero specify a (possibly non-default) zoom factor for the tab.
          * @returns Promise<void> Called after the zoom factor has been changed.
          */
-        setZoom(tabId: number, zoomFactor: number): Promise<void>;
+        setZoom(tabId: number | undefined, zoomFactor: number): Promise<void>;
 
         /**
          * Zooms a specified tab.
@@ -1136,11 +1136,11 @@ export namespace Tabs {
         /**
          * Sets the zoom settings for a specified tab, which define how zoom changes are handled. These settings are reset to defaults upon navigating the tab.
          *
-         * @param tabId The ID of the tab to change the zoom settings for; defaults to the active tab of the current window.
+         * @param tabId Optional. The ID of the tab to change the zoom settings for; defaults to the active tab of the current window.
          * @param zoomSettings Defines how zoom changes are handled and at what scope.
          * @returns Promise<void> Called after the zoom settings have been changed.
          */
-        setZoomSettings(tabId: number, zoomSettings: ZoomSettings): Promise<void>;
+        setZoomSettings(tabId: number | undefined, zoomSettings: ZoomSettings): Promise<void>;
 
         /**
          * Sets the zoom settings for a specified tab, which define how zoom changes are handled. These settings are reset to defaults upon navigating the tab.

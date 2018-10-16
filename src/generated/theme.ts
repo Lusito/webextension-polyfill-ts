@@ -50,11 +50,11 @@ export namespace Theme {
         /**
          * Make complete updates to the theme. Resolves when the update has completed.
          *
-         * @param windowId The id of the window to update. No id updates all windows.
+         * @param windowId Optional. The id of the window to update. No id updates all windows.
          * @param details The properties of the theme to update.
          * @returns Promise<void>
          */
-        update(windowId: number, details: Manifest.ThemeType): Promise<void>;
+        update(windowId: number | undefined, details: Manifest.ThemeType): Promise<void>;
 
         /**
          * Make complete updates to the theme. Resolves when the update has completed.

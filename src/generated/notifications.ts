@@ -199,11 +199,11 @@ export namespace Notifications {
         /**
          * Creates and displays a notification.
          *
-         * @param notificationId Identifier of the notification. If it is empty, this method generates an id. If it matches an existing notification, this method first clears that notification before proceeding with the create operation.
+         * @param notificationId Optional. Identifier of the notification. If it is empty, this method generates an id. If it matches an existing notification, this method first clears that notification before proceeding with the create operation.
          * @param options Contents of the notification.
          * @returns Promise<string>
          */
-        create(notificationId: string, options: CreateNotificationOptions): Promise<string>;
+        create(notificationId: string | undefined, options: CreateNotificationOptions): Promise<string>;
 
         /**
          * Creates and displays a notification.
