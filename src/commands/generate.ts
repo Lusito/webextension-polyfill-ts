@@ -223,7 +223,7 @@ function fixOptionalParameter(parameters: SchemaProperty[] | undefined, indexToF
     if (parameters && indexToFix >= 0) {
         parameters = parameters.slice();
         const param = parameters[indexToFix] = { ...parameters[indexToFix] };
-        delete param.optional;
+        param.overloadFlag = true;
     }
     return parameters;
 }
@@ -238,9 +238,9 @@ function removeOptionalParameter(parameters: SchemaProperty[] | undefined, index
 
 function getOverloadParameterIndex(parameters: SchemaProperty[] | undefined) {
     if (parameters) {
-        const lastNonOtional = getLastNonOptionalParam(parameters);
+        const lastNonOptional = getLastNonOptionalParam(parameters);
         return parameters.findIndex((param, i) => {
-            if (i < lastNonOtional && param.optional)
+            if (i < lastNonOptional && param.optional && !param.overloadFlag)
                 return true;
             return false;
         });

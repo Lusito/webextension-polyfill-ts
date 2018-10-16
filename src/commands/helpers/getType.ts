@@ -65,12 +65,12 @@ export function getType(e: SchemaProperty): string {
         const type = getType(e.additionalProperties.items);
         return `{[s:string]:${type}}`;
     }
-    else if(e.type === 'object' && e.additionalProperties && e.additionalProperties !== true && e.additionalProperties.$ref && !e.properties) {
+    else if (e.type === 'object' && e.additionalProperties && e.additionalProperties !== true && e.additionalProperties.$ref && !e.properties) {
         return `{[s:string]:${e.additionalProperties.$ref}}`;
     }
     else if (e.type === 'object' && e.patternProperties) {
         const names = Object.getOwnPropertyNames(e.patternProperties);
-        if(names.length !== 1)
+        if (names.length !== 1)
             throw new Error('Pattern properties expected to be 1 in length');
         const patternProp = e.patternProperties[names[0]];
         const type = getType(patternProp);
@@ -81,7 +81,7 @@ export function getType(e: SchemaProperty): string {
 
 export function getReturnType(e: SchemaFunctionProperty): string {
     let returnType = e.returns ? getType(e.returns) : "void";
-    if(e.returns && e.returns.optional)
+    if (e.returns && e.returns.optional)
         returnType += " | void";
     return returnType;
 }
@@ -90,13 +90,13 @@ export interface MinimumTuple<T> extends Array<T> {
     0: T;
 }
 
-const test:Array<string> = ["", ""];
+const test: Array<string> = ["", ""];
 
 console.log(test);
 
 export function getArrayType(e: SchemaArrayProperty): string {
-    if(e.items) {
-        let propType:string;
+    if (e.items) {
+        let propType: string;
         if (e.items.type === 'choices' && e.items.choices)
             propType = getUnionType(e.items.choices);
         else {
@@ -130,8 +130,16 @@ export function getProperty(name: string, prop: SchemaProperty, allowOptional: b
     return name + ': ' + propType + ' | undefined';
 }
 
+function remainingParametersOptional(parameters: SchemaProperty[], after: number) {
+    for (let i = after; i < parameters.length; i++) {
+        if (!parameters[i].optional)
+            return false;
+    }
+    return true;
+}
+
 export function getParameters(parameters: SchemaProperty[] | undefined, allowOptional: boolean) {
     if (!parameters)
         return '';
-    return parameters.map((p) => getProperty(p.name || '', p, allowOptional)).join(', ');
+    return parameters.map((p, i) => getProperty(p.name || '', p, allowOptional && remainingParametersOptional(parameters, i + 1))).join(', ');
 }

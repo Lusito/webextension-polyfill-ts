@@ -9,6 +9,7 @@ export class SchemaBaseProperty {
     public $extend?: string;//only on namespace.types
     public description?: string;
     public optional?: boolean | 'true' | 'false' | 'omit-key-if-missing';
+    public overloadFlag?: boolean; // for internal use only
     public unsupported?: boolean | 'true' | 'false';
     public deprecated?: boolean | string;
     public permissions?: string[];
