@@ -36,7 +36,7 @@ export namespace Management {
     export type ExtensionDisabledReason = "unknown" | "permissions_increase";
 
     /**
-     * The type of this extension. Will always be 'extension'.
+     * The type of this extension, 'extension' or 'theme'.
      */
     export type ExtensionType = "extension" | "theme";
 
@@ -99,7 +99,7 @@ export namespace Management {
         disabledReason?: ExtensionDisabledReason;
 
         /**
-         * The type of this extension. Will always return 'extension'.
+         * The type of this extension, 'extension' or 'theme'.
          */
         type: ExtensionType;
 
@@ -144,6 +144,24 @@ export namespace Management {
         installType: ExtensionInstallType;
     }
 
+    export interface InstallOptionsType {
+
+        /**
+         * URL pointing to the XPI file on addons.mozilla.org or similar.
+         */
+        url: Manifest.HttpURL;
+
+        /**
+         * A hash of the XPI file, using sha256 or stronger.
+         * Optional.
+         */
+        hash?: string;
+    }
+
+    export interface InstallCallbackResultType {
+        id: Manifest.ExtensionID;
+    }
+
     export interface UninstallSelfOptionsType {
 
         /**
@@ -175,6 +193,14 @@ export namespace Management {
          * @returns Promise<ExtensionInfo>
          */
         get(id: Manifest.ExtensionID): Promise<ExtensionInfo>;
+
+        /**
+         * Installs and enables a theme extension from the given url.
+         *
+         * @param options
+         * @returns Promise<InstallCallbackResultType>
+         */
+        install(options: InstallOptionsType): Promise<InstallCallbackResultType>;
 
         /**
          * Returns information about the calling extension. Note: This function can be used without requesting the 'management' permission in the manifest.

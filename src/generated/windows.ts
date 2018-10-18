@@ -194,6 +194,12 @@ export namespace Windows {
         allowScriptsToClose?: boolean;
 
         /**
+         * The CookieStoreId to use for all tabs that were created when the window is opened.
+         * Optional.
+         */
+        cookieStoreId?: string;
+
+        /**
          * A string to add to the beginning of the window title.
          * Optional.
          */

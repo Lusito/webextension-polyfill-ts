@@ -194,6 +194,11 @@ export namespace Manifest {
          * Optional.
          */
         chrome_url_overrides?: WebExtensionManifestChromeUrlOverridesType;
+
+        /**
+         * Optional.
+         */
+        user_scripts?: WebExtensionManifestUserScriptsType;
     }
 
     /**
@@ -247,7 +252,7 @@ export namespace Manifest {
         size: number;
     }
 
-    export type OptionalPermission = "clipboardRead" | "clipboardWrite" | "geolocation" | "idle" | "notifications" | "bookmarks" | "browserSettings" | "cookies" | "downloads" | "downloads.open" | "find" | "history" | "search" | "activeTab" | "tabs" | "tabHide" | "topSites" | "webNavigation" | "webRequest" | "webRequestBlocking";
+    export type OptionalPermission = "clipboardRead" | "clipboardWrite" | "geolocation" | "idle" | "notifications" | "bookmarks" | "browserSettings" | "cookies" | "downloads" | "downloads.open" | "find" | "history" | "menus.overrideContext" | "search" | "activeTab" | "tabs" | "tabHide" | "topSites" | "webNavigation" | "webRequest" | "webRequestBlocking";
 
     export type OptionalPermissionOrOrigin = OptionalPermission | MatchPattern;
 
@@ -297,11 +302,6 @@ export namespace Manifest {
      * Mostly unrestricted match patterns for privileged add-ons. This should technically be rejected for unprivileged add-ons, but, reasons. The MatchPattern class will still refuse privileged schemes for those extensions.
      */
     export type MatchPatternUnestricted = string;
-
-    /**
-     * Same as MatchPattern above, but includes moz-extension protocol
-     */
-    export type MatchPatternInternal = "<all_urls>" | string;
 
     /**
      * Details of the script or CSS to inject. Either the code or the file property must be set, but both may not be set at the same time. Based on InjectDetails, but using underscore rather than camel case naming conventions.
@@ -560,6 +560,38 @@ export namespace Manifest {
         default_area?: WebExtensionManifestBrowserActionDefaultAreaEnum;
     }
 
+    export interface WebExtensionManifestChromeSettingsOverridesSearchProviderParamsItemType {
+
+        /**
+         * A url parameter name
+         */
+        name: string;
+
+        /**
+         * The type of param can be either "purpose" or "pref".
+         * Optional.
+         */
+        condition?: "purpose" | "pref";
+
+        /**
+         * The preference to retreive the value from.
+         * Optional.
+         */
+        pref?: string;
+
+        /**
+         * The context that initiates a search, required if condition is "purpose".
+         * Optional.
+         */
+        purpose?: "contextmenu" | "searchbar" | "homepage" | "keyword" | "newtab";
+
+        /**
+         * A url parameter value.
+         * Optional.
+         */
+        value?: string;
+    }
+
     export interface WebExtensionManifestChromeSettingsOverridesSearchProviderType {
         name: string;
 
@@ -581,10 +613,28 @@ export namespace Manifest {
         suggest_url?: string;
 
         /**
+         * POST parameters to the search_url as a query string.
+         * Optional.
+         */
+        search_url_post_params?: string;
+
+        /**
+         * POST parameters to the suggest_url as a query string.
+         * Optional.
+         */
+        suggest_url_post_params?: string;
+
+        /**
          * Sets the default engine to a built-in engine only.
          * Optional.
          */
         is_default?: boolean;
+
+        /**
+         * A list of optional search url parameters. This allows the additon of search url parameters based on how the search is performed in Firefox.
+         * Optional.
+         */
+        params?: WebExtensionManifestChromeSettingsOverridesSearchProviderParamsItemType[];
     }
 
     export interface WebExtensionManifestChromeSettingsOverridesType {
@@ -689,6 +739,11 @@ export namespace Manifest {
          * Optional.
          */
         hide_matches?: MatchPatternRestricted[];
+
+        /**
+         * Optional.
+         */
+        pinned?: boolean;
     }
 
     export interface WebExtensionManifestSidebarActionType {
@@ -723,6 +778,14 @@ export namespace Manifest {
          * Optional.
          */
         newtab?: ExtensionURL;
+    }
+
+    export interface WebExtensionManifestUserScriptsType {
+
+        /**
+         * Optional.
+         */
+        api_script?: Manifest.ExtensionURL;
     }
 
     export interface WebExtensionLangpackManifestLanguagesPatternType {
@@ -938,6 +1001,31 @@ export namespace Manifest {
          * Optional.
          */
         ntp_text?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        sidebar?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        sidebar_border?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        sidebar_text?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        sidebar_highlight?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        sidebar_highlight_text?: ThemeColor;
     }
 
     export interface ThemeTypeIconsType {

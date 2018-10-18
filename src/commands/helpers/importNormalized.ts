@@ -3,6 +3,11 @@ import { readSchemaFile } from './readSchemaFile';
 import { SchemaEntry } from './types';
 import { fixes } from './fixes';
 
+const EXTENSION_NAMESPACE_FILES = [
+    'menus_child.json',
+    'user_scripts_content.json'
+];
+
 function isExtensionNamespace(entry: SchemaEntry) {
     if (entry.types && entry.types.find((t) => !!t.$extend))
         return true;
@@ -62,7 +67,7 @@ export class ImportedNamespaces {
         data.json.forEach((entry) => {
             if (entry.namespace === 'test')
                 return;
-            if (isExtensionNamespace(entry) || data.file === 'menus_child.json') {
+            if (isExtensionNamespace(entry) || EXTENSION_NAMESPACE_FILES.indexOf(data.file) >= 0) {
                 this.namespaceExtensions.push(new ImportedNamespace(data.file, data.comments, entry));
                 return;
             }

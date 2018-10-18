@@ -62,6 +62,13 @@ export namespace DevtoolsPanels {
          * @returns Promise<void> A callback invoked after the sidebar is updated with the object.
          */
         setObject(jsonObject: string, rootTitle?: string): Promise<void>;
+
+        /**
+         * Sets an HTML page to be displayed in the sidebar pane.
+         *
+         * @param path Relative path of an extension page to display within the sidebar.
+         */
+        setPage(path: Manifest.ExtensionURL): void;
     }
 
     /**

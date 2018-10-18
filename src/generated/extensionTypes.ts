@@ -9,6 +9,8 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
+import { Manifest } from "./manifest";
+
 export namespace ExtensionTypes {
 
     /**
@@ -93,6 +95,22 @@ export namespace ExtensionTypes {
     }
 
     export type DateType = string | number | Date;
+
+    export type ExtensionFileOrCode = ExtensionFileOrCodeC1Type | ExtensionFileOrCodeC2Type;
+
+    /**
+     * A plain JSON value
+     */
+    export interface PlainJSONValue {
+    }
+
+    export interface ExtensionFileOrCodeC1Type {
+        file: Manifest.ExtensionURL;
+    }
+
+    export interface ExtensionFileOrCodeC2Type {
+        code: string;
+    }
 
     export interface Static {
     }

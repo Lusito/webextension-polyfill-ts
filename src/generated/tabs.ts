@@ -210,6 +210,12 @@ export namespace Tabs {
          * Optional.
          */
         sharingState?: SharingState;
+
+        /**
+         * Whether the tab is drawing attention.
+         * Optional.
+         */
+        attention?: boolean;
     }
 
     /**
@@ -404,7 +410,7 @@ export namespace Tabs {
     /**
      * Event names supported in onUpdated.
      */
-    export type UpdatePropertyName = "audible" | "discarded" | "favIconUrl" | "hidden" | "isarticle" | "isArticle" | "mutedInfo" | "pinned" | "sharingState" | "status" | "title";
+    export type UpdatePropertyName = "attention" | "audible" | "discarded" | "favIconUrl" | "hidden" | "isarticle" | "isArticle" | "mutedInfo" | "pinned" | "sharingState" | "status" | "title";
 
     /**
      * An object describing filters to apply to tabs.onUpdated events.
@@ -530,6 +536,12 @@ export namespace Tabs {
         active?: boolean;
 
         /**
+         * Whether the tabs are drawing attention.
+         * Optional.
+         */
+        attention?: boolean;
+
+        /**
          * Whether the tabs are pinned.
          * Optional.
          */
@@ -653,6 +665,12 @@ export namespace Tabs {
         windowId?: number;
 
         /**
+         * If true, the $(ref:windows.Window) returned will have a <var>tabs</var> property that contains a list of the $(ref:tabs.Tab) objects. The <code>Tab</code> objects only contain the <code>url</code>, <code>title</code> and <code>favIconUrl</code> properties if the extension's manifest file includes the <code>"tabs"</code> permission. If false, the $(ref:windows.Window) won't have the <var>tabs</var> property.
+         * Optional.
+         */
+        populate?: boolean;
+
+        /**
          * One or more tab indices to highlight.
          */
         tabs: number[] | number;
@@ -671,6 +689,12 @@ export namespace Tabs {
          * Optional.
          */
         active?: boolean;
+
+        /**
+         * Adds or removes the tab from the current selection.
+         * Optional.
+         */
+        highlighted?: boolean;
 
         /**
          * Whether the tab should be pinned.
@@ -724,6 +748,12 @@ export namespace Tabs {
      * Lists the changes to the state of the tab that was updated.
      */
     export interface OnUpdatedChangeInfoType {
+
+        /**
+         * The tab's new attention state.
+         * Optional.
+         */
+        attention?: boolean;
 
         /**
          * The tab's new audible state.

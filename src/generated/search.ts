@@ -31,6 +31,26 @@ export namespace Search {
         favIconUrl?: string;
     }
 
+    export interface SearchSearchPropertiesType {
+
+        /**
+         * Terms to search for.
+         */
+        query: string;
+
+        /**
+         * Search engine to use. Uses the default if not specified.
+         * Optional.
+         */
+        engine?: string;
+
+        /**
+         * The ID of the tab for the search results. If not specified, a new tab is created.
+         * Optional.
+         */
+        tabId?: number;
+    }
+
     export interface Static {
 
         /**
@@ -41,10 +61,8 @@ export namespace Search {
         /**
          * Perform a search.
          *
-         * @param engineName
-         * @param searchTerms
-         * @param tabId Optional.
+         * @param searchProperties
          */
-        search(engineName: string, searchTerms: string, tabId?: number): void;
+        search(searchProperties: SearchSearchPropertiesType): void;
     }
 }

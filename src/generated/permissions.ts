@@ -30,7 +30,7 @@ export namespace Permissions {
         /**
          * Optional.
          */
-        origins?: Manifest.MatchPatternInternal[];
+        origins?: Manifest.MatchPattern[];
     }
 
     export interface Static {

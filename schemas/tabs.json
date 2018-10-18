@@ -101,7 +101,8 @@
           "cookieStoreId": {"type": "string", "optional": true, "description": "The CookieStoreId used for the tab."},
           "isArticle": {"type": "boolean", "optional": true, "description": "Whether the document in the tab can be rendered in reader mode."},
           "isInReaderMode": {"type": "boolean", "optional": true, "description": "Whether the document in the tab is being rendered in reader mode."},
-          "sharingState": {"$ref": "SharingState", "optional": true, "description": "Current tab sharing state for screen, microphone and camera."}
+          "sharingState": {"$ref": "SharingState", "optional": true, "description": "Current tab sharing state for screen, microphone and camera."},
+          "attention": {"type": "boolean", "optional": true, "description": "Whether the tab is drawing attention."}
         }
       },
       {
@@ -293,6 +294,7 @@
         "id": "UpdatePropertyName",
         "type": "string",
         "enum": [
+          "attention",
           "audible",
           "discarded",
           "favIconUrl",
@@ -656,6 +658,11 @@
                 "optional": true,
                 "description": "Whether the tabs are active in their windows."
               },
+              "attention": {
+                "type": "boolean",
+                "optional": true,
+                "description": "Whether the tabs are drawing attention."
+              },
               "pinned": {
                 "type": "boolean",
                 "optional": true,
@@ -793,6 +800,12 @@
                  "description": "The window that contains the tabs.",
                  "minimum": -2
                },
+               "populate": {
+                 "type": "boolean",
+                 "optional": true,
+                 "default": true,
+                 "description": "If true, the $(ref:windows.Window) returned will have a <var>tabs</var> property that contains a list of the $(ref:tabs.Tab) objects. The <code>Tab</code> objects only contain the <code>url</code>, <code>title</code> and <code>favIconUrl</code> properties if the extension's manifest file includes the <code>\"tabs\"</code> permission. If false, the $(ref:windows.Window) won't have the <var>tabs</var> property."
+               },
                "tabs": {
                  "description": "One or more tab indices to highlight.",
                  "choices": [
@@ -844,7 +857,6 @@
                 "description": "Whether the tab should be active. Does not affect whether the window is focused (see $(ref:windows.update))."
               },
               "highlighted": {
-                "unsupported": true,
                 "type": "boolean",
                 "optional": true,
                 "description": "Adds or removes the tab from the current selection."
@@ -1410,6 +1422,11 @@
             "name": "changeInfo",
             "description": "Lists the changes to the state of the tab that was updated.",
             "properties": {
+              "attention": {
+                "type": "boolean",
+                "optional": true,
+                "description": "The tab's new attention state."
+              },
               "audible": {
                 "type": "boolean",
                 "optional": true,

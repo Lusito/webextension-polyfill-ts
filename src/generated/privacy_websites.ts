@@ -40,7 +40,7 @@ export namespace PrivacyWebsites {
     /**
      * The type of cookies to allow.
      */
-    export type CookieConfigBehaviorEnum = "allow_all" | "reject_all" | "reject_third_party" | "allow_visited";
+    export type CookieConfigBehaviorEnum = "allow_all" | "reject_all" | "reject_third_party" | "allow_visited" | "reject_trackers";
 
     export interface Static {
 

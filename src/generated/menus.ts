@@ -10,6 +10,7 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
+import { Extension } from "./extension";
 import { Tabs } from "./tabs";
 import { Events } from "./events";
 
@@ -40,6 +41,12 @@ export namespace Menus {
          * Optional.
          */
         parentMenuItemId?: number | string;
+
+        /**
+         * The type of view where the menu is clicked. May be unset if the menu is not associated with a view.
+         * Optional.
+         */
+        viewType?: Extension.ViewType;
 
         /**
          * One of 'image', 'video', or 'audio' if the context menu was activated on one of these types of elements.
@@ -111,6 +118,12 @@ export namespace Menus {
         modifiers: OnClickDataModifiersItemEnum[];
 
         /**
+         * An integer value of button by which menu item was clicked.
+         * Optional.
+         */
+        button?: number;
+
+        /**
          * An identifier of the clicked element, if any. Use menus.getTargetElement in the page to find the corresponding element.
          * Optional.
          */
@@ -153,6 +166,18 @@ export namespace Menus {
          * Optional.
          */
         contexts?: ContextType[];
+
+        /**
+         * List of view types where the menu item will be shown. Defaults to any view, including those without a viewType.
+         * Optional.
+         */
+        viewTypes?: Extension.ViewType[];
+
+        /**
+         * Whether the item is visible in the menu.
+         * Optional.
+         */
+        visible?: boolean;
 
         /**
          * A function that will be called back when the menu item is clicked. Event pages cannot use this; instead, they should register a listener for $(ref:contextMenus.onClicked).
@@ -206,6 +231,11 @@ export namespace Menus {
         /**
          * Optional.
          */
+        icons?: {[s:string]:string};
+
+        /**
+         * Optional.
+         */
         title?: string;
 
         /**
@@ -217,6 +247,17 @@ export namespace Menus {
          * Optional.
          */
         contexts?: ContextType[];
+
+        /**
+         * Optional.
+         */
+        viewTypes?: Extension.ViewType[];
+
+        /**
+         * Whether the item is visible in the menu.
+         * Optional.
+         */
+        visible?: boolean;
 
         /**
          * @param info
@@ -246,6 +287,33 @@ export namespace Menus {
         enabled?: boolean;
     }
 
+    export interface OverrideContextContextOptionsType {
+
+        /**
+         * Whether to also include default menu items in the menu.
+         * Optional.
+         */
+        showDefaults?: boolean;
+
+        /**
+         * ContextType to override, to allow menu items from other extensions in the menu. Currently only 'bookmark' and 'tab' are supported. showDefaults cannot be used with this option.
+         * Optional.
+         */
+        context?: OverrideContextContextOptionsTypeContextEnum;
+
+        /**
+         * Required when context is 'bookmark'. Requires 'bookmark' permission.
+         * Optional.
+         */
+        bookmarkId?: string;
+
+        /**
+         * Required when context is 'tab'. Requires 'tabs' permission.
+         * Optional.
+         */
+        tabId?: number;
+    }
+
     /**
      * Information about the context of the menu action and the created menu items. For more information about each property, see OnClickData. The following properties are only set if the extension has host permissions for the given context: linkUrl, linkText, srcUrl, pageUrl, frameUrl, selectionText.
      */
@@ -260,6 +328,11 @@ export namespace Menus {
          * A list of all contexts that apply to the menu.
          */
         contexts: ContextType[];
+
+        /**
+         * Optional.
+         */
+        viewType?: Extension.ViewType;
 
         editable: boolean;
 
@@ -306,6 +379,11 @@ export namespace Menus {
 
     export type OnClickDataModifiersItemEnum = "Shift" | "Alt" | "Command" | "Ctrl" | "MacCtrl";
 
+    /**
+     * ContextType to override, to allow menu items from other extensions in the menu. Currently only 'bookmark' and 'tab' are supported. showDefaults cannot be used with this option.
+     */
+    export type OverrideContextContextOptionsTypeContextEnum = "bookmark" | "tab";
+
     export interface Static {
 
         /**
@@ -340,6 +418,13 @@ export namespace Menus {
          * @returns Promise<void> Called when removal is complete.
          */
         removeAll(): Promise<void>;
+
+        /**
+         * Show the matching menu items from this extension instead of the default menu. This should be called during a 'contextmenu' DOM event handler, and only applies to the menu that opens after this event.
+         *
+         * @param contextOptions
+         */
+        overrideContext(contextOptions: OverrideContextContextOptionsType): void;
 
         /**
          * Updates the extension items in the shown menu, including changes that have been made since the menu was shown. Has no effect if the menu is hidden. Rebuilding a shown menu is an expensive operation, only invoke this method when necessary.

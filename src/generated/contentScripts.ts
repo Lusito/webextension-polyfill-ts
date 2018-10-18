@@ -11,7 +11,6 @@ import { Manifest } from "./manifest";
 import { ExtensionTypes } from "./extensionTypes";
 
 export namespace ContentScripts {
-    export type ExtensionFileOrCode = ExtensionFileOrCodeC1Type | ExtensionFileOrCodeC2Type;
 
     /**
      * Details of a content script registered programmatically
@@ -38,13 +37,13 @@ export namespace ContentScripts {
          * The list of CSS files to inject
          * Optional.
          */
-        css?: ExtensionFileOrCode[];
+        css?: ExtensionTypes.ExtensionFileOrCode[];
 
         /**
          * The list of JS files to inject
          * Optional.
          */
-        js?: ExtensionFileOrCode[];
+        js?: ExtensionTypes.ExtensionFileOrCode[];
 
         /**
          * If allFrames is <code>true</code>, implies that the JavaScript or CSS should be injected into all frames of current page. By default, it's <code>false</code> and is only injected into the top frame.
@@ -76,14 +75,6 @@ export namespace ContentScripts {
          * @returns Promise<void>
          */
         unregister(): Promise<void>;
-    }
-
-    export interface ExtensionFileOrCodeC1Type {
-        file: Manifest.ExtensionURL;
-    }
-
-    export interface ExtensionFileOrCodeC2Type {
-        code: string;
     }
 
     export interface Static {

@@ -15,6 +15,14 @@
             "contextMenus"
           ]
         }]
+      }, {
+        "$extend": "OptionalPermission",
+        "choices": [{
+          "type": "string",
+          "enum": [
+            "menus.overrideContext"
+          ]
+        }]
       }
     ]
   },
@@ -74,6 +82,11 @@
             ],
             "optional": true,
             "description": "The parent ID, if any, for the item clicked."
+          },
+          "viewType": {
+            "$ref": "extension.ViewType",
+            "optional": true,
+            "description": "The type of view where the menu is clicked. May be unset if the menu is not associated with a view."
           },
           "mediaType": {
             "type": "string",
@@ -136,6 +149,11 @@
             },
             "description": "An array of keyboard modifiers that were held while the menu item was clicked."
           },
+          "button": {
+            "type": "integer",
+            "optional": true,
+            "description": "An integer value of button by which menu item was clicked."
+          },
           "targetElementId": {
             "type": "integer",
             "optional": true,
@@ -196,6 +214,20 @@
                 "minItems": 1,
                 "optional": true,
                 "description": "List of contexts this menu item will appear in. Defaults to ['page'] if not specified."
+              },
+              "viewTypes": {
+                "type": "array",
+                "items": {
+                  "$ref": "extension.ViewType"
+                },
+                "minItems": 1,
+                "optional": true,
+                "description": "List of view types where the menu item will be shown. Defaults to any view, including those without a viewType."
+              },
+              "visible": {
+                "type": "boolean",
+                "optional": true,
+                "description": "Whether the item is visible in the menu."
               },
               "onclick": {
                 "type": "function",
@@ -278,6 +310,13 @@
                 "$ref": "ItemType",
                 "optional": true
               },
+              "icons": {
+                "type": "object",
+                "optional": "omit-key-if-missing",
+                "patternProperties" : {
+                  "^[1-9]\\d*$": { "type" : "string" }
+                }
+              },
               "title": {
                 "type": "string",
                 "optional": true
@@ -293,6 +332,19 @@
                 },
                 "minItems": 1,
                 "optional": true
+              },
+              "viewTypes": {
+                "type": "array",
+                "items": {
+                  "$ref": "extension.ViewType"
+                },
+                "minItems": 1,
+                "optional": true
+              },
+              "visible": {
+                "type": "boolean",
+                "optional": true,
+                "description": "Whether the item is visible in the menu."
               },
               "onclick": {
                 "type": "function",
@@ -381,6 +433,44 @@
         ]
       },
       {
+        "name": "overrideContext",
+        "permissions": ["menus.overrideContext"],
+        "type": "function",
+        "description": "Show the matching menu items from this extension instead of the default menu. This should be called during a 'contextmenu' DOM event handler, and only applies to the menu that opens after this event.",
+        "parameters": [
+          {
+            "name": "contextOptions",
+            "type": "object",
+            "properties": {
+              "showDefaults": {
+                "type": "boolean",
+                "optional": true,
+                "default": false,
+                "description": "Whether to also include default menu items in the menu."
+              },
+              "context": {
+                "type": "string",
+                "enum": ["bookmark", "tab"],
+                "optional": true,
+                "description": "ContextType to override, to allow menu items from other extensions in the menu. Currently only 'bookmark' and 'tab' are supported. showDefaults cannot be used with this option."
+              },
+              "bookmarkId": {
+                "type": "string",
+                "minLength": 1,
+                "optional": true,
+                "description": "Required when context is 'bookmark'. Requires 'bookmark' permission."
+              },
+              "tabId": {
+                "type": "integer",
+                "minimum": 0,
+                "optional": true,
+                "description": "Required when context is 'tab'. Requires 'tabs' permission."
+              }
+            }
+          }
+        ]
+      },
+      {
         "name": "refresh",
         "type": "function",
         "description": "Updates the extension items in the shown menu, including changes that have been made since the menu was shown. Has no effect if the menu is hidden. Rebuilding a shown menu is an expensive operation, only invoke this method when necessary.",
@@ -431,6 +521,10 @@
                 "description": "A list of all contexts that apply to the menu.",
                 "type": "array",
                 "items": {"$ref": "ContextType"}
+              },
+              "viewType": {
+                "$ref": "extension.ViewType",
+                "optional": true
               },
               "editable": {
                 "type": "boolean"
