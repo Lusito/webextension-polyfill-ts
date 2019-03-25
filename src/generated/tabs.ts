@@ -216,6 +216,12 @@ export namespace Tabs {
          * Optional.
          */
         attention?: boolean;
+
+        /**
+         * The ID of this tab's successor, if any; $(ref:tabs.TAB_ID_NONE) otherwise.
+         * Optional.
+         */
+        successorTabId?: number;
     }
 
     /**
@@ -719,6 +725,12 @@ export namespace Tabs {
          * Optional.
          */
         loadReplace?: boolean;
+
+        /**
+         * The ID of this tab's successor. If specified, the successor tab must be in the same window as this tab.
+         * Optional.
+         */
+        successorTabId?: number;
     }
 
     export interface MoveMovePropertiesType {
@@ -742,6 +754,21 @@ export namespace Tabs {
          * Optional.
          */
         bypassCache?: boolean;
+    }
+
+    export interface MoveInSuccessionOptionsType {
+
+        /**
+         * Whether to move the tabs before (false) or after (true) tabId in the succession. Defaults to false.
+         * Optional.
+         */
+        append?: boolean;
+
+        /**
+         * Whether to link up the current predecessors or successor (depending on options.append) of tabId to the other side of the chain after it is prepended or appended. If true, one of the following happens: if options.append is false, the first tab in the array is set as the successor of any current predecessors of tabId; if options.append is true, the current successor of tabId is set as the successor of the last tab in the array. Defaults to false.
+         * Optional.
+         */
+        insert?: boolean;
     }
 
     /**
@@ -852,6 +879,12 @@ export namespace Tabs {
          * The ID of the tab that has become active.
          */
         tabId: number;
+
+        /**
+         * The ID of the tab that was previously active, if that tab is still open.
+         * Optional.
+         */
+        previousTabId?: number;
 
         /**
          * The ID of the window the active tab changed inside of.
@@ -1223,6 +1256,15 @@ export namespace Tabs {
          * @returns Promise<number[]>
          */
         hide(tabIds: number | number[]): Promise<number[]>;
+
+        /**
+         * Removes an array of tabs from their lines of succession and prepends or appends them in a chain to another tab.
+         *
+         * @param tabIds An array of tab IDs to move in the line of succession. For each tab in the array, the tab's current predecessors will have their successor set to the tab's current successor, and each tab will then be set to be the successor of the previous tab in the array. Any tabs not in the same window as the tab indicated by the second argument (or the first tab in the array, if no second argument) will be skipped.
+         * @param tabId Optional. The ID of a tab to set as the successor of the last tab in the array, or $(ref:tabs.TAB_ID_NONE) to leave the last tab without a successor. If options.append is true, then this tab is made the predecessor of the first tab in the array instead.
+         * @param options Optional.
+         */
+        moveInSuccession(tabIds: number[], tabId?: number, options?: MoveInSuccessionOptionsType): void;
 
         /**
          * Fired when a tab is created. Note that the tab's URL may not be set at the time this event fired, but you can listen to onUpdated events to be notified when a URL is set.

@@ -112,7 +112,8 @@
           },
           "mime": {
             "description": "The file's MIME type.",
-            "type": "string"
+            "type": "string",
+            "optional": true
           },
           "startTime": {
             "description": "Number of milliseconds between the unix epoch and when this download began.",

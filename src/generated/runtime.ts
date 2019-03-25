@@ -256,10 +256,10 @@ export namespace Runtime {
         /**
          * Sets the URL to be visited upon uninstallation. This may be used to clean up server-side data, do analytics, and implement surveys. Maximum 255 characters.
          *
-         * @param url URL to be opened after the extension is uninstalled. This URL must have an http: or https: scheme. Set an empty string to not open a new tab upon uninstallation.
+         * @param url Optional. URL to be opened after the extension is uninstalled. This URL must have an http: or https: scheme. Set an empty string to not open a new tab upon uninstallation.
          * @returns Promise<void> Called when the uninstall URL is set. If the given URL is invalid, $(ref:runtime.lastError) will be set.
          */
-        setUninstallURL(url: string): Promise<void>;
+        setUninstallURL(url?: string): Promise<void>;
 
         /**
          * Reloads the app or extension.

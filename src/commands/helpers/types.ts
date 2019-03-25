@@ -211,6 +211,7 @@ function validateEnumValue(json: any) {
 export class SchemaStringProperty extends SchemaBaseProperty {
     public type: 'string' = 'string';
     public preprocess?: 'localize';
+    public postprocess?: string;
     public enum?: EnumValue[];
     public minLength?: number;
     public maxLength?: number;
@@ -222,6 +223,7 @@ export class SchemaStringProperty extends SchemaBaseProperty {
         return super.getValidKeys().concat([
             'type',
             'preprocess',
+            'postprocess',
             'enum',
             'minLength',
             'maxLength',
@@ -236,6 +238,7 @@ export class SchemaStringProperty extends SchemaBaseProperty {
         assertValidOjectKeys(json, this.getValidKeys());
         assertEqual(json.type, 'string');
         assertOneOf(json.preprocess, 'localize', undefined);
+        assertType(json.postprocess, 'string', 'undefined');
         assertType(json.enum, 'array', 'undefined');
         assertArray(json.enum, (e) => validateEnumValue(e));
         assertType(json.minLength, 'number', 'undefined');

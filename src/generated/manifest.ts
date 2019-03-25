@@ -82,7 +82,7 @@ export namespace Manifest {
         /**
          * Optional.
          */
-        icons?: {[s:string]:string};
+        icons?: {[s:string]:ExtensionFileUrl};
 
         /**
          * Optional.
@@ -264,6 +264,8 @@ export namespace Manifest {
 
     export type ExtensionURL = string;
 
+    export type ExtensionFileUrl = string;
+
     export type ImageDataOrExtensionURL = string;
 
     export type ExtensionID = string;
@@ -355,9 +357,11 @@ export namespace Manifest {
         run_at?: ExtensionTypes.RunAt;
     }
 
-    export type IconPath = {[s:string]:ExtensionURL} | ExtensionURL;
+    export type IconPath = {[s:string]:ExtensionFileUrl} | ExtensionFileUrl;
 
     export type IconImageData = {[s:string]:ImageData} | ImageData;
+
+    export type PersistentBackgroundProperty = boolean;
 
     export type KeyName = string;
 
@@ -468,7 +472,7 @@ export namespace Manifest {
         gecko?: FirefoxSpecificProperties;
     }
 
-    export type WebExtensionManifestIncognitoEnum = "spanning";
+    export type WebExtensionManifestIncognitoEnum = "not_allowed" | "spanning";
 
     export interface WebExtensionManifestBackgroundC1Type {
         page: ExtensionURL;
@@ -623,6 +627,12 @@ export namespace Manifest {
          * Optional.
          */
         suggest_url_post_params?: string;
+
+        /**
+         * Encoding of the search term.
+         * Optional.
+         */
+        encoding?: string;
 
         /**
          * Sets the default engine to a built-in engine only.
@@ -822,11 +832,6 @@ export namespace Manifest {
         /**
          * Optional.
          */
-        headerURL?: ImageDataOrExtensionURL;
-
-        /**
-         * Optional.
-         */
         theme_frame?: ImageDataOrExtensionURL;
     }
 
@@ -840,22 +845,12 @@ export namespace Manifest {
         /**
          * Optional.
          */
-        accentcolor?: ThemeColor;
-
-        /**
-         * Optional.
-         */
         frame?: ThemeColor;
 
         /**
          * Optional.
          */
         frame_inactive?: ThemeColor;
-
-        /**
-         * Optional.
-         */
-        textcolor?: ThemeColor;
 
         /**
          * Optional.
@@ -886,11 +881,6 @@ export namespace Manifest {
          * Optional.
          */
         toolbar?: ThemeColor;
-
-        /**
-         * Optional.
-         */
-        toolbar_text?: ThemeColor;
 
         /**
          * Optional.
@@ -1026,6 +1016,16 @@ export namespace Manifest {
          * Optional.
          */
         sidebar_highlight_text?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        toolbar_field_highlight?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        toolbar_field_highlight_text?: ThemeColor;
     }
 
     export interface ThemeTypeIconsType {

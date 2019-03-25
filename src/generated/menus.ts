@@ -79,6 +79,12 @@ export namespace Menus {
         pageUrl?: string;
 
         /**
+         * The id of the frame of the element where the context menu was clicked.
+         * Optional.
+         */
+        frameId?: number;
+
+        /**
          *  The URL of the frame of the element where the context menu was clicked, if it was in a frame.
          * Optional.
          */

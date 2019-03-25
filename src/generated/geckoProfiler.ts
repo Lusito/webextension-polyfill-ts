@@ -8,14 +8,22 @@
 import { Events } from "./events";
 
 export namespace GeckoProfiler {
-    export type ProfilerFeature = "java" | "js" | "leaf" | "mainthreadio" | "memory" | "privacy" | "responsiveness" | "screenshots" | "seqstyle" | "stackwalk" | "tasktracer" | "threads" | "trackopts";
+    export type ProfilerFeature = "java" | "js" | "leaf" | "mainthreadio" | "memory" | "privacy" | "responsiveness" | "screenshots" | "seqstyle" | "stackwalk" | "tasktracer" | "threads" | "trackopts" | "jstracer";
+
+    export type supports = "windowLength";
 
     export interface StartSettingsType {
 
         /**
-         * The size in bytes of the buffer used to store profiling data. A larger value allows capturing a profile that covers a greater amount of time.
+         * The maximum size in bytes of the buffer used to store profiling data. A larger value allows capturing a profile that covers a greater amount of time.
          */
         bufferSize: number;
+
+        /**
+         * The length of the window of time that's kept in the buffer. Any collected samples are discarded as soon as they are older than the number of seconds specified in this setting. Zero means no duration restriction.
+         * Optional.
+         */
+        windowLength?: number;
 
         /**
          * Interval in milliseconds between samples of profiling data. A smaller value will increase the detail of the profiles captured.

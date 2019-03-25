@@ -56,8 +56,9 @@ export namespace Downloads {
 
         /**
          * The file's MIME type.
+         * Optional.
          */
-        mime: string;
+        mime?: string;
 
         /**
          * Number of milliseconds between the unix epoch and when this download began.

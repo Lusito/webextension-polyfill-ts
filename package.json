@@ -31,14 +31,14 @@
     "generate": "node dist/commands/generate.js"
   },
   "dependencies": {
-    "webextension-polyfill": "^0.3.0"
+    "webextension-polyfill": "^0.4.0"
   },
   "devDependencies": {
-    "@types/got": "^7.1.6",
-    "got": "^8.0.1",
-    "@types/node": "^8.0.53",
+    "@types/got": "^9.4.1",
+    "got": "^9.6.0",
+    "@types/node": "^11.11.7",
     "@types/rimraf": "^2.0.2",
-    "rimraf": "^2.6.2",
-    "typescript": "^2.6.2"
+    "rimraf": "^2.6.3",
+    "typescript": "^3.3.4000"
   }
 }

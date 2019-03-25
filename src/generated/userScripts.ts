@@ -78,12 +78,6 @@ export namespace UserScripts {
         unregister(): void;
     }
 
-    /**
-     * A set of API methods provided by the extensions to its userScripts
-     */
-    export interface ExportedAPIMethods {
-    }
-
     export interface Static {
 
         /**
@@ -92,12 +86,5 @@ export namespace UserScripts {
          * @param userScriptOptions
          */
         register(userScriptOptions: UserScriptOptions): void;
-
-        /**
-         * Provides a set of custom API methods available to the registered userScripts
-         *
-         * @param exportedAPIMethods
-         */
-        setScriptAPIs(exportedAPIMethods: ExportedAPIMethods): void;
     }
 }
