@@ -20,6 +20,11 @@
     "find.functions.%highlightResults.!fixAsync": null,
     "find.functions.%removeHighlighting.!fixAsync": null,
     "extensionTypes.types.$PlainJSONValue.type": "object",
+    "search.functions.%get.returns": {
+        "type": "Promise<SearchEngine[]>",
+        "optional": true,
+        "description": "A Promise that will be fulfilled with an array of search engine objects."
+    },
     "find.types": [{
         "id": "RangeData",
         "type": "object",

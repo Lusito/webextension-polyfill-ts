@@ -55,8 +55,10 @@ export namespace Search {
 
         /**
          * Gets a list of search engines.
+         *
+         * @returns Promise<SearchEngine[]> A Promise that will be fulfilled with an array of search engine objects.
          */
-        get(): void;
+        get(): Promise<SearchEngine[]>;
 
         /**
          * Perform a search.
