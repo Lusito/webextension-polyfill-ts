@@ -13,12 +13,12 @@ Sadly, there is official documentation for the schema .json files that I know of
 You will need npm and an up to date typescript compiler installed (2.7.2 at the time of this writing).
 
 Run these commands:
-* `tsc` -> to transpile the command sources (for the npm run commands as seen below).
 * `npm install` -> only needs to happen once to get all dependencies
+* `npm run build` -> to transpile the command sources (for the npm run commands as seen below).
 * `npm run fetch` -> grabs the latest schema files from mozilla
 * `npm run validate` -> validates that all the assumptions I made about the .json files are still true
 * `npm run generate` -> generates one .ts per namespace and one index.ts file.
-* `tsc` -> to test if the generated files transpile correctly.
+* `npm run build` -> to test if the generated files transpile correctly.
 
 ## Overview
 

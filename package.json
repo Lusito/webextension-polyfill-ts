@@ -24,8 +24,9 @@
     "tsconfig.json"
   ],
   "main": "dist/generated/index.js",
-  "types": "src/generated/index.ts",
+  "types": "dist/generated/index.d.ts",
   "scripts": {
+    "build": "tsc",
     "fetch": "node dist/commands/fetch.js",
     "validate": "node dist/commands/validate.js",
     "generate": "node dist/commands/generate.js"
@@ -36,9 +37,9 @@
   "devDependencies": {
     "@types/got": "^9.4.1",
     "got": "^9.6.0",
-    "@types/node": "^11.11.7",
+    "@types/node": "^11.12.2",
     "@types/rimraf": "^2.0.2",
     "rimraf": "^2.6.3",
-    "typescript": "^3.3.4000"
+    "typescript": "^3.4.1"
   }
 }
