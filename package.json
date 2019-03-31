@@ -18,9 +18,8 @@
     "url": "https://github.com/Lusito/webextension-polyfill-ts.git"
   },
   "files": [
-    "dist/",
-    "schemas/",
-    "src/",
+    "dist/generated/",
+    "src/generated/",
     "tsconfig.json"
   ],
   "main": "dist/generated/index.js",
