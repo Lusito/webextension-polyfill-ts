@@ -108,6 +108,18 @@ export namespace Proxy {
         parentFrameId: number;
 
         /**
+         * True for private browsing requests.
+         * Optional.
+         */
+        incognito?: boolean;
+
+        /**
+         * The cookie store ID of the contextual identity.
+         * Optional.
+         */
+        cookieStoreId?: string;
+
+        /**
          * URL of the resource that triggered this request.
          * Optional.
          */
@@ -181,38 +193,16 @@ export namespace Proxy {
     export interface Static {
 
         /**
-         * Registers the proxy script for the extension.
-         *
-         * @param url
-         * @returns Promise<void>
-         */
-        register(url: string): Promise<void>;
-
-        /**
-         * Unregisters the proxy script for the extension.
-         *
-         * @returns Promise<void>
-         */
-        unregister(): Promise<void>;
-
-        /**
          * Fired when proxy data is needed for a request.
          */
         onRequest: onRequestEvent;
 
         /**
-         * Notifies about proxy script errors.
+         * Notifies about errors caused by the invalid use of the proxy API.
          *
          * @param error
          */
         onError: Events.Event<(error: OnErrorErrorType) => void>;
-
-        /**
-         * Please use $(ref:proxy.onError).
-         *
-         * @param error
-         */
-        onProxyError: Events.Event<(error: OnProxyErrorErrorType) => void>;
 
         /**
          * Configures proxy settings. This setting's value is an object of type ProxyConfig.

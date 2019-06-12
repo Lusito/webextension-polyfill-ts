@@ -256,7 +256,7 @@ export namespace Manifest {
 
     export type OptionalPermissionOrOrigin = OptionalPermission | MatchPattern;
 
-    export type Permission = OptionalPermission | "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage" | "browsingData" | "contextualIdentities" | "devtools" | "dns" | "geckoProfiler" | "identity" | "management" | "menus" | "contextMenus" | "pkcs11" | "privacy" | "proxy" | "nativeMessaging" | "sessions" | "theme" | string;
+    export type Permission = OptionalPermission | "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage" | "browsingData" | "captivePortal" | "contextualIdentities" | "devtools" | "dns" | "geckoProfiler" | "identity" | "management" | "menus" | "contextMenus" | "pkcs11" | "privacy" | "proxy" | "nativeMessaging" | "sessions" | "theme" | "urlbar" | string;
 
     export type PermissionOrOrigin = Permission | MatchPattern;
 
@@ -426,11 +426,6 @@ export namespace Manifest {
         /**
          * Optional.
          */
-        icons?: ThemeTypeIconsType;
-
-        /**
-         * Optional.
-         */
         properties?: ThemeTypePropertiesType;
     }
 
@@ -439,6 +434,11 @@ export namespace Manifest {
      */
     export interface ThemeManifest extends Manifest.ManifestBase {
         theme: ThemeType;
+
+        /**
+         * Optional.
+         */
+        dark_theme?: ThemeType;
 
         /**
          * Optional.
@@ -464,12 +464,20 @@ export namespace Manifest {
         gecko?: FirefoxSpecificProperties;
     }
 
+    export interface ManifestBaseBrowserSpecificSettingsEdgeType {
+    }
+
     export interface ManifestBaseBrowserSpecificSettingsType {
 
         /**
          * Optional.
          */
         gecko?: FirefoxSpecificProperties;
+
+        /**
+         * Optional.
+         */
+        edge?: ManifestBaseBrowserSpecificSettingsEdgeType;
     }
 
     export type WebExtensionManifestIncognitoEnum = "not_allowed" | "spanning";
@@ -617,16 +625,33 @@ export namespace Manifest {
         suggest_url?: string;
 
         /**
+         * GET parameters to the search_url as a query string.
+         * Optional.
+         */
+        search_url_get_params?: string;
+
+        /**
          * POST parameters to the search_url as a query string.
          * Optional.
          */
         search_url_post_params?: string;
 
         /**
+         * GET parameters to the suggest_url as a query string.
+         * Optional.
+         */
+        suggest_url_get_params?: string;
+
+        /**
          * POST parameters to the suggest_url as a query string.
          * Optional.
          */
         suggest_url_post_params?: string;
+
+        /**
+         * Optional.
+         */
+        search_form?: string;
 
         /**
          * Encoding of the search term.
@@ -1026,409 +1051,6 @@ export namespace Manifest {
          * Optional.
          */
         toolbar_field_highlight_text?: ThemeColor;
-    }
-
-    export interface ThemeTypeIconsType {
-
-        /**
-         * Optional.
-         */
-        back?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        forward?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        reload?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        stop?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        bookmark_star?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        bookmark_menu?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        downloads?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        home?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        app_menu?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        cut?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        copy?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        paste?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        new_window?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        new_private_window?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        save_page?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        print?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        history?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        full_screen?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        find?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        options?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        addons?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        developer?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        synced_tabs?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        open_file?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        sidebars?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        subscribe?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        text_encoding?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        email_link?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        forget?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        pocket?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        getmsg?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        newmsg?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        address?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        reply?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        replyall?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        replylist?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        forwarding?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        delete?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        junk?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        file?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        nextUnread?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        prevUnread?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        mark?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        tag?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        compact?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        archive?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        chat?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        nextMsg?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        prevMsg?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        QFB?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        conversation?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        newcard?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        newlist?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        editcard?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        newim?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        send?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        spelling?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        attach?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        security?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        save?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        quote?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        buddy?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        join_chat?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        chat_accounts?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        calendar?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        tasks?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        synchronize?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        newevent?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        newtask?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        editevent?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        today?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        category?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        complete?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        priority?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        saveandclose?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        attendees?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        privacy?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        status?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        freebusy?: ExtensionURL;
-
-        /**
-         * Optional.
-         */
-        timezones?: ExtensionURL;
     }
 
     export type ThemeTypePropertiesAdditionalBackgroundsAlignmentItemEnum = "bottom" | "center" | "left" | "right" | "top" | "center bottom" | "center center" | "center top" | "left bottom" | "left center" | "left top" | "right bottom" | "right center" | "right top";
