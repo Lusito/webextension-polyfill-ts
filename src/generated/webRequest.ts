@@ -56,6 +56,12 @@ export namespace WebRequest {
          * Optional.
          */
         windowId?: number;
+
+        /**
+         * If provided, requests that do not match the incognito state will be filtered out.
+         * Optional.
+         */
+        incognito?: boolean;
     }
 
     /**
@@ -352,6 +358,18 @@ export namespace WebRequest {
         parentFrameId: number;
 
         /**
+         * True for private browsing requests.
+         * Optional.
+         */
+        incognito?: boolean;
+
+        /**
+         * The cookie store ID of the contextual identity.
+         * Optional.
+         */
+        cookieStoreId?: string;
+
+        /**
          * URL of the resource that triggered this request.
          * Optional.
          */
@@ -408,6 +426,18 @@ export namespace WebRequest {
          * ID of frame that wraps the frame which sent the request. Set to -1 if no parent frame exists.
          */
         parentFrameId: number;
+
+        /**
+         * True for private browsing requests.
+         * Optional.
+         */
+        incognito?: boolean;
+
+        /**
+         * The cookie store ID of the contextual identity.
+         * Optional.
+         */
+        cookieStoreId?: string;
 
         /**
          * URL of the resource that triggered this request.
@@ -468,6 +498,18 @@ export namespace WebRequest {
         parentFrameId: number;
 
         /**
+         * True for private browsing requests.
+         * Optional.
+         */
+        incognito?: boolean;
+
+        /**
+         * The cookie store ID of the contextual identity.
+         * Optional.
+         */
+        cookieStoreId?: string;
+
+        /**
          * URL of the resource that triggered this request.
          * Optional.
          */
@@ -524,6 +566,18 @@ export namespace WebRequest {
          * ID of frame that wraps the frame which sent the request. Set to -1 if no parent frame exists.
          */
         parentFrameId: number;
+
+        /**
+         * True for private browsing requests.
+         * Optional.
+         */
+        incognito?: boolean;
+
+        /**
+         * The cookie store ID of the contextual identity.
+         * Optional.
+         */
+        cookieStoreId?: string;
 
         /**
          * URL of the resource that triggered this request.
@@ -592,6 +646,18 @@ export namespace WebRequest {
          * ID of frame that wraps the frame which sent the request. Set to -1 if no parent frame exists.
          */
         parentFrameId: number;
+
+        /**
+         * True for private browsing requests.
+         * Optional.
+         */
+        incognito?: boolean;
+
+        /**
+         * The cookie store ID of the contextual identity.
+         * Optional.
+         */
+        cookieStoreId?: string;
 
         /**
          * URL of the resource that triggered this request.
@@ -683,6 +749,18 @@ export namespace WebRequest {
         parentFrameId: number;
 
         /**
+         * True for private browsing requests.
+         * Optional.
+         */
+        incognito?: boolean;
+
+        /**
+         * The cookie store ID of the contextual identity.
+         * Optional.
+         */
+        cookieStoreId?: string;
+
+        /**
          * URL of the resource that triggered this request.
          * Optional.
          */
@@ -760,6 +838,18 @@ export namespace WebRequest {
          * ID of frame that wraps the frame which sent the request. Set to -1 if no parent frame exists.
          */
         parentFrameId: number;
+
+        /**
+         * True for private browsing requests.
+         * Optional.
+         */
+        incognito?: boolean;
+
+        /**
+         * The cookie store ID of the contextual identity.
+         * Optional.
+         */
+        cookieStoreId?: string;
 
         /**
          * URL of the resource that triggered this request.
@@ -846,6 +936,18 @@ export namespace WebRequest {
         parentFrameId: number;
 
         /**
+         * True for private browsing requests.
+         * Optional.
+         */
+        incognito?: boolean;
+
+        /**
+         * The cookie store ID of the contextual identity.
+         * Optional.
+         */
+        cookieStoreId?: string;
+
+        /**
          * URL of the resource that triggered this request.
          * Optional.
          */
@@ -923,6 +1025,18 @@ export namespace WebRequest {
          * ID of frame that wraps the frame which sent the request. Set to -1 if no parent frame exists.
          */
         parentFrameId: number;
+
+        /**
+         * True for private browsing requests.
+         * Optional.
+         */
+        incognito?: boolean;
+
+        /**
+         * The cookie store ID of the contextual identity.
+         * Optional.
+         */
+        cookieStoreId?: string;
 
         /**
          * URL of the resource that triggered this request.
