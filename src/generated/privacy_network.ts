@@ -17,7 +17,7 @@ export namespace PrivacyNetwork {
     /**
      * The IP handling policy of WebRTC.
      */
-    export type IPHandlingPolicy = "default" | "default_public_and_private_interfaces" | "default_public_interface_only" | "disable_non_proxied_udp";
+    export type IPHandlingPolicy = "default" | "default_public_and_private_interfaces" | "default_public_interface_only" | "disable_non_proxied_udp" | "proxy_only";
 
     export interface Static {
 

@@ -162,6 +162,11 @@ export namespace Proxy {
          * Optional.
          */
         requestHeaders?: WebRequest.HttpHeaders;
+
+        /**
+         * Url classification if the request has been classified.
+         */
+        urlClassification: WebRequest.UrlClassification;
     }
 
     export interface OnErrorErrorType {

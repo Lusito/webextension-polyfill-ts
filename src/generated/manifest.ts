@@ -256,7 +256,7 @@ export namespace Manifest {
 
     export type OptionalPermissionOrOrigin = OptionalPermission | MatchPattern;
 
-    export type Permission = OptionalPermission | "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage" | "browsingData" | "captivePortal" | "contextualIdentities" | "devtools" | "dns" | "geckoProfiler" | "identity" | "management" | "menus" | "contextMenus" | "pkcs11" | "privacy" | "proxy" | "nativeMessaging" | "sessions" | "theme" | "urlbar" | string;
+    export type Permission = OptionalPermission | "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage" | "activityLog" | "browsingData" | "captivePortal" | "contextualIdentities" | "devtools" | "dns" | "geckoProfiler" | "identity" | "management" | "menus" | "contextMenus" | "networkStatus" | "normandyAddonStudy" | "pkcs11" | "privacy" | "proxy" | "nativeMessaging" | "sessions" | "theme" | "urlbar" | string;
 
     export type PermissionOrOrigin = Permission | MatchPattern;
 
@@ -906,6 +906,12 @@ export namespace Manifest {
          * Optional.
          */
         toolbar?: ThemeColor;
+
+        /**
+         * This color property is an alias of 'bookmark_text'.
+         * Optional.
+         */
+        toolbar_text?: ThemeColor;
 
         /**
          * Optional.
