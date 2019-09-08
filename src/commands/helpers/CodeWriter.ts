@@ -5,12 +5,7 @@ export class CodeWriter {
     private indentation = '';
 
     public begin(line: string) {
-        if (this.commentLines > 0) {
-            if (this.lastIsEmpty) 
-                this.lines.pop();
-            this.lines.push(this.indentation + ' */');
-            this.commentLines = 0;
-        }
+        this.finishComment();
         this.lines.push(this.indentation + line);
         this.indentation += '    ';
         this.lastIsEmpty = false;
@@ -43,7 +38,7 @@ export class CodeWriter {
         this.lastIsEmpty = false;
     }
 
-    public code(line: string) {
+    private finishComment() {
         if (this.commentLines > 0) {
             if (this.lastIsEmpty) {
                 this.lines.pop();
@@ -52,6 +47,10 @@ export class CodeWriter {
             this.lines.push(this.indentation + ' */');
             this.commentLines = 0;
         }
+    }
+
+    public code(line: string) {
+        this.finishComment();
         this.lines.push(this.indentation + line);
         this.lastIsEmpty = false;
     }

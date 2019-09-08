@@ -34,10 +34,9 @@ Promise.all([
 ]).then((result) => {
     const files = result.reduce<string[]>((dest, files) => files ? dest.concat(files) : dest, []);
 
-    rimraf('./schemas', () => {
-        fs.mkdirSync('./schemas');
-        Promise.all(files.map(downloadFile)).then((result) => {
-            console.log('done');
-        });
+    rimraf.sync('./schemas');
+    fs.mkdirSync('./schemas');
+    Promise.all(files.map(downloadFile)).then((result) => {
+        console.log('done');
     });
 });

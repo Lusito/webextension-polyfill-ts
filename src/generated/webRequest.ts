@@ -249,6 +249,29 @@ export namespace WebRequest {
     }
 
     /**
+     * Tracking flags that match our internal tracking classification
+     */
+    export type UrlClassificationFlags = "fingerprinting" | "fingerprinting_content" | "cryptomining" | "cryptomining_content" | "tracking" | "tracking_ad" | "tracking_analytics" | "tracking_social" | "tracking_content" | "any_basic_tracking" | "any_strict_tracking" | "any_social_tracking";
+
+    /**
+     * If the request has been classified this is an array of $(ref:UrlClassificationFlags).
+     */
+    export type UrlClassificationParty = UrlClassificationFlags[];
+
+    export interface UrlClassification {
+
+        /**
+         * First party classification flags if the request has been classified.
+         */
+        firstParty: UrlClassificationParty;
+
+        /**
+         * Third party classification flags if the request has been classified.
+         */
+        thirdParty: UrlClassificationParty;
+    }
+
+    /**
      * "uninitialized": The StreamFilter is not fully initialized. No methods may be called until a "start" event has been received.
      * "transferringdata": The underlying channel is currently transferring data, which will be dispatched via "data" events.
      * "finishedtransferringdata": The underlying channel has finished transferring data. Data may still be written via write() calls at this point.
@@ -401,6 +424,12 @@ export namespace WebRequest {
          * The time when this signal is triggered, in milliseconds since the epoch.
          */
         timeStamp: number;
+
+        /**
+         * Tracking classification if the request has been classified.
+         * Optional.
+         */
+        urlClassification?: UrlClassification;
     }
 
     export interface OnBeforeSendHeadersDetailsType {
@@ -471,6 +500,12 @@ export namespace WebRequest {
          * Optional.
          */
         requestHeaders?: HttpHeaders;
+
+        /**
+         * Tracking classification if the request has been classified.
+         * Optional.
+         */
+        urlClassification?: UrlClassification;
     }
 
     export interface OnSendHeadersDetailsType {
@@ -541,6 +576,12 @@ export namespace WebRequest {
          * Optional.
          */
         requestHeaders?: HttpHeaders;
+
+        /**
+         * Tracking classification if the request has been classified.
+         * Optional.
+         */
+        urlClassification?: UrlClassification;
     }
 
     export interface OnHeadersReceivedDetailsType {
@@ -621,6 +662,12 @@ export namespace WebRequest {
          * Standard HTTP status code returned by the server.
          */
         statusCode: number;
+
+        /**
+         * Tracking classification if the request has been classified.
+         * Optional.
+         */
+        urlClassification?: UrlClassification;
     }
 
     export interface OnAuthRequiredDetailsType {
@@ -722,6 +769,12 @@ export namespace WebRequest {
          * Standard HTTP status code returned by the server.
          */
         statusCode: number;
+
+        /**
+         * Tracking classification if the request has been classified.
+         * Optional.
+         */
+        urlClassification?: UrlClassification;
     }
 
     export interface OnResponseStartedDetailsType {
@@ -813,6 +866,12 @@ export namespace WebRequest {
          * HTTP status line of the response or the 'HTTP/0.9 200 OK' string for HTTP/0.9 responses (i.e., responses that lack a status line) or an empty string if there are no headers.
          */
         statusLine: string;
+
+        /**
+         * Tracking classification if the request has been classified.
+         * Optional.
+         */
+        urlClassification?: UrlClassification;
     }
 
     export interface OnBeforeRedirectDetailsType {
@@ -909,6 +968,12 @@ export namespace WebRequest {
          * HTTP status line of the response or the 'HTTP/0.9 200 OK' string for HTTP/0.9 responses (i.e., responses that lack a status line) or an empty string if there are no headers.
          */
         statusLine: string;
+
+        /**
+         * Tracking classification if the request has been classified.
+         * Optional.
+         */
+        urlClassification?: UrlClassification;
     }
 
     export interface OnCompletedDetailsType {
@@ -1000,6 +1065,11 @@ export namespace WebRequest {
          * HTTP status line of the response or the 'HTTP/0.9 200 OK' string for HTTP/0.9 responses (i.e., responses that lack a status line) or an empty string if there are no headers.
          */
         statusLine: string;
+
+        /**
+         * Tracking classification if the request has been classified.
+         */
+        urlClassification: UrlClassification;
     }
 
     export interface OnErrorOccurredDetailsType {
@@ -1080,6 +1150,12 @@ export namespace WebRequest {
          * The error description. This string is <em>not</em> guaranteed to remain backwards compatible between releases. You must not parse and act based upon its content.
          */
         error: string;
+
+        /**
+         * Tracking classification if the request has been classified.
+         * Optional.
+         */
+        urlClassification?: UrlClassification;
     }
 
     export interface HttpHeadersItemType {

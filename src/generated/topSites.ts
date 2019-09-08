@@ -33,6 +33,12 @@ export namespace TopSites {
          * Optional.
          */
         favicon?: string;
+
+        /**
+         * The entry type, either <code>url</code> for a normal page link, or <code>search</code> for a search shortcut.
+         * Optional.
+         */
+        type?: MostVisitedURLTypeEnum;
     }
 
     export interface GetOptionsType {
@@ -60,7 +66,30 @@ export namespace TopSites {
          * Optional.
          */
         includeFavicon?: boolean;
+
+        /**
+         * Include sites that the user has pinned on the Firefox new tab.
+         * Optional.
+         */
+        includePinned?: boolean;
+
+        /**
+         * Include search shortcuts appearing on the Firefox new tab.
+         * Optional.
+         */
+        includeSearchShortcuts?: boolean;
+
+        /**
+         * Return the sites that exactly appear on the user's new-tab page. When true, all other options are ignored except limit and includeFavicon.
+         * Optional.
+         */
+        newtab?: boolean;
     }
+
+    /**
+     * The entry type, either <code>url</code> for a normal page link, or <code>search</code> for a search shortcut.
+     */
+    export type MostVisitedURLTypeEnum = "url" | "search";
 
     export interface Static {
 

@@ -8,7 +8,7 @@
 import { Events } from "./events";
 
 export namespace GeckoProfiler {
-    export type ProfilerFeature = "java" | "js" | "leaf" | "mainthreadio" | "memory" | "privacy" | "responsiveness" | "screenshots" | "seqstyle" | "stackwalk" | "tasktracer" | "threads" | "trackopts" | "jstracer";
+    export type ProfilerFeature = "java" | "js" | "leaf" | "mainthreadio" | "privacy" | "responsiveness" | "screenshots" | "seqstyle" | "stackwalk" | "tasktracer" | "threads" | "trackopts" | "jstracer" | "jsallocations" | "preferencereads";
 
     export type supports = "windowLength";
 
@@ -67,6 +67,13 @@ export namespace GeckoProfiler {
         resume(): void;
 
         /**
+         * Gathers the profile data from the current profiling session, and writes it to disk. The returned promise resolves to a path that locates the created file.
+         *
+         * @param fileName The name of the file inside the profile/profiler directory
+         */
+        dumpProfileToFile(fileName: string): void;
+
+        /**
          * Gathers the profile data from the current profiling session.
          */
         getProfile(): void;
@@ -75,6 +82,11 @@ export namespace GeckoProfiler {
          * Gathers the profile data from the current profiling session. The returned promise resolves to an array buffer that contains a JSON string.
          */
         getProfileAsArrayBuffer(): void;
+
+        /**
+         * Gathers the profile data from the current profiling session. The returned promise resolves to an array buffer that contains a gzipped JSON string.
+         */
+        getProfileAsGzippedArrayBuffer(): void;
 
         /**
          * Gets the debug symbols for a particular library.
