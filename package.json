@@ -18,27 +18,28 @@
     "url": "https://github.com/Lusito/webextension-polyfill-ts.git"
   },
   "files": [
-    "dist/generated/",
+    "dist/",
     "src/generated/",
     "tsconfig.json"
   ],
-  "main": "dist/generated/index.js",
-  "types": "dist/generated/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "fetch": "node dist/commands/fetch.js",
-    "validate": "node dist/commands/validate.js",
-    "generate": "node dist/commands/generate.js"
+    "fetch": "ts-node src/commands/fetch.ts",
+    "validate": "ts-node src/commands/validate.ts",
+    "generate": "ts-node src/commands/generate.ts"
   },
   "dependencies": {
     "webextension-polyfill": "^0.4.0"
   },
   "devDependencies": {
-    "@types/got": "^9.4.4",
-    "got": "^9.6.0",
-    "@types/node": "^12.0.8",
+    "@types/got": "^9.6.7",
+    "@types/node": "^12.7.4",
     "@types/rimraf": "^2.0.2",
-    "rimraf": "^2.6.3",
-    "typescript": "^3.5.1"
+    "got": "^9.6.0",
+    "rimraf": "^3.0.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.6.2"
   }
 }
