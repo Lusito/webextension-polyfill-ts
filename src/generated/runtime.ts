@@ -371,8 +371,9 @@ export namespace Runtime {
          *
          * @param message Optional. The message sent by the calling script.
          * @param sender
+         * @param sendResponse Optional.
          */
-        onMessageExternal: Events.Event<(message: any | undefined, sender: MessageSender) => Promise<any> | void>;
+        onMessageExternal: Events.Event<(message: any | undefined, sender: MessageSender, sendResponse?: Function) => Promise<any> | void>;
 
         /**
          * This will be defined during an API method callback if there was an error
