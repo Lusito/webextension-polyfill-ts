@@ -2,7 +2,7 @@
  * Namespace: browser.proxy
  * Generated from Mozilla sources
  *
- * Use the browser.proxy API to register proxy scripts in Firefox. Proxy scripts in Firefox are proxy auto-config files with extra contextual information and support for additional return types.
+ * Provides access to global proxy settings for Firefox and proxy event listeners to handle dynamic proxy implementations.
  * Permissions: "proxy"
  */
 import { WebRequest } from "./webRequest";
@@ -145,12 +145,6 @@ export namespace Proxy {
          * The time when this signal is triggered, in milliseconds since the epoch.
          */
         timeStamp: number;
-
-        /**
-         * The server IP address that the request was actually sent to. Note that it may be a literal IPv6 address.
-         * Optional.
-         */
-        ip?: string;
 
         /**
          * Indicates if this response was fetched from disk cache.
