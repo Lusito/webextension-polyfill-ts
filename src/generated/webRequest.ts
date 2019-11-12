@@ -261,12 +261,12 @@ export namespace WebRequest {
     export interface UrlClassification {
 
         /**
-         * First party classification flags if the request has been classified.
+         * Classification flags if the request has been classified and it is first party.
          */
         firstParty: UrlClassificationParty;
 
         /**
-         * Third party classification flags if the request has been classified.
+         * Classification flags if the request has been classified and it or its window hierarchy is third party.
          */
         thirdParty: UrlClassificationParty;
     }
@@ -430,6 +430,11 @@ export namespace WebRequest {
          * Optional.
          */
         urlClassification?: UrlClassification;
+
+        /**
+         * Indicates if this request and its content window hierarchy is third party.
+         */
+        thirdParty: boolean;
     }
 
     export interface OnBeforeSendHeadersDetailsType {
@@ -506,6 +511,11 @@ export namespace WebRequest {
          * Optional.
          */
         urlClassification?: UrlClassification;
+
+        /**
+         * Indicates if this request and its content window hierarchy is third party.
+         */
+        thirdParty: boolean;
     }
 
     export interface OnSendHeadersDetailsType {
@@ -582,6 +592,11 @@ export namespace WebRequest {
          * Optional.
          */
         urlClassification?: UrlClassification;
+
+        /**
+         * Indicates if this request and its content window hierarchy is third party.
+         */
+        thirdParty: boolean;
     }
 
     export interface OnHeadersReceivedDetailsType {
@@ -668,6 +683,11 @@ export namespace WebRequest {
          * Optional.
          */
         urlClassification?: UrlClassification;
+
+        /**
+         * Indicates if this request and its content window hierarchy is third party.
+         */
+        thirdParty: boolean;
     }
 
     export interface OnAuthRequiredDetailsType {
@@ -775,6 +795,11 @@ export namespace WebRequest {
          * Optional.
          */
         urlClassification?: UrlClassification;
+
+        /**
+         * Indicates if this request and its content window hierarchy is third party.
+         */
+        thirdParty: boolean;
     }
 
     export interface OnResponseStartedDetailsType {
@@ -872,6 +897,11 @@ export namespace WebRequest {
          * Optional.
          */
         urlClassification?: UrlClassification;
+
+        /**
+         * Indicates if this request and its content window hierarchy is third party.
+         */
+        thirdParty: boolean;
     }
 
     export interface OnBeforeRedirectDetailsType {
@@ -974,6 +1004,11 @@ export namespace WebRequest {
          * Optional.
          */
         urlClassification?: UrlClassification;
+
+        /**
+         * Indicates if this request and its content window hierarchy is third party.
+         */
+        thirdParty: boolean;
     }
 
     export interface OnCompletedDetailsType {
@@ -1070,6 +1105,21 @@ export namespace WebRequest {
          * Tracking classification if the request has been classified.
          */
         urlClassification: UrlClassification;
+
+        /**
+         * Indicates if this request and its content window hierarchy is third party.
+         */
+        thirdParty: boolean;
+
+        /**
+         * For http requests, the bytes transferred in the request. Only available in onCompleted.
+         */
+        requestSize: number;
+
+        /**
+         * For http requests, the bytes received in the request. Only available in onCompleted.
+         */
+        responseSize: number;
     }
 
     export interface OnErrorOccurredDetailsType {
@@ -1156,6 +1206,11 @@ export namespace WebRequest {
          * Optional.
          */
         urlClassification?: UrlClassification;
+
+        /**
+         * Indicates if this request and its content window hierarchy is third party.
+         */
+        thirdParty: boolean;
     }
 
     export interface HttpHeadersItemType {

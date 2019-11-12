@@ -46,6 +46,23 @@ export namespace BrowserAction {
      */
     export type ColorValue = string | ColorArray | null;
 
+    /**
+     * Information sent when a browser action is clicked.
+     */
+    export interface OnClickData {
+
+        /**
+         * An array of keyboard modifiers that were held while the menu item was clicked.
+         */
+        modifiers: OnClickDataModifiersItemEnum[];
+
+        /**
+         * An integer value of button by which menu item was clicked.
+         * Optional.
+         */
+        button?: number;
+    }
+
     export interface SetTitleDetailsType extends Details {
 
         /**
@@ -92,6 +109,8 @@ export namespace BrowserAction {
     export interface SetBadgeTextColorDetailsType extends Details {
         color: ColorValue;
     }
+
+    export type OnClickDataModifiersItemEnum = "Shift" | "Alt" | "Command" | "Ctrl" | "MacCtrl";
 
     export interface Static {
 
@@ -216,7 +235,8 @@ export namespace BrowserAction {
          * Fired when a browser action icon is clicked.  This event will not fire if the browser action has a popup.
          *
          * @param tab
+         * @param info Optional.
          */
-        onClicked: Events.Event<(tab: Tabs.Tab) => void>;
+        onClicked: Events.Event<(tab: Tabs.Tab, info: OnClickData | undefined) => void>;
     }
 }

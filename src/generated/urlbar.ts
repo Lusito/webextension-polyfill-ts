@@ -91,12 +91,6 @@ export namespace Urlbar {
     }
 
     /**
-     * Details about the pick. The specific properties depend on the result type.
-     */
-    export interface OnResultPickedDetailsType {
-    }
-
-    /**
      * An object with arbitrary properties depending on the result's type.
      */
     export interface ResultPayloadType {
@@ -147,7 +141,7 @@ export namespace Urlbar {
     /**
      * Typically, a provider includes a <code>url</code> property in its results' payloads. When the user picks a result with a URL, Firefox automatically loads the URL. URLs don't make sense for every result type, however. When the user picks a result without a URL, this event is fired. The provider should take an appropriate action in response. Currently the only applicable <code>ResultType</code> is <code>tip</code>.
      */
-    export interface onResultPickedEvent extends Events.Event<(payload: OnResultPickedPayloadType, details: OnResultPickedDetailsType) => void> {
+    export interface onResultPickedEvent extends Events.Event<(payload: OnResultPickedPayloadType) => void> {
 
         /**
          * Registers an event listener <em>callback</em> to an event.
@@ -155,10 +149,17 @@ export namespace Urlbar {
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
          * @param providerName The listener will be called for the results of the provider with this name.
          */
-        addListener(callback: (payload: OnResultPickedPayloadType, details: OnResultPickedDetailsType) => void, providerName: string): void;
+        addListener(callback: (payload: OnResultPickedPayloadType) => void, providerName: string): void;
     }
 
     export interface Static {
+
+        /**
+         * Starts a search in the urlbar in the current window.
+         *
+         * @param searchString The search string.
+         */
+        search(searchString: string): void;
 
         /**
          * Before a query starts, this event is fired for the given provider. Its purpose is to request the provider's behavior for the query. The listener should return a behavior in response. By default, providers are inactive, so if your provider should always be inactive, you don't need to listen for this event.

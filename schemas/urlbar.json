@@ -100,6 +100,21 @@
         "description": "Enables or disables the engagement telemetry."
       }
     },
+    "functions": [
+      {
+        "name": "search",
+        "type": "function",
+        "async": true,
+        "description": "Starts a search in the urlbar in the current window.",
+        "parameters": [
+          {
+            "name": "searchString",
+            "type": "string",
+            "description": "The search string."
+          }
+        ]
+      }
+    ],
     "events": [
       {
         "name": "onBehaviorRequested",
@@ -182,11 +197,6 @@
             "name": "payload",
             "type": "object",
             "description": "The payload of the result that was picked."
-          },
-          {
-            "name": "details",
-            "type": "object",
-            "description": "Details about the pick. The specific properties depend on the result type."
           }
         ],
         "extraParameters": [

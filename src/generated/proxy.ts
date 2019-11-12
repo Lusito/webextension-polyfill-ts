@@ -81,6 +81,12 @@ export namespace Proxy {
          * Optional.
          */
         proxyDNS?: boolean;
+
+        /**
+         *  If true (the default value), do not use newer TLS protocol features that might have interoperability problems on the Internet. This is intended only for use with critical infrastructure like the updates, and is only available to privileged addons.
+         * Optional.
+         */
+        respectBeConservative?: boolean;
     }
 
     export interface OnRequestDetailsType {
@@ -161,12 +167,14 @@ export namespace Proxy {
          * Url classification if the request has been classified.
          */
         urlClassification: WebRequest.UrlClassification;
+
+        /**
+         * Indicates if this request and its content window hierarchy is third party.
+         */
+        thirdParty: boolean;
     }
 
     export interface OnErrorErrorType {
-    }
-
-    export interface OnProxyErrorErrorType {
     }
 
     /**

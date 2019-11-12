@@ -47,6 +47,11 @@ export namespace BrowserSettings {
         contextMenuShowEvent: Types.Setting;
 
         /**
+         * This boolean setting controls whether the FTP protocol is enabled.
+         */
+        ftpProtocolEnabled: Types.Setting;
+
+        /**
          * Returns the value of the overridden home page. Read-only.
          */
         homepageOverride: Types.Setting;

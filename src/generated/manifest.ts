@@ -107,7 +107,7 @@ export namespace Manifest {
         /**
          * Optional.
          */
-        content_security_policy?: string;
+        content_security_policy?: string | WebExtensionManifestContentSecurityPolicyC2Type;
 
         /**
          * Optional.
@@ -169,6 +169,11 @@ export namespace Manifest {
          * Optional.
          */
         default_locale?: string;
+
+        /**
+         * Optional.
+         */
+        l10n_resources?: string[];
 
         /**
          * Optional.
@@ -517,6 +522,19 @@ export namespace Manifest {
          * Optional.
          */
         open_in_tab?: boolean;
+    }
+
+    export interface WebExtensionManifestContentSecurityPolicyC2Type {
+
+        /**
+         * Optional.
+         */
+        extension_pages?: string;
+
+        /**
+         * Optional.
+         */
+        content_scripts?: string;
     }
 
     export interface WebExtensionManifestDeveloperType {

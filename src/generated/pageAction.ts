@@ -21,6 +21,23 @@ export namespace PageAction {
     export interface ImageDataType {
     }
 
+    /**
+     * Information sent when a page action is clicked.
+     */
+    export interface OnClickData {
+
+        /**
+         * An array of keyboard modifiers that were held while the menu item was clicked.
+         */
+        modifiers: OnClickDataModifiersItemEnum[];
+
+        /**
+         * An integer value of button by which menu item was clicked.
+         * Optional.
+         */
+        button?: number;
+    }
+
     export interface IsShownDetailsType {
 
         /**
@@ -90,6 +107,8 @@ export namespace PageAction {
          */
         tabId: number;
     }
+
+    export type OnClickDataModifiersItemEnum = "Shift" | "Alt" | "Command" | "Ctrl" | "MacCtrl";
 
     export interface Static {
 
@@ -167,7 +186,8 @@ export namespace PageAction {
          * Fired when a page action icon is clicked.  This event will not fire if the page action has a popup.
          *
          * @param tab
+         * @param info Optional.
          */
-        onClicked: Events.Event<(tab: Tabs.Tab) => void>;
+        onClicked: Events.Event<(tab: Tabs.Tab, info: OnClickData | undefined) => void>;
     }
 }
