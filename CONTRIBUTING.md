@@ -10,11 +10,10 @@ Sadly, there is official documentation for the schema .json files that I know of
 
 ## Build commands:
 
-You will need npm and an up to date typescript compiler installed (2.7.2 at the time of this writing).
+You will need npm installed.
 
 Run these commands:
 * `npm install` -> only needs to happen once to get all dependencies
-* `npm run build` -> to transpile the command sources (for the npm run commands as seen below).
 * `npm run fetch` -> grabs the latest schema files from mozilla
 * `npm run validate` -> validates that all the assumptions I made about the .json files are still true
 * `npm run generate` -> generates one .ts per namespace and one index.ts file.
@@ -81,7 +80,7 @@ Usually the last part of a key is not a special instruction, but a normal key. T
 
 ### Appending to an array instead of setting an attribute.
 if you want to add items to an array rather than setting an attribute of an object, you can use the `+[]` instruction:  
-`"schemaTree.manifest.types.+[]": [{...}, {...}]`  
+`"manifest.types.+[]": [{...}, {...}]`  
 Which is like saying:  
 `schemaTree.manifest.types.push({...}, {...});`
 

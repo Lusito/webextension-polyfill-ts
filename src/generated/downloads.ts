@@ -368,6 +368,12 @@ export namespace Downloads {
          * Optional.
          */
         body?: string;
+
+        /**
+         * When this flag is set to <code>true</code>, then the browser will allow downloads to proceed after encountering HTTP errors such as <code>404 Not Found</code>.
+         * Optional.
+         */
+        allowHttpErrors?: boolean;
     }
 
     export interface GetFileIconOptionsType {

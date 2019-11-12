@@ -37,7 +37,10 @@
           "trackopts",
           "jstracer",
           "jsallocations",
-          "preferencereads"
+          "nostacksampling",
+          "nativeallocations",
+          "preferencereads",
+          "ipcmessages"
         ]
       },
       {

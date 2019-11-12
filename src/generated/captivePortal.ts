@@ -6,6 +6,7 @@
  * Permissions: "captivePortal"
  */
 import { Events } from "./events";
+import { Types } from "./types";
 
 export namespace CaptivePortal {
     export interface OnStateChangedDetailsType {
@@ -48,5 +49,10 @@ export namespace CaptivePortal {
          * @param status
          */
         onConnectivityAvailable: Events.Event<(status: OnConnectivityAvailableStatusEnum) => void>;
+
+        /**
+         * Return the canonical captive-portal detection URL. Read-only.
+         */
+        canonicalURL: Types.Setting;
     }
 }

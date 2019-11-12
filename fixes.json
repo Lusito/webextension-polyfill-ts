@@ -179,8 +179,6 @@
     "pkcs11.functions.%isModuleInstalled.!fixAsync": "shown:boolean",
     "pkcs11.functions.%installModule.!fixAsync": null,
     "pkcs11.functions.%uninstallModule.!fixAsync": null,
-    "proxy.functions.%register.!fixAsync": null,
-    "proxy.functions.%unregister.!fixAsync": null,
     "sessions.functions.%forgetClosedTab.!fixAsync": null,
     "sessions.functions.%forgetClosedWindow.!fixAsync": null,
     "sessions.functions.%setTabValue.!fixAsync": null,

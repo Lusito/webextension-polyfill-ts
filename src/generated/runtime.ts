@@ -172,12 +172,6 @@ export namespace Runtime {
     }
 
     export interface SendMessageOptionsType {
-
-        /**
-         * If true, the message will be directed to the extension's proxy sandbox.
-         * Optional.
-         */
-        toProxyScript?: boolean;
     }
 
     export interface OnInstalledDetailsType {

@@ -2,7 +2,7 @@
  * Namespace: browser.proxy
  * Generated from Mozilla sources
  *
- * Use the browser.proxy API to register proxy scripts in Firefox. Proxy scripts in Firefox are proxy auto-config files with extra contextual information and support for additional return types.
+ * Provides access to global proxy settings for Firefox and proxy event listeners to handle dynamic proxy implementations.
  * Permissions: "proxy"
  */
 import { WebRequest } from "./webRequest";
@@ -81,6 +81,12 @@ export namespace Proxy {
          * Optional.
          */
         proxyDNS?: boolean;
+
+        /**
+         *  If true (the default value), do not use newer TLS protocol features that might have interoperability problems on the Internet. This is intended only for use with critical infrastructure like the updates, and is only available to privileged addons.
+         * Optional.
+         */
+        respectBeConservative?: boolean;
     }
 
     export interface OnRequestDetailsType {
@@ -147,12 +153,6 @@ export namespace Proxy {
         timeStamp: number;
 
         /**
-         * The server IP address that the request was actually sent to. Note that it may be a literal IPv6 address.
-         * Optional.
-         */
-        ip?: string;
-
-        /**
          * Indicates if this response was fetched from disk cache.
          */
         fromCache: boolean;
@@ -167,12 +167,14 @@ export namespace Proxy {
          * Url classification if the request has been classified.
          */
         urlClassification: WebRequest.UrlClassification;
+
+        /**
+         * Indicates if this request and its content window hierarchy is third party.
+         */
+        thirdParty: boolean;
     }
 
     export interface OnErrorErrorType {
-    }
-
-    export interface OnProxyErrorErrorType {
     }
 
     /**
