@@ -90,10 +90,6 @@ export interface MinimumTuple<T> extends Array<T> {
     0: T;
 }
 
-const test: Array<string> = ["", ""];
-
-console.log(test);
-
 export function getArrayType(e: SchemaArrayProperty): string {
     if (e.items) {
         let propType: string;
