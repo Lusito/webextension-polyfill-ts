@@ -604,7 +604,7 @@ export namespace Manifest {
         condition?: "purpose" | "pref";
 
         /**
-         * The preference to retreive the value from.
+         * The preference to retrieve the value from.
          * Optional.
          */
         pref?: string;
