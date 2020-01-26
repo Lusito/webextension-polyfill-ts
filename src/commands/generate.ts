@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-import * as fs from 'fs';
+import fs from 'fs';
 import { SchemaEntry, SchemaProperty, SchemaFunctionProperty } from './helpers/types';
 import { importAndFixAll, ImportedNamespace, ImportedNamespaces } from './helpers/importNormalized';
 import { filterUnique, workMap, workArray, toUpperCamelCase, lowerFirstChar } from './helpers/utils';
@@ -170,7 +170,7 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
         if (parameters || func.returns)
             writer.emptyLine();
     }
-    let asyncParam: SchemaProperty | null = null;
+    let asyncParam: SchemaFunctionProperty | null = null;
     if (parameters) {
         if (func.async === 'callback' || func.async === 'responseCallback') {
             const lastParam = parameters.length && parameters[parameters.length - 1];

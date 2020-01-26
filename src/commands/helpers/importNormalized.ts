@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import fs from 'fs';
 import { readSchemaFile } from './readSchemaFile';
 import { SchemaEntry } from './types';
 import { fixes } from './fixes';

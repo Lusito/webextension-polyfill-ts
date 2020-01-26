@@ -1,7 +1,7 @@
 #! /usr/bin/env node
-import * as got from 'got';
-import * as fs from 'fs';
-import * as rimraf from 'rimraf';
+import got from 'got';
+import fs from 'fs';
+import rimraf from 'rimraf';
 
 async function getJsonFileList(url: string) {
     try {
