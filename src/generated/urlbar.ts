@@ -10,11 +10,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { UrlbarContextualTip } from "./urlbar_contextualTip";
 import { Events } from "./events";
 import { Types } from "./types";
 
 export namespace Urlbar {
+
+    /**
+     * The state of an engagement made with the urlbar by the user. <code>start</code>: The user has started an engagement. <code>engagement</code>: The user has completed an engagement by picking a result. <code>abandonment</code>: The user has abandoned their engagement, for example by blurring the urlbar. <code>discard</code>: The engagement ended in a way that should be ignored by listeners.
+     */
+    export type EngagementState = "start" | "engagement" | "abandonment" | "discard";
 
     /**
      * A query performed in the urlbar.
@@ -39,7 +43,7 @@ export namespace Urlbar {
         /**
          * List of acceptable source types to return.
          */
-        acceptableSources: SourceType[];
+        sources: SourceType[];
     }
 
     /**
@@ -123,6 +127,20 @@ export namespace Urlbar {
     }
 
     /**
+     * This event is fired when the user starts and ends an engagement with the urlbar.
+     */
+    export interface onEngagementEvent extends Events.Event<(state: EngagementState) => void> {
+
+        /**
+         * Registers an event listener <em>callback</em> to an event.
+         *
+         * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
+         * @param providerName The name of the provider that will listen for engagement events.
+         */
+        addListener(callback: (state: EngagementState) => void, providerName: string): void;
+    }
+
+    /**
      * This event is fired for the given provider when a query is canceled. The listener should stop any ongoing fetch or creation of results and clean up its resources.
      */
     export interface onQueryCanceledEvent extends Events.Event<(query: Query) => void> {
@@ -192,6 +210,11 @@ export namespace Urlbar {
         onBehaviorRequested: onBehaviorRequestedEvent;
 
         /**
+         * This event is fired when the user starts and ends an engagement with the urlbar.
+         */
+        onEngagement: onEngagementEvent;
+
+        /**
          * This event is fired for the given provider when a query is canceled. The listener should stop any ongoing fetch or creation of results and clean up its resources.
          */
         onQueryCanceled: onQueryCanceledEvent;
@@ -207,15 +230,8 @@ export namespace Urlbar {
         onResultPicked: onResultPickedEvent;
 
         /**
-         * Enables or disables the open-view-on-focus mode.
-         */
-        openViewOnFocus: Types.Setting;
-
-        /**
          * Enables or disables the engagement telemetry.
          */
         engagementTelemetry: Types.Setting;
-
-        contextualTip: UrlbarContextualTip.Static;
     }
 }

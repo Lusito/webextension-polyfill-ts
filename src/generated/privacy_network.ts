@@ -19,6 +19,34 @@ export namespace PrivacyNetwork {
      */
     export type IPHandlingPolicy = "default" | "default_public_and_private_interfaces" | "default_public_interface_only" | "disable_non_proxied_udp" | "proxy_only";
 
+    /**
+     * An object which describes TLS minimum and maximum versions.
+     */
+    export interface tlsVersionRestrictionConfig {
+
+        /**
+         * The minimum TLS version supported.
+         * Optional.
+         */
+        minimum?: TlsVersionRestrictionConfigMinimumEnum;
+
+        /**
+         * The maximum TLS version supported.
+         * Optional.
+         */
+        maximum?: TlsVersionRestrictionConfigMaximumEnum;
+    }
+
+    /**
+     * The minimum TLS version supported.
+     */
+    export type TlsVersionRestrictionConfigMinimumEnum = "TLSv1" | "TLSv1.1" | "TLSv1.2" | "TLSv1.3" | "unknown";
+
+    /**
+     * The maximum TLS version supported.
+     */
+    export type TlsVersionRestrictionConfigMaximumEnum = "TLSv1" | "TLSv1.1" | "TLSv1.2" | "TLSv1.3" | "unknown";
+
     export interface Static {
 
         /**
@@ -35,5 +63,10 @@ export namespace PrivacyNetwork {
          * Allow users to specify the media performance/privacy tradeoffs which impacts how WebRTC traffic will be routed and how much local address information is exposed. This preference's value is of type IPHandlingPolicy, defaulting to <code>default</code>.
          */
         webRTCIPHandlingPolicy: Types.Setting;
+
+        /**
+         * This property controls the minimum and maximum TLS versions. This setting's value is an object of $(ref:tlsVersionRestrictionConfig).
+         */
+        tlsVersionRestriction: Types.Setting;
     }
 }
