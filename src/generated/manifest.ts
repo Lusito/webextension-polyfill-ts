@@ -527,14 +527,22 @@ export namespace Manifest {
     export interface WebExtensionManifestContentSecurityPolicyC2Type {
 
         /**
+         * The Content Security Policy used for extension pages.
          * Optional.
          */
         extension_pages?: string;
 
         /**
+         * The Content Security Policy used for content scripts.
          * Optional.
          */
         content_scripts?: string;
+
+        /**
+         * An alias for content_scripts to support Chrome compatibility.  Content Security Policy implementations may differ between Firefox and Chrome.  If both isolated_world and content_scripts exist, the value from content_scripts will be used.
+         * Optional.
+         */
+        isolated_world?: string;
     }
 
     export interface WebExtensionManifestDeveloperType {
@@ -604,7 +612,7 @@ export namespace Manifest {
         condition?: "purpose" | "pref";
 
         /**
-         * The preference to retreive the value from.
+         * The preference to retrieve the value from.
          * Optional.
          */
         pref?: string;

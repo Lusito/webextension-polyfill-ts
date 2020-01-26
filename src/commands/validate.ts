@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-import * as fs from 'fs';
+import fs from 'fs';
 import { readSchemaFile } from './helpers/readSchemaFile';
 import { SchemaEntry } from './helpers/types';
 import { assertArray } from './helpers/assert';

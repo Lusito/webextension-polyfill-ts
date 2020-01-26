@@ -104,7 +104,6 @@ export { Theme } from "./theme";
 export { TopSites } from "./topSites";
 export { Types } from "./types";
 export { Urlbar } from "./urlbar";
-export { UrlbarContextualTip } from "./urlbar_contextualTip";
 export { UserScripts } from "./userScripts";
 export { WebNavigation } from "./webNavigation";
 export { WebRequest } from "./webRequest";

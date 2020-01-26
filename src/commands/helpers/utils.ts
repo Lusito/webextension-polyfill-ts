@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import fs from 'fs';
 
 export function toUpperCamelCase(value: string) {
     return value[0].toUpperCase() + value.substr(1).replace(/[\-|_\.][a-z]/g, (m) => m[1].toUpperCase());

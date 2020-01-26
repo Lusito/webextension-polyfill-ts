@@ -1,6 +1,6 @@
 import { typeById } from "./types";
 import { assertType } from "./assert";
-import * as fs from 'fs';
+import fs from 'fs';
 
 function getQuoteLength(text: string, start: number, c: string) {
     for (var i = start; i < text.length; i++) {
