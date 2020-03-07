@@ -21,9 +21,8 @@ export namespace UserScripts {
 
         /**
          * The list of JS files to inject
-         * Optional.
          */
-        js?: ExtensionTypes.ExtensionFileOrCode[];
+        js: ExtensionTypes.ExtensionFileOrCode[];
 
         /**
          * An opaque user script metadata value

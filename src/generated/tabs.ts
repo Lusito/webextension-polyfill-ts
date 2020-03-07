@@ -266,9 +266,15 @@ export namespace Tabs {
     }
 
     /**
-     * The page settings including: orientation, scale, background, margins, headers, footers.
+     * Defines the page settings to be used when saving a page as a pdf file.
      */
     export interface PageSettings {
+
+        /**
+         * The name of the file. May include optional .pdf extension.
+         * Optional.
+         */
+        toFileName?: string;
 
         /**
          * The page size unit: 0 = inches, 1 = millimeters. Default: 0.
