@@ -5,6 +5,7 @@
         "description": "Further parameters, depending on the event."
     }],
     "manifest.types.$ImageData.unsupported": true,
+    "idle.types.$IdleState.enum": ["active", "idle", "locked"],
     "browserAction.functions.%isEnabled.!fixAsync": "enabled:boolean",
     "browserAction.functions.%openPopup.!fixAsync": null,
     "clipboard.functions.%setImageData.!fixAsync": null,

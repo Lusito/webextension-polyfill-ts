@@ -100,5 +100,15 @@ export namespace BrowserSettings {
          * This setting controls whether the document's fonts are used.
          */
         useDocumentFonts: Types.Setting;
+
+        /**
+         * This boolean setting controls whether zoom is applied to the full page or to text only.
+         */
+        zoomFullPage: Types.Setting;
+
+        /**
+         * This boolean setting controls whether zoom is applied on a per-site basis or to the current tab only. If privacy.resistFingerprinting is true, this setting has no effect and zoom is applied to the current tab only.
+         */
+        zoomSiteSpecific: Types.Setting;
     }
 }

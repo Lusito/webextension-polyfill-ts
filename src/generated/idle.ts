@@ -13,7 +13,7 @@
 import { Events } from "./events";
 
 export namespace Idle {
-    export type IdleState = "active" | "idle";
+    export type IdleState = "active" | "idle" | "locked";
 
     export interface Static {
 

@@ -257,11 +257,11 @@ export namespace Manifest {
         size: number;
     }
 
-    export type OptionalPermission = "clipboardRead" | "clipboardWrite" | "geolocation" | "idle" | "notifications" | "bookmarks" | "browserSettings" | "cookies" | "downloads" | "downloads.open" | "find" | "history" | "menus.overrideContext" | "search" | "activeTab" | "tabs" | "tabHide" | "topSites" | "webNavigation" | "webRequest" | "webRequestBlocking";
+    export type OptionalPermission = "clipboardRead" | "clipboardWrite" | "geolocation" | "idle" | "notifications" | "bookmarks" | "browserSettings" | "cookies" | "downloads" | "downloads.open" | "find" | "history" | "menus.overrideContext" | "privacy" | "search" | "activeTab" | "tabs" | "tabHide" | "topSites" | "webNavigation" | "webRequest" | "webRequestBlocking";
 
     export type OptionalPermissionOrOrigin = OptionalPermission | MatchPattern;
 
-    export type Permission = OptionalPermission | "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage" | "activityLog" | "browsingData" | "captivePortal" | "contextualIdentities" | "devtools" | "dns" | "geckoProfiler" | "identity" | "management" | "menus" | "contextMenus" | "networkStatus" | "normandyAddonStudy" | "pkcs11" | "privacy" | "proxy" | "nativeMessaging" | "sessions" | "theme" | "urlbar" | string;
+    export type Permission = OptionalPermission | "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage" | "activityLog" | "browsingData" | "captivePortal" | "contextualIdentities" | "devtools" | "dns" | "geckoProfiler" | "identity" | "management" | "menus" | "contextMenus" | "networkStatus" | "normandyAddonStudy" | "pkcs11" | "proxy" | "nativeMessaging" | "sessions" | "theme" | "urlbar" | string;
 
     export type PermissionOrOrigin = Permission | MatchPattern;
 
