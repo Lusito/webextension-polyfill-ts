@@ -35,11 +35,11 @@
     "webextension-polyfill": "^0.6.0"
   },
   "devDependencies": {
-    "@types/node": "^13.9.0",
-    "@types/rimraf": "^2.0.3",
-    "got": "^10.6.0",
+    "@types/node": "^12.12.31",
+    "@types/rimraf": "^3.0.0",
+    "got": "^10.7.0",
     "rimraf": "^3.0.2",
-    "ts-node": "^8.6.2",
+    "ts-node": "^8.8.1",
     "typescript": "^3.8.3"
   }
 }
