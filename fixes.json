@@ -1,32 +1,32 @@
 {
-    "events.types.$Event.functions.%addListener.parameters.+[]": [{
+    "events:types.$Event.functions.%addListener.parameters.+[]": [{
         "name": "...params",
         "type": "any[]",
         "description": "Further parameters, depending on the event."
     }],
-    "manifest.types.$ImageData.unsupported": true,
-    "idle.types.$IdleState.enum": ["active", "idle", "locked"],
-    "browserAction.functions.%isEnabled.!fixAsync": "enabled:boolean",
-    "browserAction.functions.%openPopup.!fixAsync": null,
-    "clipboard.functions.%setImageData.!fixAsync": null,
-    "commands.functions.%update.!fixAsync": null,
-    "commands.functions.%reset.!fixAsync": null,
-    "contentScripts.functions.%register.!fixAsync": "handle:RegisteredContentScript",
-    "contentScripts.types.$RegisteredContentScript.functions.%unregister.!fixAsync": null,
-    "contextualIdentities.functions.%get.!fixAsync": "contextualIdentity:ContextualIdentity",
-    "contextualIdentities.functions.%query.!fixAsync": "contextualIdentity:ContextualIdentity[]",
-    "contextualIdentities.functions.%create.!fixAsync": "contextualIdentity:ContextualIdentity",
-    "contextualIdentities.functions.%update.!fixAsync": "contextualIdentity:ContextualIdentity",
-    "contextualIdentities.functions.%remove.!fixAsync": "contextualIdentity:ContextualIdentity",
-    "find.functions.%highlightResults.!fixAsync": null,
-    "find.functions.%removeHighlighting.!fixAsync": null,
-    "extensionTypes.types.$PlainJSONValue.type": "object",
-    "search.functions.%get.returns": {
+    "manifest:types.$ImageData.unsupported": true,
+    "idle:types.$IdleState.enum": ["active", "idle", "locked"],
+    "browserAction:functions.%isEnabled.!fixAsync": "enabled:boolean",
+    "browserAction:functions.%openPopup.!fixAsync": null,
+    "clipboard:functions.%setImageData.!fixAsync": null,
+    "commands:functions.%update.!fixAsync": null,
+    "commands:functions.%reset.!fixAsync": null,
+    "contentScripts:functions.%register.!fixAsync": "handle:RegisteredContentScript",
+    "contentScripts:types.$RegisteredContentScript.functions.%unregister.!fixAsync": null,
+    "contextualIdentities:functions.%get.!fixAsync": "contextualIdentity:ContextualIdentity",
+    "contextualIdentities:functions.%query.!fixAsync": "contextualIdentity:ContextualIdentity[]",
+    "contextualIdentities:functions.%create.!fixAsync": "contextualIdentity:ContextualIdentity",
+    "contextualIdentities:functions.%update.!fixAsync": "contextualIdentity:ContextualIdentity",
+    "contextualIdentities:functions.%remove.!fixAsync": "contextualIdentity:ContextualIdentity",
+    "find:functions.%highlightResults.!fixAsync": null,
+    "find:functions.%removeHighlighting.!fixAsync": null,
+    "extensionTypes:types.$PlainJSONValue.type": "object",
+    "search:functions.%get.returns": {
         "type": "Promise<SearchEngine[]>",
         "optional": true,
         "description": "A Promise that will be fulfilled with an array of search engine objects."
     },
-    "find.types": [{
+    "find:types": [{
         "id": "RangeData",
         "type": "object",
         "properties": {
@@ -128,12 +128,12 @@
             }
         }
     }],
-    "find.functions.%find.!fixAsync": "result:FindResult",
-    "menus.functions.%refresh.!fixAsync": null,
-    "pageAction.functions.%isShown.!fixAsync": "shown:boolean",
-    "pageAction.functions.%setPopup.!fixAsync": null,
-    "pageAction.functions.%openPopup.!fixAsync": null,
-    "pkcs11.types": [{
+    "find:functions.%find.!fixAsync": "result:FindResult",
+    "menus:functions.%refresh.!fixAsync": null,
+    "pageAction:functions.%isShown.!fixAsync": "shown:boolean",
+    "pageAction:functions.%setPopup.!fixAsync": null,
+    "pageAction:functions.%openPopup.!fixAsync": null,
+    "pkcs11:types": [{
         "id": "Token",
         "type": "object",
         "properties": {
@@ -176,46 +176,46 @@
             }
         }
     }],
-    "pkcs11.functions.%getModuleSlots.!fixAsync": "ModuleSlot[]",
-    "pkcs11.functions.%isModuleInstalled.!fixAsync": "shown:boolean",
-    "pkcs11.functions.%installModule.!fixAsync": null,
-    "pkcs11.functions.%uninstallModule.!fixAsync": null,
-    "sessions.functions.%forgetClosedTab.!fixAsync": null,
-    "sessions.functions.%forgetClosedWindow.!fixAsync": null,
-    "sessions.functions.%setTabValue.!fixAsync": null,
-    "sessions.functions.%getTabValue.!fixAsync": "value:any",
-    "sessions.functions.%removeTabValue.!fixAsync": null,
-    "sessions.functions.%setWindowValue.!fixAsync": null,
-    "sessions.functions.%getWindowValue.!fixAsync": "value:any",
-    "sessions.functions.%removeWindowValue.!fixAsync": null,
-    "sidebarAction.functions.%setTitle.!fixAsync": null,
-    "sidebarAction.functions.%getTitle.!fixAsync": "title:string",
-    "sidebarAction.functions.%setIcon.!fixAsync": null,
-    "sidebarAction.functions.%setPanel.!fixAsync": null,
-    "sidebarAction.functions.%getPanel.!fixAsync": "url:string",
-    "sidebarAction.functions.%open.!fixAsync": null,
-    "sidebarAction.functions.%close.!fixAsync": null,
-    "sidebarAction.functions.%isOpen.!fixAsync": "open:boolean",
-    "tabs.functions.%discard.!fixAsync": null,
-    "tabs.functions.%toggleReaderMode.!fixAsync": null,
-    "tabs.functions.%captureTab.!fixAsync": "dataUrl:string",
-    "tabs.functions.%show.!fixAsync": null,
-    "tabs.functions.%hide.!fixAsync": "hiddenTabIds:number[]",
-    "theme.functions.%getCurrent.!fixAsync": "theme:any",
-    "theme.functions.%update.!fixAsync": null,
-    "theme.functions.%reset.!fixAsync": null,
-    "webRequest.functions.%getSecurityInfo.!fixAsync": "info:SecurityInfo",
-    "storage.types.$StorageArea.functions.%get.parameters.%keys.choices.#0.type": "null | string",
-    "storage.types.$StorageArea.functions.%get.parameters.%keys.choices.#2.type": "{[s:string] : any}",
-    "storage.types.$StorageArea.functions.%get.parameters.%keys.choices.#2.additionalProperties": null,
-    "storage.types.$StorageArea.functions.%get.parameters.%callback.parameters.%items.type": "{[s:string] : any}",
-    "storage.types.$StorageArea.functions.%get.parameters.%callback.parameters.%items.additionalProperties": null,
-    "cookies.functions.%getAll.parameters.%details.properties.firstPartyDomain.type": "string | null",
-    "runtime.functions.%getManifest.returns": {
+    "pkcs11:functions.%getModuleSlots.!fixAsync": "ModuleSlot[]",
+    "pkcs11:functions.%isModuleInstalled.!fixAsync": "shown:boolean",
+    "pkcs11:functions.%installModule.!fixAsync": null,
+    "pkcs11:functions.%uninstallModule.!fixAsync": null,
+    "sessions:functions.%forgetClosedTab.!fixAsync": null,
+    "sessions:functions.%forgetClosedWindow.!fixAsync": null,
+    "sessions:functions.%setTabValue.!fixAsync": null,
+    "sessions:functions.%getTabValue.!fixAsync": "value:any",
+    "sessions:functions.%removeTabValue.!fixAsync": null,
+    "sessions:functions.%setWindowValue.!fixAsync": null,
+    "sessions:functions.%getWindowValue.!fixAsync": "value:any",
+    "sessions:functions.%removeWindowValue.!fixAsync": null,
+    "sidebarAction:functions.%setTitle.!fixAsync": null,
+    "sidebarAction:functions.%getTitle.!fixAsync": "title:string",
+    "sidebarAction:functions.%setIcon.!fixAsync": null,
+    "sidebarAction:functions.%setPanel.!fixAsync": null,
+    "sidebarAction:functions.%getPanel.!fixAsync": "url:string",
+    "sidebarAction:functions.%open.!fixAsync": null,
+    "sidebarAction:functions.%close.!fixAsync": null,
+    "sidebarAction:functions.%isOpen.!fixAsync": "open:boolean",
+    "tabs:functions.%discard.!fixAsync": null,
+    "tabs:functions.%toggleReaderMode.!fixAsync": null,
+    "tabs:functions.%captureTab.!fixAsync": "dataUrl:string",
+    "tabs:functions.%show.!fixAsync": null,
+    "tabs:functions.%hide.!fixAsync": "hiddenTabIds:number[]",
+    "theme:functions.%getCurrent.!fixAsync": "theme:any",
+    "theme:functions.%update.!fixAsync": null,
+    "theme:functions.%reset.!fixAsync": null,
+    "webRequest:functions.%getSecurityInfo.!fixAsync": "info:SecurityInfo",
+    "storage:types.$StorageArea.functions.%get.parameters.%keys.choices.#0.type": "null | string",
+    "storage:types.$StorageArea.functions.%get.parameters.%keys.choices.#2.type": "{[s:string] : any}",
+    "storage:types.$StorageArea.functions.%get.parameters.%keys.choices.#2.additionalProperties": null,
+    "storage:types.$StorageArea.functions.%get.parameters.%callback.parameters.%items.type": "{[s:string] : any}",
+    "storage:types.$StorageArea.functions.%get.parameters.%callback.parameters.%items.additionalProperties": null,
+    "cookies:functions.%getAll.parameters.%details.properties.firstPartyDomain.type": "string | null",
+    "runtime:functions.%getManifest.returns": {
         "$ref": "Manifest.ManifestBase",
         "description": "The manifest details."
     },
-    "runtime.types.$Port.properties.onDisconnect": {
+    "runtime:types.$Port.properties.onDisconnect": {
         "isEvent": true,
         "name": "onDisconnect",
         "type": "function",
@@ -227,7 +227,7 @@
             }
         ]
     },
-    "runtime.types.$Port.properties.onMessage": {
+    "runtime:types.$Port.properties.onMessage": {
         "isEvent": true,
         "name": "onMessage",
         "type": "function",
@@ -243,7 +243,7 @@
             }
         ]
     },
-    "runtime.types.$Port.properties.postMessage": {
+    "runtime:types.$Port.properties.postMessage": {
         "name": "postMessage",
         "type": "function",
         "description": "Send a message to the other end. This takes one argument, which is a JSON object representing the message to send. It will be delivered to any script listening to the port's onMessage event, or to the native application if this port is connected to a native application.",
@@ -254,23 +254,25 @@
             }
         ]
     },
-    "runtime.events.%onMessage.parameters.%sendResponse": null,
-    "runtime.events.%onMessage.returns": {
+    "runtime:events.%onMessage.parameters.%sendResponse": null,
+    "runtime:events.%onMessage.returns": {
         "type": "Promise<any>",
         "optional": true,
         "description": "Return a <code>Promise</code> from the listener function and resolve the promise when the response is ready."
     },
-    "runtime.events.%onMessageExternal.parameters.%sendResponse": null,
-    "runtime.events.%onMessageExternal.returns": {
+    "runtime:events.%onMessageExternal.parameters.%sendResponse": null,
+    "runtime:events.%onMessageExternal.returns": {
         "type": "Promise<any>",
         "optional": true,
         "description": "Return a <code>Promise</code> from the listener function and resolve the promise when the response is ready."
     },
-    "extensionTypes.types.$Date.id": "DateType",
-    "menus.functions.%create.parameters.%createProperties.properties.onclick.parameters.%info.$ref": "OnClickData",
-    "menus.functions.%update.parameters.%updateProperties.properties.onclick.parameters.%info.$ref": "OnClickData",
+    "extensionTypes:types.$Date.id": "DateType",
+    "menus:functions.%create.parameters.%createProperties.properties.onclick.parameters.%info.$ref": "OnClickData",
+    "menus:functions.%update.parameters.%updateProperties.properties.onclick.parameters.%info.$ref": "OnClickData",
 
-    "webRequest.types.+[]": [{
+    "devtools.panels:types.$ExtensionPanel.events.%onShown.parameters.%window.type": "Window",
+    "devtools.panels:types.$ExtensionSidebarPane.events.%onShown.parameters.%window.type": "Window",
+    "webRequest:types.+[]": [{
         "id": "StreamFilterStatus",
         "type": "string",
         "enum": [{
@@ -357,32 +359,40 @@
         "events": [{
             "id": "ondata",
             "type": "function",
+            "assignableEvent": true,
             "description": "Dispatched with a StreamFilterDataEvent whenever incoming data is available on the stream. This data will not be delivered to the output stream unless it is explicitly written via a write() call.",
             "parameters": [{
+                "name": "data",
                 "type": "ref",
                 "$ref": "StreamFilterEventData"
             }]
         }, {
             "id": "onstart",
             "type": "function",
+            "assignableEvent": true,
             "description": "Dispatched when the stream is opened, and is about to begin delivering data.",
             "parameters": [{
+                "name": "data",
                 "type": "ref",
                 "$ref": "StreamFilterEventData"
             }]
         }, {
             "id": "onstop",
             "type": "function",
+            "assignableEvent": true,
             "description": "Dispatched when the stream has closed, and has no more data to deliver. The output stream remains open and writable until close() is called.",
             "parameters": [{
+                "name": "data",
                 "type": "ref",
                 "$ref": "StreamFilterEventData"
             }]
         }, {
             "id": "onerror",
             "type": "function",
+            "assignableEvent": true,
             "description": "Dispatched when an error has occurred. No further data may be read or written after this point.",
             "parameters": [{
+                "name": "data",
                 "type": "ref",
                 "$ref": "StreamFilterEventData"
             }]
