@@ -155,9 +155,10 @@ export const fixes: Fix[] = [{
     apply: (namespaces) => {
         const fixes = readJsonFile('./fixes.json');
         for (const path in fixes) {
-            const parts = path.split('.');
-            let base: any = namespaces.namespaces[parts[0]].entry;
-            for (let i = 1; i < (parts.length - 1); i++) {
+            const [namespace, selector] = path.split(':');
+            const parts = selector.split('.');
+            let base: any = namespaces.namespaces[namespace].entry;
+            for (let i = 0; i < (parts.length - 1); i++) {
                 const part = parts[i];
                 if (part[0] === '$') {
                     const id = part.substr(1);

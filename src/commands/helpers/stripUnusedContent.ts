@@ -5,6 +5,7 @@ function stripUnusedPropertiesFromProperty(val: SchemaProperty) {
     if (val.type === 'object') {
         stripUnusedPropertiesMap(val.properties);
         val.functions = stripUnusedProperties(val.functions);
+        val.events = stripUnusedProperties(val.events);
     } else if (val.type === 'choices' && val.choices)
         val.choices = stripUnusedProperties(val.choices);
     if (val.type === 'function')

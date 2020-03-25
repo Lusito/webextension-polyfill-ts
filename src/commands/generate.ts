@@ -36,6 +36,10 @@ function getImports(entry: SchemaEntry, subNamespaces: string[]) {
                 if (prop.additionalProperties.$ref && IGNORE_ADDITIONAL_PROPERTIES.indexOf(prop.additionalProperties.$ref) === -1)
                     checkAndAddImport(prop.additionalProperties.$ref);
             }
+            workArray(prop.functions, addFromProperty);
+            workArray(prop.events, addFromProperty);
+            if (prop.events && prop.events.find((e) => !e.assignableEvent))
+                imports.push('Events');
         }
         else if (prop.type === 'choices')
             workArray(prop.choices, addFromProperty);
@@ -110,6 +114,7 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
         }
         addProperties(type.properties, writer);
         workArray(type.functions, (func) => addFunction(func, func.parameters, writer));
+        workArray(type.events, (event) => addEvent(event, writer));
         writer.end('}');
     } else if (type.type === 'string' && type.enum) {
         writer.code('export type ' + type.id + ' = ' + getEnumType(type.enum) + ';');
@@ -131,8 +136,11 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
 
 function addEvent(event: SchemaFunctionProperty, writer: CodeWriter) {
     assertSupported(event);
-    if (!event.name)
+    const name = event.name || event.id;
+    if (!name) {
+        console.log(event);
         throw ErrorMessage.MISSING_NAME;
+    }
 
     if (event.description) {
         writer.comment(event.description);
@@ -146,10 +154,12 @@ function addEvent(event: SchemaFunctionProperty, writer: CodeWriter) {
         writer.comment('@param ' + param.name + fullDescription);
     });
 
-    if(event.$extend) {
-        writer.code(event.name + ': ' + event.$extend + ';');
+    if (event.assignableEvent) {
+        writer.code(name + '?: (' + getParameters(event.parameters, false) + ') => ' + getReturnType(event) + ';');
+    } else if(event.$extend) {
+        writer.code(name + ': ' + event.$extend + ';');
     } else {
-        writer.code(event.name + ': Events.Event<(' + getParameters(event.parameters, false) + ') => ' + getReturnType(event) + '>;');
+        writer.code(name + ': Events.Event<(' + getParameters(event.parameters, false) + ') => ' + getReturnType(event) + '>;');
     }
     writer.emptyLine();
 }

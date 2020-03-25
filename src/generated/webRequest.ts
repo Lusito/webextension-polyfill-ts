@@ -331,6 +331,34 @@ export namespace WebRequest {
          * @param data
          */
         write(data: ArrayBuffer | Uint8Array): void;
+
+        /**
+         * Dispatched with a StreamFilterDataEvent whenever incoming data is available on the stream. This data will not be delivered to the output stream unless it is explicitly written via a write() call.
+         *
+         * @param data
+         */
+        ondata?: (data: StreamFilterEventData) => void;
+
+        /**
+         * Dispatched when the stream is opened, and is about to begin delivering data.
+         *
+         * @param data
+         */
+        onstart?: (data: StreamFilterEventData) => void;
+
+        /**
+         * Dispatched when the stream has closed, and has no more data to deliver. The output stream remains open and writable until close() is called.
+         *
+         * @param data
+         */
+        onstop?: (data: StreamFilterEventData) => void;
+
+        /**
+         * Dispatched when an error has occurred. No further data may be read or written after this point.
+         *
+         * @param data
+         */
+        onerror?: (data: StreamFilterEventData) => void;
     }
 
     export interface StreamFilterEventData {

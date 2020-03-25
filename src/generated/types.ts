@@ -9,6 +9,8 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
+import { Events } from "./events";
+
 export namespace Types {
 
     /**
@@ -46,6 +48,13 @@ export namespace Types {
          * @returns Promise<void> Called at the completion of the clear operation.
          */
         clear(details: SettingClearDetailsType): Promise<void>;
+
+        /**
+         * Fired after the setting changes.
+         *
+         * @param details
+         */
+        onChange: Events.Event<(details: SettingOnChangeDetailsType) => void>;
     }
 
     export interface SettingOnChangeDetailsType {

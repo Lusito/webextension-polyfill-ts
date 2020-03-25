@@ -9,8 +9,8 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
-import { Manifest } from "./manifest";
 import { Events } from "./events";
+import { Manifest } from "./manifest";
 
 export namespace DevtoolsPanels {
 
@@ -26,6 +26,11 @@ export namespace DevtoolsPanels {
          * @returns Promise<ExtensionSidebarPane> A callback invoked when the sidebar is created.
          */
         createSidebarPane(title: string): Promise<ExtensionSidebarPane>;
+
+        /**
+         * Fired when an object is selected in the panel.
+         */
+        onSelectionChanged: Events.Event<() => void>;
     }
 
     /**
@@ -38,6 +43,18 @@ export namespace DevtoolsPanels {
      * Represents a panel created by extension.
      */
     export interface ExtensionPanel {
+
+        /**
+         * Fired when the user switches to the panel.
+         *
+         * @param window The JavaScript <code>window</code> object of panel's page.
+         */
+        onShown: Events.Event<(window: Window) => void>;
+
+        /**
+         * Fired when the user switches away from the panel.
+         */
+        onHidden: Events.Event<() => void>;
     }
 
     /**
@@ -69,6 +86,18 @@ export namespace DevtoolsPanels {
          * @param path Relative path of an extension page to display within the sidebar.
          */
         setPage(path: Manifest.ExtensionURL): void;
+
+        /**
+         * Fired when the sidebar pane becomes visible as a result of user switching to the panel that hosts it.
+         *
+         * @param window The JavaScript <code>window</code> object of the sidebar page, if one was set with the <code>setPage()</code> method.
+         */
+        onShown: Events.Event<(window: Window) => void>;
+
+        /**
+         * Fired when the sidebar pane becomes hidden as a result of the user switching away from the panel that hosts the sidebar pane.
+         */
+        onHidden: Events.Event<() => void>;
     }
 
     /**
