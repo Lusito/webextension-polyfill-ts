@@ -257,11 +257,15 @@ export namespace Manifest {
         size: number;
     }
 
-    export type OptionalPermission = "clipboardRead" | "clipboardWrite" | "geolocation" | "idle" | "notifications" | "bookmarks" | "browserSettings" | "cookies" | "downloads" | "downloads.open" | "find" | "history" | "menus.overrideContext" | "privacy" | "search" | "activeTab" | "tabs" | "tabHide" | "topSites" | "webNavigation" | "webRequest" | "webRequestBlocking";
+    export type OptionalPermissionNoPrompt = "idle" | "cookies" | "menus.overrideContext" | "search" | "activeTab" | "webRequest" | "webRequestBlocking";
+
+    export type OptionalPermission = OptionalPermissionNoPrompt | "clipboardRead" | "clipboardWrite" | "geolocation" | "notifications" | "bookmarks" | "browserSettings" | "browsingData" | "devtools" | "downloads" | "downloads.open" | "find" | "history" | "management" | "pkcs11" | "privacy" | "proxy" | "sessions" | "tabs" | "tabHide" | "topSites" | "webNavigation";
 
     export type OptionalPermissionOrOrigin = OptionalPermission | MatchPattern;
 
-    export type Permission = OptionalPermission | "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage" | "activityLog" | "browsingData" | "captivePortal" | "contextualIdentities" | "devtools" | "dns" | "geckoProfiler" | "identity" | "management" | "menus" | "contextMenus" | "networkStatus" | "normandyAddonStudy" | "pkcs11" | "proxy" | "nativeMessaging" | "sessions" | "theme" | "urlbar" | string;
+    export type PermissionNoPrompt = OptionalPermission | "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage" | "activityLog" | "captivePortal" | "contextualIdentities" | "dns" | "geckoProfiler" | "identity" | "menus" | "contextMenus" | "networkStatus" | "normandyAddonStudy" | "theme" | "urlbar";
+
+    export type Permission = PermissionNoPrompt | OptionalPermission | string | "nativeMessaging";
 
     export type PermissionOrOrigin = Permission | MatchPattern;
 

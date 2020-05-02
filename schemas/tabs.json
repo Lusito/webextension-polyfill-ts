@@ -7,11 +7,19 @@
     "namespace": "manifest",
     "types": [
       {
+        "$extend": "OptionalPermissionNoPrompt",
+        "choices": [{
+          "type": "string",
+          "enum": [
+            "activeTab"
+          ]
+        }]
+      },
+      {
         "$extend": "OptionalPermission",
         "choices": [{
           "type": "string",
           "enum": [
-            "activeTab",
             "tabs",
             "tabHide"
           ]
@@ -1447,6 +1455,48 @@
                 "description": "Whether to link up the current predecessors or successor (depending on options.append) of tabId to the other side of the chain after it is prepended or appended. If true, one of the following happens: if options.append is false, the first tab in the array is set as the successor of any current predecessors of tabId; if options.append is true, the current successor of tabId is set as the successor of the last tab in the array. Defaults to false."
               }
             }
+          }
+        ]
+      },
+      {
+        "name": "goForward",
+        "type": "function",
+        "description": "Navigate to next page in tab's history, if available",
+        "async": "callback",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "tabId",
+            "minimum": 0,
+            "optional": true,
+            "description": "The ID of the tab to navigate forward."
+          },
+          {
+            "type": "function",
+            "name": "callback",
+            "optional": true,
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "goBack",
+        "type": "function",
+        "description": "Navigate to previous page in tab's history, if available.",
+        "async": "callback",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "tabId",
+            "minimum": 0,
+            "optional": true,
+            "description": "The ID of the tab to navigate backward."
+          },
+          {
+            "type": "function",
+            "name": "callback",
+            "optional": true,
+            "parameters": []
           }
         ]
       }
