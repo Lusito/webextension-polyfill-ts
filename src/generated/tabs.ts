@@ -1273,6 +1273,22 @@ export namespace Tabs {
         moveInSuccession(tabIds: number[], tabId?: number, options?: MoveInSuccessionOptionsType): void;
 
         /**
+         * Navigate to next page in tab's history, if available
+         *
+         * @param tabId Optional. The ID of the tab to navigate forward.
+         * @returns Promise<void>
+         */
+        goForward(tabId?: number): Promise<void>;
+
+        /**
+         * Navigate to previous page in tab's history, if available.
+         *
+         * @param tabId Optional. The ID of the tab to navigate backward.
+         * @returns Promise<void>
+         */
+        goBack(tabId?: number): Promise<void>;
+
+        /**
          * Fired when a tab is created. Note that the tab's URL may not be set at the time this event fired, but you can listen to onUpdated events to be notified when a URL is set.
          *
          * @param tab Details of the tab that was created.

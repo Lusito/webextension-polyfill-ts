@@ -5,6 +5,7 @@
  * Permissions: "manifest:optional_permissions"
  */
 import { Manifest } from "./manifest";
+import { Events } from "./events";
 
 export namespace Permissions {
     export interface Permissions {
@@ -65,5 +66,19 @@ export namespace Permissions {
          * @returns Promise<void>
          */
         remove(permissions: Permissions): Promise<void>;
+
+        /**
+         * Fired when the extension acquires new permissions.
+         *
+         * @param permissions
+         */
+        onAdded: Events.Event<(permissions: Permissions) => void>;
+
+        /**
+         * Fired when permissions are removed from the extension.
+         *
+         * @param permissions
+         */
+        onRemoved: Events.Event<(permissions: Permissions) => void>;
     }
 }
