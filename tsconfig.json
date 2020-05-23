@@ -1,27 +1,15 @@
 {
-    "compilerOptions": {
-        "target": "es2015",
-        "module": "commonjs",
-        "lib": [
-            "es2015",
-            "dom"
-        ],
-        "declaration": true,
-        "sourceMap": true,
-        "outDir": "./dist",
-        "strict": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "noImplicitThis": true,
-        "alwaysStrict": true,
-        "noUnusedLocals": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
-        "esModuleInterop": true,
-        "moduleResolution": "node",
-        "experimentalDecorators": true
-    },
-    "include": [
-        "src/generated/*"
-    ],
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "lib": ["es2015", "dom"],
+    "noEmit": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node"
+  },
+  "include": ["src"]
 }

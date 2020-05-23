@@ -7,7 +7,7 @@ This is a TypeScript ready "wrapper" for the [WebExtension browser API Polyfill]
   * [browser](https://hg.mozilla.org/integration/autoland/raw-file/tip/browser/components/extensions/schemas/)
 
 ## How to use:
-This guide assumes you are building a web-extension using npm and webpack.
+This guide assumes you are building a web-extension using npm and webpack, parcel or similar.
 If you are looking for an example use-case, check out the development branch of my web-extension [Forget Me Not](https://github.com/lusito/forget-me-not/tree/develop).
 
 * `npm install --save-dev webextension-polyfill-ts`
@@ -17,8 +17,11 @@ If you are looking for an example use-case, check out the development branch of 
 
 If you want to use the exported types in your code, simply import them like this:
 ```typescript
-import { browser, Cookies } from "webextension-polyfill-ts";
-const cookie: Cookies.Cookie;
+import { Cookies } from "webextension-polyfill-ts";
+
+function inspectCookie(cookie: Cookies.Cookie) {
+    //...
+}
 ```
 
 All types are inside their respective namespace:
@@ -26,6 +29,9 @@ All types are inside their respective namespace:
   * For example `browser.cookies` types are in the `Cookies` namespace
 * Nested namespaces will remove the dot and have the first character after the dot as upper-case.
   * For example `browser.devtools.inspectedWindow` types are in the `DevtoolsInspectedWindow` namespace.
+
+## Unit Testing
+Consider [mockzilla-webextension](https://lusito.github.io/mockzilla-webextension/) for unit-testing. It combines all the types this package provides with some nifty mocking functionality.
 
 ## Issues
 There are still some issues left:

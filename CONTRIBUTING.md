@@ -6,27 +6,27 @@ You might have noticed that some generated code is wrong.. Since I don't use the
 
 This file should give you a quick introduction. It won't cover everything.
 
-Sadly, there is official documentation for the schema .json files that I know of. I suggest having a look at `src/commands/helpers/types.ts`, which documents structure of the schema.json files as I deducted them from reading them. You can ignore the helper functions I put in there. They are only there to help validating the schema files.
+Sadly, there is official documentation for the schema .json files that I know of. I suggest having a look at `src/helpers/types.ts`, which documents structure of the schema.json files as I deducted them from reading them. You can ignore the helper functions I put in there. They are only there to help validating the schema files.
 
 ## Build commands:
 
 You will need npm installed.
 
 Run these commands:
-* `npm install` -> only needs to happen once to get all dependencies
+* `npm install` -> only needs to happen once to get all dependencies and whenever you merge back changes from this repository.
 * `npm run fetch` -> grabs the latest schema files from mozilla
-* `npm run validate` -> validates that all the assumptions I made about the .json files are still true
-* `npm run generate` -> generates one .ts per namespace and one index.ts file.
-* `npm run build` -> to test if the generated files transpile correctly.
+* `npm run validate:schemas` -> validates that all the assumptions I made about the .json files are still true
+* `npm run build` -> generates one .d.ts per namespace and one index.d.ts file in the lib folder.
+* `npm run validate:lib` -> to test if the generated files are valid TypeScript.
+* `npm run all` -> execute all of the above (except npm install) in order.
 
 ## Overview
 
 As you might have read, this project grabs schema files from mozilla, parses them and then spits out typescript files.
 Here is a list of all folders and files in this project:
 - schemas: schema .json files downloaded from various sources.
-- src
-  - commands: source for commandline commands to fetch and validate schemas, and to generate typescript files.
-  - generated: generated typescript files
+- lib: generated typescript definition files and one manually written file (index.js)
+- src: source for commandline commands to fetch and validate schemas, and to generate typescript files.
 - fixes.json: fixes for schema files.. see below.
 
 ## fixes.json
@@ -116,14 +116,14 @@ This will automagically do all the work for you. Possible "replacement" values f
 
 ## The commands code
 
-### src/commands/fetch.ts
+### src/fetch.ts
 This is a simple node command to remove the schemas directory, and then redownload them from the mozilla sources.
 Everything should be self explanatory.
 
-### src/commands/validate.ts
-This is a simple node command to read each schema/*.json file and validate it against my assumptions. So if -at some point- the schema files change beyond what I expect, this should hopefully spit out a warning. It uses helper functions in `src/commands/helpers/types.ts`
+### src/validate.ts
+This is a simple node command to read each schema/*.json file and validate it against my assumptions. So if -at some point- the schema files change beyond what I expect, this should hopefully spit out a warning. It uses helper functions in `src/helpers/types.ts`
 
-### src/commands/generate.ts
+### src/build.ts
 This file is a lot more complex and at this time I don't have the time to go into every detail of it. It sure could use some refactoring, as it has grown quite a bit.
 
 What it essentially does is:
@@ -133,8 +133,8 @@ What it essentially does is:
   - applying some autocorrection
   - applying manual json fixes (see fixes.json)
   - flatten the schema tree and create names/ids where none where given.
-  - see `src/commands/helpers/fixes.ts` for more details
-- Write each namespace to its corresponding .ts file
-- Write an index.ts file that imports everything.
+  - see `src/helpers/fixes.ts` for more details
+- Write each namespace to its corresponding .d.ts file
+- Write an index.d.ts file that imports everything.
 
 That's it for now. You'll need to figure the rest out on your own or open an issue with questions you have.
