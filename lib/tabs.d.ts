@@ -539,6 +539,21 @@ export declare namespace Tabs {
         title?: string;
     }
 
+    interface DuplicateDuplicatePropertiesType {
+
+        /**
+         * The position the new tab should take in the window. The provided value will be clamped to between zero and the number of tabs in the window.
+         * Optional.
+         */
+        index?: number;
+
+        /**
+         * Whether the tab should become the active tab in the window. Does not affect whether the window is focused (see $(ref:windows.update)). Defaults to <var>true</var>.
+         * Optional.
+         */
+        active?: boolean;
+    }
+
     interface QueryQueryInfoType {
 
         /**
@@ -1021,9 +1036,10 @@ export declare namespace Tabs {
          * Duplicates a tab.
          *
          * @param tabId The ID of the tab which is to be duplicated.
+         * @param duplicateProperties Optional.
          * @returns Promise<Tab>
          */
-        duplicate(tabId: number): Promise<Tab>;
+        duplicate(tabId: number, duplicateProperties?: DuplicateDuplicatePropertiesType): Promise<Tab>;
 
         /**
          * Gets all tabs that have the specified properties, or all tabs if no properties are specified.
