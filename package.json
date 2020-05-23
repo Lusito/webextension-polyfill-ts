@@ -1,6 +1,6 @@
 {
   "name": "webextension-polyfill-ts",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "webextension-polyfill for TypeScript",
   "keywords": [
     "TypeScript",
@@ -18,28 +18,26 @@
     "url": "https://github.com/Lusito/webextension-polyfill-ts.git"
   },
   "files": [
-    "dist/",
-    "src/generated/",
-    "tsconfig.json"
+    "lib/"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "all": "npm run fetch && npm run validate && npm run generate && npm run build",
-    "build": "rimraf dist && tsc",
-    "fetch": "ts-node src/commands/fetch.ts",
-    "validate": "ts-node src/commands/validate.ts",
-    "generate": "ts-node src/commands/generate.ts"
+    "all": "npm run fetch && npm run validate:schemas && npm run build && npm run validate:lib",
+    "build": "ts-node src/build.ts",
+    "fetch": "ts-node src/fetch.ts",
+    "validate:schemas": "ts-node src/validate.ts",
+    "validate:lib": "tsc -p tsconfig-lib.json"
   },
   "dependencies": {
     "webextension-polyfill": "^0.6.0"
   },
   "devDependencies": {
-    "@types/node": "^13.13.4",
+    "@types/node": "^14.0.5",
     "@types/rimraf": "^3.0.0",
-    "got": "^11.0.3",
+    "got": "^11.1.4",
     "rimraf": "^3.0.2",
-    "ts-node": "^8.9.1",
-    "typescript": "^3.8.3"
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3"
   }
 }
