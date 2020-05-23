@@ -1,6 +1,6 @@
 {
   "name": "webextension-polyfill-ts",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "webextension-polyfill for TypeScript",
   "keywords": [
     "TypeScript",
@@ -33,11 +33,11 @@
     "webextension-polyfill": "^0.6.0"
   },
   "devDependencies": {
-    "@types/node": "^13.13.4",
+    "@types/node": "^14.0.5",
     "@types/rimraf": "^3.0.0",
-    "got": "^11.0.3",
+    "got": "^11.1.4",
     "rimraf": "^3.0.2",
-    "ts-node": "^8.9.1",
-    "typescript": "^3.8.3"
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3"
   }
 }
