@@ -272,6 +272,11 @@
 
     "devtools.panels:types.$ExtensionPanel.events.%onShown.parameters.%window.type": "Window",
     "devtools.panels:types.$ExtensionSidebarPane.events.%onShown.parameters.%window.type": "Window",
+    "windows:functions.%create.parameters.%createData.properties.focused": {
+        "type": "boolean",
+        "optional": true,
+        "description": "If true, the new window will be focused. If false, the new window will be opened in the background and the currently focused window will stay focused. Defaults to true."
+    },
     "webRequest:types.+[]": [{
         "id": "StreamFilterStatus",
         "type": "string",

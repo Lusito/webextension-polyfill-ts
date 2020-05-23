@@ -170,6 +170,12 @@ export declare namespace Windows {
         height?: number;
 
         /**
+         * If true, the new window will be focused. If false, the new window will be opened in the background and the currently focused window will stay focused. Defaults to true.
+         * Optional.
+         */
+        focused?: boolean;
+
+        /**
          * Whether the new window should be an incognito window.
          * Optional.
          */
