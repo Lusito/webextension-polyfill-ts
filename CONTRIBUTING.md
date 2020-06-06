@@ -76,6 +76,7 @@ If you use any of the above, it is assumed that the current node is an array.
 
 Usually the last part of a key is not a special instruction, but a normal key. These are exceptions:
 - If the last part is exactly `+[]`, values are appended to an array.
+- If the last part is exactly `-[]`, the values are selectors to remove elements from an array. See the instructions to navigate an array above.
 - If the last part is exactly `!fixAsync`, async functions can be easily fixed.
 
 ### Appending to an array instead of setting an attribute.

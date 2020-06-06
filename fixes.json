@@ -277,7 +277,18 @@
         "optional": true,
         "description": "If true, the new window will be focused. If false, the new window will be opened in the background and the currently focused window will stay focused. Defaults to true."
     },
+    "webRequest:events.%onBeforeRequest.returns.$ref": "BlockingResponseOrPromise",
+    "webRequest:events.%onBeforeSendHeaders.returns.$ref": "BlockingResponseOrPromise",
+    "webRequest:events.%onHeadersReceived.returns.$ref": "BlockingResponseOrPromise",
+    "webRequest:events.%onAuthRequired.returns.$ref": "BlockingResponseOrPromise",
+    "webRequest:events.%onAuthRequired.parameters.-[]": ["%callback"],
     "webRequest:types.+[]": [{
+        "type": "choices",
+        "id": "BlockingResponseOrPromise",
+        "description": "A BlockingResponse or a Promise<BlockingResponse>",
+        "choices": [{ "type": "BlockingResponse" }, { "type": "Promise<BlockingResponse>" }]
+    },
+    {
         "id": "StreamFilterStatus",
         "type": "string",
         "enum": [{
