@@ -272,6 +272,11 @@ export declare namespace WebRequest {
     }
 
     /**
+     * A BlockingResponse or a Promise<BlockingResponse>
+     */
+    type BlockingResponseOrPromise = BlockingResponse | Promise<BlockingResponse>;
+
+    /**
      * "uninitialized": The StreamFilter is not fully initialized. No methods may be called until a "start" event has been received.
      * "transferringdata": The underlying channel is currently transferring data, which will be dispatched via "data" events.
      * "finishedtransferringdata": The underlying channel has finished transferring data. Data may still be written via write() calls at this point.
@@ -1332,7 +1337,7 @@ export declare namespace WebRequest {
     /**
      * Fired when a request is about to occur.
      */
-    interface onBeforeRequestEvent extends Events.Event<(details: OnBeforeRequestDetailsType) => BlockingResponse | void> {
+    interface onBeforeRequestEvent extends Events.Event<(details: OnBeforeRequestDetailsType) => BlockingResponseOrPromise | void> {
 
         /**
          * Registers an event listener <em>callback</em> to an event.
@@ -1341,13 +1346,13 @@ export declare namespace WebRequest {
          * @param filter A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnBeforeRequestDetailsType) => BlockingResponse | void, filter: RequestFilter, extraInfoSpec?: OnBeforeRequestOptions[]): void;
+        addListener(callback: (details: OnBeforeRequestDetailsType) => BlockingResponseOrPromise | void, filter: RequestFilter, extraInfoSpec?: OnBeforeRequestOptions[]): void;
     }
 
     /**
      * Fired before sending an HTTP request, once the request headers are available. This may occur after a TCP connection is made to the server, but before any HTTP data is sent. 
      */
-    interface onBeforeSendHeadersEvent extends Events.Event<(details: OnBeforeSendHeadersDetailsType) => BlockingResponse | void> {
+    interface onBeforeSendHeadersEvent extends Events.Event<(details: OnBeforeSendHeadersDetailsType) => BlockingResponseOrPromise | void> {
 
         /**
          * Registers an event listener <em>callback</em> to an event.
@@ -1356,7 +1361,7 @@ export declare namespace WebRequest {
          * @param filter A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnBeforeSendHeadersDetailsType) => BlockingResponse | void, filter: RequestFilter, extraInfoSpec?: OnBeforeSendHeadersOptions[]): void;
+        addListener(callback: (details: OnBeforeSendHeadersDetailsType) => BlockingResponseOrPromise | void, filter: RequestFilter, extraInfoSpec?: OnBeforeSendHeadersOptions[]): void;
     }
 
     /**
@@ -1377,7 +1382,7 @@ export declare namespace WebRequest {
     /**
      * Fired when HTTP response headers of a request have been received.
      */
-    interface onHeadersReceivedEvent extends Events.Event<(details: OnHeadersReceivedDetailsType) => BlockingResponse | void> {
+    interface onHeadersReceivedEvent extends Events.Event<(details: OnHeadersReceivedDetailsType) => BlockingResponseOrPromise | void> {
 
         /**
          * Registers an event listener <em>callback</em> to an event.
@@ -1386,13 +1391,13 @@ export declare namespace WebRequest {
          * @param filter A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnHeadersReceivedDetailsType) => BlockingResponse | void, filter: RequestFilter, extraInfoSpec?: OnHeadersReceivedOptions[]): void;
+        addListener(callback: (details: OnHeadersReceivedDetailsType) => BlockingResponseOrPromise | void, filter: RequestFilter, extraInfoSpec?: OnHeadersReceivedOptions[]): void;
     }
 
     /**
      * Fired when an authentication failure is received. The listener has three options: it can provide authentication credentials, it can cancel the request and display the error page, or it can take no action on the challenge. If bad user credentials are provided, this may be called multiple times for the same request.
      */
-    interface onAuthRequiredEvent extends Events.Event<(details: OnAuthRequiredDetailsType, callback: ((response: BlockingResponse) => void) | undefined) => BlockingResponse | void> {
+    interface onAuthRequiredEvent extends Events.Event<(details: OnAuthRequiredDetailsType) => BlockingResponseOrPromise | void> {
 
         /**
          * Registers an event listener <em>callback</em> to an event.
@@ -1401,7 +1406,7 @@ export declare namespace WebRequest {
          * @param filter A set of filters that restricts the events that will be sent to this listener.
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnAuthRequiredDetailsType, callback: ((response: BlockingResponse) => void) | undefined) => BlockingResponse | void, filter: RequestFilter, extraInfoSpec?: OnAuthRequiredOptions[]): void;
+        addListener(callback: (details: OnAuthRequiredDetailsType) => BlockingResponseOrPromise | void, filter: RequestFilter, extraInfoSpec?: OnAuthRequiredOptions[]): void;
     }
 
     /**

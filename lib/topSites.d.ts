@@ -80,7 +80,7 @@ export declare namespace TopSites {
         includeSearchShortcuts?: boolean;
 
         /**
-         * Return the sites that exactly appear on the user's new-tab page. When true, all other options are ignored except limit and includeFavicon.
+         * Return the sites that exactly appear on the user's new-tab page. When true, all other options are ignored except limit and includeFavicon. If the user disabled newtab Top Sites, the newtab parameter will be ignored.
          * Optional.
          */
         newtab?: boolean;

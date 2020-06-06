@@ -62,7 +62,49 @@ export declare namespace Storage {
         clear(): Promise<void>;
     }
 
-    interface SyncStorageArea extends StorageArea {
+    interface StorageAreaSync {
+
+        /**
+         * Gets one or more items from storage.
+         *
+         * @param keys Optional. A single key to get, list of keys to get, or a dictionary specifying default values (see description of the object).  An empty list or object will return an empty result object.  Pass in <code>null</code> to get the entire contents of storage.
+         * @returns Promise<StorageAreaSyncGetCallbackItemsType> Callback with storage items, or on failure (in which case $(ref:runtime.lastError) will be set).
+         */
+        get(keys?: string | string[] | StorageAreaSyncGetKeysC3Type): Promise<StorageAreaSyncGetCallbackItemsType>;
+
+        /**
+         * Gets the amount of space (in bytes) being used by one or more items.
+         *
+         * @param keys Optional. A single key or list of keys to get the total usage for. An empty list will return 0. Pass in <code>null</code> to get the total usage of all of storage.
+         * @returns Promise<number> Callback with the amount of space being used by storage, or on failure (in which case $(ref:runtime.lastError) will be set).
+         */
+        getBytesInUse(keys?: string | string[]): Promise<number>;
+
+        /**
+         * Sets multiple items.
+         *
+         * @param items <p>An object which gives each key/value pair to update storage with. Any other key/value pairs in storage will not be affected.</p><p>Primitive values such as numbers will serialize as expected. Values with a <code>typeof</code> <code>"object"</code> and <code>"function"</code> will typically serialize to <code>{}</code>, with the exception of <code>Array</code> (serializes as expected), <code>Date</code>, and <code>Regex</code> (serialize using their <code>String</code> representation).</p>
+         * @returns Promise<void> Callback on success, or on failure (in which case $(ref:runtime.lastError) will be set).
+         */
+        set(items: StorageAreaSyncSetItemsType): Promise<void>;
+
+        /**
+         * Removes one or more items from storage.
+         *
+         * @param keys A single key or a list of keys for items to remove.
+         * @returns Promise<void> Callback on success, or on failure (in which case $(ref:runtime.lastError) will be set).
+         */
+        remove(keys: string | string[]): Promise<void>;
+
+        /**
+         * Removes all items from storage.
+         *
+         * @returns Promise<void> Callback on success, or on failure (in which case $(ref:runtime.lastError) will be set).
+         */
+        clear(): Promise<void>;
+    }
+
+    interface SyncStorageAreaSync extends StorageAreaSync {
 
         /**
          * The maximum total amount (in bytes) of data that can be stored in sync storage, as measured by the JSON stringification of every value plus every key's length. Updates that would cause this limit to be exceeded fail immediately and set $(ref:runtime.lastError).
@@ -112,6 +154,24 @@ export declare namespace Storage {
     interface StorageAreaSetItemsType {
     }
 
+    /**
+     * Storage items to return in the callback, where the values are replaced with those from storage if they exist.
+     */
+    interface StorageAreaSyncGetKeysC3Type {
+    }
+
+    /**
+     * Object with items in their key-value mappings.
+     */
+    interface StorageAreaSyncGetCallbackItemsType {
+    }
+
+    /**
+     * <p>An object which gives each key/value pair to update storage with. Any other key/value pairs in storage will not be affected.</p><p>Primitive values such as numbers will serialize as expected. Values with a <code>typeof</code> <code>"object"</code> and <code>"function"</code> will typically serialize to <code>{}</code>, with the exception of <code>Array</code> (serializes as expected), <code>Date</code>, and <code>Regex</code> (serialize using their <code>String</code> representation).</p>
+     */
+    interface StorageAreaSyncSetItemsType {
+    }
+
     interface Static {
 
         /**
@@ -122,7 +182,7 @@ export declare namespace Storage {
          */
         onChanged: Events.Event<(changes: {[s:string]:StorageChange}, areaName: string) => void>;
 
-        sync: SyncStorageArea;
+        sync: SyncStorageAreaSync;
 
         local: LocalStorageArea;
 

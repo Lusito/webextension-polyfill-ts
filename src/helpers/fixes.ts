@@ -164,24 +164,20 @@ export const fixes: Fix[] = [{
                     const id = part.substr(1);
                     assertType(base, 'array');
                     base = base.find((e: any) => e.id === id);
-                    assertType(base, 'array', 'object');
                 } else if (part[0] === '%') {
                     const name = part.substr(1);
                     assertType(base, 'array');
                     base = base.find((e: any) => e.name === name);
-                    assertType(base, 'array', 'object');
-                    assertType(base, 'array', 'object');
                 } else if (part[0] === '#') {
                     assertType(base, 'array');
                     const index = parseInt(part.substr(1));
                     if (index >= base.length || index < 0)
                         throw new Error('Index out of bounds');
                     base = base[index];
-                    assertType(base, 'array', 'object');
                 } else {
                     base = base[part];
-                    assertType(base, 'array', 'object');
                 }
+                assertType(base, 'array', 'object');
             }
             const lastPart = parts[parts.length - 1];
             const value = fixes[path];
@@ -189,6 +185,25 @@ export const fixes: Fix[] = [{
                 assertType(base, 'array');
                 assertType(value, 'array');
                 value.forEach((e: any) => base.push(e));
+            } else if(lastPart === "-[]") {
+                assertType(base, 'array');
+                assertType(value, 'array');
+                value.reverse().forEach((selector: string) => {
+                    let index;
+                    const rest = selector.substr(1);
+                    if (selector[0] === '$') {
+                        index = base.findIndex((e: any) => e.id === rest);
+                    } else if (selector[0] === '%') {
+                        index = base.findIndex((e: any) => e.name === rest);
+                    } else if (selector[0] === '#') {
+                        index = parseInt(rest);
+                    } else {
+                        throw new Error(`Unknown selector: ${selector}`);
+                    }
+                    if (index >= base.length || index < 0)
+                        throw new Error(`Could not find element by selector: ${selector}`);
+                    base.splice(index, 1);
+                });
             } else if (lastPart === "!fixAsync") {
                 assertEqual(base.async, true);
                 assertType(base.parameters, 'array');
