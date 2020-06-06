@@ -8,7 +8,7 @@
 import { Events } from "./events";
 
 export declare namespace GeckoProfiler {
-    type ProfilerFeature = "java" | "js" | "leaf" | "mainthreadio" | "privacy" | "responsiveness" | "screenshots" | "seqstyle" | "stackwalk" | "tasktracer" | "threads" | "trackopts" | "jstracer" | "jsallocations" | "nostacksampling" | "nativeallocations" | "preferencereads" | "ipcmessages";
+    type ProfilerFeature = "java" | "js" | "leaf" | "mainthreadio" | "responsiveness" | "screenshots" | "seqstyle" | "stackwalk" | "tasktracer" | "threads" | "jstracer" | "jsallocations" | "nostacksampling" | "nativeallocations" | "preferencereads" | "ipcmessages" | "fileio" | "fileioall" | "noiostacks";
 
     type supports = "windowLength";
 
