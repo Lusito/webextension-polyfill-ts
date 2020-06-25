@@ -201,6 +201,21 @@
     "tabs:functions.%captureTab.!fixAsync": "dataUrl:string",
     "tabs:functions.%show.!fixAsync": null,
     "tabs:functions.%hide.!fixAsync": "hiddenTabIds:number[]",
+    "tabs:functions.%update.parameters.%updateProperties.properties.autoDiscardable": {
+        "type": "boolean",
+        "optional": true,
+        "description": "Whether the tab should be discarded automatically by the browser when resources are low."
+    },
+    "tabs:functions.%query.parameters.%queryInfo.properties.autoDiscardable": {
+        "type": "boolean",
+        "optional": true,
+        "description": "Whether the tabs can be discarded automatically by the browser when resources are low."
+    },
+    "tabs:types.$Tab.properties.autoDiscardable": {
+        "type": "boolean",
+        "optional": true,
+        "description": "Whether the tab can be discarded automatically by the browser when resources are low."
+    },
     "theme:functions.%getCurrent.!fixAsync": "theme:any",
     "theme:functions.%update.!fixAsync": null,
     "theme:functions.%reset.!fixAsync": null,

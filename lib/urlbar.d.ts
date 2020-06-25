@@ -74,9 +74,9 @@ export declare namespace Urlbar {
     }
 
     /**
-     * Possible types of results. <code>remote_tab</code>: A synced tab from another device. <code>search</code>: A search suggestion from a search engine. <code>tab</code>: An open tab in the browser. <code>tip</code>: An actionable message to help the user with their query. <code>url</code>: A URL that's not one of the other types.
+     * Possible types of results. <code>dynamic</code>: A result whose view and payload are specified by the extension. <code>remote_tab</code>: A synced tab from another device. <code>search</code>: A search suggestion from a search engine. <code>tab</code>: An open tab in the browser. <code>tip</code>: An actionable message to help the user with their query. <code>url</code>: A URL that's not one of the other types.
      */
-    type ResultType = "remote_tab" | "search" | "tab" | "tip" | "url";
+    type ResultType = "dynamic" | "remote_tab" | "search" | "tab" | "tip" | "url";
 
     /**
      * Options to the <code>search</code> function.
@@ -169,9 +169,9 @@ export declare namespace Urlbar {
     }
 
     /**
-     * Typically, a provider includes a <code>url</code> property in its results' payloads. When the user picks a result with a URL, Firefox automatically loads the URL. URLs don't make sense for every result type, however. When the user picks a result without a URL, this event is fired. The provider should take an appropriate action in response. Currently the only applicable <code>ResultType</code> is <code>tip</code>.
+     * Typically, a provider includes a <code>url</code> property in its results' payloads. When the user picks a result with a URL, Firefox automatically loads the URL. URLs don't make sense for every result type, however. When the user picks a result without a URL, this event is fired. The provider should take an appropriate action in response. Currently the only applicable <code>ResultTypes</code> are <code>dynamic</code> and <code>tip</code>.
      */
-    interface onResultPickedEvent extends Events.Event<(payload: OnResultPickedPayloadType) => void> {
+    interface onResultPickedEvent extends Events.Event<(payload: OnResultPickedPayloadType, elementName: string) => void> {
 
         /**
          * Registers an event listener <em>callback</em> to an event.
@@ -179,7 +179,7 @@ export declare namespace Urlbar {
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
          * @param providerName The listener will be called for the results of the provider with this name.
          */
-        addListener(callback: (payload: OnResultPickedPayloadType) => void, providerName: string): void;
+        addListener(callback: (payload: OnResultPickedPayloadType, elementName: string) => void, providerName: string): void;
     }
 
     interface Static {
@@ -225,7 +225,7 @@ export declare namespace Urlbar {
         onResultsRequested: onResultsRequestedEvent;
 
         /**
-         * Typically, a provider includes a <code>url</code> property in its results' payloads. When the user picks a result with a URL, Firefox automatically loads the URL. URLs don't make sense for every result type, however. When the user picks a result without a URL, this event is fired. The provider should take an appropriate action in response. Currently the only applicable <code>ResultType</code> is <code>tip</code>.
+         * Typically, a provider includes a <code>url</code> property in its results' payloads. When the user picks a result with a URL, Firefox automatically loads the URL. URLs don't make sense for every result type, however. When the user picks a result without a URL, this event is fired. The provider should take an appropriate action in response. Currently the only applicable <code>ResultTypes</code> are <code>dynamic</code> and <code>tip</code>.
          */
         onResultPicked: onResultPickedEvent;
 

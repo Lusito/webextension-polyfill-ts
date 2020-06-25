@@ -222,6 +222,12 @@ export declare namespace Tabs {
          * Optional.
          */
         successorTabId?: number;
+
+        /**
+         * Whether the tab can be discarded automatically by the browser when resources are low.
+         * Optional.
+         */
+        autoDiscardable?: boolean;
     }
 
     /**
@@ -681,6 +687,12 @@ export declare namespace Tabs {
          * Optional.
          */
         microphone?: boolean;
+
+        /**
+         * Whether the tabs can be discarded automatically by the browser when resources are low.
+         * Optional.
+         */
+        autoDiscardable?: boolean;
     }
 
     interface HighlightHighlightInfoType {
@@ -752,6 +764,12 @@ export declare namespace Tabs {
          * Optional.
          */
         successorTabId?: number;
+
+        /**
+         * Whether the tab should be discarded automatically by the browser when resources are low.
+         * Optional.
+         */
+        autoDiscardable?: boolean;
     }
 
     interface MoveMovePropertiesType {
