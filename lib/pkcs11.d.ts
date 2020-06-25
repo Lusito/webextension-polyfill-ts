@@ -5,6 +5,8 @@
  * PKCS#11 module management API
  * Permissions: "pkcs11"
  */
+import { Types } from "./types";
+
 export declare namespace Pkcs11 {
     interface Token {
 
@@ -86,5 +88,10 @@ export declare namespace Pkcs11 {
          * @returns Promise<undefined>
          */
         getModuleSlots(name: string): Promise<undefined>;
+
+        /**
+         * Controls whether or not the built-in PKCS#11 module (osclientcerts) is loaded.
+         */
+        autoload: Types.Setting;
     }
 }
