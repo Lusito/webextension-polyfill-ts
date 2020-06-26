@@ -1,6 +1,5 @@
 import { SchemaEntry } from "../helpers/types";
 import { SchemaVisitorFactory, VisitorAction } from "../helpers/visitor";
-import { workArray } from "../helpers/utils";
 import { assertValidOjectKeys } from "../helpers/assert";
 
 // There are namespaces and namespaces that extend existing namespaces.
@@ -10,7 +9,7 @@ function visitor(entry: SchemaEntry, entryToExtend: SchemaEntry) {
     if (!entryToExtend.types) entryToExtend.types = [];
     const types = entryToExtend.types;
 
-    workArray(entry.types, (t) => {
+    entry.types?.forEach((t) => {
         if (!t.$extend) {
             types.push(t);
             return;
@@ -31,7 +30,7 @@ function visitor(entry: SchemaEntry, entryToExtend: SchemaEntry) {
 
         if (t.type === "choices" && t.choices && extended.type === "choices" && extended.choices) {
             const choices = extended.choices;
-            const onlyEnums = t.choices.findIndex((c) => c.type !== "string" || !c.enum) === -1;
+            const onlyEnums = t.choices.every((c) => c.type === "string" && c.enum);
             const enumToExtend = choices.find((c) => c.type === "string" && !!c.enum);
             if (onlyEnums && enumToExtend && enumToExtend.type === "string" && enumToExtend.enum) {
                 const enumArray = enumToExtend.enum;
@@ -51,7 +50,7 @@ function visitor(entry: SchemaEntry, entryToExtend: SchemaEntry) {
 
     if (!entryToExtend.functions) entryToExtend.functions = [];
     const functions = entryToExtend.functions;
-    workArray(entry.functions, (t) => functions.push(t));
+    entry.functions?.forEach((t) => functions.push(t));
 
     return VisitorAction.REMOVE;
 }

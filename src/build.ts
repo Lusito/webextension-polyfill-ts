@@ -3,7 +3,7 @@ import rimraf from 'rimraf';
 import fs from 'fs';
 import { SchemaEntry, SchemaProperty, SchemaFunctionProperty } from './helpers/types';
 import { importAndFixAll, ImportedNamespace } from './helpers/importNormalized';
-import { filterUnique, workMap, workArray, toUpperCamelCase, lowerFirstChar } from './helpers/utils';
+import { filterUnique, workMap, toUpperCamelCase, lowerFirstChar } from './helpers/utils';
 import { CodeWriter } from './helpers/CodeWriter';
 import { ErrorMessage, assertSupported } from './helpers/assert';
 import { getProperty, getEnumType, getUnionType, getType, getParameters, setCurrentTypeId, fixRef, getReturnType, getArrayType } from './helpers/getType';
@@ -22,7 +22,7 @@ function getImports(entry: SchemaEntry, subNamespaces: string[]) {
         if (prop.type === 'function') {
             if (prop.returns && prop.returns.$ref)
                 checkAndAddImport(prop.returns.$ref);
-            workArray(prop.parameters, addFromProperty);
+            prop.parameters?.forEach(addFromProperty);
         }
         if (prop.type === 'object') {
             workMap(prop.properties, addFromProperty);
@@ -31,20 +31,20 @@ function getImports(entry: SchemaEntry, subNamespaces: string[]) {
                 if (prop.additionalProperties.$ref)
                     checkAndAddImport(prop.additionalProperties.$ref);
             }
-            workArray(prop.functions, addFromProperty);
-            workArray(prop.events, addFromProperty);
+            prop.functions?.forEach(addFromProperty);
+            prop.events?.forEach(addFromProperty);
             if (prop.events && prop.events.find((e) => !e.assignableEvent))
                 imports.push('Events');
         }
         else if (prop.type === 'choices')
-            workArray(prop.choices, addFromProperty);
+            prop.choices?.forEach(addFromProperty);
         else if (prop.type === 'array' && prop.items)
             addFromProperty(prop.items);
     }
-    workArray(entry.types, addFromProperty);
-    workArray(entry.functions, addFromProperty);
-    if (workArray(entry.events, addFromProperty))
-        imports.push('Events');
+    entry.types?.forEach(addFromProperty);
+    entry.functions?.forEach(addFromProperty);
+    entry.events?.forEach(addFromProperty);
+    if (entry.events && entry.events.length) imports.push('Events');
     workMap(entry.properties, addFromProperty);
     return imports.filter(filterUnique);
 }
@@ -84,7 +84,7 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
                 writer.emptyLine();
         }
         if (type.type === 'string') {
-            workArray(type.enum, (e) => {
+            type.enum?.forEach((e) => {
                 if (typeof e !== 'string')
                     writer.comment('"' + e.name + '": ' + e.description);
             });
@@ -108,8 +108,8 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
             //     throw new Error('what now?');
         }
         addProperties(type.properties, writer);
-        workArray(type.functions, (func) => addFunction(func, func.parameters, writer));
-        workArray(type.events, (event) => addEvent(event, writer));
+        type.functions?.forEach((func) => addFunction(func, func.parameters, writer));
+        type.events?.forEach((event) => addEvent(event, writer));
         writer.end('}');
     } else if (type.type === 'string' && type.enum) {
         writer.code('type ' + type.id + ' = ' + getEnumType(type.enum) + ';');
@@ -143,7 +143,7 @@ function addEvent(event: SchemaFunctionProperty, writer: CodeWriter) {
             writer.emptyLine();
     }
 
-    workArray(event.parameters, (param) => {
+    event.parameters?.forEach((param) => {
         const description = param.description ? ' ' + param.description : '';
         const fullDescription = param.optional ? (' Optional.' + description) : description;
         writer.comment('@param ' + param.name + fullDescription);
@@ -283,15 +283,15 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
         writer.emptyLine();
 
         writer.begin('export declare namespace ' + toUpperCamelCase(entry.namespace) +  ' {');
-        workArray(entry.types, (type) => addType(type, writer));
+        entry.types?.forEach((type) => addType(type, writer));
         const extendsPart = entry.$import ? ` extends ${toUpperCamelCase(entry.$import)}.Static` : '';
         writer.begin('interface Static' + extendsPart + ' {');
-        if (workArray(entry.functions, (func) => addFunction(func, func.parameters, writer))) {
-            if (entry.events)
-                writer.emptyLine();
-        }
+        entry.functions?.forEach((func) => addFunction(func, func.parameters, writer));
+        if (entry.functions?.length && entry.events?.length)
+            writer.emptyLine();
 
-        if (workArray(entry.events, (event) => addEvent(event, writer)))
+        entry.events?.forEach((event) => addEvent(event, writer));
+        if (entry.events?.length)
             writer.emptyLine();
 
         addProperties(entry.properties, writer);

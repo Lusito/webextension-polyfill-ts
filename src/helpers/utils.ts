@@ -31,14 +31,6 @@ export function modifyMap<T>(map: { [s: string]: T }|undefined, callback:(val:T,
     return false;
 }
 
-export function workArray<T>(list:T[]|undefined, callback:(val:T, i:number) => void) {
-    if(list && list.length) {
-        list.forEach(callback);
-        return true;
-    }
-    return false;
-}
-
 export function modifyArray<T>(list:T[]|undefined, callback:(val:T, i:number) => T) {
     if(list && list.length) {
         list.forEach((e,i)=>list[i] = callback(e, i));

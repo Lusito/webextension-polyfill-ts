@@ -1,6 +1,6 @@
 import { SchemaVisitorFactory } from "../helpers/visitor";
 import { SchemaEntry, SchemaProperty, SchemaBaseProperty, SchemaFunctionProperty } from "../helpers/types";
-import { workArray, modifyMap, modifyArray, toUpperCamelCase } from "../helpers/utils";
+import { modifyMap, modifyArray, toUpperCamelCase } from "../helpers/utils";
 import { ErrorMessage } from "../helpers/assert";
 
 // There are a lot of inline types in the schemas (for example a function parameter)
@@ -153,8 +153,8 @@ function extractParameterObjectType<T extends SchemaBaseProperty>(
 }
 
 function visitor(entry: SchemaEntry) {
-    workArray(entry.functions, (func) => extractParameterObjectFunction(func, entry));
-    workArray(entry.events, (evt) => extractParameterObjectFunction(evt, entry));
+    entry.functions?.forEach((func) => extractParameterObjectFunction(func, entry));
+    entry.events?.forEach((evt) => extractParameterObjectFunction(evt, entry));
     modifyMap(entry.properties, (prop, key) => {
         if (prop.$ref && prop.hasOwnProperty("properties")) {
             const id = combineNamePrefix(toUpperCamelCase(key), prop.$ref);
@@ -170,9 +170,7 @@ function visitor(entry: SchemaEntry) {
         }
     });
 
-    // slice array, since array will be modified during work
-    const entryTypes = entry.types && entry.types.slice();
-    workArray(entryTypes, (type) => {
+    entry.types?.forEach((type) => {
         if (!type.id) throw new Error("Gotta have a prefix, dude!");
         extractParameterObjectType(type, toUpperCamelCase(type.id), true, entry);
     });
