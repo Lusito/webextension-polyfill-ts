@@ -1,0 +1,4 @@
+{
+  "types.$ExtensionPanel.events.%onShown.parameters.%window.type": "Window",
+  "types.$ExtensionSidebarPane.events.%onShown.parameters.%window.type": "Window"
+}

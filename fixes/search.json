@@ -1,0 +1,7 @@
+{
+  "functions.%get.returns": {
+    "type": "Promise<SearchEngine[]>",
+    "optional": true,
+    "description": "A Promise that will be fulfilled with an array of search engine objects."
+  }
+}

@@ -14,7 +14,7 @@ export function filterUnique(e: any, i: number, a: any[]) {
 }
 
 export function workMap<T>(map: { [s: string]: T }|undefined, callback:(val:T, key:string) => void) {
-    if(map && Object.getOwnPropertyNames(map).length) {
+    if(map && Object.keys(map).length) {
         for(const key in map)
             callback(map[key], key);
         return true;
@@ -23,7 +23,7 @@ export function workMap<T>(map: { [s: string]: T }|undefined, callback:(val:T, k
 }
 
 export function modifyMap<T>(map: { [s: string]: T }|undefined, callback:(val:T, key:string) => T) {
-    if(map && Object.getOwnPropertyNames(map).length) {
+    if(map && Object.keys(map).length) {
         for(const key in map)
             map[key] = callback(map[key], key);
         return true;

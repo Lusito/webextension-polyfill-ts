@@ -50,11 +50,33 @@ In order to create types, these steps are followed:
     * Some of the json objects are missing a `type` property and we need to guess based on the existence of other properties.
     * Merging namespaces, which have been declared accross multiple files
     * Some properties have their types defined inline, rather than naming a type. Replacing them with references to extracted types helps to keep the generated code tidy and well-documented. This requires some auto-generated type names.
-  * Apply a couple of fixes from `fixes.json` to the gathered information, since the schema files are partially incorrect or incomplete.
+  * Apply a couple of fixes from `fixes/<namespace>.json` to the gathered information, since the schema files are partially incorrect or incomplete.
   * Generate a `d.ts` file for each namespace in the `/lib` folder
   * Generate an `index.d.ts` file to combine all other `.d.ts` files in the `/lib` folder
 * `npm run validate:lib`:
   * Test if the generated files are valid TypeScript
+
+### Visitor pattern for src/fixes/*.ts
+
+To be able to easily apply fixes on the various data types, a visitor pattern similar to what can be seen in babel has been introduced:
+
+```typescript
+export const fix: SchemaVisitorFactory = (namespace, namespaces) => {
+    return {
+        name: "some description of what the fix does in order to print a good error message",
+        visitors: {
+            Namespace(original) {
+                return shouldRemove(original) ? VisitorAction.REMOVE : original;
+            },
+        },
+    };
+};
+```` 
+
+The factory method will be called freshly before processing a new namespace.
+
+The visitor methods will be called for each instance of the specified type (`Namespace`, `Type`, `Event`, `Function`, `Parameter`, `Returns` or `Property`).
+Either return a replacement, the original or VisitorAction.REMOVE if you want it to be removed.
 
 ## Improved Solution
 
@@ -63,18 +85,16 @@ The build process described above is a very ugly one, which is not easy to follo
 Some of the bad things I've noticed while revisiting the code:
 
 * Some of the steps in `fixes.ts` apply multiple different fixes rather than just one.
-* Some fixes are applied outside of the `fixes.ts` or `fixes.json`
-* The format of the fixes.json is not very intuitive. I keep mixing up the operator types.
+* Some fixes are applied outside of the `fixes.ts` or `fixes/<namespace>.json`
+* The format of the `fixes/<namespace>.json` is not very intuitive. I keep mixing up the operator types.
 * The validation logic should be moved outside of the `src/helpers/types.ts` file.
 * Each fix needs to handle walking the children manually by itself.
 * If an assertion fails, the error message doesn't give you information about what element is currently being looked at.
 
 This can obviously be done better. Some ideas:
-* Using a visitor pattern similar to eslint, babel, etc. to make the logic more clear.
 * Using a pipeline approach, where each fix creates a new file-dump, so that it's possible to inspect the changes that each fix does.
-* Extracting the logic that handles the `fixes.json` into a separate, well documented library, refactoring it in the process to make it more flexible and intuitive to use.
-* splitting fixes.json into multiple files (per-namespace or per-file).
+* Extracting the logic that handles the `fixes/<namespace>.json` into a separate, well documented library, refactoring it in the process to make it more flexible and intuitive to use.
 * Actually get these patches applied in the mozilla schema files, i.e. submit patches to mozilla.
-  * This will not make the fixes.json obsolete, since wrong schema definitions pop up regularly.
+  * This will not make the `fixes/<namespace>.json` obsolete, since wrong schema definitions pop up regularly.
 
 That way, it would be easier to see, what happened in between steps and where something wrong was done. However, this is not an easy task due to references between namespaces.

@@ -1,0 +1,10 @@
+{
+  "functions.%forgetClosedTab.!fixAsync": null,
+  "functions.%forgetClosedWindow.!fixAsync": null,
+  "functions.%setTabValue.!fixAsync": null,
+  "functions.%getTabValue.!fixAsync": "value:any",
+  "functions.%removeTabValue.!fixAsync": null,
+  "functions.%setWindowValue.!fixAsync": null,
+  "functions.%getWindowValue.!fixAsync": "value:any",
+  "functions.%removeWindowValue.!fixAsync": null
+}

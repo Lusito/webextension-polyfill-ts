@@ -2,17 +2,11 @@
 import rimraf from 'rimraf';
 import fs from 'fs';
 import { SchemaEntry, SchemaProperty, SchemaFunctionProperty } from './helpers/types';
-import { importAndFixAll, ImportedNamespace, ImportedNamespaces } from './helpers/importNormalized';
+import { importAndFixAll, ImportedNamespace } from './helpers/importNormalized';
 import { filterUnique, workMap, workArray, toUpperCamelCase, lowerFirstChar } from './helpers/utils';
 import { CodeWriter } from './helpers/CodeWriter';
 import { ErrorMessage, assertSupported } from './helpers/assert';
 import { getProperty, getEnumType, getUnionType, getType, getParameters, setCurrentTypeId, fixRef, getReturnType, getArrayType } from './helpers/getType';
-
-const IGNORE_ADDITIONAL_PROPERTIES = [
-    'UnrecognizedProperty',
-    'ImageDataOrExtensionURL',
-    'ThemeColor'
-];
 
 function getImports(entry: SchemaEntry, subNamespaces: string[]) {
     const imports: string[] = [];
@@ -34,7 +28,7 @@ function getImports(entry: SchemaEntry, subNamespaces: string[]) {
             workMap(prop.properties, addFromProperty);
             
             if (prop.additionalProperties && typeof (prop.additionalProperties) === 'object') {
-                if (prop.additionalProperties.$ref && IGNORE_ADDITIONAL_PROPERTIES.indexOf(prop.additionalProperties.$ref) === -1)
+                if (prop.additionalProperties.$ref)
                     checkAndAddImport(prop.additionalProperties.$ref);
             }
             workArray(prop.functions, addFromProperty);
@@ -102,7 +96,7 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
         if(type.$import) {
             extendsClass = ' extends ' + fixRef(type.$import);
         } else if (type.additionalProperties && typeof (type.additionalProperties) === 'object') {
-            if (type.additionalProperties.$ref && IGNORE_ADDITIONAL_PROPERTIES.indexOf(type.additionalProperties.$ref) === -1)
+            if (type.additionalProperties.$ref)
                 extendsClass = ' extends ' + fixRef(type.additionalProperties.$ref);
         }
         writer.begin('interface ' + type.id + templateParam + extendsClass + ' {');
@@ -312,20 +306,20 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
     }
 }
 
-function writeIndexFile(namespaces: ImportedNamespaces) {
+function writeIndexFile(namespaces: ImportedNamespace[]) {
     console.log('- index.ts');
     const writer = new CodeWriter();
-    workMap(namespaces.namespaces, (ns) => {
+    namespaces.forEach((ns) => {
         if (ns.entry.namespace.indexOf('.') === -1)
             writer.code('import { ' + toUpperCamelCase(ns.entry.namespace) + ' } from "./' + ns.entry.namespace + '";');
     });
-    workMap(namespaces.namespaces, (ns) => {
+    namespaces.forEach((ns) => {
         writer.code('export { ' + toUpperCamelCase(ns.entry.namespace) + ' } from "./' + ns.entry.namespace.replace(/\./g, '_') + '";');
     });
 
     writer.emptyLine();
     writer.begin('export interface Browser {');
-    workMap(namespaces.namespaces, (ns) => {
+    namespaces.forEach((ns) => {
         if (ns.entry.namespace.indexOf('.') === -1)
             writer.code(ns.entry.namespace + ': ' + toUpperCamelCase(ns.entry.namespace) + '.Static;');
     });
@@ -343,7 +337,11 @@ try {
         console.log('removing old definitions: ');
         rimraf.sync('./lib/*.d.ts');
         console.log('generating new definitions: ');
-        workMap(namespaces.namespaces, (ns, key) => writeNamespace(ns, namespaces.getSubNamespaces(key)));
+        const namespaceKeys = namespaces.map((ns) => ns.entry.namespace);
+        namespaces.forEach((ns) => {
+            const prefix = ns.entry.namespace + ".";
+            writeNamespace(ns, namespaceKeys.filter((key) => key.startsWith(prefix)));
+        });
         writeIndexFile(namespaces);
 
         console.log('--------------------');

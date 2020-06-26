@@ -59,7 +59,7 @@ export function getType(e: SchemaProperty): string {
     }
     else if (e.type === 'value')
         return e.value;
-    else if (e.type === 'object' && (!e.properties || Object.getOwnPropertyNames(e.properties).length === 0)
+    else if (e.type === 'object' && (!e.properties || Object.keys(e.properties).length === 0)
         && e.additionalProperties && e.additionalProperties !== true && e.additionalProperties.type === 'array'
         && e.additionalProperties.items && e.additionalProperties.items.type) {
         const type = getType(e.additionalProperties.items);
@@ -69,7 +69,7 @@ export function getType(e: SchemaProperty): string {
         return `{[s:string]:${e.additionalProperties.$ref}}`;
     }
     else if (e.type === 'object' && e.patternProperties) {
-        const names = Object.getOwnPropertyNames(e.patternProperties);
+        const names = Object.keys(e.patternProperties);
         if (names.length !== 1)
             throw new Error('Pattern properties expected to be 1 in length');
         const patternProp = e.patternProperties[names[0]];
@@ -94,7 +94,7 @@ export function getArrayType(e: SchemaArrayProperty): string {
     if (e.items) {
         let propType: string;
         if (e.items.type === 'choices' && e.items.choices)
-            propType = getUnionType(e.items.choices);
+            propType = `Array<${getUnionType(e.items.choices)}>`;
         else {
             if (e.items.$ref)
                 propType = fixRef(e.items.$ref);

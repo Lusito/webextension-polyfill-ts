@@ -53,7 +53,7 @@ export function assertMap(json: any, callback: (json: any) => void) {
 }
 
 export function assertValidOjectKeys(json: any, keys: string[]) {
-    const names = Object.getOwnPropertyNames(json);
+    const names = Object.keys(json);
     for (let i = 0; i < names.length; i++)
         assertOneOfX(names[i], keys);
 }

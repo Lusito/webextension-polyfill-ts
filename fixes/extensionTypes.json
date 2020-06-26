@@ -1,0 +1,4 @@
+{
+  "types.$PlainJSONValue.type": "object",
+  "types.$Date.id": "DateType"
+}

@@ -1,0 +1,57 @@
+{
+  "functions.%getManifest.returns": {
+    "$ref": "Manifest.ManifestBase",
+    "description": "The manifest details."
+  },
+  "types.$Port.properties.onDisconnect": {
+    "isEvent": true,
+    "name": "onDisconnect",
+    "type": "function",
+    "description": "",
+    "parameters": [
+      {
+        "$ref": "Port",
+        "name": "port"
+      }
+    ]
+  },
+  "types.$Port.properties.onMessage": {
+    "isEvent": true,
+    "name": "onMessage",
+    "type": "function",
+    "description": "",
+    "parameters": [
+      {
+        "name": "message",
+        "type": "any"
+      },
+      {
+        "$ref": "Port",
+        "name": "port"
+      }
+    ]
+  },
+  "types.$Port.properties.postMessage": {
+    "name": "postMessage",
+    "type": "function",
+    "description": "Send a message to the other end. This takes one argument, which is a JSON object representing the message to send. It will be delivered to any script listening to the port's onMessage event, or to the native application if this port is connected to a native application.",
+    "parameters": [
+      {
+        "name": "message",
+        "type": "any"
+      }
+    ]
+  },
+  "events.%onMessage.parameters.%sendResponse": null,
+  "events.%onMessage.returns": {
+    "type": "Promise<any>",
+    "optional": true,
+    "description": "Return a <code>Promise</code> from the listener function and resolve the promise when the response is ready."
+  },
+  "events.%onMessageExternal.parameters.%sendResponse": null,
+  "events.%onMessageExternal.returns": {
+    "type": "Promise<any>",
+    "optional": true,
+    "description": "Return a <code>Promise</code> from the listener function and resolve the promise when the response is ready."
+  }
+}

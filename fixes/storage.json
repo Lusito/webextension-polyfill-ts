@@ -1,0 +1,7 @@
+{
+  "types.$StorageArea.functions.%get.parameters.%keys.choices.#0.type": "null | string",
+  "types.$StorageArea.functions.%get.parameters.%keys.choices.#2.type": "{[s:string] : any}",
+  "types.$StorageArea.functions.%get.parameters.%keys.choices.#2.additionalProperties": null,
+  "types.$StorageArea.functions.%get.parameters.%callback.parameters.%items.type": "{[s:string] : any}",
+  "types.$StorageArea.functions.%get.parameters.%callback.parameters.%items.additionalProperties": null
+}

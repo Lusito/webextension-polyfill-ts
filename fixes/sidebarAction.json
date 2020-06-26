@@ -1,0 +1,10 @@
+{
+  "functions.%setTitle.!fixAsync": null,
+  "functions.%getTitle.!fixAsync": "title:string",
+  "functions.%setIcon.!fixAsync": null,
+  "functions.%setPanel.!fixAsync": null,
+  "functions.%getPanel.!fixAsync": "url:string",
+  "functions.%open.!fixAsync": null,
+  "functions.%close.!fixAsync": null,
+  "functions.%isOpen.!fixAsync": "open:boolean"
+}

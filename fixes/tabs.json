@@ -1,0 +1,22 @@
+{
+  "functions.%discard.!fixAsync": null,
+  "functions.%toggleReaderMode.!fixAsync": null,
+  "functions.%captureTab.!fixAsync": "dataUrl:string",
+  "functions.%show.!fixAsync": null,
+  "functions.%hide.!fixAsync": "hiddenTabIds:number[]",
+  "functions.%update.parameters.%updateProperties.properties.autoDiscardable": {
+    "type": "boolean",
+    "optional": true,
+    "description": "Whether the tab should be discarded automatically by the browser when resources are low."
+  },
+  "functions.%query.parameters.%queryInfo.properties.autoDiscardable": {
+    "type": "boolean",
+    "optional": true,
+    "description": "Whether the tabs can be discarded automatically by the browser when resources are low."
+  },
+  "types.$Tab.properties.autoDiscardable": {
+    "type": "boolean",
+    "optional": true,
+    "description": "Whether the tab can be discarded automatically by the browser when resources are low."
+  }
+}

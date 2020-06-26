@@ -383,7 +383,7 @@ export class SchemaFunctionProperty extends SchemaBaseProperty {
     public returns?: SchemaProperty;
     public allowAmbiguousOptionalArguments?: boolean;
     public filters?: SchemaProperty[];
-    public assignableEvent?: boolean; // used for fixes.json only
+    public assignableEvent?: boolean; // used for fixes/*.json only
 
     public static getValidKeys() {
         return super.getValidKeys().concat([

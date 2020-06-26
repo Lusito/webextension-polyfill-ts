@@ -1,0 +1,52 @@
+{
+  "types": [
+    {
+      "id": "Token",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the token."
+        },
+        "manufacturer": {
+          "type": "string",
+          "description": "Name of the token's manufacturer."
+        },
+        "HWVersion": {
+          "type": "string",
+          "description": "Hardware version, as a PKCS #11 version number (two 32-bit integers separated with a dot, like \"1.0\"."
+        },
+        "FWVersion": {
+          "type": "string",
+          "description": "Firmware version, as a PKCS #11 version number (two 32-bit integers separated with a dot, like \"1.0\"."
+        },
+        "serial": {
+          "type": "string",
+          "description": "Serial number, whose format is defined by the token specification."
+        },
+        "isLoggedIn": {
+          "type": "boolean",
+          "description": "true if the token is logged on already, false otherwise."
+        }
+      }
+    },
+    {
+      "id": "ModuleSlot",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the slot."
+        },
+        "token": {
+          "type": "Token|null",
+          "description": "The token of the slot."
+        }
+      }
+    }
+  ],
+  "functions.%getModuleSlots.!fixAsync": "ModuleSlot[]",
+  "functions.%isModuleInstalled.!fixAsync": "shown:boolean",
+  "functions.%installModule.!fixAsync": null,
+  "functions.%uninstallModule.!fixAsync": null
+}

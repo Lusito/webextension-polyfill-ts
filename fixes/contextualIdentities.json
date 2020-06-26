@@ -1,0 +1,7 @@
+{
+  "functions.%get.!fixAsync": "contextualIdentity:ContextualIdentity",
+  "functions.%query.!fixAsync": "contextualIdentity:ContextualIdentity[]",
+  "functions.%create.!fixAsync": "contextualIdentity:ContextualIdentity",
+  "functions.%update.!fixAsync": "contextualIdentity:ContextualIdentity",
+  "functions.%remove.!fixAsync": "contextualIdentity:ContextualIdentity"
+}
