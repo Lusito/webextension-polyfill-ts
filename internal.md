@@ -45,7 +45,7 @@ In order to create types, these steps are followed:
   * import namespaces from schema files
     * Also reads all comments from the json file, so we can later re-insert them in the `d.ts` file (they contain license information).
   * remove old `d.ts` files
-  * Apply a couple of fixes, so it's easier to work with the data (see `src/helpers/fixes.ts`). For example:
+  * Apply a couple of fixes, so it's easier to work with the data (see `src/fixes/*.ts`). For example:
     * remove content that has been marked `deprecated` or `unsupported`
     * Some of the json objects are missing a `type` property and we need to guess based on the existence of other properties.
     * Merging namespaces, which have been declared accross multiple files
@@ -84,11 +84,7 @@ The build process described above is a very ugly one, which is not easy to follo
 
 Some of the bad things I've noticed while revisiting the code:
 
-* Some of the steps in `fixes.ts` apply multiple different fixes rather than just one.
-* Some fixes are applied outside of the `fixes.ts` or `fixes/<namespace>.json`
 * The format of the `fixes/<namespace>.json` is not very intuitive. I keep mixing up the operator types.
-* The validation logic should be moved outside of the `src/helpers/types.ts` file.
-* Each fix needs to handle walking the children manually by itself.
 * If an assertion fails, the error message doesn't give you information about what element is currently being looked at.
 
 This can obviously be done better. Some ideas:

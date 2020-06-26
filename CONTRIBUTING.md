@@ -6,7 +6,7 @@ You might have noticed that some generated code is wrong.. Since I don't use the
 
 This file should give you a quick introduction. It won't cover everything.
 
-Sadly, there is official documentation for the schema .json files that I know of. I suggest having a look at `src/helpers/types.ts`, which documents structure of the schema.json files as I deducted them from reading them. You can ignore the helper functions I put in there. They are only there to help validating the schema files.
+Sadly, there is official documentation for the schema .json files that I know of. I suggest having a look at `src/helpers/types.ts`, which documents structure of the schema.json files as I deducted them from reading them.
 
 ## Build commands:
 
@@ -139,7 +139,7 @@ What it essentially does is:
   - applying some autocorrection
   - applying manual json fixes (see `fixes/<namespace>.json`)
   - flatten the schema tree and create names/ids where none where given.
-  - see `src/helpers/fixes.ts` for more details
+  - see `src/fixes/*.ts` for more details
 - Write each namespace to its corresponding .d.ts file
 - Write an index.d.ts file that imports everything.
 
