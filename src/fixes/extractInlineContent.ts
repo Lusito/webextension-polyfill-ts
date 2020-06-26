@@ -1,5 +1,11 @@
 import { SchemaVisitorFactory } from "../helpers/visitor";
-import { SchemaEntry, SchemaProperty, SchemaBaseProperty, SchemaFunctionProperty } from "../helpers/types";
+import {
+    SchemaEntry,
+    SchemaProperty,
+    SchemaBaseProperty,
+    SchemaFunctionProperty,
+    SchemaObjectProperty,
+} from "../helpers/types";
 import { modifyMap, modifyArray, toUpperCamelCase } from "../helpers/utils";
 import { ErrorMessage } from "../helpers/assert";
 
@@ -37,31 +43,31 @@ function convertToRefIfObject(
         prop.additionalProperties.$ref &&
         !prop.properties
     ) {
-        //special case for a map type.. not extracted, will be handled in getType
+        // special case for a map type.. not extracted, will be handled in getType
     } else if (prop.type === "object" && !prop.isInstanceOf && !prop.patternProperties) {
         if (!namePrefix) throw ErrorMessage.MISSING_NAME;
         const name = combineNamePrefix(namePrefix, propName);
-        const id = toUpperCamelCase(name) + "Type";
+        const id = `${toUpperCamelCase(name)}Type`;
         const newRef = convertToRef(prop, id, entry);
         // extractParameterObjectFromProperty(params[i], name, entry, false);
         return newRef;
     } else if (prop.type === "string" && prop.enum) {
         if (!namePrefix) throw ErrorMessage.MISSING_NAME;
         const name = combineNamePrefix(namePrefix, propName);
-        const id = toUpperCamelCase(name) + "Enum";
+        const id = `${toUpperCamelCase(name)}Enum`;
         return convertToRef(prop, id, entry);
     } else if (prop.type === "choices" && prop.choices) {
         if (prop.choices.length === 1)
             prop.choices[0] = convertToRefIfObject(prop.choices[0], propName, namePrefix, entry);
         else {
             modifyArray(prop.choices, (choice, i) => {
-                return convertToRefIfObject(choice, propName + "C" + (i + 1), namePrefix, entry);
+                return convertToRefIfObject(choice, `${propName}C${i + 1}`, namePrefix, entry);
             });
         }
     } else if (prop.type === "array" && prop.items && (prop.items.type !== "object" || !prop.items.isInstanceOf)) {
-        prop.items = convertToRefIfObject(prop.items, propName + "Item", namePrefix, entry);
+        prop.items = convertToRefIfObject(prop.items, `${propName}Item`, namePrefix, entry);
     } else if (prop.type === "function") {
-        modifyArray(prop.parameters, (param, i) => {
+        modifyArray(prop.parameters, (param) => {
             if (!param.name) throw ErrorMessage.MISSING_NAME;
             return convertToRefIfObject(param, propName + toUpperCamelCase(param.name), namePrefix, entry);
         });
@@ -82,7 +88,7 @@ function extractParameterObjectType<T extends SchemaBaseProperty>(
     namePrefix: string,
     isRoot: boolean,
     entry: SchemaEntry
-): T {
+): SchemaProperty {
     if (prop.type === "object") {
         if (
             prop.additionalProperties &&
@@ -92,16 +98,16 @@ function extractParameterObjectType<T extends SchemaBaseProperty>(
         ) {
             extractParameterObjectType(prop.additionalProperties, namePrefix, true, entry);
         }
-        modifyMap(prop.properties, (prop, key) =>
-            extractParameterObjectType(prop, combineNamePrefix(namePrefix, key), false, entry)
+        modifyMap(prop.properties, (prop2, key) =>
+            extractParameterObjectType(prop2, combineNamePrefix(namePrefix, key), false, entry)
         );
-        modifyMap(prop.patternProperties, (prop, key) =>
-            extractParameterObjectType(prop, namePrefix + "Pattern", false, entry)
+        modifyMap(prop.patternProperties, (prop2) =>
+            extractParameterObjectType(prop2, `${namePrefix}Pattern`, false, entry)
         );
-        modifyArray(prop.events, (evt) =>
+        modifyArray<SchemaProperty>(prop.events, (evt) =>
             extractParameterObjectType(evt, combineNamePrefix(namePrefix, evt.name), false, entry)
         );
-        modifyArray(prop.functions, (func) =>
+        modifyArray<SchemaProperty>(prop.functions, (func) =>
             extractParameterObjectType(func, combineNamePrefix(namePrefix, func.name), false, entry)
         );
 
@@ -114,20 +120,18 @@ function extractParameterObjectType<T extends SchemaBaseProperty>(
                 prop.additionalProperties.items &&
                 prop.additionalProperties.items.type
             ) {
-                //special case for a map type.. not extracted, will be handled in getType
+                // special case for a map type.. not extracted, will be handled in getType
             } else if (prop.patternProperties) {
-                //special case for a map type.. not extracted, will be handled in getType
+                // special case for a map type.. not extracted, will be handled in getType
             } else {
                 if (!namePrefix) throw ErrorMessage.MISSING_NAME;
-                const id = namePrefix + "Type";
+                const id = `${namePrefix}Type`;
                 prop = convertToRef(prop, id, entry);
             }
         }
     } else if (prop.type === "string" && prop.enum) {
         if (!isRoot) {
-            const ref = convertToRefIfObject(prop, "", namePrefix, entry);
-            //@ts-ignore
-            return ref;
+            return convertToRefIfObject(prop, "", namePrefix, entry);
         }
     } else if (prop.type === "array" && prop.items) {
         prop.items = convertToRefIfObject(prop.items, "item", namePrefix, entry);
@@ -136,19 +140,18 @@ function extractParameterObjectType<T extends SchemaBaseProperty>(
             prop.choices[0] = extractParameterObjectType(prop.choices[0], namePrefix, false, entry);
         else
             modifyArray(prop.choices, (choice, i) =>
-                extractParameterObjectType(choice, namePrefix + "C" + (i + 1), false, entry)
+                extractParameterObjectType(choice, `${namePrefix}C${i + 1}`, false, entry)
             );
     } else if (prop.type === "function") {
-        modifyArray(prop.parameters, (param, i) =>
+        modifyArray(prop.parameters, (param) =>
             extractParameterObjectType(param, combineNamePrefix(namePrefix, param.name), false, entry)
         );
-        modifyArray(prop.extraParameters, (param, i) =>
+        modifyArray(prop.extraParameters, (param) =>
             extractParameterObjectType(param, combineNamePrefix(namePrefix, param.name), false, entry)
         );
         if (prop.returns)
             prop.returns = extractParameterObjectType<SchemaProperty>(prop.returns, "Return", false, entry);
     }
-    // @ts-ignore
     return prop;
 }
 
@@ -156,18 +159,16 @@ function visitor(entry: SchemaEntry) {
     entry.functions?.forEach((func) => extractParameterObjectFunction(func, entry));
     entry.events?.forEach((evt) => extractParameterObjectFunction(evt, entry));
     modifyMap(entry.properties, (prop, key) => {
-        if (prop.$ref && prop.hasOwnProperty("properties")) {
+        if (prop.$ref && "properties" in prop) {
             const id = combineNamePrefix(toUpperCamelCase(key), prop.$ref);
-            const newProp = {
+            const newProp: SchemaObjectProperty = {
                 type: "object",
-                additionalProperties: { $ref: prop.$ref },
+                additionalProperties: { type: "ref", $ref: prop.$ref },
                 properties: (prop as any).properties,
             };
-            //@ts-ignore
             return convertToRef(newProp, id, entry);
-        } else {
-            return convertToRefIfObject(prop, key, "Property", entry);
         }
+        return convertToRefIfObject(prop, key, "Property", entry);
     });
 
     entry.types?.forEach((type) => {

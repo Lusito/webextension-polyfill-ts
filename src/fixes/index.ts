@@ -24,4 +24,4 @@ export const fixes: SchemaVisitorFactory[] = [
     extendEvents,
 ];
 
-//Fixme: copy permissions from ns to subns
+// Fixme: copy permissions from ns to subns

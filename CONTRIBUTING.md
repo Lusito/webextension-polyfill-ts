@@ -20,6 +20,11 @@ Run these commands:
 * `npm run validate:lib` -> to test if the generated files are valid TypeScript.
 * `npm run all` -> execute all of the above (except npm install) in order.
 
+## Linting commands:
+
+When you changed code, ensure you uphold linting and formatting rules.
+Use `npm run lint` to check them or `npm run lint:fix` to try to autofix them.
+
 ## Overview
 
 As you might have read, this project grabs schema files from mozilla, parses them and then spits out typescript files.

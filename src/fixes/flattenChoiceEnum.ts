@@ -10,7 +10,7 @@ function visitor(prop: SchemaProperty, types: SchemaProperty[]) {
     const choices = prop.type === "choices" && prop.choices;
     if (choices) {
         modifyArray(choices, (c) => {
-            if (c.$ref && c.$ref.endsWith("Enum")) {
+            if (c.$ref?.endsWith("Enum")) {
                 const extended = types.find((t2) => t2.id === c.$ref);
                 if (!extended) throw new Error("Could not find extended");
                 if (extended.type !== "string") throw new Error("error flattening single choice, both must be string");

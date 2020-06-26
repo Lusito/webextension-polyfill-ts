@@ -7,8 +7,6 @@
     "webextension",
     "polyfill"
   ],
-  "author": "Santo Pfingsten",
-  "license": "Zlib",
   "homepage": "https://github.com/Lusito/webextension-polyfill-ts",
   "bugs": {
     "url": "https://github.com/Lusito/webextension-polyfill-ts/issues"
@@ -17,26 +15,41 @@
     "type": "git",
     "url": "https://github.com/Lusito/webextension-polyfill-ts.git"
   },
+  "license": "Zlib",
+  "author": "Santo Pfingsten",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/"
   ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "scripts": {
     "all": "npm run fetch && npm run validate:schemas && npm run build && npm run validate:lib",
     "build": "ts-node src/build.ts",
     "fetch": "ts-node src/fetch.ts",
-    "validate:schemas": "ts-node src/validate.ts",
-    "validate:lib": "tsc -p tsconfig-lib.json"
+    "lint": "npm run lint:es && npm run lint:package && npm run lint:style",
+    "lint:es": "eslint src/**/*.ts --ext .ts --ignore-path .prettierignore",
+    "lint:es:fix": "npm run lint:es -- --fix",
+    "lint:fix": "npm run lint:es:fix && npm run lint:package:fix && npm run lint:style:fix",
+    "lint:package": "sort-package-json --check",
+    "lint:package:fix": "sort-package-json",
+    "lint:style": "npm run lint:style:base -- --check",
+    "lint:style:base": "prettier {src,_locales}/**/*.{ts,js,json} ./*.{ts,js,json} --quote-props consistent",
+    "lint:style:fix": "npm run lint:style:base -- --write",
+    "validate:lib": "tsc -p tsconfig-lib.json",
+    "validate:schemas": "ts-node src/validate.ts"
   },
   "dependencies": {
     "webextension-polyfill": "^0.6.0"
   },
   "devDependencies": {
+    "@lusito/eslint-config": "^1.1.1",
+    "@lusito/prettier-config": "^1.1.0",
+    "@lusito/stylelint-config": "^1.1.0",
     "@types/node": "^14.0.11",
     "@types/rimraf": "^3.0.0",
     "got": "^11.3.0",
     "rimraf": "^3.0.2",
+    "sort-package-json": "^1.44.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
   }

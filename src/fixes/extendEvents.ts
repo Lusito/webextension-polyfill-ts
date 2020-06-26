@@ -6,7 +6,9 @@ import { getParameters, getReturnType } from "../helpers/getType";
 // This fix creates new type definitions to be used instead of Events.Event.
 
 export const extendEvents: SchemaVisitorFactory = (namespace, namespaces) => {
-    const types = namespaces.find((ns) => ns.entry.namespace === "events")!.entry.types;
+    const eventNs = namespaces.find((ns) => ns.entry.namespace === "events");
+    if (!eventNs) throw new Error("Missing events namespace");
+    const { types } = eventNs.entry;
     if (!types) throw new Error("Missing events types");
     const eventType = types.find((t) => t.id === "Event");
     if (!eventType) throw new Error("Missing Events.Event");
@@ -22,10 +24,9 @@ export const extendEvents: SchemaVisitorFactory = (namespace, namespaces) => {
         visitors: {
             Event(e) {
                 if (e.extraParameters) {
-                    const id = e.name + "Event";
+                    const id = `${e.name}Event`;
                     const extendedAddListener = JSON.parse(JSON.stringify(addListener));
-                    const ref =
-                        "Events.Event<(" + getParameters(e.parameters, false) + ") => " + getReturnType(e) + ">";
+                    const ref = `Events.Event<(${getParameters(e.parameters, false)}) => ${getReturnType(e)}>`;
                     const extended: SchemaObjectProperty = {
                         id,
                         type: "object",
@@ -38,7 +39,7 @@ export const extendEvents: SchemaVisitorFactory = (namespace, namespaces) => {
                     };
                     const params = extendedAddListener.parameters;
                     if (!params) throw new Error("Missing addListener.parameters in Event type");
-                    params[0].type = "(" + getParameters(e.parameters, false) + ") => " + getReturnType(e);
+                    params[0].type = `(${getParameters(e.parameters, false)}) => ${getReturnType(e)}`;
                     params.pop();
                     e.extraParameters.forEach((p) => params.push(p));
                     e.$extend = id;

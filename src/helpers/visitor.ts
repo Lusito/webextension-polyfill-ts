@@ -1,5 +1,5 @@
 import { SchemaEntry, SchemaFunctionProperty, SchemaProperty } from "./types";
-import { ImportedNamespace } from "./importNormalized";
+import type { ImportedNamespace } from "./importNormalized";
 
 export enum VisitorAction {
     REMOVE = "WET_POLYFILL_TS_VISITOR/REMOVE",
@@ -61,7 +61,7 @@ function walkArray<T extends SchemaProperty>(context: WalkerContext, original: T
 
 function walkMap<T extends SchemaProperty>(context: WalkerContext, original: { [s: string]: T }) {
     const modified: { [s: string]: T } = {};
-    for (const key in original) {
+    for (const key of Object.keys(original)) {
         const entry = original[key];
         const result = handlePropertyVisit(context, entry);
         if (result !== VisitorAction.REMOVE) {
@@ -116,7 +116,7 @@ interface WalkerContext {
 
 export function applyFix(namespaces: ImportedNamespace[], factory: SchemaVisitorFactory) {
     return namespaces.filter((namespace) => {
-        const entry = namespace.entry;
+        const { entry } = namespace;
         const visitorInfo = factory(namespace, namespaces);
         if (!visitorInfo) return true;
 

@@ -13,7 +13,7 @@ function visitor(entry: SchemaEntry) {
     if (!fs.existsSync(file)) return entry;
 
     const fixes = readJsonFile(file);
-    for (const path in fixes) {
+    for (const path of Object.keys(fixes)) {
         const parts = path.split(".");
         let base: any = entry;
         for (let i = 0; i < parts.length - 1; i++) {
@@ -75,23 +75,21 @@ function visitor(entry: SchemaEntry) {
                 name: "callback",
                 parameters: params,
             });
-        } else {
-            if (value === null && Array.isArray(base)) {
-                let index;
-                if (lastPart[0] === "$") {
-                    const id = lastPart.substr(1);
-                    index = base.findIndex((e: any) => e.id === id);
-                } else if (lastPart[0] === "%") {
-                    const name = lastPart.substr(1);
-                    index = base.findIndex((e: any) => e.name === name);
-                } else {
-                    throw new Error("Unknown method to remove from array: " + lastPart);
-                }
-                if (index === -1) throw new Error("Could not find " + lastPart);
-                base.splice(index, 1);
+        } else if (value === null && Array.isArray(base)) {
+            let index;
+            if (lastPart[0] === "$") {
+                const id = lastPart.substr(1);
+                index = base.findIndex((e: any) => e.id === id);
+            } else if (lastPart[0] === "%") {
+                const name = lastPart.substr(1);
+                index = base.findIndex((e: any) => e.name === name);
             } else {
-                base[lastPart] = value;
+                throw new Error(`Unknown method to remove from array: ${lastPart}`);
             }
+            if (index === -1) throw new Error(`Could not find ${lastPart}`);
+            base.splice(index, 1);
+        } else {
+            base[lastPart] = value;
         }
     }
     return entry;
