@@ -896,22 +896,6 @@ export declare namespace Tabs {
         toIndex: number;
     }
 
-    interface OnSelectionChangedSelectInfoType {
-
-        /**
-         * The ID of the window the selected tab changed inside of.
-         */
-        windowId: number;
-    }
-
-    interface OnActiveChangedSelectInfoType {
-
-        /**
-         * The ID of the window the selected tab changed inside of.
-         */
-        windowId: number;
-    }
-
     interface OnActivatedActiveInfoType {
 
         /**
@@ -929,19 +913,6 @@ export declare namespace Tabs {
          * The ID of the window the active tab changed inside of.
          */
         windowId: number;
-    }
-
-    interface OnHighlightChangedSelectInfoType {
-
-        /**
-         * The window whose tabs changed.
-         */
-        windowId: number;
-
-        /**
-         * All highlighted tabs in the window.
-         */
-        tabIds: number[];
     }
 
     interface OnHighlightedHighlightInfoType {

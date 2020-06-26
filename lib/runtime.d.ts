@@ -145,17 +145,6 @@ export declare namespace Runtime {
      */
     type OnRestartRequiredReason = "app_update" | "os_update" | "periodic";
 
-    /**
-     * If an update is available, this contains more information about the available update.
-     */
-    interface RequestUpdateCheckCallbackDetailsType {
-
-        /**
-         * The version of the available update.
-         */
-        version: string;
-    }
-
     interface ConnectConnectInfoType {
 
         /**

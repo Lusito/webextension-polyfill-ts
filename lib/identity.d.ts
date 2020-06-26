@@ -20,40 +20,6 @@ export declare namespace Identity {
         id: string;
     }
 
-    interface GetAuthTokenDetailsType {
-
-        /**
-         * Optional.
-         */
-        interactive?: boolean;
-
-        /**
-         * Optional.
-         */
-        account?: AccountInfo;
-
-        /**
-         * Optional.
-         */
-        scopes?: string[];
-    }
-
-    interface GetProfileUserInfoCallbackUserinfoType {
-        email: string;
-
-        id: string;
-    }
-
-    interface RemoveCachedAuthTokenDetailsType {
-        token: string;
-    }
-
-    interface RemoveCachedAuthTokenCallbackUserinfoType {
-        email: string;
-
-        id: string;
-    }
-
     interface LaunchWebAuthFlowDetailsType {
         url: Manifest.HttpURL;
 

@@ -198,10 +198,6 @@ export declare namespace Bookmarks {
         oldIndex: number;
     }
 
-    interface OnChildrenReorderedReorderInfoType {
-        childIds: string[];
-    }
-
     interface Static {
 
         /**

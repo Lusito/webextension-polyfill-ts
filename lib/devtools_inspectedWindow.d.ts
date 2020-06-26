@@ -85,12 +85,6 @@ export declare namespace DevtoolsInspectedWindow {
         injectedScript?: string;
     }
 
-    /**
-     * Set to undefined if the resource content was set successfully; describes error otherwise.
-     */
-    interface ResourceSetContentCallbackErrorType {
-    }
-
     interface Static {
 
         /**
