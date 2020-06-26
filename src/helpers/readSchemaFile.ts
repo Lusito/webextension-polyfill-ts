@@ -1,6 +1,5 @@
 import fs from "fs";
 
-import { typeById } from "./types";
 import { assertType } from "./assert";
 
 function getQuoteLength(text: string, start: number, c: string) {
@@ -75,12 +74,6 @@ export function readSchemaFile(file: string) {
         const split = splitComments(value);
         const json: any = JSON.parse(split.json);
         assertType(json, "array");
-        json.forEach((e: any) => {
-            if (e.types)
-                e.types.forEach((t: any) => {
-                    if (t.id) typeById[`${e.namespace}.${t.id}`] = t;
-                });
-        });
         return { file, json, comments: split.comments };
     } catch (e) {
         console.error(`Error reading ${file}: `, e);

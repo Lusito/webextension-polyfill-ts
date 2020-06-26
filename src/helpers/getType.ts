@@ -1,4 +1,4 @@
-import { SchemaProperty, EnumValue, SchemaFunctionProperty, SchemaArrayProperty } from "./types";
+import { SchemaProperty, SchemaEnumValue, SchemaFunctionProperty, SchemaArrayProperty } from "./types";
 import { ErrorMessage } from "./assert";
 import { filterUnique } from "./utils";
 
@@ -17,7 +17,7 @@ export function getUnionType(list: SchemaProperty[]) {
     return list.map(getType).filter(filterUnique).join(" | ");
 }
 
-export function getEnumType(list: EnumValue[]) {
+export function getEnumType(list: SchemaEnumValue[]) {
     return list
         .map((e: any) => {
             if (e === undefined) return "undefined";
