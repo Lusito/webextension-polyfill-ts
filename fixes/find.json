@@ -1,0 +1,113 @@
+{
+  "functions.%highlightResults.!fixAsync": null,
+  "functions.%removeHighlighting.!fixAsync": null,
+  "types": [
+    {
+      "id": "RangeData",
+      "type": "object",
+      "properties": {
+        "framePos": {
+          "type": "integer",
+          "description": "The index of the frame containing the match. 0 corresponds to the parent window. Note that the order of objects in the rangeData array will sequentially line up with the order of frame indexes: for example, framePos for the first sequence of rangeData objects will be 0, framePos for the next sequence will be 1, and so on.",
+          "minimum": 0
+        },
+        "startTextNodePos": {
+          "type": "integer",
+          "description": "The ordinal position of the text node in which the match started.",
+          "minimum": 0
+        },
+        "endTextNodePos": {
+          "type": "integer",
+          "description": "The ordinal position of the text node in which the match ended.",
+          "minimum": 0
+        },
+        "startOffset": {
+          "type": "integer",
+          "description": "The ordinal string position of the start of the matched word within start text node.If match word include in single text node, Extension can get match word between startOffset and endOffset string index in the single text node.",
+          "minimum": 0
+        },
+        "endOffset": {
+          "type": "integer",
+          "description": "The ordinal string position of the end of the matched word within end text node.",
+          "minimum": 0
+        }
+      }
+    },
+    {
+      "id": "Rectangle",
+      "type": "object",
+      "properties": {
+        "top": {
+          "type": "number",
+          "description": "Pixels from the top."
+        },
+        "left": {
+          "type": "number",
+          "description": "Pixels from the left."
+        },
+        "bottom": {
+          "type": "number",
+          "description": "Pixels from the bottom."
+        },
+        "right": {
+          "type": "number",
+          "description": "Pixels from the right."
+        }
+      }
+    },
+    {
+      "id": "RectsAndTexts",
+      "type": "object",
+      "properties": {
+        "rectList": {
+          "type": "array",
+          "items": { "$ref": "Rectangle" },
+          "description": "Rectangles relative to the top-left of the viewport."
+        },
+        "textList": {
+          "type": "array",
+          "items": { "$ref": "string" },
+          "description": "an array of strings, corresponding to the rectList array. The entry at textList[i] contains the part of the match bounded by the rectangle at rectList[i]."
+        }
+      }
+    },
+    {
+      "id": "RectData",
+      "type": "object",
+      "properties": {
+        "rectsAndTexts": {
+          "type": "RectsAndTexts",
+          "description": "The index of the frame containing the match. 0 corresponds to the parent window. Note that the order of objects in the rangeData array will sequentially line up with the order of frame indexes: for example, framePos for the first sequence of rangeData objects will be 0, framePos for the next sequence will be 1, and so on."
+        },
+        "text": {
+          "type": "string",
+          "description": "The complete text of the match."
+        }
+      }
+    },
+    {
+      "id": "FindResult",
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "description": "The number of results found.",
+          "minimum": 0
+        },
+        "rangeData": {
+          "type": "array",
+          "items": { "$ref": "RangeData" },
+          "description": "If includeRangeData was given in the options parameter, then this property will be included. It is provided as an array of RangeData objects, one for each match. Each RangeData object describes where in the DOM tree the match was found. This would enable, for example, an extension to get the text surrounding each match, so as to display context for the matches. The items correspond to the items given in rectData, so rangeData[i] describes the same match as rectData[i].",
+          "optional": true
+        },
+        "rectData": {
+          "type": "array",
+          "items": { "$ref": "RectData" },
+          "description": " If includeRectData was given in the options parameter, then this property will be included. It is an array of RectData objects. It contains client rectangles for all the text matched in the search, relative to the top-left of the viewport. Extensions can use this to provide custom highlighting of the results.",
+          "optional": true
+        }
+      }
+    }
+  ],
+  "functions.%find.!fixAsync": "result:FindResult"
+}

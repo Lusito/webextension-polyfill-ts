@@ -200,7 +200,7 @@ export declare namespace Events {
          * Matches if the port of the URL is contained in any of the specified port lists. For example <code>[80, 443, [1000, 1200]]</code> matches all requests on port 80, 443 and in the range 1000-1200.
          * Optional.
          */
-        ports?: number | [number, number];
+        ports?: Array<number | [number, number]>;
     }
 
     interface Static {

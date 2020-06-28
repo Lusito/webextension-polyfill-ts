@@ -44,7 +44,7 @@ export declare namespace Storage {
          * @param items <p>An object which gives each key/value pair to update storage with. Any other key/value pairs in storage will not be affected.</p><p>Primitive values such as numbers will serialize as expected. Values with a <code>typeof</code> <code>"object"</code> and <code>"function"</code> will typically serialize to <code>{}</code>, with the exception of <code>Array</code> (serializes as expected), <code>Date</code>, and <code>Regex</code> (serialize using their <code>String</code> representation).</p>
          * @returns Promise<void> Callback on success, or on failure (in which case $(ref:runtime.lastError) will be set).
          */
-        set(items: StorageAreaSetItemsType): Promise<void>;
+        set(items: {[s:string] : any}): Promise<void>;
 
         /**
          * Removes one or more items from storage.
@@ -68,9 +68,9 @@ export declare namespace Storage {
          * Gets one or more items from storage.
          *
          * @param keys Optional. A single key to get, list of keys to get, or a dictionary specifying default values (see description of the object).  An empty list or object will return an empty result object.  Pass in <code>null</code> to get the entire contents of storage.
-         * @returns Promise<StorageAreaSyncGetCallbackItemsType> Callback with storage items, or on failure (in which case $(ref:runtime.lastError) will be set).
+         * @returns Promise<{[s:string] : any}> Callback with storage items, or on failure (in which case $(ref:runtime.lastError) will be set).
          */
-        get(keys?: string | string[] | StorageAreaSyncGetKeysC3Type): Promise<StorageAreaSyncGetCallbackItemsType>;
+        get(keys?: null | string | string[] | {[s:string] : any}): Promise<{[s:string] : any}>;
 
         /**
          * Gets the amount of space (in bytes) being used by one or more items.
@@ -78,7 +78,7 @@ export declare namespace Storage {
          * @param keys Optional. A single key or list of keys to get the total usage for. An empty list will return 0. Pass in <code>null</code> to get the total usage of all of storage.
          * @returns Promise<number> Callback with the amount of space being used by storage, or on failure (in which case $(ref:runtime.lastError) will be set).
          */
-        getBytesInUse(keys?: string | string[]): Promise<number>;
+        getBytesInUse(keys?: null | string | string[]): Promise<number>;
 
         /**
          * Sets multiple items.
@@ -86,7 +86,7 @@ export declare namespace Storage {
          * @param items <p>An object which gives each key/value pair to update storage with. Any other key/value pairs in storage will not be affected.</p><p>Primitive values such as numbers will serialize as expected. Values with a <code>typeof</code> <code>"object"</code> and <code>"function"</code> will typically serialize to <code>{}</code>, with the exception of <code>Array</code> (serializes as expected), <code>Date</code>, and <code>Regex</code> (serialize using their <code>String</code> representation).</p>
          * @returns Promise<void> Callback on success, or on failure (in which case $(ref:runtime.lastError) will be set).
          */
-        set(items: StorageAreaSyncSetItemsType): Promise<void>;
+        set(items: {[s:string] : any}): Promise<void>;
 
         /**
          * Removes one or more items from storage.
@@ -146,30 +146,6 @@ export declare namespace Storage {
          * The maximum size (in bytes) of the managed storage JSON manifest file. Files larger than this limit will fail to load.
          */
         QUOTA_BYTES: 5242880;
-    }
-
-    /**
-     * <p>An object which gives each key/value pair to update storage with. Any other key/value pairs in storage will not be affected.</p><p>Primitive values such as numbers will serialize as expected. Values with a <code>typeof</code> <code>"object"</code> and <code>"function"</code> will typically serialize to <code>{}</code>, with the exception of <code>Array</code> (serializes as expected), <code>Date</code>, and <code>Regex</code> (serialize using their <code>String</code> representation).</p>
-     */
-    interface StorageAreaSetItemsType {
-    }
-
-    /**
-     * Storage items to return in the callback, where the values are replaced with those from storage if they exist.
-     */
-    interface StorageAreaSyncGetKeysC3Type {
-    }
-
-    /**
-     * Object with items in their key-value mappings.
-     */
-    interface StorageAreaSyncGetCallbackItemsType {
-    }
-
-    /**
-     * <p>An object which gives each key/value pair to update storage with. Any other key/value pairs in storage will not be affected.</p><p>Primitive values such as numbers will serialize as expected. Values with a <code>typeof</code> <code>"object"</code> and <code>"function"</code> will typically serialize to <code>{}</code>, with the exception of <code>Array</code> (serializes as expected), <code>Date</code>, and <code>Regex</code> (serialize using their <code>String</code> representation).</p>
-     */
-    interface StorageAreaSyncSetItemsType {
     }
 
     interface Static {

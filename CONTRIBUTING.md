@@ -6,7 +6,7 @@ You might have noticed that some generated code is wrong.. Since I don't use the
 
 This file should give you a quick introduction. It won't cover everything.
 
-Sadly, there is official documentation for the schema .json files that I know of. I suggest having a look at `src/helpers/types.ts`, which documents structure of the schema.json files as I deducted them from reading them. You can ignore the helper functions I put in there. They are only there to help validating the schema files.
+Sadly, there is official documentation for the schema .json files that I know of. I suggest having a look at `src/helpers/types.ts`, which documents structure of the schema.json files as I deducted them from reading them.
 
 ## Build commands:
 
@@ -20,6 +20,11 @@ Run these commands:
 * `npm run validate:lib` -> to test if the generated files are valid TypeScript.
 * `npm run all` -> execute all of the above (except npm install) in order.
 
+## Linting commands:
+
+When you changed code, ensure you uphold linting and formatting rules.
+Use `npm run lint` to check them or `npm run lint:fix` to try to autofix them.
+
 ## Overview
 
 As you might have read, this project grabs schema files from mozilla, parses them and then spits out typescript files.
@@ -27,13 +32,13 @@ Here is a list of all folders and files in this project:
 - schemas: schema .json files downloaded from various sources.
 - lib: generated typescript definition files and one manually written file (index.js)
 - src: source for commandline commands to fetch and validate schemas, and to generate typescript files.
-- fixes.json: fixes for schema files.. see below.
+- `fixes/<namespace>.json`: fixes for schema files.. see below.
 
-## fixes.json
+## fixes/\<namespace\>.json
 
 Since the schema .json files are flawed, some fixes have to be applied to generate good typescript files. Sometimes types are wrong or missing in the schema files.
 
-This json file is a map key => replacement, where key expresses what part of the compiled schema structure you want to modify.
+The fixes json files are a map key => replacement, where key expresses what part of the compiled schema structure you want to modify.
 
 To illustrate how this works, let's examine this line:  
 ```"manifest.types.$ImageData.unsupported": true,```
@@ -132,9 +137,9 @@ What it essentially does is:
 - Apply a lot of fixes on the schema tree, for example:
   - removing unused and deprecated object to lighten the tree
   - applying some autocorrection
-  - applying manual json fixes (see fixes.json)
+  - applying manual json fixes (see `fixes/<namespace>.json`)
   - flatten the schema tree and create names/ids where none where given.
-  - see `src/helpers/fixes.ts` for more details
+  - see `src/fixes/*.ts` for more details
 - Write each namespace to its corresponding .d.ts file
 - Write an index.d.ts file that imports everything.
 

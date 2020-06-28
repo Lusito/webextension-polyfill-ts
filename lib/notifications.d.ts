@@ -176,24 +176,6 @@ export declare namespace Notifications {
         isClickable?: boolean;
     }
 
-    interface CreateNotificationOptionsButtonsItemType {
-        title: string;
-
-        /**
-         * Optional.
-         */
-        iconUrl?: string;
-    }
-
-    interface UpdateNotificationOptionsButtonsItemType {
-        title: string;
-
-        /**
-         * Optional.
-         */
-        iconUrl?: string;
-    }
-
     interface Static {
 
         /**

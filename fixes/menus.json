@@ -1,0 +1,5 @@
+{
+  "functions.%refresh.!fixAsync": null,
+  "functions.%create.parameters.%createProperties.properties.onclick.parameters.%info.$ref": "OnClickData",
+  "functions.%update.parameters.%updateProperties.properties.onclick.parameters.%info.$ref": "OnClickData"
+}

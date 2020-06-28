@@ -328,7 +328,7 @@ export declare namespace Menus {
         /**
          * A list of IDs of the menu items that were shown.
          */
-        menuIds: undefined[];
+        menuIds: Array<number | string>;
 
         /**
          * A list of all contexts that apply to the menu.

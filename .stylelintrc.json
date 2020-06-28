@@ -1,0 +1,3 @@
+{
+  "extends": ["@lusito/stylelint-config"]
+}

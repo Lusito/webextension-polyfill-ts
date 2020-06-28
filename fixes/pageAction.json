@@ -1,0 +1,5 @@
+{
+  "functions.%isShown.!fixAsync": "shown:boolean",
+  "functions.%setPopup.!fixAsync": null,
+  "functions.%openPopup.!fixAsync": null
+}

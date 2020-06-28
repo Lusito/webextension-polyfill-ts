@@ -51,58 +51,6 @@ export declare namespace Omnibox {
         description: string;
     }
 
-    /**
-     * The style ranges for the description, as provided by the extension.
-     */
-    interface SuggestResultDescriptionStylesItemType {
-        offset: number;
-
-        /**
-         * The style type
-         */
-        type: DescriptionStyleType;
-
-        /**
-         * Optional.
-         */
-        length?: number;
-    }
-
-    /**
-     * The style ranges for the description, as provided by ToValue().
-     */
-    interface SuggestResultDescriptionStylesRawItemType {
-        offset: number;
-
-        type: number;
-    }
-
-    /**
-     * The style ranges for the description, as provided by the extension.
-     */
-    interface DefaultSuggestResultDescriptionStylesItemType {
-        offset: number;
-
-        /**
-         * The style type
-         */
-        type: DescriptionStyleType;
-
-        /**
-         * Optional.
-         */
-        length?: number;
-    }
-
-    /**
-     * The style ranges for the description, as provided by ToValue().
-     */
-    interface DefaultSuggestResultDescriptionStylesRawItemType {
-        offset: number;
-
-        type: number;
-    }
-
     interface Static {
 
         /**

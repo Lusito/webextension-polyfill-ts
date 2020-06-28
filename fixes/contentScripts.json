@@ -1,0 +1,4 @@
+{
+  "functions.%register.!fixAsync": "handle:RegisteredContentScript",
+  "types.$RegisteredContentScript.functions.%unregister.!fixAsync": null
+}

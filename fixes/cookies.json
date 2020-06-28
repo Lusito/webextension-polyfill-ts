@@ -1,0 +1,3 @@
+{
+  "functions.%getAll.parameters.%details.properties.firstPartyDomain.type": "string | null"
+}
