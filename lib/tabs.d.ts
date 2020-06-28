@@ -1082,6 +1082,13 @@ export declare namespace Tabs {
         reload(tabId?: number, reloadProperties?: ReloadReloadPropertiesType): Promise<void>;
 
         /**
+         * Warm up a tab
+         *
+         * @param tabId The ID of the tab to warm up.
+         */
+        warmup(tabId: number): void;
+
+        /**
          * Closes one or more tabs.
          *
          * @param tabIds The tab or list of tabs to close.
