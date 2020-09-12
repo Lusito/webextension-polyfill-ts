@@ -5,7 +5,31 @@
   "events.%onHeadersReceived.returns.$ref": "BlockingResponseOrPromise",
   "events.%onAuthRequired.returns.$ref": "BlockingResponseOrPromise",
   "events.%onAuthRequired.parameters.-[]": ["%callback"],
+  "events.%onErrorOccurred.extraParameters.+[]": [
+    {
+      "type": "array",
+      "optional": true,
+      "name": "extraInfoSpec",
+      "description": "Array of extra information that should be passed to the listener function.",
+      "items": {
+        "$ref": "OnErrorOccurredOptions"
+      }
+    }
+  ],
+  "types.$OnBeforeRequestOptions.enum.+[]": ["extraHeaders"],
+  "types.$OnBeforeSendHeadersOptions.enum.+[]": ["extraHeaders"],
+  "types.$OnSendHeadersOptions.enum.+[]": ["extraHeaders"],
+  "types.$OnHeadersReceivedOptions.enum.+[]": ["extraHeaders"],
+  "types.$OnAuthRequiredOptions.enum.+[]": ["extraHeaders"],
+  "types.$OnResponseStartedOptions.enum.+[]": ["extraHeaders"],
+  "types.$OnBeforeRedirectOptions.enum.+[]": ["extraHeaders"],
+  "types.$OnCompletedOptions.enum.+[]": ["extraHeaders"],
   "types.+[]": [
+    {
+      "id": "OnErrorOccurredOptions",
+      "type": "string",
+      "enum": ["extraHeaders"]
+    },
     {
       "type": "choices",
       "id": "BlockingResponseOrPromise",

@@ -1121,7 +1121,7 @@ export declare namespace Tabs {
         toggleReaderMode(tabId?: number): Promise<void>;
 
         /**
-         * Captures the visible area of a specified tab. You must have $(topic:declare_permissions)[&lt;all_urls&gt;] permission to use this method.
+         * Captures an area of a specified tab. You must have $(topic:declare_permissions)[&lt;all_urls&gt;] permission to use this method.
          *
          * @param tabId Optional. The tab to capture. Defaults to the active tab of the current window.
          * @param options Optional.
@@ -1130,7 +1130,7 @@ export declare namespace Tabs {
         captureTab(tabId?: number, options?: ExtensionTypes.ImageDetails): Promise<string>;
 
         /**
-         * Captures the visible area of the currently active tab in the specified window. You must have $(topic:declare_permissions)[&lt;all_urls&gt;] permission to use this method.
+         * Captures an area of the currently active tab in the specified window. You must have $(topic:declare_permissions)[&lt;all_urls&gt;] permission to use this method.
          *
          * @param windowId Optional. The target window. Defaults to the $(topic:current-window)[current window].
          * @param options Optional.

@@ -19,7 +19,7 @@ export declare namespace ExtensionTypes {
     type ImageFormat = "jpeg" | "png";
 
     /**
-     * Details about the format and quality of an image.
+     * Details about the format, quality, area and scale of the capture.
      */
     interface ImageDetails {
 
@@ -34,6 +34,18 @@ export declare namespace ExtensionTypes {
          * Optional.
          */
         quality?: number;
+
+        /**
+         * The area of the document to capture, in CSS pixels, relative to the page.  If omitted, capture the visible viewport.
+         * Optional.
+         */
+        rect?: ImageDetailsRectType;
+
+        /**
+         * The scale of the resulting image.  Defaults to <code>devicePixelRatio</code>.
+         * Optional.
+         */
+        scale?: number;
     }
 
     /**
@@ -102,6 +114,19 @@ export declare namespace ExtensionTypes {
      * A plain JSON value
      */
     interface PlainJSONValue {
+    }
+
+    /**
+     * The area of the document to capture, in CSS pixels, relative to the page.  If omitted, capture the visible viewport.
+     */
+    interface ImageDetailsRectType {
+        x: number;
+
+        y: number;
+
+        width: number;
+
+        height: number;
     }
 
     interface ExtensionFileOrCodeC1Type {
