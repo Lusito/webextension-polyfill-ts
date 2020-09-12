@@ -15,21 +15,21 @@ import { Events } from "./events";
 export declare namespace WebRequest {
     type ResourceType = "main_frame" | "sub_frame" | "stylesheet" | "script" | "image" | "object" | "object_subrequest" | "xmlhttprequest" | "xslt" | "ping" | "beacon" | "xml_dtd" | "font" | "media" | "websocket" | "csp_report" | "imageset" | "web_manifest" | "speculative" | "other";
 
-    type OnBeforeRequestOptions = "blocking" | "requestBody";
+    type OnBeforeRequestOptions = "blocking" | "requestBody" | "extraHeaders";
 
-    type OnBeforeSendHeadersOptions = "requestHeaders" | "blocking";
+    type OnBeforeSendHeadersOptions = "requestHeaders" | "blocking" | "extraHeaders";
 
-    type OnSendHeadersOptions = "requestHeaders";
+    type OnSendHeadersOptions = "requestHeaders" | "extraHeaders";
 
-    type OnHeadersReceivedOptions = "blocking" | "responseHeaders";
+    type OnHeadersReceivedOptions = "blocking" | "responseHeaders" | "extraHeaders";
 
-    type OnAuthRequiredOptions = "responseHeaders" | "blocking" | "asyncBlocking";
+    type OnAuthRequiredOptions = "responseHeaders" | "blocking" | "asyncBlocking" | "extraHeaders";
 
-    type OnResponseStartedOptions = "responseHeaders";
+    type OnResponseStartedOptions = "responseHeaders" | "extraHeaders";
 
-    type OnBeforeRedirectOptions = "responseHeaders";
+    type OnBeforeRedirectOptions = "responseHeaders" | "extraHeaders";
 
-    type OnCompletedOptions = "responseHeaders";
+    type OnCompletedOptions = "responseHeaders" | "extraHeaders";
 
     /**
      * An object describing filters to apply to webRequest events.
@@ -270,6 +270,8 @@ export declare namespace WebRequest {
          */
         thirdParty: UrlClassificationParty;
     }
+
+    type OnErrorOccurredOptions = "extraHeaders";
 
     /**
      * A BlockingResponse or a Promise<BlockingResponse>
@@ -1464,8 +1466,9 @@ export declare namespace WebRequest {
          *
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
          * @param filter A set of filters that restricts the events that will be sent to this listener.
+         * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
-        addListener(callback: (details: OnErrorOccurredDetailsType) => void, filter: RequestFilter): void;
+        addListener(callback: (details: OnErrorOccurredDetailsType) => void, filter: RequestFilter, extraInfoSpec?: OnErrorOccurredOptions[]): void;
     }
 
     interface Static {
