@@ -92,7 +92,7 @@ export declare namespace Manifest {
         /**
          * Optional.
          */
-        background?: WebExtensionManifestBackgroundC1Type | WebExtensionManifestBackgroundC2Type;
+        background?: WebExtensionManifestBackgroundC1Type | WebExtensionManifestBackgroundC2Type | WebExtensionManifestBackgroundC3Type;
 
         /**
          * Optional.
@@ -509,6 +509,10 @@ export declare namespace Manifest {
         persistent?: boolean;
     }
 
+    interface WebExtensionManifestBackgroundC3Type {
+        service_worker: ExtensionURL;
+    }
+
     interface WebExtensionManifestOptionsUiType {
         page: ExtensionURL;
 
@@ -640,7 +644,7 @@ export declare namespace Manifest {
         /**
          * Optional.
          */
-        keyword?: string;
+        keyword?: string | string[];
 
         search_url: string;
 
