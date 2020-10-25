@@ -15,7 +15,7 @@ function getQuoteLength(text: string, start: number, c: string) {
 function getSingleLineCommentLength(text: string, start: number) {
     let i = start;
     for (; i < text.length; i++) {
-        if (text[i] === "\n") break;
+        if (text[i] === "\r" || text[i] === "\n") break;
     }
     return i - start;
 }
@@ -32,24 +32,27 @@ function getMultiLineCommentLength(text: string, start: number) {
 }
 
 function splitComments(text: string) {
-    const json = [];
+    const json: string[] = [];
     const comments = [];
     let start = 0;
     let count = 0;
+    function addJson(s: string) {
+        if (s.trim()) json.push(s);
+    }
     for (let i = 0; i < text.length; i++) {
         const c = text[i];
         const nc = text[i + 1];
         if (c === "/" && nc === "/") {
-            if (count) json.push(text.substr(start, count + 1));
+            if (count) addJson(text.substr(start, count));
             const len = getSingleLineCommentLength(text, i + 1);
-            comments.push(text.substr(i, len + 1));
+            if (!json.length) comments.push(text.substr(i, len + 1));
             i += len + 1;
             start = i + 1;
             count = 0;
         } else if (c === "/" && nc === "*") {
-            if (count) json.push(text.substr(start, count + 1));
+            if (count) addJson(text.substr(start, count));
             const len = getMultiLineCommentLength(text, i + 1);
-            comments.push(text.substr(i, len + 2));
+            if (!json.length) comments.push(text.substr(i, len + 2));
             i += len + 1;
             start = i + 1;
             count = 0;
@@ -61,7 +64,7 @@ function splitComments(text: string) {
             count++;
         }
     }
-    if (count) json.push(text.substr(start, count + 1));
+    if (count) addJson(text.substr(start, count));
     return {
         comments: comments.join("\n"),
         json: json.join(""),

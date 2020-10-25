@@ -20,6 +20,8 @@ class SchemaBasePropertyValidator {
             "permissions",
             "allowedContexts",
             "onError",
+            "inline_doc",
+            "nodoc",
         ];
     }
 
@@ -37,6 +39,8 @@ class SchemaBasePropertyValidator {
         assertType(json.allowedContexts, "array", "undefined");
         assertArray(json.allowedContexts, (s) => assertType(s, "string"));
         assertOneOf(json.onError, "warn", undefined);
+        assertOneOf(json.inline_doc, true, false, "true", "false", undefined);
+        assertOneOf(json.nodoc, true, false, "true", "false", undefined);
     }
 }
 
@@ -72,6 +76,7 @@ function validateSchemaProperty(json: any) {
             case "array":
                 return SchemaArrayPropertyValidator.validate(json);
             case "object":
+            case "binary":
                 return SchemaObjectPropertyValidator.validate(json);
             case "boolean":
                 return SchemaBooleanPropertyValidator.validate(json);
@@ -218,7 +223,7 @@ class SchemaObjectPropertyValidator extends SchemaBasePropertyValidator {
     public static validate(json: any) {
         super.validate(json);
         assertValidOjectKeys(json, this.getValidKeys());
-        assertEqual(json.type, "object");
+        assertOneOf(json.type, "object", "binary");
         assertType(json.properties, "object", "undefined");
         assertMap(json.properties, validateSchemaPropertyWithoutExtend);
         assertType(json.additionalProperties, "object", "boolean", "undefined");
@@ -296,6 +301,7 @@ class SchemaFunctionPropertyValidator extends SchemaBasePropertyValidator {
                 "returns",
                 "allowAmbiguousOptionalArguments",
                 "filters",
+                "options",
             ]);
     }
 
@@ -314,6 +320,17 @@ class SchemaFunctionPropertyValidator extends SchemaBasePropertyValidator {
         assertType(json.allowAmbiguousOptionalArguments, "boolean", "undefined");
         assertType(json.filters, "array", "undefined");
         assertArray(json.filters, validateSchemaPropertyWithoutExtend);
+        assertType(json.options, "object", "undefined");
+        if (json.options) {
+            assertValidOjectKeys(json.options, ["supportsListeners", "supportsRules", "conditions", "actions"]);
+            assertType(json.options.supportsListeners, "boolean", "undefined");
+            assertType(json.options.supportsRules, "boolean", "undefined");
+            assertType(json.options.conditions, "array", "undefined");
+            assertType(json.options.actions, "array", "undefined");
+            assertArray(json.options.conditions, (s) => assertType(s, "string", "undefined"));
+            assertArray(json.options.actions, (s) => assertType(s, "string", "undefined"));
+
+        }
     }
 }
 

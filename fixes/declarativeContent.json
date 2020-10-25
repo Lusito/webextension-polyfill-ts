@@ -1,0 +1,87 @@
+{
+  "types.+[]": [
+    {
+        "id": "Rule<TCondition, TAction>",
+        "type": "object",
+        "properties": {
+            "conditions": {
+              "type": "array",
+              "items": { "$ref": "TCondition" },
+              "description": "List of conditions that can trigger the actions."
+            },
+            "actions": {
+              "type": "array",
+              "items": { "$ref": "TAction" },
+              "description": "List of actions that are triggered if one of the conditions is fulfilled."
+            }
+        }
+    },
+    {
+      "id": "RuleEvent<TCondition, TAction>",
+      "type": "object",
+      "description": "An object which allows the addition and removal of rules for declarative content.",
+      "functions": [
+        {
+          "name": "addRules",
+          "type": "function",
+          "description": "Registers rules to handle events.",
+          "parameters": [
+            {
+              "name": "rules",
+              "type": "array",
+              "items": { "$ref": "Rule<TCondition, TAction>" },
+              "description": "Rules to be registered. These do not replace previously registered rules."
+            }
+          ]
+        },
+        {
+          "name": "getRules",
+          "type": "function",
+          "description": "Fetches currently registered rules.",
+          "parameters": [
+            {
+              "name": "rules",
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Rule ids to fetch.",
+              "optional": true
+            },
+            {
+              "name": "callback",
+              "type": "function",
+              "description": "Called when rules have been fetched.",
+              "optional": true,
+              "parameters": [
+                {
+                  "name": "rules",
+                  "type": "array",
+                  "items": { "type": "Rule<TCondition, TAction>" }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "removeRules",
+          "type": "function",
+          "description": "Unregisters currently registered rules.",
+          "parameters": [
+            {
+              "name": "rules",
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Rule ids to be unregistered.",
+              "optional": true
+            },
+            {
+              "name": "callback",
+              "type": "function",
+              "description": "Called when rules were unregistered.",
+              "optional": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
