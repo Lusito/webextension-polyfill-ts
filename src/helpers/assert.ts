@@ -18,7 +18,7 @@ export function assertEqual(a: any, b: any) {
 }
 
 export function assertSupported(prop: SchemaProperty) {
-    if (prop.deprecated || prop.unsupported) throw ErrorMessage.UNSUPPORTED;
+    if (prop.deprecated || prop.unsupported) throw new Error(ErrorMessage.UNSUPPORTED);
 }
 
 export function assertOneOfX(value: any, validValues: any[]) {

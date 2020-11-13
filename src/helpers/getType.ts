@@ -22,7 +22,7 @@ export function getEnumType(list: SchemaEnumValue[]) {
         .map((e: any) => {
             if (e === undefined) return "undefined";
             if (typeof e === "string") return JSON.stringify(e);
-            if (!e.name) throw ErrorMessage.MISSING_NAME;
+            if (!e.name) throw new Error(ErrorMessage.MISSING_NAME);
             return JSON.stringify(e.name);
         })
         .join(" | ");

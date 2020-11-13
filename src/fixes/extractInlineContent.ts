@@ -45,14 +45,14 @@ function convertToRefIfObject(
     ) {
         // special case for a map type.. not extracted, will be handled in getType
     } else if (prop.type === "object" && !prop.isInstanceOf && !prop.patternProperties) {
-        if (!namePrefix) throw ErrorMessage.MISSING_NAME;
+        if (!namePrefix) throw new Error(ErrorMessage.MISSING_NAME);
         const name = combineNamePrefix(namePrefix, propName);
         const id = `${toUpperCamelCase(name)}Type`;
         const newRef = convertToRef(prop, id, entry);
         // extractParameterObjectFromProperty(params[i], name, entry, false);
         return newRef;
     } else if (prop.type === "string" && prop.enum) {
-        if (!namePrefix) throw ErrorMessage.MISSING_NAME;
+        if (!namePrefix) throw new Error(ErrorMessage.MISSING_NAME);
         const name = combineNamePrefix(namePrefix, propName);
         const id = `${toUpperCamelCase(name)}Enum`;
         return convertToRef(prop, id, entry);
@@ -68,7 +68,7 @@ function convertToRefIfObject(
         prop.items = convertToRefIfObject(prop.items, `${propName}Item`, namePrefix, entry);
     } else if (prop.type === "function") {
         modifyArray(prop.parameters, (param) => {
-            if (!param.name) throw ErrorMessage.MISSING_NAME;
+            if (!param.name) throw new Error(ErrorMessage.MISSING_NAME);
             return convertToRefIfObject(param, propName + toUpperCamelCase(param.name), namePrefix, entry);
         });
     }
@@ -77,7 +77,7 @@ function convertToRefIfObject(
 
 function extractParameterObjectFunction(func: SchemaFunctionProperty, entry: SchemaEntry) {
     modifyArray(func.parameters, (param) => {
-        if (!param.name) throw ErrorMessage.MISSING_NAME;
+        if (!param.name) throw new Error(ErrorMessage.MISSING_NAME);
         return convertToRefIfObject(param, param.name, func.name, entry);
     });
     if (func.returns) func.returns = convertToRefIfObject(func.returns, "return", func.name, entry);
@@ -124,7 +124,7 @@ function extractParameterObjectType<T extends SchemaBaseProperty>(
             } else if (prop.patternProperties) {
                 // special case for a map type.. not extracted, will be handled in getType
             } else {
-                if (!namePrefix) throw ErrorMessage.MISSING_NAME;
+                if (!namePrefix) throw new Error(ErrorMessage.MISSING_NAME);
                 const id = `${namePrefix}Type`;
                 prop = convertToRef(prop, id, entry);
             }

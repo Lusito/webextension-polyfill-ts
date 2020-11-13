@@ -56,6 +56,7 @@ function getImports(entry: SchemaEntry, subNamespaces: string[]) {
 
 function addProperties(properties: { [s: string]: SchemaProperty } | undefined, writer: CodeWriter) {
     workMap(properties, (prop, key) => {
+        if (key === "instanceType") return;
         assertSupported(prop);
 
         if (prop.type === "function") {
@@ -91,7 +92,11 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
         }
     }
     if (type.type === "object") {
-        const templateParam = type.id === "Event" ? "<T extends Function>" : "";
+        const templateMap: { [s: string]: string } = {
+            Event: "<T extends Function>",
+            RuleEvent: "<TRule extends Record<string, unknown>>",
+        };
+        const templateParam = templateMap[type.id || ""] ?? "";
         let extendsClass = "";
         if (type.$import) {
             extendsClass = ` extends ${fixRef(type.$import)}`;
@@ -133,7 +138,7 @@ function addEvent(event: SchemaFunctionProperty, writer: CodeWriter) {
     const name = event.name || event.id;
     if (!name) {
         console.log(event);
-        throw ErrorMessage.MISSING_NAME;
+        throw new Error(ErrorMessage.MISSING_NAME);
     }
 
     if (event.description) {
@@ -141,25 +146,32 @@ function addEvent(event: SchemaFunctionProperty, writer: CodeWriter) {
         if (event.parameters?.length) writer.emptyLine();
     }
 
-    event.parameters?.forEach((param) => {
-        const description = param.description ? ` ${param.description}` : "";
-        const fullDescription = param.optional ? ` Optional.${description}` : description;
-        writer.comment(`@param ${param.name}${fullDescription}`);
-    });
-
-    if (event.assignableEvent) {
-        writer.code(`${name}?: (${getParameters(event.parameters, false)}) => ${getReturnType(event)};`);
-    } else if (event.$extend) {
-        writer.code(`${name}: ${event.$extend};`);
+    if (event.options?.supportsRules) {
+        const toType = (values: string[]) => values.map((value) => value.split(".")[1] || value).join(" | ");
+        writer.code(`${name}: RuleEvent<${toType(event.options.conditions)}, ${toType(event.options.actions)}>;`);
     } else {
-        writer.code(`${name}: Events.Event<(${getParameters(event.parameters, false)}) => ${getReturnType(event)}>;`);
+        event.parameters?.forEach((param) => {
+            const description = param.description ? ` ${param.description}` : "";
+            const fullDescription = param.optional ? ` Optional.${description}` : description;
+            writer.comment(`@param ${param.name}${fullDescription}`);
+        });
+
+        if (event.assignableEvent) {
+            writer.code(`${name}?: (${getParameters(event.parameters, false)}) => ${getReturnType(event)};`);
+        } else if (event.$extend) {
+            writer.code(`${name}: ${event.$extend};`);
+        } else {
+            writer.code(
+                `${name}: Events.Event<(${getParameters(event.parameters, false)}) => ${getReturnType(event)}>;`
+            );
+        }
     }
     writer.emptyLine();
 }
 
 function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] | undefined, writer: CodeWriter) {
     assertSupported(func);
-    if (!func.name) throw ErrorMessage.MISSING_NAME;
+    if (!func.name) throw new Error(ErrorMessage.MISSING_NAME);
 
     const indexToFix = getOverloadParameterIndex(parameters);
     if (indexToFix >= 0) {
@@ -276,6 +288,14 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
         entry.types?.forEach((type) => addType(type, writer));
         const extendsPart = entry.$import ? ` extends ${toUpperCamelCase(entry.$import)}.Static` : "";
         writer.begin(`interface Static${extendsPart} {`);
+
+        // Constructors
+        entry.types?.forEach((type) => {
+            if (type.type === "object" && type.properties && type.properties.instanceType)
+                writer.code(`${type.id}: { new(options?: ${type.id}): ${type.id} };`);
+            writer.emptyLine();
+        });
+
         entry.functions?.forEach((func) => addFunction(func, func.parameters, writer));
         if (entry.functions?.length && entry.events?.length) writer.emptyLine();
 

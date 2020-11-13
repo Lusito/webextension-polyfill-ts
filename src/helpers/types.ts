@@ -11,6 +11,8 @@ export interface SchemaBaseProperty {
     permissions?: string[];
     allowedContexts?: string[];
     onError?: "warn";
+    inline_doc?: boolean;
+    nodoc?: boolean;
 }
 
 export interface SchemaChoicesProperty extends SchemaBaseProperty {
@@ -51,7 +53,7 @@ export interface SchemaStringProperty extends SchemaBaseProperty {
 }
 
 export interface SchemaObjectProperty extends SchemaBaseProperty {
-    type: "object";
+    type: "object" | "binary";
     properties?: { [s: string]: SchemaProperty };
     additionalProperties?: SchemaProperty | boolean;
     patternProperties?: { [s: string]: SchemaProperty };
@@ -93,6 +95,12 @@ export interface SchemaFunctionProperty extends SchemaBaseProperty {
     allowAmbiguousOptionalArguments?: boolean;
     filters?: SchemaProperty[];
     assignableEvent?: boolean; // used for fixes/*.json only
+    options?: {
+        supportsListeners: boolean;
+        supportsRules: boolean;
+        conditions: string[];
+        actions: string[];
+    };
 }
 
 export type SchemaProperty =
