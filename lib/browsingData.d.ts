@@ -32,6 +32,12 @@ export declare namespace BrowsingData {
         hostnames?: string[];
 
         /**
+         * Only remove data associated with this specific cookieStoreId.
+         * Optional.
+         */
+        cookieStoreId?: string;
+
+        /**
          * An object whose properties specify which origin types ought to be cleared. If this object isn't specified, it defaults to clearing only "unprotected" origins. Please ensure that you <em>really</em> want to remove application data before adding 'protectedWeb' or 'extensions'.
          * Optional.
          */
