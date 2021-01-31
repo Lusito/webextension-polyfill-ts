@@ -18,5 +18,10 @@
     "type": "boolean",
     "optional": true,
     "description": "Whether the tab can be discarded automatically by the browser when resources are low."
+  },
+  "types.$Tab.properties.pendingUrl": {
+    "type": "string",
+    "optional": true,
+    "description": "The URL the tab is navigating to, before it has committed. This property is only present if the extension's manifest includes the \"tabs\" permission and there is a pending navigation."
   }
 }

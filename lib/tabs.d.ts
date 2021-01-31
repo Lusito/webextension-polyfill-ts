@@ -228,6 +228,12 @@ export declare namespace Tabs {
          * Optional.
          */
         autoDiscardable?: boolean;
+
+        /**
+         * The URL the tab is navigating to, before it has committed. This property is only present if the extension's manifest includes the "tabs" permission and there is a pending navigation.
+         * Optional.
+         */
+        pendingUrl?: string;
     }
 
     /**
