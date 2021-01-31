@@ -470,6 +470,12 @@ export declare namespace WebRequest {
          * Indicates if this request and its content window hierarchy is third party.
          */
         thirdParty: boolean;
+
+        /**
+         * URL of the resource that triggered this request (on chrome).
+         * Optional.
+         */
+        initiator?: string;
     }
 
     interface OnBeforeSendHeadersDetailsType {
@@ -551,6 +557,12 @@ export declare namespace WebRequest {
          * Indicates if this request and its content window hierarchy is third party.
          */
         thirdParty: boolean;
+
+        /**
+         * URL of the resource that triggered this request (on chrome).
+         * Optional.
+         */
+        initiator?: string;
     }
 
     interface OnSendHeadersDetailsType {
@@ -632,6 +644,12 @@ export declare namespace WebRequest {
          * Indicates if this request and its content window hierarchy is third party.
          */
         thirdParty: boolean;
+
+        /**
+         * URL of the resource that triggered this request (on chrome).
+         * Optional.
+         */
+        initiator?: string;
     }
 
     interface OnHeadersReceivedDetailsType {
@@ -723,6 +741,12 @@ export declare namespace WebRequest {
          * Indicates if this request and its content window hierarchy is third party.
          */
         thirdParty: boolean;
+
+        /**
+         * URL of the resource that triggered this request (on chrome).
+         * Optional.
+         */
+        initiator?: string;
     }
 
     interface OnAuthRequiredDetailsType {
@@ -835,6 +859,12 @@ export declare namespace WebRequest {
          * Indicates if this request and its content window hierarchy is third party.
          */
         thirdParty: boolean;
+
+        /**
+         * URL of the resource that triggered this request (on chrome).
+         * Optional.
+         */
+        initiator?: string;
     }
 
     interface OnResponseStartedDetailsType {
@@ -937,6 +967,12 @@ export declare namespace WebRequest {
          * Indicates if this request and its content window hierarchy is third party.
          */
         thirdParty: boolean;
+
+        /**
+         * URL of the resource that triggered this request (on chrome).
+         * Optional.
+         */
+        initiator?: string;
     }
 
     interface OnBeforeRedirectDetailsType {
@@ -1044,6 +1080,12 @@ export declare namespace WebRequest {
          * Indicates if this request and its content window hierarchy is third party.
          */
         thirdParty: boolean;
+
+        /**
+         * URL of the resource that triggered this request (on chrome).
+         * Optional.
+         */
+        initiator?: string;
     }
 
     interface OnCompletedDetailsType {
@@ -1155,6 +1197,12 @@ export declare namespace WebRequest {
          * For http requests, the bytes received in the request. Only available in onCompleted.
          */
         responseSize: number;
+
+        /**
+         * URL of the resource that triggered this request (on chrome).
+         * Optional.
+         */
+        initiator?: string;
     }
 
     interface OnErrorOccurredDetailsType {
@@ -1246,6 +1294,12 @@ export declare namespace WebRequest {
          * Indicates if this request and its content window hierarchy is third party.
          */
         thirdParty: boolean;
+
+        /**
+         * URL of the resource that triggered this request (on chrome).
+         * Optional.
+         */
+        initiator?: string;
     }
 
     interface HttpHeadersItemType {
