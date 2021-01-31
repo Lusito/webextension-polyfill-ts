@@ -86,7 +86,7 @@ export declare namespace Runtime {
     /**
      * The machine's processor architecture.
      */
-    type PlatformArch = "arm" | "x86-32" | "x86-64";
+    type PlatformArch = "aarch64" | "arm" | "ppc64" | "s390x" | "sparc64" | "x86-32" | "x86-64";
 
     /**
      * An object containing information about the current platform.

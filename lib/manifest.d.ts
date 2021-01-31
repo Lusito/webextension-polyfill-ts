@@ -539,18 +539,6 @@ export declare namespace Manifest {
          * Optional.
          */
         extension_pages?: string;
-
-        /**
-         * The Content Security Policy used for content scripts.
-         * Optional.
-         */
-        content_scripts?: string;
-
-        /**
-         * An alias for content_scripts to support Chrome compatibility.  Content Security Policy implementations may differ between Firefox and Chrome.  If both isolated_world and content_scripts exist, the value from content_scripts will be used.
-         * Optional.
-         */
-        isolated_world?: string;
     }
 
     interface WebExtensionManifestDeveloperType {

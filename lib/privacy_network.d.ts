@@ -38,6 +38,11 @@ export declare namespace PrivacyNetwork {
     }
 
     /**
+     * The mode for https-only mode.
+     */
+    type HTTPSOnlyModeOption = "always" | "private_browsing" | "never";
+
+    /**
      * The minimum TLS version supported.
      */
     type TlsVersionRestrictionConfigMinimumEnum = "TLSv1" | "TLSv1.1" | "TLSv1.2" | "TLSv1.3" | "unknown";
@@ -68,5 +73,10 @@ export declare namespace PrivacyNetwork {
          * This property controls the minimum and maximum TLS versions. This setting's value is an object of $(ref:tlsVersionRestrictionConfig).
          */
         tlsVersionRestriction: Types.Setting;
+
+        /**
+         * Allow users to query the mode for 'HTTPS-Only Mode'. This setting's value is of type HTTPSOnlyModeOption, defaulting to <code>never</code>.
+         */
+        httpsOnlyMode: Types.Setting;
     }
 }

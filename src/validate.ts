@@ -22,6 +22,8 @@ class SchemaBasePropertyValidator {
             "onError",
             "inline_doc",
             "nodoc",
+            "preprocess",
+            "postprocess",
         ];
     }
 
@@ -41,6 +43,8 @@ class SchemaBasePropertyValidator {
         assertOneOf(json.onError, "warn", undefined);
         assertOneOf(json.inline_doc, true, false, "true", "false", undefined);
         assertOneOf(json.nodoc, true, false, "true", "false", undefined);
+        assertType(json.preprocess, "string", "undefined");
+        assertType(json.postprocess, "string", "undefined");
     }
 }
 
@@ -175,8 +179,6 @@ class SchemaStringPropertyValidator extends SchemaBasePropertyValidator {
             .getValidKeys()
             .concat([
                 "type",
-                "preprocess",
-                "postprocess",
                 "enum",
                 "minLength",
                 "maxLength",
@@ -190,8 +192,6 @@ class SchemaStringPropertyValidator extends SchemaBasePropertyValidator {
         super.validate(json);
         assertValidOjectKeys(json, this.getValidKeys());
         assertEqual(json.type, "string");
-        assertOneOf(json.preprocess, "localize", undefined);
-        assertType(json.postprocess, "string", "undefined");
         assertType(json.enum, "array", "undefined");
         assertArray(json.enum, (e) => validateEnumValue(e));
         assertType(json.minLength, "number", "undefined");
@@ -213,7 +213,6 @@ class SchemaObjectPropertyValidator extends SchemaBasePropertyValidator {
                 "patternProperties",
                 "$import",
                 "isInstanceOf",
-                "postprocess",
                 "functions",
                 "events",
                 "default",
@@ -233,7 +232,6 @@ class SchemaObjectPropertyValidator extends SchemaBasePropertyValidator {
         assertMap(json.patternProperties, validateSchemaPropertyWithoutExtend);
         assertType(json.$import, "string", "undefined");
         assertType(json.isInstanceOf, "string", "undefined");
-        assertOneOf(json.postprocess, "convertImageDataToURL", undefined);
         assertType(json.functions, "array", "undefined");
         assertArray(json.functions, (e) => SchemaFunctionPropertyValidator.validate(e));
         assertType(json.events, "array", "undefined");
