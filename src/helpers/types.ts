@@ -14,7 +14,7 @@ export interface SchemaBaseProperty {
     inline_doc?: boolean;
     nodoc?: boolean;
     preprocess?: string;
-    postprocess?: string
+    postprocess?: string;
 }
 
 export interface SchemaChoicesProperty extends SchemaBaseProperty {

@@ -8,11 +8,9 @@ function visitor<T extends SchemaProperty>(value: T) {
     return value;
 }
 
-export const removeInstanceTypes: SchemaVisitorFactory = () => {
-    return {
-        name: "remove InstanceType types",
-        visitors: {
-            Type: visitor,
-        },
-    };
-};
+export const removeInstanceTypes: SchemaVisitorFactory = () => ({
+    name: "remove InstanceType types",
+    visitors: {
+        Type: visitor,
+    },
+});

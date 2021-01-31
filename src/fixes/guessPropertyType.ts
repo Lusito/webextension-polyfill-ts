@@ -16,14 +16,12 @@ function fixPropertyType(original: any) {
     return original;
 }
 
-export const guessPropertyType: SchemaVisitorFactory = () => {
-    return {
-        name: "correcting types",
-        visitors: {
-            Property: fixPropertyType,
-            Parameter: fixPropertyType,
-            Returns: fixPropertyType,
-            Type: fixPropertyType,
-        },
-    };
-};
+export const guessPropertyType: SchemaVisitorFactory = () => ({
+    name: "correcting types",
+    visitors: {
+        Property: fixPropertyType,
+        Parameter: fixPropertyType,
+        Returns: fixPropertyType,
+        Type: fixPropertyType,
+    },
+});

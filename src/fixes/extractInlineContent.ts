@@ -1,11 +1,5 @@
 import { SchemaVisitorFactory } from "../helpers/visitor";
-import {
-    SchemaEntry,
-    SchemaProperty,
-    SchemaBaseProperty,
-    SchemaFunctionProperty,
-    SchemaObjectProperty,
-} from "../helpers/types";
+import { SchemaEntry, SchemaProperty, SchemaFunctionProperty, SchemaObjectProperty } from "../helpers/types";
 import { modifyMap, modifyArray, toUpperCamelCase } from "../helpers/utils";
 import { ErrorMessage } from "../helpers/assert";
 
@@ -60,9 +54,9 @@ function convertToRefIfObject(
         if (prop.choices.length === 1)
             prop.choices[0] = convertToRefIfObject(prop.choices[0], propName, namePrefix, entry);
         else {
-            modifyArray(prop.choices, (choice, i) => {
-                return convertToRefIfObject(choice, `${propName}C${i + 1}`, namePrefix, entry);
-            });
+            modifyArray(prop.choices, (choice, i) =>
+                convertToRefIfObject(choice, `${propName}C${i + 1}`, namePrefix, entry)
+            );
         }
     } else if (prop.type === "array" && prop.items && (prop.items.type !== "object" || !prop.items.isInstanceOf)) {
         prop.items = convertToRefIfObject(prop.items, `${propName}Item`, namePrefix, entry);
@@ -83,7 +77,7 @@ function extractParameterObjectFunction(func: SchemaFunctionProperty, entry: Sch
     if (func.returns) func.returns = convertToRefIfObject(func.returns, "return", func.name, entry);
 }
 
-function extractParameterObjectType<T extends SchemaBaseProperty>(
+function extractParameterObjectType(
     prop: SchemaProperty,
     namePrefix: string,
     isRoot: boolean,
@@ -149,8 +143,7 @@ function extractParameterObjectType<T extends SchemaBaseProperty>(
         modifyArray(prop.extraParameters, (param) =>
             extractParameterObjectType(param, combineNamePrefix(namePrefix, param.name), false, entry)
         );
-        if (prop.returns)
-            prop.returns = extractParameterObjectType<SchemaProperty>(prop.returns, "Return", false, entry);
+        if (prop.returns) prop.returns = extractParameterObjectType(prop.returns, "Return", false, entry);
     }
     return prop;
 }
@@ -178,11 +171,9 @@ function visitor(entry: SchemaEntry) {
     return entry;
 }
 
-export const extractInlineContent: SchemaVisitorFactory = () => {
-    return {
-        name: "extracting inline content",
-        visitors: {
-            Namespace: visitor,
-        },
-    };
-};
+export const extractInlineContent: SchemaVisitorFactory = () => ({
+    name: "extracting inline content",
+    visitors: {
+        Namespace: visitor,
+    },
+});

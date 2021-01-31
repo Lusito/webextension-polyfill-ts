@@ -14,16 +14,14 @@ function visitor(val: SchemaProperty) {
     return val;
 }
 
-export const cleanupRefs: SchemaVisitorFactory = () => {
-    return {
-        name: "clean up ugly $ref values",
-        visitors: {
-            Type: visitor,
-            Event: visitor,
-            Function: visitor,
-            Parameter: visitor,
-            Returns: visitor,
-            Property: visitor,
-        },
-    };
-};
+export const cleanupRefs: SchemaVisitorFactory = () => ({
+    name: "clean up ugly $ref values",
+    visitors: {
+        Type: visitor,
+        Event: visitor,
+        Function: visitor,
+        Parameter: visitor,
+        Returns: visitor,
+        Property: visitor,
+    },
+});

@@ -95,20 +95,16 @@ function visitor(entry: SchemaEntry, directory: string) {
     return entry;
 }
 
-export const applyEarlyJsonFixes: SchemaVisitorFactory = () => {
-    return {
-        name: "applying early manual json fixes",
-        visitors: {
-            Namespace: (entry) => visitor(entry, "early-fixes"),
-        },
-    };
-};
+export const applyEarlyJsonFixes: SchemaVisitorFactory = () => ({
+    name: "applying early manual json fixes",
+    visitors: {
+        Namespace: (entry) => visitor(entry, "early-fixes"),
+    },
+});
 
-export const applyJsonFixes: SchemaVisitorFactory = () => {
-    return {
-        name: "applying manual json fixes",
-        visitors: {
-            Namespace: (entry) => visitor(entry, "fixes"),
-        },
-    };
-};
+export const applyJsonFixes: SchemaVisitorFactory = () => ({
+    name: "applying manual json fixes",
+    visitors: {
+        Namespace: (entry) => visitor(entry, "fixes"),
+    },
+});

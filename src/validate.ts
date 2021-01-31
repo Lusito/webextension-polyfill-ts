@@ -175,17 +175,7 @@ function validateEnumValue(json: any) {
 
 class SchemaStringPropertyValidator extends SchemaBasePropertyValidator {
     public static getValidKeys() {
-        return super
-            .getValidKeys()
-            .concat([
-                "type",
-                "enum",
-                "minLength",
-                "maxLength",
-                "pattern",
-                "format",
-                "default",
-            ]);
+        return super.getValidKeys().concat(["type", "enum", "minLength", "maxLength", "pattern", "format", "default"]);
     }
 
     public static validate(json: any) {
@@ -327,7 +317,6 @@ class SchemaFunctionPropertyValidator extends SchemaBasePropertyValidator {
             assertType(json.options.actions, "array", "undefined");
             assertArray(json.options.conditions, (s) => assertType(s, "string", "undefined"));
             assertArray(json.options.actions, (s) => assertType(s, "string", "undefined"));
-
         }
     }
 }

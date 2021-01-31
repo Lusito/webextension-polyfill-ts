@@ -14,16 +14,14 @@ function visitor(value: SchemaProperty) {
     return value.unsupported || value.deprecated ? VisitorAction.REMOVE : value;
 }
 
-export const removeUnusedAdditionalProperties: SchemaVisitorFactory = () => {
-    return {
-        name: "remove unsupported and deprecated content",
-        visitors: {
-            Type: visitor,
-            Event: visitor,
-            Function: visitor,
-            Parameter: visitor,
-            Returns: visitor,
-            Property: visitor,
-        },
-    };
-};
+export const removeUnusedAdditionalProperties: SchemaVisitorFactory = () => ({
+    name: "remove unsupported and deprecated content",
+    visitors: {
+        Type: visitor,
+        Event: visitor,
+        Function: visitor,
+        Parameter: visitor,
+        Returns: visitor,
+        Property: visitor,
+    },
+});
