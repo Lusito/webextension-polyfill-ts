@@ -145,6 +145,17 @@ export declare namespace Runtime {
      */
     type OnRestartRequiredReason = "app_update" | "os_update" | "periodic";
 
+    /**
+     * If an update is available, this contains more information about the available update.
+     */
+    interface RequestUpdateCheckCallbackDetailsType {
+
+        /**
+         * The version of the available update.
+         */
+        version: string;
+    }
+
     interface ConnectConnectInfoType {
 
         /**
@@ -248,6 +259,13 @@ export declare namespace Runtime {
          * Reloads the app or extension.
          */
         reload(): void;
+
+        /**
+         * Requests an update check for this app/extension.
+         *
+         * @returns Promise<[RequestUpdateCheckStatus, RequestUpdateCheckCallbackDetailsType]>
+         */
+        requestUpdateCheck(): Promise<[RequestUpdateCheckStatus, RequestUpdateCheckCallbackDetailsType]>;
 
         /**
          * Attempts to connect to connect listeners within an extension/app (such as the background page), or other extensions/apps. This is useful for content scripts connecting to their extension processes, inter-app/extension communication, and $(topic:manifest/externally_connectable)[web messaging]. Note that this does not connect to any listeners in a content script. Extensions may connect to content scripts embedded in tabs via $(ref:tabs.connect).

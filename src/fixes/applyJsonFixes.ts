@@ -8,8 +8,8 @@ import { assertType, assertEqual } from "../helpers/assert";
 // There are a lot of namespace specific fixes that need to be applied.
 // These fixes are written in the /fixes/<namespace>.json files and this file applies these files to their respective namespace
 
-function visitor(entry: SchemaEntry) {
-    const file = `./fixes/${entry.namespace}.json`;
+function visitor(entry: SchemaEntry, directory: string) {
+    const file = `./${directory}/${entry.namespace}.json`;
     if (!fs.existsSync(file)) return entry;
 
     const fixes = readJsonFile(file);
@@ -95,11 +95,20 @@ function visitor(entry: SchemaEntry) {
     return entry;
 }
 
+export const applyEarlyJsonFixes: SchemaVisitorFactory = () => {
+    return {
+        name: "applying early manual json fixes",
+        visitors: {
+            Namespace: (entry) => visitor(entry, "early-fixes"),
+        },
+    };
+};
+
 export const applyJsonFixes: SchemaVisitorFactory = () => {
     return {
         name: "applying manual json fixes",
         visitors: {
-            Namespace: visitor,
+            Namespace: (entry) => visitor(entry, "fixes"),
         },
     };
 };

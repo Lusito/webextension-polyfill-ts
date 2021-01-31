@@ -5,7 +5,7 @@ import { flattenChoiceEnum } from "./flattenChoiceEnum";
 import { guessPropertyType } from "./guessPropertyType";
 import { applyExtensionNamespace } from "./applyExtensionNamespace";
 import { removeUnusedNamespaces } from "./removeUnusedNamespaces";
-import { applyJsonFixes } from "./applyJsonFixes";
+import { applyEarlyJsonFixes, applyJsonFixes } from "./applyJsonFixes";
 import { extractInlineContent } from "./extractInlineContent";
 import { extendEvents } from "./extendEvents";
 import { removeUnusedAdditionalProperties } from "./removeUnusedAdditionalProperties";
@@ -17,10 +17,11 @@ export const fixes: SchemaVisitorFactory[] = [
     convertBinaryToObject,
     removeInstanceTypes,
     guessPropertyType,
+    applyExtensionNamespace,
+    applyEarlyJsonFixes,
     removeUnusedAdditionalProperties,
     removeUnsupported,
     cleanupRefs,
-    applyExtensionNamespace,
     applyJsonFixes,
     extractInlineContent,
     flattenChoiceEnum,
