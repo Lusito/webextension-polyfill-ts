@@ -1,6 +1,6 @@
 {
   "name": "webextension-polyfill-ts",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "description": "webextension-polyfill for TypeScript",
   "keywords": [
     "TypeScript",
@@ -27,13 +27,13 @@
     "build": "ts-node src/build.ts",
     "fetch": "ts-node src/fetch.ts",
     "lint": "npm run lint:es && npm run lint:package && npm run lint:style",
-    "lint:es": "eslint src/**/*.ts --ext .ts --ignore-path .prettierignore",
+    "lint:es": "eslint \"src/**/*.ts\" --ext .ts --ignore-path .prettierignore",
     "lint:es:fix": "npm run lint:es -- --fix",
     "lint:fix": "npm run lint:es:fix && npm run lint:package:fix && npm run lint:style:fix",
     "lint:package": "sort-package-json --check",
     "lint:package:fix": "sort-package-json",
     "lint:style": "npm run lint:style:base -- --check",
-    "lint:style:base": "prettier {src,_locales}/**/*.{ts,js,json} ./*.{ts,js,json} --quote-props consistent",
+    "lint:style:base": "prettier \"{src,_locales}/**/*.{ts,js,json}\" \"./*.{ts,js,json}\" --quote-props consistent",
     "lint:style:fix": "npm run lint:style:base -- --write",
     "validate:lib": "tsc -p tsconfig-lib.json",
     "validate:schemas": "ts-node src/validate.ts"
@@ -42,15 +42,15 @@
     "webextension-polyfill": "^0.7.0"
   },
   "devDependencies": {
-    "@lusito/eslint-config": "^1.3.1",
-    "@lusito/prettier-config": "^1.2.0",
-    "@lusito/stylelint-config": "^1.2.0",
-    "@types/node": "^14.14.7",
+    "@lusito/eslint-config": "^1.5.0",
+    "@lusito/prettier-config": "^1.5.0",
+    "@lusito/stylelint-config": "^1.5.0",
+    "@types/node": "^14.14.22",
     "@types/rimraf": "^3.0.0",
-    "got": "^11.8.0",
+    "got": "^11.8.1",
     "rimraf": "^3.0.2",
-    "sort-package-json": "^1.46.1",
-    "ts-node": "^9.0.0",
-    "typescript": "^4.0.5"
+    "sort-package-json": "^1.48.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
   }
 }

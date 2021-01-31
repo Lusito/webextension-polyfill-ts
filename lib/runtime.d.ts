@@ -86,7 +86,7 @@ export declare namespace Runtime {
     /**
      * The machine's processor architecture.
      */
-    type PlatformArch = "arm" | "x86-32" | "x86-64";
+    type PlatformArch = "aarch64" | "arm" | "ppc64" | "s390x" | "sparc64" | "x86-32" | "x86-64";
 
     /**
      * An object containing information about the current platform.
@@ -144,6 +144,17 @@ export declare namespace Runtime {
      * The reason that the event is being dispatched. 'app_update' is used when the restart is needed because the application is updated to a newer version. 'os_update' is used when the restart is needed because the browser/OS is updated to a newer version. 'periodic' is used when the system runs for more than the permitted uptime set in the enterprise policy.
      */
     type OnRestartRequiredReason = "app_update" | "os_update" | "periodic";
+
+    /**
+     * If an update is available, this contains more information about the available update.
+     */
+    interface RequestUpdateCheckCallbackDetailsType {
+
+        /**
+         * The version of the available update.
+         */
+        version: string;
+    }
 
     interface ConnectConnectInfoType {
 
@@ -248,6 +259,13 @@ export declare namespace Runtime {
          * Reloads the app or extension.
          */
         reload(): void;
+
+        /**
+         * Requests an update check for this app/extension.
+         *
+         * @returns Promise<[RequestUpdateCheckStatus, RequestUpdateCheckCallbackDetailsType]>
+         */
+        requestUpdateCheck(): Promise<[RequestUpdateCheckStatus, RequestUpdateCheckCallbackDetailsType]>;
 
         /**
          * Attempts to connect to connect listeners within an extension/app (such as the background page), or other extensions/apps. This is useful for content scripts connecting to their extension processes, inter-app/extension communication, and $(topic:manifest/externally_connectable)[web messaging]. Note that this does not connect to any listeners in a content script. Extensions may connect to content scripts embedded in tabs via $(ref:tabs.connect).

@@ -13,12 +13,13 @@ export interface SchemaBaseProperty {
     onError?: "warn";
     inline_doc?: boolean;
     nodoc?: boolean;
+    preprocess?: string;
+    postprocess?: string;
 }
 
 export interface SchemaChoicesProperty extends SchemaBaseProperty {
     type: "choices";
     choices?: SchemaProperty[];
-    preprocess?: "localize";
 }
 
 export interface SchemaAnyProperty extends SchemaBaseProperty {
@@ -42,8 +43,6 @@ export type SchemaEnumValue = string | { name: string; description: string };
 
 export interface SchemaStringProperty extends SchemaBaseProperty {
     type: "string";
-    preprocess?: "localize";
-    postprocess?: string;
     enum?: SchemaEnumValue[];
     minLength?: number;
     maxLength?: number;
@@ -59,7 +58,6 @@ export interface SchemaObjectProperty extends SchemaBaseProperty {
     patternProperties?: { [s: string]: SchemaProperty };
     $import?: string;
     isInstanceOf?: string;
-    postprocess?: "convertImageDataToURL";
     functions?: SchemaFunctionProperty[];
     events?: SchemaFunctionProperty[];
     default?: any[];

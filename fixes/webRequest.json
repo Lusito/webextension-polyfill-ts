@@ -1,5 +1,50 @@
 {
   "functions.%getSecurityInfo.!fixAsync": "info:SecurityInfo",
+  "events.%onAuthRequired.parameters.%details.properties.initiator": {
+    "type": "string",
+    "optional": true,
+    "description": "URL of the resource that triggered this request (on chrome)."
+  },
+  "events.%onBeforeRedirect.parameters.%details.properties.initiator": {
+    "type": "string",
+    "optional": true,
+    "description": "URL of the resource that triggered this request (on chrome)."
+  },
+  "events.%onBeforeRequest.parameters.%details.properties.initiator": {
+    "type": "string",
+    "optional": true,
+    "description": "URL of the resource that triggered this request (on chrome)."
+  },
+  "events.%onBeforeSendHeaders.parameters.%details.properties.initiator": {
+    "type": "string",
+    "optional": true,
+    "description": "URL of the resource that triggered this request (on chrome)."
+  },
+  "events.%onCompleted.parameters.%details.properties.initiator": {
+    "type": "string",
+    "optional": true,
+    "description": "URL of the resource that triggered this request (on chrome)."
+  },
+  "events.%onErrorOccurred.parameters.%details.properties.initiator": {
+    "type": "string",
+    "optional": true,
+    "description": "URL of the resource that triggered this request (on chrome)."
+  },
+  "events.%onHeadersReceived.parameters.%details.properties.initiator": {
+    "type": "string",
+    "optional": true,
+    "description": "URL of the resource that triggered this request (on chrome)."
+  },
+  "events.%onSendHeaders.parameters.%details.properties.initiator": {
+    "type": "string",
+    "optional": true,
+    "description": "URL of the resource that triggered this request (on chrome)."
+  },
+  "events.%onResponseStarted.parameters.%details.properties.initiator": {
+    "type": "string",
+    "optional": true,
+    "description": "URL of the resource that triggered this request (on chrome)."
+  },
   "events.%onBeforeRequest.returns.$ref": "BlockingResponseOrPromise",
   "events.%onBeforeSendHeaders.returns.$ref": "BlockingResponseOrPromise",
   "events.%onHeadersReceived.returns.$ref": "BlockingResponseOrPromise",

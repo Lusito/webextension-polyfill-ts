@@ -22,6 +22,8 @@ class SchemaBasePropertyValidator {
             "onError",
             "inline_doc",
             "nodoc",
+            "preprocess",
+            "postprocess",
         ];
     }
 
@@ -41,6 +43,8 @@ class SchemaBasePropertyValidator {
         assertOneOf(json.onError, "warn", undefined);
         assertOneOf(json.inline_doc, true, false, "true", "false", undefined);
         assertOneOf(json.nodoc, true, false, "true", "false", undefined);
+        assertType(json.preprocess, "string", "undefined");
+        assertType(json.postprocess, "string", "undefined");
     }
 }
 
@@ -171,27 +175,13 @@ function validateEnumValue(json: any) {
 
 class SchemaStringPropertyValidator extends SchemaBasePropertyValidator {
     public static getValidKeys() {
-        return super
-            .getValidKeys()
-            .concat([
-                "type",
-                "preprocess",
-                "postprocess",
-                "enum",
-                "minLength",
-                "maxLength",
-                "pattern",
-                "format",
-                "default",
-            ]);
+        return super.getValidKeys().concat(["type", "enum", "minLength", "maxLength", "pattern", "format", "default"]);
     }
 
     public static validate(json: any) {
         super.validate(json);
         assertValidOjectKeys(json, this.getValidKeys());
         assertEqual(json.type, "string");
-        assertOneOf(json.preprocess, "localize", undefined);
-        assertType(json.postprocess, "string", "undefined");
         assertType(json.enum, "array", "undefined");
         assertArray(json.enum, (e) => validateEnumValue(e));
         assertType(json.minLength, "number", "undefined");
@@ -213,7 +203,6 @@ class SchemaObjectPropertyValidator extends SchemaBasePropertyValidator {
                 "patternProperties",
                 "$import",
                 "isInstanceOf",
-                "postprocess",
                 "functions",
                 "events",
                 "default",
@@ -233,7 +222,6 @@ class SchemaObjectPropertyValidator extends SchemaBasePropertyValidator {
         assertMap(json.patternProperties, validateSchemaPropertyWithoutExtend);
         assertType(json.$import, "string", "undefined");
         assertType(json.isInstanceOf, "string", "undefined");
-        assertOneOf(json.postprocess, "convertImageDataToURL", undefined);
         assertType(json.functions, "array", "undefined");
         assertArray(json.functions, (e) => SchemaFunctionPropertyValidator.validate(e));
         assertType(json.events, "array", "undefined");
@@ -329,7 +317,6 @@ class SchemaFunctionPropertyValidator extends SchemaBasePropertyValidator {
             assertType(json.options.actions, "array", "undefined");
             assertArray(json.options.conditions, (s) => assertType(s, "string", "undefined"));
             assertArray(json.options.actions, (s) => assertType(s, "string", "undefined"));
-
         }
     }
 }

@@ -5,13 +5,11 @@ import { SchemaVisitorFactory, VisitorAction } from "../helpers/visitor";
 
 const UNUSED_NAMESPACES = ["test"];
 
-export const removeUnusedNamespaces: SchemaVisitorFactory = () => {
-    return {
-        name: "remove unused namespaces",
-        visitors: {
-            Namespace(original) {
-                return UNUSED_NAMESPACES.includes(original.namespace) ? VisitorAction.REMOVE : original;
-            },
+export const removeUnusedNamespaces: SchemaVisitorFactory = () => ({
+    name: "remove unused namespaces",
+    visitors: {
+        Namespace(original) {
+            return UNUSED_NAMESPACES.includes(original.namespace) ? VisitorAction.REMOVE : original;
         },
-    };
-};
+    },
+});

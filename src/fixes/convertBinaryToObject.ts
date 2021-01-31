@@ -10,16 +10,14 @@ function visitor<T extends SchemaProperty>(value: T) {
     };
 }
 
-export const convertBinaryToObject: SchemaVisitorFactory = () => {
-    return {
-        name: "convert binary types to object types",
-        visitors: {
-            Type: visitor,
-            Event: visitor,
-            Function: visitor,
-            Parameter: visitor,
-            Returns: visitor,
-            Property: visitor,
-        },
-    };
-};
+export const convertBinaryToObject: SchemaVisitorFactory = () => ({
+    name: "convert binary types to object types",
+    visitors: {
+        Type: visitor,
+        Event: visitor,
+        Function: visitor,
+        Parameter: visitor,
+        Returns: visitor,
+        Property: visitor,
+    },
+});
