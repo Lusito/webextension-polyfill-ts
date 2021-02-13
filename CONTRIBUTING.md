@@ -6,7 +6,7 @@ You might have noticed that some generated code is wrong.. Since I don't use the
 
 This file should give you a quick introduction. It won't cover everything.
 
-Sadly, there is official documentation for the schema .json files that I know of. I suggest having a look at `src/helpers/types.ts`, which documents structure of the schema.json files as I deducted them from reading them.
+Sadly, there is no official documentation for the schema .json files that I know of. I suggest having a look at `src/helpers/types.ts`, which documents structure of the schema.json files as I deducted them from reading them.
 
 ## Build commands:
 

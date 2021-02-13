@@ -37,7 +37,8 @@ export declare namespace Dns {
          *
          * @param hostname
          * @param flags Optional.
+         * @returns Promise<DNSRecord>
          */
-        resolve(hostname: string, flags?: ResolveFlags): void;
+        resolve(hostname: string, flags?: ResolveFlags): Promise<DNSRecord>;
     }
 }
