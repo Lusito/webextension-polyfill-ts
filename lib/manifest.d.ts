@@ -259,13 +259,13 @@ export declare namespace Manifest {
 
     type OptionalPermissionNoPrompt = "idle" | "cookies" | "menus.overrideContext" | "search" | "activeTab" | "webRequest" | "webRequestBlocking";
 
-    type OptionalPermission = OptionalPermissionNoPrompt | "clipboardRead" | "clipboardWrite" | "geolocation" | "notifications" | "bookmarks" | "browserSettings" | "browsingData" | "devtools" | "downloads" | "downloads.open" | "find" | "history" | "management" | "pkcs11" | "privacy" | "proxy" | "sessions" | "tabs" | "tabHide" | "topSites" | "webNavigation";
+    type OptionalPermission = OptionalPermissionNoPrompt | "clipboardRead" | "clipboardWrite" | "geolocation" | "notifications" | "bookmarks" | "browserSettings" | "browsingData" | "devtools" | "downloads" | "downloads.open" | "find" | "history" | "management" | "pkcs11" | "privacy" | "proxy" | "nativeMessaging" | "sessions" | "tabs" | "tabHide" | "topSites" | "webNavigation";
 
     type OptionalPermissionOrOrigin = OptionalPermission | MatchPattern;
 
     type PermissionNoPrompt = OptionalPermission | "alarms" | "mozillaAddons" | "storage" | "unlimitedStorage" | "activityLog" | "captivePortal" | "contextualIdentities" | "dns" | "geckoProfiler" | "identity" | "menus" | "contextMenus" | "networkStatus" | "normandyAddonStudy" | "theme" | "urlbar";
 
-    type Permission = PermissionNoPrompt | OptionalPermission | string | "nativeMessaging";
+    type Permission = PermissionNoPrompt | OptionalPermission | string;
 
     type PermissionOrOrigin = Permission | MatchPattern;
 
