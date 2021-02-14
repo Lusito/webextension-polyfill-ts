@@ -20,7 +20,6 @@ export const fixes: SchemaVisitorFactory[] = [
     applyExtensionNamespace,
     applyEarlyJsonFixes,
     removeUnusedAdditionalProperties,
-    removeUnsupported,
     cleanupRefs,
     applyJsonFixes,
     extractInlineContent,
