@@ -63,9 +63,9 @@ export declare namespace Permissions {
          * Relinquish the given permissions.
          *
          * @param permissions
-         * @returns Promise<void>
+         * @returns Promise<boolean>
          */
-        remove(permissions: Permissions): Promise<void>;
+        remove(permissions: Permissions): Promise<boolean>;
 
         /**
          * Fired when the extension acquires new permissions.
