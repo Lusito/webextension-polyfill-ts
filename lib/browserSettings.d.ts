@@ -47,7 +47,7 @@ export declare namespace BrowserSettings {
         contextMenuShowEvent: Types.Setting;
 
         /**
-         * This boolean setting controls whether the FTP protocol is enabled.
+         * Returns whether the FTP protocol is enabled. Read-only.
          */
         ftpProtocolEnabled: Types.Setting;
 

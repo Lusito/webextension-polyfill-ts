@@ -35,12 +35,6 @@ export declare namespace Proxy {
         httpProxyAll?: boolean;
 
         /**
-         * The address of the ftp proxy, can include a port.
-         * Optional.
-         */
-        ftp?: string;
-
-        /**
          * The address of the ssl proxy, can include a port.
          * Optional.
          */

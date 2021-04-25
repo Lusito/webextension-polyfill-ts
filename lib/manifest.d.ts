@@ -387,7 +387,7 @@ export declare namespace Manifest {
         /**
          * The protocol the site wishes to handle, specified as a string. For example, you can register to handle SMS text message links by registering to handle the "sms" scheme.
          */
-        protocol: "bitcoin" | "dat" | "dweb" | "geo" | "gopher" | "im" | "ipfs" | "ipns" | "irc" | "ircs" | "magnet" | "mailto" | "mms" | "news" | "nntp" | "sip" | "sms" | "smsto" | "ssb" | "ssh" | "tel" | "urn" | "webcal" | "wtai" | "xmpp" | string;
+        protocol: "bitcoin" | "dat" | "dweb" | "ftp" | "geo" | "gopher" | "im" | "ipfs" | "ipns" | "irc" | "ircs" | "magnet" | "mailto" | "matrix" | "mms" | "news" | "nntp" | "sip" | "sms" | "smsto" | "ssb" | "ssh" | "tel" | "urn" | "webcal" | "wtai" | "xmpp" | string;
 
         /**
          * The URL of the handler, as a string. This string should include "%s" as a placeholder which will be replaced with the escaped URL of the document to be handled. This URL might be a true URL, or it could be a phone number, email address, or so forth.
@@ -954,11 +954,6 @@ export declare namespace Manifest {
          * Optional.
          */
         toolbar_field_border?: ThemeColor;
-
-        /**
-         * Optional.
-         */
-        toolbar_field_separator?: ThemeColor;
 
         /**
          * Optional.

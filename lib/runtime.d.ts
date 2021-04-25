@@ -365,7 +365,7 @@ export declare namespace Runtime {
          * @param message Optional. The message sent by the calling script.
          * @param sender
          */
-        onMessage: Events.Event<(message: any | undefined, sender: MessageSender, sendResponse: (args: any) => void) => Promise<any> | void>;
+        onMessage: Events.Event<(message: any | undefined, sender: MessageSender) => Promise<any> | void>;
 
         /**
          * Fired when a message is sent from another extension/app. Cannot be used in a content script.
