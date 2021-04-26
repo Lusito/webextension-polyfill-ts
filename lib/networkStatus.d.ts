@@ -35,7 +35,7 @@ export declare namespace NetworkStatus {
     /**
      * If known, the type of network connection that is avialable.
      */
-    type NetworkLinkInfoTypeEnum = "unknown" | "ethernet" | "usb" | "wifi" | "wimax" | "2g" | "3g" | "4g";
+    type NetworkLinkInfoTypeEnum = "unknown" | "ethernet" | "usb" | "wifi" | "wimax" | "mobile";
 
     interface Static {
 

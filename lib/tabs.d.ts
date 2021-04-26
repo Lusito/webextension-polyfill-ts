@@ -434,7 +434,7 @@ export declare namespace Tabs {
     /**
      * Event names supported in onUpdated.
      */
-    type UpdatePropertyName = "attention" | "audible" | "discarded" | "favIconUrl" | "hidden" | "isArticle" | "mutedInfo" | "pinned" | "sharingState" | "status" | "title";
+    type UpdatePropertyName = "attention" | "audible" | "discarded" | "favIconUrl" | "hidden" | "isArticle" | "mutedInfo" | "pinned" | "sharingState" | "status" | "title" | "url";
 
     /**
      * An object describing filters to apply to tabs.onUpdated events.
