@@ -335,7 +335,9 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     });
     writer.end("}");
 
-    writer.code("export declare const browser: Browser;");
+    writer.begin("declare global {");
+    writer.code("const browser: Browser;");
+    writer.end("}");
     writer.emptyLine();
     fs.writeFileSync("lib/index.d.ts", writer.toString());
 }
