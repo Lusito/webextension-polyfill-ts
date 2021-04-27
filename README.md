@@ -1,7 +1,7 @@
 # Web-Extension Polyfill for TypeScript
 
 This is a TypeScript ready "wrapper" for the [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill) by Mozilla.
-* It does include webextension-polyfill, so no need to manually add it.
+* It does not include webextension-polyfill, but it is required as a peer dependency. You need to manually install and load/execute it where necessary.
 * It is generated from these mozilla schema (.json) files:
   * [toolkit](https://hg.mozilla.org/integration/autoland/raw-file/tip/toolkit/components/extensions/schemas/)
   * [browser](https://hg.mozilla.org/integration/autoland/raw-file/tip/browser/components/extensions/schemas/)
@@ -11,11 +11,11 @@ This guide assumes you are building a web-extension using npm and webpack, parce
 If you are looking for an example use-case, check out the development branch of my web-extension [Forget Me Not](https://github.com/lusito/forget-me-not/tree/develop).
 
 * `npm install --save-dev webextension-polyfill-ts`
-* `import { browser } from "webextension-polyfill-ts";`
-  * Use this to access the browser API.
-  * If the current environment does not supply a global window object, the exported browser object will be a dummy object, which you can use for unit tests.
+* `import "webextension-polyfill-ts";`
+  * Adds types for the global `browser` object.
+  * Use `browser` as usual to access the browser API.
 
-If you want to use the exported types in your code, simply import them like this:
+If you want to use specific exported types in your code, simply import them like this:
 ```typescript
 import { Cookies } from "webextension-polyfill-ts";
 

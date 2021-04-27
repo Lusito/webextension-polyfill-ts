@@ -38,9 +38,6 @@
     "validate:lib": "tsc -p tsconfig-lib.json",
     "validate:schemas": "ts-node src/validate.ts"
   },
-  "dependencies": {
-    "webextension-polyfill": "^0.7.0"
-  },
   "devDependencies": {
     "@lusito/eslint-config": "^1.5.0",
     "@lusito/prettier-config": "^1.5.0",
@@ -52,5 +49,8 @@
     "sort-package-json": "^1.48.1",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.5"
+  },
+  "peerDependencies": {
+    "webextension-polyfill": "^0.7.0"
   }
 }

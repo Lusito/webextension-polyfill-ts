@@ -167,4 +167,6 @@ export interface Browser {
     windows: Windows.Static;
 }
 
-export declare const browser: Browser;
+declare global {
+    const browser: Browser;
+}
