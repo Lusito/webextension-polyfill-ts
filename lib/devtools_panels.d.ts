@@ -78,7 +78,7 @@ export declare namespace DevtoolsPanels {
          * @param rootTitle Optional. An optional title for the root of the expression tree.
          * @returns Promise<void> A callback invoked after the sidebar is updated with the object.
          */
-        setObject(jsonObject: string, rootTitle?: string): Promise<void>;
+        setObject(jsonObject: string | Array<unknown> | Record<string, unknown>, rootTitle?: string): Promise<void>;
 
         /**
          * Sets an HTML page to be displayed in the sidebar pane.
