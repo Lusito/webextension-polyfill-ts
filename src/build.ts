@@ -181,26 +181,21 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
     assert.supported(func);
     if (!func.name) throw new Error(ErrorMessage.MISSING_NAME);
 
-    const indexToFix = getOverloadParameterIndex(parameters);
-    if (indexToFix >= 0) {
-        addFunction(func, fixOptionalParameter(func.parameters, indexToFix), writer);
-        addFunction(func, removeOptionalParameter(func.parameters, indexToFix), writer);
-        return;
-    }
     if (func.description) {
         writer.comment(func.description);
         if (parameters || func.returns) writer.emptyLine();
     }
     let asyncParam: SchemaFunctionProperty | null = null;
+    let parametersWithoutAsync = parameters;
     if (parameters) {
         if (func.async === "callback" || func.async === "responseCallback") {
             const lastParam = parameters.length && parameters[parameters.length - 1];
             if (!lastParam || lastParam.name !== func.async) throw new Error("Last param expected to be callback");
             if (lastParam.type !== "function") throw new Error("async param is expected to be function");
-            parameters = parameters.slice(0, parameters.length - 1);
+            parametersWithoutAsync = parameters.slice(0, parameters.length - 1);
             asyncParam = lastParam;
         }
-        parameters.forEach((param) => {
+        parametersWithoutAsync!.forEach((param) => {
             const description = param.description ? ` ${param.description}` : "";
             const fullDescription = param.optional ? ` Optional.${description}` : description;
             writer.comment(`@param ${param.name}${fullDescription}`);
@@ -221,44 +216,16 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
         writer.comment(`@returns ${returnType}${description}`);
     }
     const optionalPart = func.optional ? "?" : "";
-    writer.code(`${func.name + optionalPart}(${getParameters(parameters, true)}): ${returnType};`);
+    writer.code(`${func.name + optionalPart}(${getParameters(parametersWithoutAsync, true)}): ${returnType};`);
     writer.emptyLine();
-}
 
-function getLastNonOptionalParam(parameters: SchemaProperty[]) {
-    for (let i = parameters.length - 1; i >= 0; i--) {
-        if (!parameters[i].optional && parameters[i].type !== "function") return i;
-    }
-    return -1;
-}
-
-function fixOptionalParameter(parameters: SchemaProperty[] | undefined, indexToFix: number) {
-    if (parameters && indexToFix >= 0) {
-        parameters = parameters.slice();
-        const param = { ...parameters[indexToFix] };
-        parameters[indexToFix] = param;
-        param.overloadFlag = true;
-    }
-    return parameters;
-}
-
-function removeOptionalParameter(parameters: SchemaProperty[] | undefined, indexToFix: number) {
-    if (parameters && indexToFix >= 0) {
-        parameters = parameters.slice();
-        parameters.splice(indexToFix, 1);
-    }
-    return parameters;
-}
-
-function getOverloadParameterIndex(parameters: SchemaProperty[] | undefined) {
     if (parameters) {
-        const lastNonOptional = getLastNonOptionalParam(parameters);
-        return parameters.findIndex((param, i) => {
-            if (i < lastNonOptional && param.optional && !param.overloadFlag) return true;
-            return false;
-        });
+        const skipParam = parameters.find((v) => v.skipableParameter);
+        if (skipParam) {
+            const fixedParameters = parameters.filter((v) => v !== skipParam);
+            addFunction(func, fixedParameters, writer);
+        }
     }
-    return -1;
 }
 
 function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {

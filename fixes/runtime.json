@@ -3,6 +3,7 @@
     "$ref": "Manifest.ManifestBase",
     "description": "The manifest details."
   },
+  "functions.%connect.parameters.%extensionId.skipableParameter": true,
   "types.$Port.properties.onDisconnect": {
     "isEvent": true,
     "name": "onDisconnect",

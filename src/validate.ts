@@ -14,6 +14,7 @@ class SchemaBasePropertyValidator {
             "$extend",
             "description",
             "optional",
+            "skipableParameter",
             "unsupported",
             "deprecated",
             "permissions",
@@ -36,6 +37,7 @@ class SchemaBasePropertyValidator {
         assert.typeOf(json.$extend, "string", "undefined");
         assert.typeOf(json.description, "string", "undefined");
         assert.oneOf(json.optional, true, false, "true", "false", "omit-key-if-missing", undefined);
+        assert.typeOf(json.skipableParameter, "boolean", "undefined");
         assert.oneOf(json.unsupported, true, false, "true", "false", undefined);
         assert.typeOf(json.deprecated, "boolean", "string", "undefined");
         assert.typeOf(json.permissions, "array", "undefined");

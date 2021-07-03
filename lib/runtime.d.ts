@@ -277,6 +277,14 @@ export declare namespace Runtime {
         connect(extensionId?: string, connectInfo?: ConnectConnectInfoType): Port;
 
         /**
+         * Attempts to connect to connect listeners within an extension/app (such as the background page), or other extensions/apps. This is useful for content scripts connecting to their extension processes, inter-app/extension communication, and $(topic:manifest/externally_connectable)[web messaging]. Note that this does not connect to any listeners in a content script. Extensions may connect to content scripts embedded in tabs via $(ref:tabs.connect).
+         *
+         * @param connectInfo Optional.
+         * @returns Port Port through which messages can be sent and received. The port's $(ref:runtime.Port onDisconnect) event is fired if the extension/app does not exist. 
+         */
+        connect(connectInfo?: ConnectConnectInfoType): Port;
+
+        /**
          * Connects to a native application in the host machine.
          *
          * @param application The name of the registered application to connect to.

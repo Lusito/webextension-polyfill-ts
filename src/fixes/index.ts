@@ -11,11 +11,13 @@ import { extendEvents } from "./extendEvents";
 import { removeUnusedAdditionalProperties } from "./removeUnusedAdditionalProperties";
 import { convertBinaryToObject } from "./convertBinaryToObject";
 import { removeInstanceTypes } from "./removeInstanceTypes";
+import { detectSkipableParameters } from "./detectSkipableParameter";
 
 export const fixes: SchemaVisitorFactory[] = [
     removeUnusedNamespaces,
     convertBinaryToObject,
     removeInstanceTypes,
+    detectSkipableParameters,
     guessPropertyType,
     applyExtensionNamespace,
     applyEarlyJsonFixes,
