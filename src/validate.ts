@@ -1,8 +1,6 @@
 #! /usr/bin/env node
 /* eslint-disable max-classes-per-file */
-import fs from "fs";
-
-import { readSchemaFile } from "./helpers/readSchemaFile";
+import { readAllSchemaFiles, SchemaFileData } from "./helpers/readSchemaFile";
 import { Assert } from "./helpers/assert";
 import { workArray, workMap } from "./helpers/utils";
 
@@ -375,7 +373,7 @@ class SchemaEntryValidator {
     }
 }
 
-function validateJson(data: ReturnType<typeof readSchemaFile>) {
+function validateJson(data: SchemaFileData) {
     try {
         console.log(data.file);
         workArray(data.json, SchemaEntryValidator.validate);
@@ -385,7 +383,7 @@ function validateJson(data: ReturnType<typeof readSchemaFile>) {
     }
 }
 
-function updateTypeById(data: ReturnType<typeof readSchemaFile>) {
+function updateTypeById(data: SchemaFileData) {
     data.json.forEach((e: any) => {
         if (e.types)
             e.types.forEach((t: any) => {
@@ -394,7 +392,7 @@ function updateTypeById(data: ReturnType<typeof readSchemaFile>) {
     });
 }
 
-const files = fs.readdirSync("./schemas").map(readSchemaFile);
+const files = readAllSchemaFiles();
 files.forEach(updateTypeById);
 files.forEach(validateJson);
 console.log("--------------------");

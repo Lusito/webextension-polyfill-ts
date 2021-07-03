@@ -71,10 +71,10 @@ function splitComments(text: string) {
     };
 }
 
-export function readSchemaFile(file: string) {
+export function readSchemaFile(folder: string, file: string) {
     const assert = new Assert("readSchemaFile");
     try {
-        const value = fs.readFileSync(`./schemas/${file}`, { encoding: "utf-8" });
+        const value = fs.readFileSync(`./${folder}/${file}`, { encoding: "utf-8" });
         const split = splitComments(value);
         const json: any = JSON.parse(split.json);
         assert.typeOf(json, "array");
@@ -83,4 +83,13 @@ export function readSchemaFile(file: string) {
         console.error(`Error reading ${file}: `, e);
         throw e;
     }
+}
+
+export type SchemaFileData = ReturnType<typeof readSchemaFile>;
+
+export function readAllSchemaFiles() {
+    return [
+        ...fs.readdirSync("./schemas").map((file) => readSchemaFile("schemas", file)),
+        ...fs.readdirSync("./schemasAdditional").map((file) => readSchemaFile("schemasAdditional", file)),
+    ];
 }

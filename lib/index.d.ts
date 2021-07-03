@@ -52,6 +52,7 @@ import { UserScripts } from "./userScripts";
 import { WebNavigation } from "./webNavigation";
 import { WebRequest } from "./webRequest";
 import { Windows } from "./windows";
+import { Scripting } from "./scripting";
 export { ActivityLog } from "./activityLog";
 export { Alarms } from "./alarms";
 export { Bookmarks } from "./bookmarks";
@@ -113,6 +114,7 @@ export { UserScripts } from "./userScripts";
 export { WebNavigation } from "./webNavigation";
 export { WebRequest } from "./webRequest";
 export { Windows } from "./windows";
+export { Scripting } from "./scripting";
 
 export interface Browser {
     activityLog: ActivityLog.Static;
@@ -169,6 +171,7 @@ export interface Browser {
     webNavigation: WebNavigation.Static;
     webRequest: WebRequest.Static;
     windows: Windows.Static;
+    scripting: Scripting.Static;
 }
 
 export declare const browser: Browser;

@@ -1,6 +1,4 @@
-import fs from "fs";
-
-import { readSchemaFile } from "./readSchemaFile";
+import { readAllSchemaFiles } from "./readSchemaFile";
 import { SchemaEntry } from "./types";
 import { applyFixes } from "./visitor";
 import { fixes } from "../fixes";
@@ -47,8 +45,7 @@ export class ImportedNamespace {
 export function importAndFixAll() {
     const namespaces: ImportedNamespace[] = [];
     try {
-        const files = fs.readdirSync("./schemas");
-        files.map(readSchemaFile).forEach((data) => {
+        readAllSchemaFiles().forEach((data) => {
             console.log(`- ${data.file}`);
             if (data.file === "native_manifest.json") return;
             data.json.forEach((entry: SchemaEntry) => {
