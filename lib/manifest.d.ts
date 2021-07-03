@@ -122,7 +122,7 @@ export declare namespace Manifest {
         /**
          * Optional.
          */
-        web_accessible_resources?: string[];
+        web_accessible_resources?: string[] | WebExtensionManifestWebAccessibleResourcesC2ItemType[];
 
         /**
          * Optional.
@@ -137,7 +137,12 @@ export declare namespace Manifest {
         /**
          * Optional.
          */
-        browser_action?: WebExtensionManifestBrowserActionType;
+        action?: ActionManifest;
+
+        /**
+         * Optional.
+         */
+        browser_action?: ActionManifest;
 
         /**
          * Optional.
@@ -372,6 +377,41 @@ export declare namespace Manifest {
 
     type PersistentBackgroundProperty = boolean;
 
+    interface ActionManifest {
+
+        /**
+         * Optional.
+         */
+        default_title?: string;
+
+        /**
+         * Optional.
+         */
+        default_icon?: IconPath;
+
+        /**
+         * Specifies icons to use for dark and light themes
+         * Optional.
+         */
+        theme_icons?: ThemeIcons[];
+
+        /**
+         * Optional.
+         */
+        default_popup?: string;
+
+        /**
+         * Optional.
+         */
+        browser_style?: boolean;
+
+        /**
+         * Defines the location the browserAction will appear by default.  The default location is navbar.
+         * Optional.
+         */
+        default_area?: ActionManifestDefaultAreaEnum;
+    }
+
     type KeyName = string;
 
     /**
@@ -541,6 +581,20 @@ export declare namespace Manifest {
         extension_pages?: string;
     }
 
+    interface WebExtensionManifestWebAccessibleResourcesC2ItemType {
+        resources: string[];
+
+        /**
+         * Optional.
+         */
+        matches?: MatchPatternRestricted[];
+
+        /**
+         * Optional.
+         */
+        extensions?: ExtensionID[];
+    }
+
     interface WebExtensionManifestDeveloperType {
 
         /**
@@ -552,46 +606,6 @@ export declare namespace Manifest {
          * Optional.
          */
         url?: string;
-    }
-
-    /**
-     * Defines the location the browserAction will appear by default.  The default location is navbar.
-     */
-    type WebExtensionManifestBrowserActionDefaultAreaEnum = "navbar" | "menupanel" | "tabstrip" | "personaltoolbar";
-
-    interface WebExtensionManifestBrowserActionType {
-
-        /**
-         * Optional.
-         */
-        default_title?: string;
-
-        /**
-         * Optional.
-         */
-        default_icon?: IconPath;
-
-        /**
-         * Specifies icons to use for dark and light themes
-         * Optional.
-         */
-        theme_icons?: ThemeIcons[];
-
-        /**
-         * Optional.
-         */
-        default_popup?: string;
-
-        /**
-         * Optional.
-         */
-        browser_style?: boolean;
-
-        /**
-         * Defines the location the browserAction will appear by default.  The default location is navbar.
-         * Optional.
-         */
-        default_area?: WebExtensionManifestBrowserActionDefaultAreaEnum;
     }
 
     interface WebExtensionManifestChromeSettingsOverridesSearchProviderParamsItemType {
@@ -859,6 +873,11 @@ export declare namespace Manifest {
          */
         paths?: string[];
     }
+
+    /**
+     * Defines the location the browserAction will appear by default.  The default location is navbar.
+     */
+    type ActionManifestDefaultAreaEnum = "navbar" | "menupanel" | "tabstrip" | "personaltoolbar";
 
     interface ThemeExperimentImagesType {
     }

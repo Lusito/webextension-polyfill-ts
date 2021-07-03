@@ -13,12 +13,6 @@
 import { Menus } from "./menus";
 
 export declare namespace ContextMenus {
-
-    /**
-     * The different contexts a menu can appear in. Specifying 'all' is equivalent to the combination of all other contexts except for 'tab' and 'tools_menu'.
-     */
-    type ContextType = "all" | "page" | "frame" | "selection" | "link" | "editable" | "password" | "image" | "video" | "audio" | "launcher" | "bookmark" | "browser_action" | "page_action" | "tab";
-
     interface Static extends Menus.Static {
     }
 }

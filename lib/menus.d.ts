@@ -19,7 +19,7 @@ export declare namespace Menus {
     /**
      * The different contexts a menu can appear in. Specifying 'all' is equivalent to the combination of all other contexts except for 'tab' and 'tools_menu'.
      */
-    type ContextType = "all" | "page" | "frame" | "selection" | "link" | "editable" | "password" | "image" | "video" | "audio" | "launcher" | "bookmark" | "browser_action" | "page_action" | "tab" | "tools_menu";
+    type ContextType = "all" | "page" | "frame" | "selection" | "link" | "editable" | "password" | "image" | "video" | "audio" | "launcher" | "bookmark" | "tab" | "tools_menu" | "browser_action" | "page_action" | "action";
 
     /**
      * The type of menu item.
@@ -218,10 +218,10 @@ export declare namespace Menus {
         enabled?: boolean;
 
         /**
-         * Specifies a command to issue for the context click.  Currently supports internal commands _execute_page_action, _execute_browser_action and _execute_sidebar_action.
+         * Specifies a command to issue for the context click.
          * Optional.
          */
-        command?: string;
+        command?: string | "_execute_browser_action" | "_execute_page_action" | "_execute_sidebar_action" | "_execute_action" | "_execute_page_action" | "_execute_sidebar_action";
     }
 
     /**

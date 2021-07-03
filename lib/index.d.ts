@@ -1,6 +1,7 @@
 import { ActivityLog } from "./activityLog";
 import { Alarms } from "./alarms";
 import { Bookmarks } from "./bookmarks";
+import { Action } from "./action";
 import { BrowserAction } from "./browserAction";
 import { BrowserSettings } from "./browserSettings";
 import { BrowsingData } from "./browsingData";
@@ -54,8 +55,10 @@ import { Windows } from "./windows";
 export { ActivityLog } from "./activityLog";
 export { Alarms } from "./alarms";
 export { Bookmarks } from "./bookmarks";
+export { Action } from "./action";
 export { BrowserAction } from "./browserAction";
 export { BrowserSettings } from "./browserSettings";
+export { BrowserSettingsColorManagement } from "./browserSettings_colorManagement";
 export { BrowsingData } from "./browsingData";
 export { CaptivePortal } from "./captivePortal";
 export { Clipboard } from "./clipboard";
@@ -115,6 +118,7 @@ export interface Browser {
     activityLog: ActivityLog.Static;
     alarms: Alarms.Static;
     bookmarks: Bookmarks.Static;
+    action: Action.Static;
     browserAction: BrowserAction.Static;
     browserSettings: BrowserSettings.Static;
     browsingData: BrowsingData.Static;

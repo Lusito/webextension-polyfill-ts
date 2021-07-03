@@ -37,26 +37,7 @@ export declare namespace Extension {
         tabId?: number;
     }
 
-    /**
-     * Set for the lifetime of a callback if an ansychronous extension api has resulted in an error. If no error has occured lastError will be <var>undefined</var>.
-     */
-    interface PropertyLastErrorType {
-
-        /**
-         * Description of the error that has taken place.
-         */
-        message: string;
-    }
-
     interface Static {
-
-        /**
-         * Converts a relative path within an extension install directory to a fully-qualified URL.
-         *
-         * @param path A path to a resource within an extension expressed relative to its install directory.
-         * @returns string The fully-qualified URL to the resource.
-         */
-        getURL(path: string): string;
 
         /**
          * Returns an array of the JavaScript 'window' objects for each of the pages running inside the current extension.
@@ -86,12 +67,6 @@ export declare namespace Extension {
          * @returns Promise<boolean>
          */
         isAllowedFileSchemeAccess(): Promise<boolean>;
-
-        /**
-         * Set for the lifetime of a callback if an ansychronous extension api has resulted in an error. If no error has occured lastError will be <var>undefined</var>.
-         * Optional.
-         */
-        lastError?: PropertyLastErrorType;
 
         /**
          * True for content scripts running inside incognito tabs, and for extension pages running inside an incognito process. The latter only applies to extensions with 'split' incognito_behavior.

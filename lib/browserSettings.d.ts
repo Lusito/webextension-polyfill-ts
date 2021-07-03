@@ -10,6 +10,7 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
+import { BrowserSettingsColorManagement } from "./browserSettings_colorManagement";
 import { Types } from "./types";
 
 export declare namespace BrowserSettings {
@@ -23,6 +24,11 @@ export declare namespace BrowserSettings {
      * After which mouse event context menus should popup.
      */
     type ContextMenuMouseEvent = "mouseup" | "mousedown";
+
+    /**
+     * Color management mode.
+     */
+    type ColorManagementMode = "off" | "full" | "tagged_only";
 
     interface Static {
 
@@ -45,11 +51,6 @@ export declare namespace BrowserSettings {
          * Controls after which mouse event context menus popup. This setting's value is of type ContextMenuMouseEvent, which has possible values of <code>mouseup</code> and <code>mousedown</code>.
          */
         contextMenuShowEvent: Types.Setting;
-
-        /**
-         * Returns whether the FTP protocol is enabled. Read-only.
-         */
-        ftpProtocolEnabled: Types.Setting;
 
         /**
          * Returns the value of the overridden home page. Read-only.
@@ -110,5 +111,7 @@ export declare namespace BrowserSettings {
          * This boolean setting controls whether zoom is applied on a per-site basis or to the current tab only. If privacy.resistFingerprinting is true, this setting has no effect and zoom is applied to the current tab only.
          */
         zoomSiteSpecific: Types.Setting;
+
+        colorManagement: BrowserSettingsColorManagement.Static;
     }
 }
