@@ -13,37 +13,48 @@ function getType(json: any): ObjectTypes {
     return typeof json as ObjectTypes;
 }
 
-export function assertEqual(a: any, b: any) {
-    if (a !== b) throw new Error(`'${JSON.stringify(a)}' is not ${JSON.stringify(b)}`);
-}
+export class Assert {
+    public readonly name: string;
 
-export function assertSupported(prop: SchemaProperty) {
-    if (prop.deprecated || prop.unsupported) throw new Error(ErrorMessage.UNSUPPORTED);
-}
-
-export function assertOneOfX(value: any, validValues: any[]) {
-    if (!validValues.includes(value)) throw new Error(`'${value}' is not one of ${JSON.stringify(validValues)}`);
-}
-
-export function assertOneOf(value: any, ...validValues: any[]) {
-    assertOneOfX(value, validValues);
-}
-
-export function assertType(json: any, ...validTypes: ObjectTypes[]) {
-    assertOneOfX(getType(json), validTypes);
-}
-
-export function assertArray(json: any, callback: (json: any) => void) {
-    json?.forEach(callback);
-}
-
-export function assertMap(json: any, callback: (json: any) => void) {
-    if (json) {
-        for (const key of Object.keys(json)) callback(json[key]);
+    public constructor(name: string) {
+        this.name = name;
     }
-}
 
-export function assertValidOjectKeys(json: any, keys: string[]) {
-    const names = Object.keys(json);
-    for (const name of names) assertOneOfX(name, keys);
+    public fail = (message: string) => {
+        throw new Error(`${this.name}: ${message}`);
+    };
+
+    public equal = (a: any, b: any) => {
+        if (a !== b) this.fail(`${this.name}: '${JSON.stringify(a)}' is not ${JSON.stringify(b)}`);
+    };
+
+    public supported = (prop: SchemaProperty) => {
+        if (prop.deprecated || prop.unsupported) this.fail(ErrorMessage.UNSUPPORTED);
+    };
+
+    public oneOfX = (value: any, validValues: any[]) => {
+        if (!validValues.includes(value)) this.fail(`'${value}' is not one of ${JSON.stringify(validValues)}`);
+    };
+
+    public oneOf = (value: any, ...validValues: any[]) => {
+        this.oneOfX(value, validValues);
+    };
+
+    public typeOf = (json: any, ...validTypes: ObjectTypes[]) => {
+        this.oneOfX(getType(json), validTypes);
+    };
+
+    public validOjectKeys = (json: any, allowedKeys: string[]) => {
+        const actualKeys = Object.keys(json);
+        for (const key of actualKeys) this.oneOfX(key, allowedKeys);
+    };
+
+    public enumValue = (json: any) => {
+        this.typeOf(json, "string", "object", "undefined");
+        if (typeof json === "object") {
+            this.validOjectKeys(json, ["name", "description"]);
+            this.typeOf(json.name, "string");
+            this.typeOf(json.description, "string");
+        }
+    };
 }

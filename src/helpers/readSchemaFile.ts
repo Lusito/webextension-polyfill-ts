@@ -1,6 +1,6 @@
 import fs from "fs";
 
-import { assertType } from "./assert";
+import { Assert } from "./assert";
 
 function getQuoteLength(text: string, start: number, c: string) {
     let i = start;
@@ -72,11 +72,12 @@ function splitComments(text: string) {
 }
 
 export function readSchemaFile(file: string) {
+    const assert = new Assert("readSchemaFile");
     try {
         const value = fs.readFileSync(`./schemas/${file}`, { encoding: "utf-8" });
         const split = splitComments(value);
         const json: any = JSON.parse(split.json);
-        assertType(json, "array");
+        assert.typeOf(json, "array");
         return { file, json, comments: split.comments };
     } catch (e) {
         console.error(`Error reading ${file}: `, e);

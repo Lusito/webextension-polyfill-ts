@@ -3,7 +3,8 @@
 import fs from "fs";
 
 import { readSchemaFile } from "./helpers/readSchemaFile";
-import { assertType, assertOneOf, assertArray, assertValidOjectKeys, assertEqual, assertMap } from "./helpers/assert";
+import { Assert } from "./helpers/assert";
+import { workArray, workMap } from "./helpers/utils";
 
 const typeById: { [s: string]: any } = {};
 
@@ -24,34 +25,39 @@ class SchemaBasePropertyValidator {
             "nodoc",
             "preprocess",
             "postprocess",
+            "min_manifest_version",
+            "max_manifest_version",
         ];
     }
 
     public static validate(json: any) {
-        assertType(json, "object");
-        assertType(json.id, "string", "undefined");
-        assertType(json.name, "string", "undefined");
-        assertType(json.$extend, "string", "undefined");
-        assertType(json.description, "string", "undefined");
-        assertOneOf(json.optional, true, false, "true", "false", "omit-key-if-missing", undefined);
-        assertOneOf(json.unsupported, true, false, "true", "false", undefined);
-        assertType(json.deprecated, "boolean", "string", "undefined");
-        assertType(json.permissions, "array", "undefined");
-        assertArray(json.permissions, (s) => assertType(s, "string"));
-        assertType(json.allowedContexts, "array", "undefined");
-        assertArray(json.allowedContexts, (s) => assertType(s, "string"));
-        assertOneOf(json.onError, "warn", undefined);
-        assertOneOf(json.inline_doc, true, false, "true", "false", undefined);
-        assertOneOf(json.nodoc, true, false, "true", "false", undefined);
-        assertType(json.preprocess, "string", "undefined");
-        assertType(json.postprocess, "string", "undefined");
+        const assert = new Assert("SchemaBasePropertyValidator");
+        assert.typeOf(json, "object");
+        assert.typeOf(json.id, "string", "undefined");
+        assert.typeOf(json.name, "string", "undefined");
+        assert.typeOf(json.$extend, "string", "undefined");
+        assert.typeOf(json.description, "string", "undefined");
+        assert.oneOf(json.optional, true, false, "true", "false", "omit-key-if-missing", undefined);
+        assert.oneOf(json.unsupported, true, false, "true", "false", undefined);
+        assert.typeOf(json.deprecated, "boolean", "string", "undefined");
+        assert.typeOf(json.permissions, "array", "undefined");
+        workArray(json.permissions, (s) => assert.typeOf(s, "string"));
+        assert.typeOf(json.allowedContexts, "array", "undefined");
+        workArray(json.allowedContexts, (s) => assert.typeOf(s, "string"));
+        assert.oneOf(json.onError, "warn", undefined);
+        assert.oneOf(json.inline_doc, true, false, "true", "false", undefined);
+        assert.oneOf(json.nodoc, true, false, "true", "false", undefined);
+        assert.typeOf(json.preprocess, "string", "undefined");
+        assert.typeOf(json.postprocess, "string", "undefined");
+        assert.typeOf(json.min_manifest_version, "number", "undefined");
+        assert.typeOf(json.max_manifest_version, "number", "undefined");
     }
 }
 
 let currentNamespace = "";
-function getReducedRefJson(json: any, attr: string) {
+function getReducedRefJson(assert: Assert, json: any, attr: string) {
     const id = json[attr];
-    assertType(id, "string");
+    assert.typeOf(id, "string");
     const normalizedId = id.indexOf(".") >= 0 ? id : `${currentNamespace}.${id}`;
     const inherit = typeById[normalizedId];
     if (!inherit) throw new Error(`Could not find id '${normalizedId}' in registry`);
@@ -62,11 +68,11 @@ function getReducedRefJson(json: any, attr: string) {
     return result;
 }
 
-function validateSchemaProperty(json: any) {
-    assertType(json, "object");
+function validateSchemaProperty(assert: Assert, json: any) {
+    assert.typeOf(json, "object");
     if (json.unsupported) return;
-    if (json.$ref) json = getReducedRefJson(json, "$ref");
-    else if (json.$extend) json = getReducedRefJson(json, "$extend");
+    if (json.$ref) json = getReducedRefJson(assert, json, "$ref");
+    else if (json.$extend) json = getReducedRefJson(assert, json, "$extend");
 
     if (json.choices) SchemaChoicesPropertyValidator.validate(json);
     else if (json.value) SchemaValuePropertyValidator.validate(json);
@@ -98,9 +104,9 @@ function validateSchemaProperty(json: any) {
     }
 }
 
-function validateSchemaPropertyWithoutExtend(json: any) {
-    validateSchemaProperty(json);
-    if (json.$extend) throw new Error("Only types may contain $extend");
+function validateSchemaPropertyWithoutExtend(assert: Assert, json: any) {
+    validateSchemaProperty(assert, json);
+    if (json.$extend) assert.fail("Only types may contain $extend");
 }
 
 class SchemaChoicesPropertyValidator extends SchemaBasePropertyValidator {
@@ -110,9 +116,10 @@ class SchemaChoicesPropertyValidator extends SchemaBasePropertyValidator {
 
     public static validate(json: any) {
         super.validate(json);
-        assertValidOjectKeys(json, this.getValidKeys());
-        assertType(json.choices, "array", "undefined");
-        assertArray(json.allowedContexts, validateSchemaPropertyWithoutExtend);
+        const assert = new Assert("SchemaChoicesPropertyValidator");
+        assert.validOjectKeys(json, this.getValidKeys());
+        assert.typeOf(json.choices, "array", "undefined");
+        workArray(json.allowedContexts, (e) => validateSchemaPropertyWithoutExtend(assert, e));
     }
 }
 
@@ -123,8 +130,9 @@ class SchemaAnyPropertyValidator extends SchemaBasePropertyValidator {
 
     public static validate(json: any) {
         super.validate(json);
-        assertValidOjectKeys(json, this.getValidKeys());
-        assertEqual(json.type, "any");
+        const assert = new Assert("SchemaAnyPropertyValidator");
+        assert.validOjectKeys(json, this.getValidKeys());
+        assert.equal(json.type, "any");
     }
 }
 
@@ -135,8 +143,9 @@ class SchemaRefPropertyValidator extends SchemaBasePropertyValidator {
 
     public static validate(json: any) {
         super.validate(json);
-        assertValidOjectKeys(json, this.getValidKeys());
-        assertType(json.$type, "object");
+        const assert = new Assert("SchemaRefPropertyValidator");
+        assert.validOjectKeys(json, this.getValidKeys());
+        assert.typeOf(json.$type, "object");
     }
 }
 
@@ -147,8 +156,9 @@ class SchemaNullPropertyValidator extends SchemaBasePropertyValidator {
 
     public static validate(json: any) {
         super.validate(json);
-        assertValidOjectKeys(json, this.getValidKeys());
-        assertEqual(json.type, "null");
+        const assert = new Assert("SchemaNullPropertyValidator");
+        assert.validOjectKeys(json, this.getValidKeys());
+        assert.equal(json.type, "null");
     }
 }
 
@@ -159,17 +169,9 @@ class SchemaValuePropertyValidator extends SchemaBasePropertyValidator {
 
     public static validate(json: any) {
         super.validate(json);
-        assertValidOjectKeys(json, this.getValidKeys());
+        const assert = new Assert("SchemaValuePropertyValidator");
+        assert.validOjectKeys(json, this.getValidKeys());
         if (typeof json.value === "undefined") throw new Error("Value expected");
-    }
-}
-
-function validateEnumValue(json: any) {
-    assertType(json, "string", "object", "undefined");
-    if (typeof json === "object") {
-        assertValidOjectKeys(json, ["name", "description"]);
-        assertType(json.name, "string");
-        assertType(json.description, "string");
     }
 }
 
@@ -180,15 +182,16 @@ class SchemaStringPropertyValidator extends SchemaBasePropertyValidator {
 
     public static validate(json: any) {
         super.validate(json);
-        assertValidOjectKeys(json, this.getValidKeys());
-        assertEqual(json.type, "string");
-        assertType(json.enum, "array", "undefined");
-        assertArray(json.enum, (e) => validateEnumValue(e));
-        assertType(json.minLength, "number", "undefined");
-        assertType(json.maxLength, "number", "undefined");
-        assertType(json.pattern, "string", "undefined");
-        assertType(json.format, "string", "undefined");
-        assertType(json.default, "string", "undefined");
+        const assert = new Assert("SchemaStringPropertyValidator");
+        assert.validOjectKeys(json, this.getValidKeys());
+        assert.equal(json.type, "string");
+        assert.typeOf(json.enum, "array", "undefined");
+        workArray(json.enum, assert.enumValue);
+        assert.typeOf(json.minLength, "number", "undefined");
+        assert.typeOf(json.maxLength, "number", "undefined");
+        assert.typeOf(json.pattern, "string", "undefined");
+        assert.typeOf(json.format, "string", "undefined");
+        assert.typeOf(json.default, "string", "undefined");
     }
 }
 
@@ -211,22 +214,23 @@ class SchemaObjectPropertyValidator extends SchemaBasePropertyValidator {
 
     public static validate(json: any) {
         super.validate(json);
-        assertValidOjectKeys(json, this.getValidKeys());
-        assertOneOf(json.type, "object", "binary");
-        assertType(json.properties, "object", "undefined");
-        assertMap(json.properties, validateSchemaPropertyWithoutExtend);
-        assertType(json.additionalProperties, "object", "boolean", "undefined");
+        const assert = new Assert("SchemaObjectPropertyValidator");
+        assert.validOjectKeys(json, this.getValidKeys());
+        assert.oneOf(json.type, "object", "binary");
+        assert.typeOf(json.properties, "object", "undefined");
+        workMap(json.properties, (e) => validateSchemaPropertyWithoutExtend(assert, e));
+        assert.typeOf(json.additionalProperties, "object", "boolean", "undefined");
         if (typeof json.additionalProperties === "object")
-            validateSchemaPropertyWithoutExtend(json.additionalProperties);
-        assertType(json.patternProperties, "object", "undefined");
-        assertMap(json.patternProperties, validateSchemaPropertyWithoutExtend);
-        assertType(json.$import, "string", "undefined");
-        assertType(json.isInstanceOf, "string", "undefined");
-        assertType(json.functions, "array", "undefined");
-        assertArray(json.functions, (e) => SchemaFunctionPropertyValidator.validate(e));
-        assertType(json.events, "array", "undefined");
-        assertArray(json.events, (e) => SchemaFunctionPropertyValidator.validate(e));
-        assertType(json.default, "object", "undefined");
+            validateSchemaPropertyWithoutExtend(assert, json.additionalProperties);
+        assert.typeOf(json.patternProperties, "object", "undefined");
+        workMap(json.patternProperties, (e) => validateSchemaPropertyWithoutExtend(assert, e));
+        assert.typeOf(json.$import, "string", "undefined");
+        assert.typeOf(json.isInstanceOf, "string", "undefined");
+        assert.typeOf(json.functions, "array", "undefined");
+        workArray(json.functions, (e) => SchemaFunctionPropertyValidator.validate(e));
+        assert.typeOf(json.events, "array", "undefined");
+        workArray(json.events, (e) => SchemaFunctionPropertyValidator.validate(e));
+        assert.typeOf(json.default, "object", "undefined");
     }
 }
 
@@ -237,11 +241,12 @@ class SchemaNumberPropertyValidator extends SchemaBasePropertyValidator {
 
     public static validate(json: any) {
         super.validate(json);
-        assertValidOjectKeys(json, this.getValidKeys());
-        assertOneOf(json.type, "integer", "number");
-        assertType(json.minimum, "number", "undefined");
-        assertType(json.maximum, "number", "undefined");
-        assertType(json.default, "number", "undefined");
+        const assert = new Assert("SchemaNumberPropertyValidator");
+        assert.validOjectKeys(json, this.getValidKeys());
+        assert.oneOf(json.type, "integer", "number");
+        assert.typeOf(json.minimum, "number", "undefined");
+        assert.typeOf(json.maximum, "number", "undefined");
+        assert.typeOf(json.default, "number", "undefined");
     }
 }
 
@@ -252,9 +257,10 @@ class SchemaBooleanPropertyValidator extends SchemaBasePropertyValidator {
 
     public static validate(json: any) {
         super.validate(json);
-        assertValidOjectKeys(json, this.getValidKeys());
-        assertEqual(json.type, "boolean");
-        assertType(json.default, "boolean", "undefined");
+        const assert = new Assert("SchemaBooleanPropertyValidator");
+        assert.validOjectKeys(json, this.getValidKeys());
+        assert.equal(json.type, "boolean");
+        assert.typeOf(json.default, "boolean", "undefined");
     }
 }
 
@@ -265,14 +271,15 @@ class SchemaArrayPropertyValidator extends SchemaBasePropertyValidator {
 
     public static validate(json: any) {
         super.validate(json);
-        assertValidOjectKeys(json, this.getValidKeys());
-        assertEqual(json.type, "array");
-        assertType(json.items, "object", "undefined");
-        if (json.items) validateSchemaPropertyWithoutExtend(json.items);
-        assertType(json.minItems, "number", "undefined");
-        assertType(json.maxItems, "number", "undefined");
-        assertType(json.default, "array", "undefined");
-        if (json.default) assertEqual(json.default.length, 0);
+        const assert = new Assert("SchemaArrayPropertyValidator");
+        assert.validOjectKeys(json, this.getValidKeys());
+        assert.equal(json.type, "array");
+        assert.typeOf(json.items, "object", "undefined");
+        if (json.items) validateSchemaPropertyWithoutExtend(assert, json.items);
+        assert.typeOf(json.minItems, "number", "undefined");
+        assert.typeOf(json.maxItems, "number", "undefined");
+        assert.typeOf(json.default, "array", "undefined");
+        if (json.default) assert.equal(json.default.length, 0);
     }
 }
 
@@ -295,28 +302,29 @@ class SchemaFunctionPropertyValidator extends SchemaBasePropertyValidator {
 
     public static validate(json: any) {
         super.validate(json);
-        assertValidOjectKeys(json, this.getValidKeys());
-        assertOneOf(json.type, "function", undefined); // hack: sometimes not set.
-        assertOneOf(json.async, "callback", "responseCallback", true, false, undefined);
-        assertType(json.requireUserInput, "boolean", "undefined");
-        assertType(json.parameters, "array", "undefined");
-        assertArray(json.parameters, validateSchemaPropertyWithoutExtend);
-        assertType(json.extraParameters, "array", "undefined");
-        assertArray(json.extraParameters, validateSchemaPropertyWithoutExtend);
-        assertType(json.returns, "object", "undefined");
-        if (json.returns) validateSchemaPropertyWithoutExtend(json.returns);
-        assertType(json.allowAmbiguousOptionalArguments, "boolean", "undefined");
-        assertType(json.filters, "array", "undefined");
-        assertArray(json.filters, validateSchemaPropertyWithoutExtend);
-        assertType(json.options, "object", "undefined");
+        const assert = new Assert("SchemaFunctionPropertyValidator");
+        assert.validOjectKeys(json, this.getValidKeys());
+        assert.oneOf(json.type, "function", undefined); // hack: sometimes not set.
+        assert.oneOf(json.async, "callback", "responseCallback", true, false, undefined);
+        assert.typeOf(json.requireUserInput, "boolean", "undefined");
+        assert.typeOf(json.parameters, "array", "undefined");
+        workArray(json.parameters, (e) => validateSchemaPropertyWithoutExtend(assert, e));
+        assert.typeOf(json.extraParameters, "array", "undefined");
+        workArray(json.extraParameters, (e) => validateSchemaPropertyWithoutExtend(assert, e));
+        assert.typeOf(json.returns, "object", "undefined");
+        if (json.returns) validateSchemaPropertyWithoutExtend(assert, json.returns);
+        assert.typeOf(json.allowAmbiguousOptionalArguments, "boolean", "undefined");
+        assert.typeOf(json.filters, "array", "undefined");
+        workArray(json.filters, (e) => validateSchemaPropertyWithoutExtend(assert, e));
+        assert.typeOf(json.options, "object", "undefined");
         if (json.options) {
-            assertValidOjectKeys(json.options, ["supportsListeners", "supportsRules", "conditions", "actions"]);
-            assertType(json.options.supportsListeners, "boolean", "undefined");
-            assertType(json.options.supportsRules, "boolean", "undefined");
-            assertType(json.options.conditions, "array", "undefined");
-            assertType(json.options.actions, "array", "undefined");
-            assertArray(json.options.conditions, (s) => assertType(s, "string", "undefined"));
-            assertArray(json.options.actions, (s) => assertType(s, "string", "undefined"));
+            assert.validOjectKeys(json.options, ["supportsListeners", "supportsRules", "conditions", "actions"]);
+            assert.typeOf(json.options.supportsListeners, "boolean", "undefined");
+            assert.typeOf(json.options.supportsRules, "boolean", "undefined");
+            assert.typeOf(json.options.conditions, "array", "undefined");
+            assert.typeOf(json.options.actions, "array", "undefined");
+            workArray(json.options.conditions, (s) => assert.typeOf(s, "string", "undefined"));
+            workArray(json.options.actions, (s) => assert.typeOf(s, "string", "undefined"));
         }
     }
 }
@@ -339,37 +347,38 @@ class SchemaEntryValidator {
     }
 
     public static validate(json: any) {
-        assertType(json, "object");
-        assertType(json.namespace, "string");
+        const assert = new Assert("SchemaEntryValidator");
+        assert.typeOf(json, "object");
+        assert.typeOf(json.namespace, "string");
         currentNamespace = json.namespace;
-        assertType(json.description, "string", "undefined");
-        assertType(json.permissions, "array", "undefined");
-        assertArray(json.permissions, (e) => assertType(e, "string"));
-        assertType(json.types, "array", "undefined");
-        assertArray(json.types, validateSchemaProperty);
+        assert.typeOf(json.description, "string", "undefined");
+        assert.typeOf(json.permissions, "array", "undefined");
+        workArray(json.permissions, (e) => assert.typeOf(e, "string"));
+        assert.typeOf(json.types, "array", "undefined");
+        workArray(json.types, (e) => validateSchemaProperty(assert, e));
 
-        assertType(json.functions, "array", "undefined");
-        assertArray(json.functions, (e) => SchemaFunctionPropertyValidator.validate(e));
-        assertType(json.events, "array", "undefined");
-        assertArray(json.events, (e) => SchemaFunctionPropertyValidator.validate(e));
+        assert.typeOf(json.functions, "array", "undefined");
+        workArray(json.functions, (e) => SchemaFunctionPropertyValidator.validate(e));
+        assert.typeOf(json.events, "array", "undefined");
+        workArray(json.events, (e) => SchemaFunctionPropertyValidator.validate(e));
 
-        assertType(json.properties, "object", "undefined");
-        assertMap(json.properties, validateSchemaPropertyWithoutExtend);
+        assert.typeOf(json.properties, "object", "undefined");
+        workMap(json.properties, (e) => validateSchemaPropertyWithoutExtend(assert, e));
 
-        assertType(json.allowedContexts, "array", "undefined");
-        assertArray(json.allowedContexts, (e) => assertType(e, "string"));
+        assert.typeOf(json.allowedContexts, "array", "undefined");
+        workArray(json.allowedContexts, (e) => assert.typeOf(e, "string"));
 
-        assertType(json.defaultContexts, "array", "undefined");
-        assertArray(json.defaultContexts, (e) => assertType(e, "string"));
-        assertType(json.nocompile, "boolean", "undefined");
-        assertType(json.$import, "string", "undefined");
+        assert.typeOf(json.defaultContexts, "array", "undefined");
+        workArray(json.defaultContexts, (e) => assert.typeOf(e, "string"));
+        assert.typeOf(json.nocompile, "boolean", "undefined");
+        assert.typeOf(json.$import, "string", "undefined");
     }
 }
 
 function validateJson(data: ReturnType<typeof readSchemaFile>) {
     try {
         console.log(data.file);
-        assertArray(data.json, SchemaEntryValidator.validate);
+        workArray(data.json, SchemaEntryValidator.validate);
     } catch (e) {
         console.error(`Error reading ${data.file}: `, e);
         throw e;

@@ -15,6 +15,8 @@ export interface SchemaBaseProperty {
     nodoc?: boolean;
     preprocess?: string;
     postprocess?: string;
+    min_manifest_version?: number;
+    max_manifest_version?: number;
 }
 
 export interface SchemaChoicesProperty extends SchemaBaseProperty {

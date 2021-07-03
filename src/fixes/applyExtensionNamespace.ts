@@ -1,6 +1,6 @@
 import { SchemaEntry } from "../helpers/types";
 import { SchemaVisitorFactory, VisitorAction } from "../helpers/visitor";
-import { assertValidOjectKeys } from "../helpers/assert";
+import { Assert } from "../helpers/assert";
 
 // There are namespaces and namespaces that extend existing namespaces.
 // This fix merges the extending namespaces into the namespace they extend and then removes the extending namespaces.
@@ -18,11 +18,12 @@ function visitor(entry: SchemaEntry, entryToExtend: SchemaEntry) {
         const extended = types.find((t2) => t2.id === t.$extend);
         if (!extended) throw new Error(`Could not find type to extend: ${t.$extend}`);
 
+        const assert = new Assert(t.$extend);
         if (t.type === "choices") {
-            assertValidOjectKeys(t, ["type", "$extend", "choices"]);
+            assert.validOjectKeys(t, ["type", "$extend", "choices"]);
             t.type = "choices";
         } else if (t.type === "object") {
-            assertValidOjectKeys(t, ["type", "$extend", "properties"]);
+            assert.validOjectKeys(t, ["type", "$extend", "properties"]);
             t.type = "object";
         } else {
             throw new Error(`Unknown extension type ${t.$extend}`);

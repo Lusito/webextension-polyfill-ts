@@ -12,6 +12,14 @@ export function filterUnique(e: any, i: number, a: any[]) {
     return a.indexOf(e) === i;
 }
 
+export function workArray<T>(array: T[] | undefined, callback: (val: T, index: number) => void) {
+    if (array && array.length) {
+        array.forEach(callback);
+        return true;
+    }
+    return false;
+}
+
 export function workMap<T>(map: { [s: string]: T } | undefined, callback: (val: T, key: string) => void) {
     if (map && Object.keys(map).length) {
         for (const key of Object.keys(map)) callback(map[key], key);

@@ -7,7 +7,7 @@ import { SchemaEntry, SchemaProperty, SchemaFunctionProperty } from "./helpers/t
 import { importAndFixAll, ImportedNamespace } from "./helpers/importNormalized";
 import { filterUnique, workMap, toUpperCamelCase, lowerFirstChar } from "./helpers/utils";
 import { CodeWriter } from "./helpers/CodeWriter";
-import { ErrorMessage, assertSupported } from "./helpers/assert";
+import { ErrorMessage, Assert } from "./helpers/assert";
 import {
     getProperty,
     getEnumType,
@@ -54,10 +54,15 @@ function getImports(entry: SchemaEntry, subNamespaces: string[]) {
     return imports.filter(filterUnique);
 }
 
-function addProperties(properties: { [s: string]: SchemaProperty } | undefined, writer: CodeWriter) {
+function addProperties(
+    id: string | undefined,
+    properties: { [s: string]: SchemaProperty } | undefined,
+    writer: CodeWriter
+) {
+    const assert = new Assert(`build/addProperties(${id})`);
     workMap(properties, (prop, key) => {
         if (key === "instanceType") return;
-        assertSupported(prop);
+        assert.supported(prop);
 
         if (prop.type === "function") {
             if ("isEvent" in prop) addEvent(prop, writer);
@@ -77,7 +82,8 @@ function addProperties(properties: { [s: string]: SchemaProperty } | undefined, 
 }
 
 function addType(type: SchemaProperty, writer: CodeWriter) {
-    assertSupported(type);
+    const assert = new Assert(`build/addType(${type.id})`);
+    assert.supported(type);
     setCurrentTypeId(type.id);
 
     if (type.description || (type.type === "string" && type.enum)) {
@@ -107,11 +113,11 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
 
         if (type.additionalProperties && typeof type.additionalProperties === "object") {
             if (type.additionalProperties.type === "object")
-                addProperties(type.additionalProperties.properties, writer);
+                addProperties(type.id, type.additionalProperties.properties, writer);
             // else if(type.additionalProperties.type !== 'any')
             //     throw new Error('what now?');
         }
-        addProperties(type.properties, writer);
+        addProperties(type.id, type.properties, writer);
         type.functions?.forEach((func) => addFunction(func, func.parameters, writer));
         type.events?.forEach((event) => addEvent(event, writer));
         writer.end("}");
@@ -134,8 +140,9 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
 }
 
 function addEvent(event: SchemaFunctionProperty, writer: CodeWriter) {
-    assertSupported(event);
     const name = event.name || event.id;
+    const assert = new Assert(`build/addEvent(${name})`);
+    assert.supported(event);
     if (!name) {
         console.log(event);
         throw new Error(ErrorMessage.MISSING_NAME);
@@ -170,7 +177,8 @@ function addEvent(event: SchemaFunctionProperty, writer: CodeWriter) {
 }
 
 function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] | undefined, writer: CodeWriter) {
-    assertSupported(func);
+    const assert = new Assert(`build/addFunction(${func.name})`);
+    assert.supported(func);
     if (!func.name) throw new Error(ErrorMessage.MISSING_NAME);
 
     const indexToFix = getOverloadParameterIndex(parameters);
@@ -302,7 +310,7 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
         entry.events?.forEach((event) => addEvent(event, writer));
         if (entry.events?.length) writer.emptyLine();
 
-        addProperties(entry.properties, writer);
+        addProperties(filename, entry.properties, writer);
         subNamespaces.forEach((ns) => writer.code(`${ns.split(".")[1]}: ${toUpperCamelCase(ns)}.Static;`));
 
         writer.end("}");
