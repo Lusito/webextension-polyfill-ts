@@ -24,5 +24,10 @@ export namespace BrowserSettingsColorManagement {
          * This boolean setting controls whether or not native sRGB color management is used.
          */
         useNativeSRGB: Types.Setting;
+
+        /**
+         * This boolean setting controls whether or not the WebRender compositor is used.
+         */
+        useWebRenderCompositor: Types.Setting;
     }
 }

@@ -2,7 +2,7 @@
 // Project: https://github.com/mozilla/webextension-polyfill
 // Definitions by: Santo Pfingsten <https://github.com/Lusito>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// Generated using github.com/Lusito/webextension-polyfill-ts
+// Generated using https://github.com/Lusito/webextension-polyfill-ts
 
 // Generated from Mozilla sources. Do not manually edit!
 

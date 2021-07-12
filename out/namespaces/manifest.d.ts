@@ -656,15 +656,7 @@ export namespace Manifest {
     interface WebExtensionManifestWebAccessibleResourcesC2ItemType {
         resources: string[];
 
-        /**
-         * Optional.
-         */
-        matches?: MatchPatternRestricted[];
-
-        /**
-         * Optional.
-         */
-        extensions?: ExtensionID[];
+        matches: MatchPatternRestricted[];
     }
 
     interface WebExtensionManifestDeveloperType {
