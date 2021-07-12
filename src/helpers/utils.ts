@@ -14,7 +14,7 @@ export function filterUnique(e: any, i: number, a: any[]) {
 }
 
 export function workArray<T>(array: T[] | undefined, callback: (val: T, index: number) => void) {
-    if (array && array.length) {
+    if (array?.length) {
         array.forEach(callback);
         return true;
     }

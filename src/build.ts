@@ -211,6 +211,7 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
             parametersWithoutAsync = parameters.slice(0, parameters.length - 1);
             asyncParam = lastParam;
         }
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         parametersWithoutAsync!.forEach((param) => writer.comment(formatParamComment(param)));
     }
     let returnType = "void";
