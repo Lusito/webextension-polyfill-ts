@@ -334,15 +334,8 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     });
     writer.end("}");
 
-    const template = fs.readFileSync("./templates/index.d.ts", { encoding: "utf-8" });
+    const template = fs.readFileSync("./src/indexTemplate.d.ts", { encoding: "utf-8" });
     fs.writeFileSync("out/index.d.ts", template.replace("type Browser = any;", writer.toString().trim()));
-}
-
-function writeTsConfig(namespaces: ImportedNamespace[]) {
-    console.log("- tsconfig.json");
-    const template = fs.readFileSync("./templates/tsconfig.json", { encoding: "utf-8" });
-    const namespaceLines = namespaces.map((ns) => `"${namespacePath(ns)}.d.ts"`);
-    fs.writeFileSync("out/tsconfig.json", template.replace(`"namespaces/*.d.ts"`, namespaceLines.join(",\n        ")));
 }
 
 try {
@@ -362,7 +355,6 @@ try {
             );
         });
         writeIndexFile(namespaces);
-        writeTsConfig(namespaces);
 
         console.log("--------------------");
         console.log("All definitions generated!");
