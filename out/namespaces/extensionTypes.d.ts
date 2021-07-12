@@ -117,7 +117,9 @@ export namespace ExtensionTypes {
     /**
      * A plain JSON value
      */
-    interface PlainJSONValue {}
+    interface PlainJSONValue {
+        [s: string]: unknown;
+    }
 
     /**
      * The area of the document to capture, in CSS pixels, relative to the page.  If omitted, capture the visible viewport.
@@ -140,5 +142,7 @@ export namespace ExtensionTypes {
         code: string;
     }
 
-    interface Static {}
+    interface Static {
+        [s: string]: unknown;
+    }
 }

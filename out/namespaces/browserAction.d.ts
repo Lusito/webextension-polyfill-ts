@@ -12,5 +12,7 @@
 import { Action } from "./action";
 
 export namespace BrowserAction {
-    interface Static extends Action.Static {}
+    interface Static extends Action.Static {
+        [s: string]: unknown;
+    }
 }

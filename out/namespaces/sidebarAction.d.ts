@@ -14,7 +14,9 @@ export namespace SidebarAction {
     /**
      * Pixel data for an image. Must be an ImageData object (for example, from a <code>canvas</code> element).
      */
-    interface ImageDataType {}
+    interface ImageDataType extends ImageData {
+        [s: string]: unknown;
+    }
 
     interface SetTitleDetailsType {
         /**
@@ -125,7 +127,9 @@ export namespace SidebarAction {
         windowId?: number;
     }
 
-    interface SetIconDetailsTypePathC2Type {}
+    interface SetIconDetailsTypePathC2Type {
+        [s: string]: unknown;
+    }
 
     interface Static {
         /**

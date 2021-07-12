@@ -14,5 +14,7 @@
 import { Menus } from "./menus";
 
 export namespace ContextMenus {
-    interface Static extends Menus.Static {}
+    interface Static extends Menus.Static {
+        [s: string]: unknown;
+    }
 }

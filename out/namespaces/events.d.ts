@@ -213,5 +213,7 @@ export namespace Events {
         ports?: Array<number | [number, number]>;
     }
 
-    interface Static {}
+    interface Static {
+        [s: string]: unknown;
+    }
 }

@@ -588,7 +588,9 @@ export namespace Manifest {
         gecko?: FirefoxSpecificProperties;
     }
 
-    interface ManifestBaseBrowserSpecificSettingsEdgeType {}
+    interface ManifestBaseBrowserSpecificSettingsEdgeType {
+        [s: string]: unknown;
+    }
 
     interface ManifestBaseBrowserSpecificSettingsType {
         /**
@@ -832,7 +834,9 @@ export namespace Manifest {
         description?: string;
     }
 
-    interface WebExtensionManifestExperimentApisType extends Experiments.ExperimentAPI {}
+    interface WebExtensionManifestExperimentApisType extends Experiments.ExperimentAPI {
+        [s: string]: unknown;
+    }
 
     interface WebExtensionManifestOmniboxType {
         keyword: string;
@@ -934,11 +938,17 @@ export namespace Manifest {
      */
     type ActionManifestDefaultAreaEnum = "navbar" | "menupanel" | "tabstrip" | "personaltoolbar";
 
-    interface ThemeExperimentImagesType {}
+    interface ThemeExperimentImagesType {
+        [s: string]: unknown;
+    }
 
-    interface ThemeExperimentColorsType {}
+    interface ThemeExperimentColorsType {
+        [s: string]: unknown;
+    }
 
-    interface ThemeExperimentPropertiesType {}
+    interface ThemeExperimentPropertiesType {
+        [s: string]: unknown;
+    }
 
     interface ThemeTypeImagesType {
         /**
@@ -1175,5 +1185,7 @@ export namespace Manifest {
         additional_backgrounds_tiling?: ThemeTypePropertiesAdditionalBackgroundsTilingItemEnum[];
     }
 
-    interface Static {}
+    interface Static {
+        [s: string]: unknown;
+    }
 }

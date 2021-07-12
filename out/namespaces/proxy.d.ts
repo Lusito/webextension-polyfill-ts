@@ -171,7 +171,9 @@ export namespace Proxy {
         thirdParty: boolean;
     }
 
-    interface OnErrorErrorType {}
+    interface OnErrorErrorType {
+        [s: string]: unknown;
+    }
 
     /**
      * The type of proxy to use.

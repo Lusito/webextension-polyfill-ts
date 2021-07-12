@@ -55,7 +55,9 @@ export namespace ActivityLog {
     /**
      * The result of the call.
      */
-    interface OnExtensionActivityDetailsTypeDataResultType {}
+    interface OnExtensionActivityDetailsTypeDataResultType {
+        [s: string]: unknown;
+    }
 
     interface OnExtensionActivityDetailsTypeDataType {
         /**

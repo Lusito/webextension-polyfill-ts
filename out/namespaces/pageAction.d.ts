@@ -18,7 +18,9 @@ export namespace PageAction {
     /**
      * Pixel data for an image. Must be an ImageData object (for example, from a <code>canvas</code> element).
      */
-    interface ImageDataType {}
+    interface ImageDataType extends ImageData {
+        [s: string]: unknown;
+    }
 
     /**
      * Information sent when a page action is clicked.

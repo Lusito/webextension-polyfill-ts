@@ -107,10 +107,17 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
         let extendsClass = "";
         if (type.$import) {
             extendsClass = ` extends ${fixRef(type.$import)}`;
-        } else if (type.additionalProperties && typeof type.additionalProperties === "object") {
-            if (type.additionalProperties.$ref) extendsClass = ` extends ${fixRef(type.additionalProperties.$ref)}`;
+        } else if (
+            type.additionalProperties &&
+            typeof type.additionalProperties === "object" &&
+            type.additionalProperties.$ref
+        ) {
+            extendsClass = ` extends ${fixRef(type.additionalProperties.$ref)}`;
+        } else if (type.isInstanceOf) {
+            extendsClass = ` extends ${type.isInstanceOf}`;
         }
         writer.begin(`interface ${type.id}${templateParam}${extendsClass} {`);
+        const writeInstructions = writer.getWriteInstructionCount();
 
         if (type.additionalProperties && typeof type.additionalProperties === "object") {
             if (type.additionalProperties.type === "object")
@@ -121,6 +128,11 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
         addProperties(type.id, type.properties, writer);
         type.functions?.forEach((func) => addFunction(func, func.parameters, writer));
         type.events?.forEach((event) => addEvent(event, writer));
+
+        // Empty interface, add index signature for unknown
+        if (writeInstructions === writer.getWriteInstructionCount()) {
+            writer.code(`[s: string]: unknown`);
+        }
 
         writer.end("}");
     } else if (type.type === "string" && type.enum) {
@@ -266,6 +278,7 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
         entry.types?.forEach((type) => addType(type, writer));
         const extendsPart = entry.$import ? ` extends ${toUpperCamelCase(entry.$import)}.Static` : "";
         writer.begin(`interface Static${extendsPart} {`);
+        const writeInstructions = writer.getWriteInstructionCount();
 
         // Constructors
         entry.types?.forEach((type) => {
@@ -283,6 +296,11 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
 
         addProperties(filename, entry.properties, writer);
         subNamespaces.forEach((ns) => writer.code(`${ns.split(".")[1]}: ${toUpperCamelCase(ns)}.Static;`));
+
+        // Empty interface, add index signature for unknown
+        if (writeInstructions === writer.getWriteInstructionCount()) {
+            writer.code(`[s: string]: unknown`);
+        }
 
         writer.end("}");
         writer.end("}");

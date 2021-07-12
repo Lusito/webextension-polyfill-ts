@@ -147,5 +147,7 @@ export namespace Types {
         scope?: SettingScope;
     }
 
-    interface Static {}
+    interface Static {
+        [s: string]: unknown;
+    }
 }

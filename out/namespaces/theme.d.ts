@@ -32,7 +32,9 @@ export namespace Theme {
     /**
      * The new theme after update
      */
-    interface ThemeUpdateInfoThemeType {}
+    interface ThemeUpdateInfoThemeType {
+        [s: string]: unknown;
+    }
 
     interface Static {
         /**

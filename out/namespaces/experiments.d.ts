@@ -58,5 +58,7 @@ export namespace Experiments {
         scopes: APIChildScope[];
     }
 
-    interface Static {}
+    interface Static {
+        [s: string]: unknown;
+    }
 }

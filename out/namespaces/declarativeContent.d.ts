@@ -17,7 +17,9 @@ export namespace DeclarativeContent {
      * See <a href="https://developer.mozilla.org/en-US/docs/Web/API/ImageData">https://developer.mozilla.
      * org/en-US/docs/Web/API/ImageData</a>.
      */
-    interface ImageDataType {}
+    interface ImageDataType extends ImageData {
+        [s: string]: unknown;
+    }
 
     /**
      * Matches the state of a web page based on various criteria.
@@ -52,7 +54,9 @@ export namespace DeclarativeContent {
      * but the extension must have a page action. If the extension has the <a href="activeTab.html">activeTab</a> permission,
      * clicking the page action grants access to the active tab.
      */
-    interface ShowPageAction {}
+    interface ShowPageAction {
+        [s: string]: unknown;
+    }
 
     /**
      * Declarative event action that shows the extension's toolbar action ($(ref:pageAction page action)
@@ -61,7 +65,9 @@ export namespace DeclarativeContent {
      * If the extension has the <a href="activeTab.html">activeTab</a> permission, clicking the page action grants access to
      * the active tab.
      */
-    interface ShowAction {}
+    interface ShowAction {
+        [s: string]: unknown;
+    }
 
     /**
      * Declarative event action that sets the n-<abbr title="device-independent pixel">dip</abbr>
@@ -160,7 +166,9 @@ export namespace DeclarativeContent {
         removeRules(rules?: string[], callback?: () => void): void;
     }
 
-    interface SetIconImageDataC2Type {}
+    interface SetIconImageDataC2Type {
+        [s: string]: unknown;
+    }
 
     interface Static {
         PageStateMatcher: { new (options?: PageStateMatcher): PageStateMatcher };

@@ -176,7 +176,9 @@ export namespace Runtime {
         includeTlsChannelId?: boolean;
     }
 
-    interface SendMessageOptionsType {}
+    interface SendMessageOptionsType {
+        [s: string]: unknown;
+    }
 
     interface OnInstalledDetailsType {
         /**

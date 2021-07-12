@@ -35,7 +35,9 @@ export namespace DevtoolsPanels {
     /**
      * Represents the Sources panel.
      */
-    interface SourcesPanel {}
+    interface SourcesPanel {
+        [s: string]: unknown;
+    }
 
     /**
      * Represents a panel created by extension.
@@ -103,7 +105,9 @@ export namespace DevtoolsPanels {
     /**
      * A button created by the extension.
      */
-    interface Button {}
+    interface Button {
+        [s: string]: unknown;
+    }
 
     interface Static {
         /**

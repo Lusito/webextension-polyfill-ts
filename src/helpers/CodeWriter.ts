@@ -18,7 +18,14 @@ export class CodeWriter {
 
     private indentation = "";
 
+    private writeInstructionCount = 0;
+
+    public getWriteInstructionCount() {
+        return this.writeInstructionCount;
+    }
+
     public begin(line: string) {
+        this.writeInstructionCount++;
         this.finishComment();
         this.lines.push(this.indentation + line);
         this.indentation += "    ";
@@ -26,6 +33,7 @@ export class CodeWriter {
     }
 
     public end(line: string) {
+        this.writeInstructionCount++;
         if (this.commentLines > 0) throw new Error("Comment before block end");
         if (this.lastIsEmpty) {
             this.lines.pop();
@@ -40,6 +48,7 @@ export class CodeWriter {
     public comment(line: string) {
         line = line.trim();
         if (!line) return;
+        this.writeInstructionCount++;
         if (this.commentLines === 0) {
             this.lines.push(`${this.indentation}/**`);
         }
@@ -56,6 +65,7 @@ export class CodeWriter {
 
     private finishComment() {
         if (this.commentLines > 0) {
+            this.writeInstructionCount++;
             if (this.lastIsEmpty) {
                 this.lines.pop();
                 this.lastIsEmpty = false;
@@ -66,6 +76,7 @@ export class CodeWriter {
     }
 
     public code(line: string) {
+        this.writeInstructionCount++;
         this.finishComment();
         this.lines.push(this.indentation + line);
         this.lastIsEmpty = false;
@@ -73,6 +84,7 @@ export class CodeWriter {
 
     public emptyLine() {
         if (!this.lastIsEmpty) {
+            this.writeInstructionCount++;
             if (this.commentLines > 0) this.lines.push(`${this.indentation} *`);
             else this.lines.push("");
             this.lastIsEmpty = true;

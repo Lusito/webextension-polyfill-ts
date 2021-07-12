@@ -110,12 +110,16 @@ export namespace Urlbar {
     /**
      * The payload of the result that was picked.
      */
-    interface OnResultPickedPayloadType {}
+    interface OnResultPickedPayloadType {
+        [s: string]: unknown;
+    }
 
     /**
      * An object with arbitrary properties depending on the result's type.
      */
-    interface ResultPayloadType {}
+    interface ResultPayloadType {
+        [s: string]: unknown;
+    }
 
     /**
      * Before a query starts, this event is fired for the given provider. Its purpose is to request the provider's behavior for

@@ -25,7 +25,9 @@ export namespace DevtoolsInspectedWindow {
     /**
      * The options parameter can contain one or more options.
      */
-    interface EvalOptionsType {}
+    interface EvalOptionsType {
+        [s: string]: unknown;
+    }
 
     /**
      * An object providing details if an exception occurred while evaluating the expression.

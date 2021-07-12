@@ -41,7 +41,9 @@ export namespace Action {
     /**
      * Pixel data for an image. Must be an ImageData object (for example, from a <code>canvas</code> element).
      */
-    interface ImageDataType {}
+    interface ImageDataType extends ImageData {
+        [s: string]: unknown;
+    }
 
     /**
      * An array of four integers in the range [0,255] that make up the RGBA color of the badge. For example,
