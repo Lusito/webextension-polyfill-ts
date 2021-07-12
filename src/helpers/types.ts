@@ -55,9 +55,9 @@ export interface SchemaStringProperty extends SchemaBaseProperty {
 
 export interface SchemaObjectProperty extends SchemaBaseProperty {
     type: "object" | "binary";
-    properties?: { [s: string]: SchemaProperty };
+    properties?: Record<string, SchemaProperty>;
     additionalProperties?: SchemaProperty | boolean;
-    patternProperties?: { [s: string]: SchemaProperty };
+    patternProperties?: Record<string, SchemaProperty>;
     $import?: string;
     isInstanceOf?: string;
     functions?: SchemaFunctionProperty[];
@@ -123,7 +123,7 @@ export interface SchemaEntry {
     types?: SchemaProperty[];
     functions?: SchemaFunctionProperty[];
     events?: SchemaFunctionProperty[];
-    properties?: { [s: string]: SchemaProperty };
+    properties?: Record<string, SchemaProperty>;
     allowedContexts?: string[];
     defaultContexts?: string[];
     nocompile?: boolean;

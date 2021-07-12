@@ -17,14 +17,9 @@
   },
   "license": "Zlib",
   "author": "Santo Pfingsten",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "files": [
-    "lib/"
-  ],
   "scripts": {
-    "all": "npm run fetch && npm run validate:schemas && npm run build && npm run validate:lib",
-    "build": "ts-node src/build.ts",
+    "all": "npm run fetch && npm run validate:schemas && npm run build && npm run validate:out",
+    "build": "ts-node src/build.ts && npm run format:out",
     "fetch": "ts-node src/fetch.ts",
     "lint": "npm run lint:es && npm run lint:package && npm run lint:style",
     "lint:es": "eslint \"src/**/*.ts\" --ext .ts --ignore-path .prettierignore",
@@ -35,7 +30,8 @@
     "lint:style": "npm run lint:style:base -- --check",
     "lint:style:base": "prettier \"{src,_locales}/**/*.{ts,js,json}\" \"./*.{ts,js,json}\" --quote-props consistent",
     "lint:style:fix": "npm run lint:style:base -- --write",
-    "validate:lib": "tsc -p tsconfig-lib.json",
+    "format:out": "prettier \"out/**/*.d.ts\" --write",
+    "validate:out": "tsc -p tsconfig-out.json",
     "validate:schemas": "ts-node src/validate.ts"
   },
   "dependencies": {

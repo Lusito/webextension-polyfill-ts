@@ -1,14 +1,19 @@
 import { SchemaProperty, SchemaEnumValue, SchemaFunctionProperty, SchemaArrayProperty } from "./types";
 import { ErrorMessage } from "./assert";
-import { filterUnique } from "./utils";
+import { filterUnique, toUpperCamelCase } from "./utils";
 
 let currentTypeId: string | undefined;
+let currentNamespace = "";
 
 export function setCurrentTypeId(id?: string) {
     currentTypeId = id;
 }
 
-const typeMap: { [s: string]: string } = {
+export function setCurrentNamespace(namespace: string) {
+    currentNamespace = namespace;
+}
+
+const typeMap: Record<string, string> = {
     integer: "number",
     function: "Function",
 };
@@ -28,7 +33,10 @@ export function getEnumType(list: SchemaEnumValue[]) {
         .join(" | ");
 }
 export function fixRef(ref: string) {
-    if (ref.includes(".")) return ref[0].toUpperCase() + ref.substr(1);
+    if (ref.includes(".")) ref = toUpperCamelCase(ref);
+
+    const currentNsPrefix = `${toUpperCamelCase(currentNamespace)}.`;
+    if (ref.startsWith(currentNsPrefix)) ref = ref.substr(currentNsPrefix.length);
     return ref;
 }
 export function getType(e: SchemaProperty): string {
@@ -57,7 +65,7 @@ export function getType(e: SchemaProperty): string {
         e.additionalProperties.items.type
     ) {
         const type = getType(e.additionalProperties.items);
-        return `{[s:string]:${type}}`;
+        return `Record<string, ${type}>`;
     } else if (
         e.type === "object" &&
         e.additionalProperties &&
@@ -65,13 +73,13 @@ export function getType(e: SchemaProperty): string {
         e.additionalProperties.$ref &&
         !e.properties
     ) {
-        return `{[s:string]:${e.additionalProperties.$ref}}`;
+        return `Record<string, ${e.additionalProperties.$ref}>`;
     } else if (e.type === "object" && e.patternProperties) {
         const names = Object.keys(e.patternProperties);
         if (names.length !== 1) throw new Error("Pattern properties expected to be 1 in length");
         const patternProp = e.patternProperties[names[0]];
         const type = getType(patternProp);
-        return `{[s:string]:${type}}`;
+        return `Record<string, ${type}>`;
     }
     return propType;
 }
@@ -97,11 +105,17 @@ export function getArrayType(e: SchemaArrayProperty): string {
             // fixme: arrays of minimum size can't be done easily anymore since TypeScript 2.7.. find another way.
             // fixed size:
             if (e.minItems && e.maxItems === e.minItems) propType = `[${Array(e.minItems).fill(propType).join(", ")}]`;
-            else propType += "[]";
+            else if (propType.includes("<")) propType = `Array<${propType}>`;
+            else propType = `${propType}[]`;
         }
         return propType;
     }
     return typeMap[e.type] || e.type;
+}
+
+export function safeUndefined(propType: string) {
+    if (propType === "any") return "any";
+    return `${propType} | undefined`;
 }
 
 export function getProperty(name: string, prop: SchemaProperty, allowOptional: boolean) {
@@ -110,7 +124,7 @@ export function getProperty(name: string, prop: SchemaProperty, allowOptional: b
     if (!isOptional) return `${name}: ${propType}`;
     if (allowOptional) return `${name}?: ${propType}`;
     if (propType.includes("=>")) propType = `(${propType})`;
-    return `${name}: ${propType} | undefined`;
+    return `${name}: ${safeUndefined(propType)}`;
 }
 
 function remainingParametersOptional(parameters: SchemaProperty[], after: number) {

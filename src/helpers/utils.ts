@@ -1,6 +1,7 @@
 import fs from "fs";
 
 export function toUpperCamelCase(value: string) {
+    if (!value) return value;
     return value[0].toUpperCase() + value.substr(1).replace(/[-|_.][a-z]/g, (m) => m[1].toUpperCase());
 }
 
@@ -20,7 +21,7 @@ export function workArray<T>(array: T[] | undefined, callback: (val: T, index: n
     return false;
 }
 
-export function workMap<T>(map: { [s: string]: T } | undefined, callback: (val: T, key: string) => void) {
+export function workMap<T>(map: Record<string, T> | undefined, callback: (val: T, key: string) => void) {
     if (map && Object.keys(map).length) {
         for (const key of Object.keys(map)) callback(map[key], key);
         return true;
@@ -28,7 +29,7 @@ export function workMap<T>(map: { [s: string]: T } | undefined, callback: (val: 
     return false;
 }
 
-export function modifyMap<T>(map: { [s: string]: T } | undefined, callback: (val: T, key: string) => T) {
+export function modifyMap<T>(map: Record<string, T> | undefined, callback: (val: T, key: string) => T) {
     if (map && Object.keys(map).length) {
         for (const key of Object.keys(map)) map[key] = callback(map[key], key);
         return true;

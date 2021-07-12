@@ -51,9 +51,9 @@ In order to create types, these steps are followed:
     * Merging namespaces, which have been declared accross multiple files
     * Some properties have their types defined inline, rather than naming a type. Replacing them with references to extracted types helps to keep the generated code tidy and well-documented. This requires some auto-generated type names.
   * Apply a couple of fixes from `fixes/<namespace>.json` to the gathered information, since the schema files are partially incorrect or incomplete.
-  * Generate a `d.ts` file for each namespace in the `/lib` folder
-  * Generate an `index.d.ts` file to combine all other `.d.ts` files in the `/lib` folder
-* `npm run validate:lib`:
+  * Generate a `d.ts` file for each namespace in the `/out/namespaces` folder
+  * Generate an `index.d.ts` file to combine all other `.d.ts` files in the `/out` folder
+* `npm run validate:out`:
   * Test if the generated files are valid TypeScript
 
 ### Visitor pattern for src/fixes/*.ts

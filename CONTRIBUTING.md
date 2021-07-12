@@ -16,8 +16,8 @@ Run these commands:
 * `npm install` -> only needs to happen once to get all dependencies and whenever you merge back changes from this repository.
 * `npm run fetch` -> grabs the latest schema files from mozilla
 * `npm run validate:schemas` -> validates that all the assumptions I made about the .json files are still true
-* `npm run build` -> generates one .d.ts per namespace and one index.d.ts file in the lib folder.
-* `npm run validate:lib` -> to test if the generated files are valid TypeScript.
+* `npm run build` -> generates one .d.ts per namespace and one index.d.ts file in the out folder.
+* `npm run validate:out` -> to test if the generated files are valid TypeScript.
 * `npm run all` -> execute all of the above (except npm install) in order.
 
 ## Linting commands:
@@ -30,7 +30,7 @@ Use `npm run lint` to check them or `npm run lint:fix` to try to autofix them.
 As you might have read, this project grabs schema files from mozilla, parses them and then spits out typescript files.
 Here is a list of all folders and files in this project:
 - schemas: schema .json files downloaded from various sources.
-- lib: generated typescript definition files and one manually written file (index.js)
+- out: generated typescript definition files.
 - src: source for commandline commands to fetch and validate schemas, and to generate typescript files.
 - `fixes/<namespace>.json`: fixes for schema files.. see below.
 

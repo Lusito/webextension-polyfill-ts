@@ -4,7 +4,7 @@ import { readAllSchemaFiles, SchemaFileData } from "./helpers/readSchemaFile";
 import { Assert } from "./helpers/assert";
 import { workArray, workMap } from "./helpers/utils";
 
-const typeById: { [s: string]: any } = {};
+const typeById: Record<string, any> = {};
 
 class SchemaBasePropertyValidator {
     public static getValidKeys() {

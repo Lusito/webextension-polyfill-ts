@@ -1,3 +1,14 @@
+const MAX_COMMENT_LENGTH = 120;
+const PREFER_SENTENCE_END_LENGTH = 80;
+
+const idealCommentEnd = /[,.!?)\]>]/;
+function findIdealCommentEnd(line: string) {
+    for (let i = Math.min(120, line.length - 1); i > PREFER_SENTENCE_END_LENGTH; i--) {
+        if (idealCommentEnd.test(line[i])) return i;
+    }
+    return line.lastIndexOf(" ", MAX_COMMENT_LENGTH);
+}
+
 export class CodeWriter {
     private readonly lines: string[] = [];
 
@@ -27,12 +38,18 @@ export class CodeWriter {
     }
 
     public comment(line: string) {
+        line = line.trim();
         if (!line) return;
         if (this.commentLines === 0) {
-            if (!this.lastIsEmpty) this.lines.push("");
             this.lines.push(`${this.indentation}/**`);
         }
-        this.lines.push(`${this.indentation} * ${line}`);
+        while (line.length > MAX_COMMENT_LENGTH) {
+            const index = findIdealCommentEnd(line);
+            const part = line.substring(0, index + 1);
+            this.lines.push(`${this.indentation} * ${part.trim()}`);
+            line = line.substring(index + 1);
+        }
+        if (line.trim()) this.lines.push(`${this.indentation} * ${line.trim()}`);
         this.commentLines++;
         this.lastIsEmpty = false;
     }

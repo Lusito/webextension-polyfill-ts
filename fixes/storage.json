@@ -1,15 +1,15 @@
 {
   "types.$StorageArea.functions.%get.parameters.%keys.choices.#0.type": "null | string",
-  "types.$StorageArea.functions.%get.parameters.%keys.choices.#2.type": "{[s:string] : any}",
+  "types.$StorageArea.functions.%get.parameters.%keys.choices.#2.type": "Record<string, any>",
   "types.$StorageArea.functions.%get.parameters.%keys.choices.#2.additionalProperties": null,
-  "types.$StorageArea.functions.%get.parameters.%callback.parameters.%items.type": "{[s:string] : any}",
+  "types.$StorageArea.functions.%get.parameters.%callback.parameters.%items.type": "Record<string, any>",
   "types.$StorageArea.functions.%get.parameters.%callback.parameters.%items.additionalProperties": null,
-  "types.$StorageArea.functions.%set.parameters.%items.type": "{[s:string] : any}",
+  "types.$StorageArea.functions.%set.parameters.%items.type": "Record<string, any>",
   "types.$StorageAreaSync.functions.%get.parameters.%keys.choices.#0.type": "null | string",
-  "types.$StorageAreaSync.functions.%get.parameters.%keys.choices.#2.type": "{[s:string] : any}",
+  "types.$StorageAreaSync.functions.%get.parameters.%keys.choices.#2.type": "Record<string, any>",
   "types.$StorageAreaSync.functions.%get.parameters.%keys.choices.#2.additionalProperties": null,
-  "types.$StorageAreaSync.functions.%get.parameters.%callback.parameters.%items.type": "{[s:string] : any}",
+  "types.$StorageAreaSync.functions.%get.parameters.%callback.parameters.%items.type": "Record<string, any>",
   "types.$StorageAreaSync.functions.%get.parameters.%callback.parameters.%items.additionalProperties": null,
-  "types.$StorageAreaSync.functions.%set.parameters.%items.type": "{[s:string] : any}",
+  "types.$StorageAreaSync.functions.%set.parameters.%items.type": "Record<string, any>",
   "types.$StorageAreaSync.functions.%getBytesInUse.parameters.%keys.choices.#0.type": "null | string"
 }

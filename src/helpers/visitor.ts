@@ -59,8 +59,8 @@ function walkArray<T extends SchemaProperty>(context: WalkerContext, original: T
     return modified;
 }
 
-function walkMap<T extends SchemaProperty>(context: WalkerContext, original: { [s: string]: T }) {
-    const modified: { [s: string]: T } = {};
+function walkMap<T extends SchemaProperty>(context: WalkerContext, original: Record<string, T>) {
+    const modified: Record<string, T> = {};
     for (const key of Object.keys(original)) {
         const entry = original[key];
         const result = handlePropertyVisit(context, entry);

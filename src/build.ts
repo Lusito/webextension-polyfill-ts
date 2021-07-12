@@ -18,6 +18,7 @@ import {
     fixRef,
     getReturnType,
     getArrayType,
+    setCurrentNamespace,
 } from "./helpers/getType";
 
 function getImports(entry: SchemaEntry, subNamespaces: string[]) {
@@ -56,7 +57,7 @@ function getImports(entry: SchemaEntry, subNamespaces: string[]) {
 
 function addProperties(
     id: string | undefined,
-    properties: { [s: string]: SchemaProperty } | undefined,
+    properties: Record<string, SchemaProperty> | undefined,
     writer: CodeWriter
 ) {
     const assert = new Assert(`build/addProperties(${id})`);
@@ -73,7 +74,7 @@ function addProperties(
             return;
         }
         if (prop.description || prop.optional) {
-            if (prop.description) writer.comment(prop.description);
+            if (prop.description) writer.comment(prop.description.trim());
             if (prop.optional) writer.comment("Optional.");
         }
         writer.code(`${getProperty(key, prop, true)};`);
@@ -88,18 +89,18 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
 
     if (type.description || (type.type === "string" && type.enum)) {
         if (type.description) {
-            writer.comment(type.description);
+            writer.comment(type.description.trim());
             if (type.type === "string" && type.enum && type.enum.length) writer.emptyLine();
         }
         if (type.type === "string") {
             type.enum?.forEach((e) => {
-                if (typeof e !== "string") writer.comment(`"${e.name}": ${e.description}`);
+                if (typeof e !== "string") writer.comment(`"${e.name}": ${e.description.trim()}`);
             });
         }
     }
     if (type.type === "object") {
-        const templateMap: { [s: string]: string } = {
-            Event: "<T extends Function>",
+        const templateMap: Record<string, string> = {
+            Event: "<T extends (...args: any[]) => any>",
             RuleEvent: "<TRule extends Record<string, unknown>>",
         };
         const templateParam = templateMap[type.id || ""] ?? "";
@@ -120,6 +121,7 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
         addProperties(type.id, type.properties, writer);
         type.functions?.forEach((func) => addFunction(func, func.parameters, writer));
         type.events?.forEach((event) => addEvent(event, writer));
+
         writer.end("}");
     } else if (type.type === "string" && type.enum) {
         writer.code(`type ${type.id} = ${getEnumType(type.enum)};`);
@@ -139,6 +141,12 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
     setCurrentTypeId(undefined);
 }
 
+function formatParamComment(param: SchemaProperty) {
+    const description = param.description ? `${param.description}` : "";
+    const fullDescription = param.optional ? `Optional. ${description}` : description;
+    return `@param ${param.name} ${fullDescription.trim()}`;
+}
+
 function addEvent(event: SchemaFunctionProperty, writer: CodeWriter) {
     const name = event.name || event.id;
     const assert = new Assert(`build/addEvent(${name})`);
@@ -149,7 +157,7 @@ function addEvent(event: SchemaFunctionProperty, writer: CodeWriter) {
     }
 
     if (event.description) {
-        writer.comment(event.description);
+        writer.comment(event.description.trim());
         if (event.parameters?.length) writer.emptyLine();
     }
 
@@ -157,11 +165,7 @@ function addEvent(event: SchemaFunctionProperty, writer: CodeWriter) {
         const toType = (values: string[]) => values.map((value) => value.split(".")[1] || value).join(" | ");
         writer.code(`${name}: RuleEvent<${toType(event.options.conditions)}, ${toType(event.options.actions)}>;`);
     } else {
-        event.parameters?.forEach((param) => {
-            const description = param.description ? ` ${param.description}` : "";
-            const fullDescription = param.optional ? ` Optional.${description}` : description;
-            writer.comment(`@param ${param.name}${fullDescription}`);
-        });
+        event.parameters?.forEach((param) => writer.comment(formatParamComment(param)));
 
         if (event.assignableEvent) {
             writer.code(`${name}?: (${getParameters(event.parameters, false)}) => ${getReturnType(event)};`);
@@ -182,7 +186,7 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
     if (!func.name) throw new Error(ErrorMessage.MISSING_NAME);
 
     if (func.description) {
-        writer.comment(func.description);
+        writer.comment(func.description.trim());
         if (parameters || func.returns) writer.emptyLine();
     }
     let asyncParam: SchemaFunctionProperty | null = null;
@@ -195,25 +199,23 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
             parametersWithoutAsync = parameters.slice(0, parameters.length - 1);
             asyncParam = lastParam;
         }
-        parametersWithoutAsync!.forEach((param) => {
-            const description = param.description ? ` ${param.description}` : "";
-            const fullDescription = param.optional ? ` Optional.${description}` : description;
-            writer.comment(`@param ${param.name}${fullDescription}`);
-        });
+        parametersWithoutAsync!.forEach((param) => writer.comment(formatParamComment(param)));
     }
     let returnType = "void";
     if (asyncParam) {
         if (func.returns) throw new Error("Error: conflict between return value and async");
-        const description = asyncParam.description ? ` ${asyncParam.description}` : "";
+        const description = asyncParam.description ? asyncParam.description.trim() : "";
+        if (description) writer.comment(`@returns ${description}`);
+
         if (!asyncParam.parameters || !asyncParam.parameters.length) returnType = "void";
         else if (asyncParam.parameters.length === 1) returnType = getType(asyncParam.parameters[0]);
         else returnType = `[${asyncParam.parameters.map(getType).join(", ")}]`;
         returnType = `Promise<${returnType}>`;
-        writer.comment(`@returns ${returnType}${description}`);
     } else if (func.returns) {
-        const description = func.returns.description ? ` ${func.returns.description}` : "";
+        const description = func.returns.description ? func.returns.description.trim() : "";
+        if (description) writer.comment(`@returns ${description}`);
+
         returnType = getType(func.returns);
-        writer.comment(`@returns ${returnType}${description}`);
     }
     const optionalPart = func.optional ? "?" : "";
     writer.code(`${func.name + optionalPart}(${getParameters(parametersWithoutAsync, true)}): ${returnType};`);
@@ -231,7 +233,8 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
 function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
     try {
         const { entry } = namespace;
-        const filename = `${entry.namespace.replace(/\./g, "_")}.d.ts`;
+        setCurrentNamespace(entry.namespace);
+        const filename = `${namespacePath(namespace)}.d.ts`;
         console.log(`- ${filename}`);
 
         const writer = new CodeWriter();
@@ -239,7 +242,7 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
         writer.comment(`Namespace: browser.${entry.namespace}`);
         writer.comment("Generated from Mozilla sources. Do not manually edit!");
         if (entry.description || entry.permissions) writer.emptyLine();
-        if (entry.description) writer.comment(entry.description);
+        if (entry.description) writer.comment(entry.description.trim());
         if (entry.permissions)
             writer.comment(
                 `Permissions: ${
@@ -259,16 +262,17 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
             .forEach((e) => writer.code(e));
         writer.emptyLine();
 
-        writer.begin(`export declare namespace ${toUpperCamelCase(entry.namespace)} {`);
+        writer.begin(`export namespace ${toUpperCamelCase(entry.namespace)} {`);
         entry.types?.forEach((type) => addType(type, writer));
         const extendsPart = entry.$import ? ` extends ${toUpperCamelCase(entry.$import)}.Static` : "";
         writer.begin(`interface Static${extendsPart} {`);
 
         // Constructors
         entry.types?.forEach((type) => {
-            if (type.type === "object" && type.properties && type.properties.instanceType)
+            if (type.type === "object" && type.properties && type.properties.instanceType) {
                 writer.code(`${type.id}: { new(options?: ${type.id}): ${type.id} };`);
-            writer.emptyLine();
+                writer.emptyLine();
+            }
         });
 
         entry.functions?.forEach((func) => addFunction(func, func.parameters, writer));
@@ -282,24 +286,26 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
 
         writer.end("}");
         writer.end("}");
-        fs.writeFileSync(`lib/${filename}`, writer.toString());
+        fs.writeFileSync(`out/${filename}`, writer.toString());
     } catch (e) {
         console.error(`Error reading ${namespace.file}: `, e);
         throw e;
     }
 }
 
+function namespacePath(ns: ImportedNamespace) {
+    return `namespaces/${ns.entry.namespace.replace(/\./g, "_")}`;
+}
+
 function writeIndexFile(namespaces: ImportedNamespace[]) {
-    console.log("- index.ts");
+    console.log("- index.d.ts");
     const writer = new CodeWriter();
     namespaces.forEach((ns) => {
         if (!ns.entry.namespace.includes("."))
-            writer.code(`import { ${toUpperCamelCase(ns.entry.namespace)} } from "./${ns.entry.namespace}";`);
+            writer.code(`import { ${toUpperCamelCase(ns.entry.namespace)} } from "./${namespacePath(ns)}";`);
     });
     namespaces.forEach((ns) => {
-        writer.code(
-            `export { ${toUpperCamelCase(ns.entry.namespace)} } from "./${ns.entry.namespace.replace(/\./g, "_")}";`
-        );
+        writer.code(`export { ${toUpperCamelCase(ns.entry.namespace)} } from "./${namespacePath(ns)}";`);
     });
 
     writer.emptyLine();
@@ -310,9 +316,15 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     });
     writer.end("}");
 
-    writer.code("export declare const browser: Browser;");
-    writer.emptyLine();
-    fs.writeFileSync("lib/index.d.ts", writer.toString());
+    const template = fs.readFileSync("./templates/index.d.ts", { encoding: "utf-8" });
+    fs.writeFileSync("out/index.d.ts", template.replace("type Browser = any;", writer.toString().trim()));
+}
+
+function writeTsConfig(namespaces: ImportedNamespace[]) {
+    console.log("- tsconfig.json");
+    const template = fs.readFileSync("./templates/tsconfig.json", { encoding: "utf-8" });
+    const namespaceLines = namespaces.map((ns) => `"${namespacePath(ns)}.d.ts"`);
+    fs.writeFileSync("out/tsconfig.json", template.replace(`"namespaces/*.d.ts"`, namespaceLines.join(",\n        ")));
 }
 
 try {
@@ -320,7 +332,8 @@ try {
     const namespaces = importAndFixAll();
     if (namespaces) {
         console.log("removing old definitions: ");
-        rimraf.sync("./lib/*.d.ts");
+        rimraf.sync("./out");
+        fs.mkdirSync("./out/namespaces", { recursive: true });
         console.log("generating new definitions: ");
         const namespaceKeys = namespaces.map((ns) => ns.entry.namespace);
         namespaces.forEach((ns) => {
@@ -331,6 +344,7 @@ try {
             );
         });
         writeIndexFile(namespaces);
+        writeTsConfig(namespaces);
 
         console.log("--------------------");
         console.log("All definitions generated!");
