@@ -34,9 +34,6 @@
     "validate:out": "tsc -p tsconfig-out.json",
     "validate:schemas": "ts-node src/validate.ts"
   },
-  "dependencies": {
-    "webextension-polyfill": "^0.8.0"
-  },
   "devDependencies": {
     "@lusito/eslint-config": "^1.6.1",
     "@lusito/prettier-config": "^1.6.0",
