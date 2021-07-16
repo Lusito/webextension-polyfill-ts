@@ -335,7 +335,7 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     });
     writer.emptyLine();
 
-    writer.begin("export interface Browser {");
+    writer.begin("interface Browser {");
     namespaces.forEach((ns) => {
         if (!ns.entry.namespace.includes("."))
             writer.code(`${ns.entry.namespace}: ${toUpperCamelCase(ns.entry.namespace)}.Static;`);
@@ -343,12 +343,14 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     writer.end("}");
     writer.emptyLine();
 
+    writer.code("/* tslint:disable:strict-export-declare-modifiers */");
     namespaces.forEach((ns) => {
         if (!ns.entry.namespace.includes(".")) {
             const name = toUpperCamelCase(ns.entry.namespace);
             writer.code(`export import ${name} = Imported${name};`);
         }
     });
+    writer.code("/* tslint:enable:strict-export-declare-modifiers */");
     writer.end("}");
 
     const template = fs.readFileSync("./src/indexTemplate.d.ts", { encoding: "utf-8" });
