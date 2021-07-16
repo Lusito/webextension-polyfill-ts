@@ -320,23 +320,39 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     console.log("- index.d.ts");
     const writer = new CodeWriter();
     namespaces.forEach((ns) => {
-        if (!ns.entry.namespace.includes("."))
-            writer.code(`import { ${toUpperCamelCase(ns.entry.namespace)} } from "./${namespacePath(ns)}";`);
-    });
-    namespaces.forEach((ns) => {
-        writer.code(`export { ${toUpperCamelCase(ns.entry.namespace)} } from "./${namespacePath(ns)}";`);
+        if (!ns.entry.namespace.includes(".")) {
+            const name = toUpperCamelCase(ns.entry.namespace);
+            writer.code(`import { ${name} as Imported${name} } from "./${namespacePath(ns)}";`);
+        }
     });
 
     writer.emptyLine();
+    writer.begin("declare namespace Browser {");
+    namespaces.forEach((ns) => {
+        if (!ns.entry.namespace.includes(".")) {
+            writer.code(`const ${ns.entry.namespace}: ${toUpperCamelCase(ns.entry.namespace)}.Static;`);
+        }
+    });
+    writer.emptyLine();
+
     writer.begin("export interface Browser {");
     namespaces.forEach((ns) => {
         if (!ns.entry.namespace.includes("."))
             writer.code(`${ns.entry.namespace}: ${toUpperCamelCase(ns.entry.namespace)}.Static;`);
     });
     writer.end("}");
+    writer.emptyLine();
+
+    namespaces.forEach((ns) => {
+        if (!ns.entry.namespace.includes(".")) {
+            const name = toUpperCamelCase(ns.entry.namespace);
+            writer.code(`export import ${name} = Imported${name};`);
+        }
+    });
+    writer.end("}");
 
     const template = fs.readFileSync("./src/indexTemplate.d.ts", { encoding: "utf-8" });
-    fs.writeFileSync("out/index.d.ts", template.replace("type Browser = any;", writer.toString().trim()));
+    fs.writeFileSync("out/index.d.ts", template.replace("declare namespace Browser {}", writer.toString().trim()));
 }
 
 try {

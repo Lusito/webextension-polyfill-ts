@@ -6,8 +6,7 @@
 
 // Generated from Mozilla sources. Do not manually edit!
 
-type Browser = any;
+declare namespace Browser {}
 
-declare const browser: Browser;
-
-export default browser;
+export = Browser;
+export as namespace browser;
