@@ -51,6 +51,21 @@ All types are inside their respective namespace:
 * Nested namespaces will remove the dot and have the first character after the dot as upper-case.
   * For example `browser.devtools.inspectedWindow` types are in the `DevtoolsInspectedWindow` namespace.
 
+### ES6 Module Loader
+
+If you are loading the polyfill using native ES6 module loader, it will export a global object.
+I don't recommend that use-case, but if you are looking for types in this scenario, you can make the types work by creating a file `global.d.ts` with this content:
+
+```typescript
+import type { Browser } from "webextension-polyfill";
+
+declare global {
+    const browser: Browser.Browser;
+}
+```
+
+**Note:** I haven't tried the ES6 module loader approach, and the above will only get you the types. Check out [Basic Setup with module bundlers](https://github.com/mozilla/webextension-polyfill#basic-setup-with-module-bundlers) for more information and don't ask me about it, as I have no clue whatsoever (aside from the types).
+
 ## Unit Testing
 Consider [mockzilla-webextension](https://lusito.github.io/mockzilla-webextension/) for unit-testing. It combines all the types this package provides with some nifty mocking functionality.
 
