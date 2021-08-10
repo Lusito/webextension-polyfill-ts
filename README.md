@@ -1,23 +1,44 @@
-# Web-Extension Polyfill for TypeScript
+# TypeScript Types for the Web-Extension Polyfill
 
-This is a TypeScript ready "wrapper" for the [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill) by Mozilla.
-* It does include webextension-polyfill, so no need to manually add it.
-* It is generated from these mozilla schema (.json) files:
+## News: This Has Changed to Be a Pure Generator Project
+
+This project supplies the TypeScript types for the [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill) by Mozilla.
+[@types/webextension-polyfill](https://www.npmjs.com/package/@types/webextension-polyfill) is not manually written, it is generated from these mozilla schema (.json) files:
   * [toolkit](https://hg.mozilla.org/integration/autoland/raw-file/tip/toolkit/components/extensions/schemas/)
   * [browser](https://hg.mozilla.org/integration/autoland/raw-file/tip/browser/components/extensions/schemas/)
 
-## How to use:
-This guide assumes you are building a web-extension using npm and webpack, parcel or similar.
+## Migration Guide From webextension-polyfill-ts
+
+This used to be a wrapper library, which included webextension-polyfill. If you have been using `webextension-polyfill-ts` before, then you can easily move to `@types/webextension-polyfill` with these steps:
+
+- Replace all imports of "webextension-polyfill-ts" with "webextension-polyfill".
+- In all places, where you would import `{ browser }`, you'll now need to import `browser`.
+
+Examples:
+
+```TypeScript
+// Before:
+import { browser } from "webextension-polyfill-ts";
+// After
+import browser from "webextension-polyfill";
+
+// Before:
+import { browser, Cookies } from "webextension-polyfill-ts";
+// After
+import browser, { Cookies } from "webextension-polyfill";
+```
+
+## How to Use:
+This guide assumes you are already using [webextension-polyfill](https://github.com/mozilla/webextension-polyfill).
 If you are looking for an example use-case, check out the development branch of my web-extension [Forget Me Not](https://github.com/lusito/forget-me-not/tree/develop).
 
-* `npm install --save-dev webextension-polyfill-ts`
-* `import { browser } from "webextension-polyfill-ts";`
-  * Use this to access the browser API.
-  * If the current environment does not supply a global window object, the exported browser object will be a dummy object, which you can use for unit tests.
+* `npm install webextension-polyfill` (if you haven't done this already)
+* `npm install --save-dev @types/webextension-polyfill`
+* `import browser from "webextension-polyfill";`
 
-If you want to use the exported types in your code, simply import them like this:
+If you want to use the generated types in your code, simply import them like this:
 ```typescript
-import { Cookies } from "webextension-polyfill-ts";
+import { Cookies } from "webextension-polyfill";
 
 function inspectCookie(cookie: Cookies.Cookie) {
     //...
@@ -45,10 +66,11 @@ There are still some issues left:
 See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Help
-If you have problems, questions or other feedback, please [create an issue](https://github.com/Lusito/webextension-polyfill-ts/issues) here on Github.
+All runtime issues you have should be reported at the [webextension-polyfill](https://github.com/mozilla/webextension-polyfill).
+If you have problems, questions or other feedback about the generated types, please [create an issue](https://github.com/Lusito/webextension-polyfill-ts/issues) here on Github.
 
 ## License
 My generator code of this project has been released under the [zlib/libpng License](https://github.com/Lusito/webextension-polyfill-ts/blob/master/LICENSE)
 
-The schema files from mozilla however have defined their own licences, which will be exported to the generated .ts files as well.
+The schema files from mozilla however have defined their own licences, which will be exported to the generated `@types` project as well.
 For example, there are files under the Mozilla Public License and some under a BSD style license.
