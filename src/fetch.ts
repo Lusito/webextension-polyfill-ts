@@ -11,7 +11,7 @@ async function getJsonFileList(url: string) {
         return lines
             .filter((l) => l.endsWith(".json") && !l.endsWith(" telemetry.json"))
             .map((l) => url + l.split(" ")[2]);
-    } catch (error) {
+    } catch (error: any) {
         console.error(error.response.body);
         return null;
     }
@@ -25,7 +25,7 @@ async function downloadFile(url: string) {
         const response = await got(url);
         fs.writeFileSync(`./schemas/${filename}`, response.body);
         console.log(`${filename} saved`);
-    } catch (error) {
+    } catch (error: any) {
         console.error(`Error downloading ${filename}: ${error.response.body}`);
     }
 }
@@ -39,7 +39,7 @@ async function downloadChromeFile(url: string) {
         const buffer = Buffer.from(response.body, "base64");
         fs.writeFileSync(`./schemas/${filename}`, buffer.toString("utf8"));
         console.log(`${filename} saved`);
-    } catch (error) {
+    } catch (error: any) {
         console.error(`Error downloading ${filename}: ${error.response?.body || error.message}`);
     }
 }

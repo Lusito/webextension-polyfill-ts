@@ -34,7 +34,7 @@ function handleVisit(context: WalkerContext, original: any, visitorKey: SchemaVi
     if (visitor) {
         try {
             return visitor(original);
-        } catch (e) {
+        } catch (e: any) {
             e.message = `Error processing '${context.filename}' in visitor '${context.visitorInfo.name}' (${visitorKey}): ${e.message}`;
             throw e;
         }

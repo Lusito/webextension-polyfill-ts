@@ -35,15 +35,15 @@
     "validate:schemas": "ts-node src/validate.ts"
   },
   "devDependencies": {
-    "@lusito/eslint-config": "^1.6.1",
-    "@lusito/prettier-config": "^1.6.0",
+    "@lusito/eslint-config": "^1.7.0",
+    "@lusito/prettier-config": "^1.7.0",
     "@lusito/stylelint-config": "^1.6.0",
-    "@types/node": "^16.0.0",
-    "@types/rimraf": "^3.0.0",
+    "@types/node": "^16.11.1",
+    "@types/rimraf": "^3.0.2",
     "got": "^11.8.2",
     "rimraf": "^3.0.2",
-    "sort-package-json": "^1.50.0",
-    "ts-node": "^10.0.0",
-    "typescript": "^4.3.5"
+    "sort-package-json": "^1.52.0",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.4"
   }
 }
