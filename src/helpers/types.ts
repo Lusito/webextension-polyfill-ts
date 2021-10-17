@@ -22,6 +22,7 @@ export interface SchemaBaseProperty {
 export interface SchemaChoicesProperty extends SchemaBaseProperty {
     type: "choices";
     choices?: SchemaProperty[];
+    default?: any[];
 }
 
 export interface SchemaAnyProperty extends SchemaBaseProperty {

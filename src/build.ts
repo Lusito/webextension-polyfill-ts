@@ -137,6 +137,8 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
         writer.end("}");
     } else if (type.type === "string" && type.enum) {
         writer.code(`type ${type.id} = ${getEnumType(type.enum)};`);
+    } else if (type.type === "ref") {
+        writer.code(`type ${type.id} = ${type.$ref};`);
     } else if (type.type === "string") {
         writer.code(`type ${type.id} = string;`);
     } else if (type.type === "value") {

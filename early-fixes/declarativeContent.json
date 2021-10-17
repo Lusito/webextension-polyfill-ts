@@ -1,0 +1,8 @@
+{
+  "types.$ShowPageAction": {
+    "id": "ShowPageAction",
+    "description": "Please use ShowAction.",
+    "type": "ref",
+    "$ref": "never"
+  }
+}

@@ -111,7 +111,7 @@ function validateSchemaPropertyWithoutExtend(assert: Assert, json: any) {
 
 class SchemaChoicesPropertyValidator extends SchemaBasePropertyValidator {
     public static getValidKeys() {
-        return super.getValidKeys().concat(["choices", "preprocess"]);
+        return super.getValidKeys().concat(["choices", "preprocess", "default"]);
     }
 
     public static validate(json: any) {

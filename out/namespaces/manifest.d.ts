@@ -113,7 +113,12 @@ export namespace Manifest {
         /**
          * Optional.
          */
-        permissions?: PermissionOrOrigin[];
+        permissions?: PermissionOrOrigin[] | Permission[];
+
+        /**
+         * Optional.
+         */
+        host_permissions?: MatchPattern[];
 
         /**
          * Optional.
@@ -1113,6 +1118,11 @@ export namespace Manifest {
          * Optional.
          */
         ntp_background?: ThemeColor;
+
+        /**
+         * Optional.
+         */
+        ntp_card_background?: ThemeColor;
 
         /**
          * Optional.

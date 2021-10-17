@@ -89,6 +89,24 @@ function visitor(entry: SchemaEntry, directory: string) {
             }
             if (index === -1) throw new Error(`Could not find ${lastPart}`);
             base.splice(index, 1);
+        // special case for $ref
+        } else if (lastPart === "$ref") {
+            base[lastPart] = value;
+        } else if (lastPart[0] === "$") {
+            const id = lastPart.substr(1);
+            assert.typeOf(base, "array");
+            const index = base.findIndex((e: any) => e.id === id);
+            base[index] = value;
+        } else if (lastPart[0] === "%") {
+            const name = lastPart.substr(1);
+            assert.typeOf(base, "array");
+            const index = base.findIndex((e: any) => e.name === name);
+            base[index] = value;
+        } else if (lastPart[0] === "#") {
+            assert.typeOf(base, "array");
+            const index = parseInt(lastPart.substr(1));
+            if (index >= base.length || index < 0) throw new Error("Index out of bounds");
+            base[index] = value;
         } else {
             base[lastPart] = value;
         }
