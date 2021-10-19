@@ -158,7 +158,7 @@ export namespace Manifest {
         /**
          * Optional.
          */
-        commands?: WebExtensionManifestCommandsType;
+        commands?: Record<string, WebExtensionManifestCommandsType>;
 
         /**
          * Optional.
