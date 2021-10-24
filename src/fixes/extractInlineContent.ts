@@ -19,6 +19,25 @@ function convertToRef(prop: SchemaProperty, id: string, entry: SchemaEntry): Sch
     return newProp;
 }
 
+function convertToNestedRef(prop: SchemaProperty, id: string, entry: SchemaEntry): SchemaProperty {
+    const newProp: SchemaProperty = {
+        type: "object",
+        additionalProperties: {
+            type: "ref",
+            $ref: id,
+        },
+    };
+    if (prop.name) newProp.name = prop.name;
+    if (prop.description) newProp.description = prop.description;
+    if (!entry.types) entry.types = [];
+    if (prop.optional) newProp.optional = prop.optional;
+    delete prop.name;
+    prop.id = id;
+    entry.types.push(prop);
+
+    return newProp;
+}
+
 function combineNamePrefix(namePrefix: string, suffix?: string) {
     if (suffix) return namePrefix + toUpperCamelCase(suffix);
     return namePrefix;
@@ -117,6 +136,16 @@ function extractParameterObjectType(
                 // special case for a map type.. not extracted, will be handled in getType
             } else if (prop.patternProperties) {
                 // special case for a map type.. not extracted, will be handled in getType
+            } else if (
+                (!prop.properties || Object.keys(prop.properties).length === 0) &&
+                prop.additionalProperties &&
+                prop.additionalProperties !== true &&
+                prop.additionalProperties.type === "object"
+            ) {
+                // special case for a nested object type
+                if (!namePrefix) throw new Error(ErrorMessage.MISSING_NAME);
+                const id = `${namePrefix}Type`;
+                prop = convertToNestedRef(prop, id, entry);
             } else {
                 if (!namePrefix) throw new Error(ErrorMessage.MISSING_NAME);
                 const id = `${namePrefix}Type`;
