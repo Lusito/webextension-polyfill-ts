@@ -49,6 +49,13 @@ export namespace Runtime {
          * Optional.
          */
         sender?: MessageSender;
+
+        /**
+         * If the port was disconnected due to an error, this will be set to an object with a string property message,
+         * giving you more information about the error. See onDisconnect.
+         * Optional.
+         */
+        error?: PortErrorType;
     }
 
     /**
@@ -218,6 +225,14 @@ export namespace Runtime {
          * Optional.
          */
         message?: string;
+    }
+
+    /**
+     * If the port was disconnected due to an error, this will be set to an object with a string property message,
+     * giving you more information about the error. See onDisconnect.
+     */
+    interface PortErrorType {
+        message: string;
     }
 
     interface Static {

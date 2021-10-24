@@ -4,6 +4,14 @@
     "description": "The manifest details."
   },
   "functions.%connect.parameters.%extensionId.skipableParameter": true,
+  "types.$Port.properties.error": {
+    "type": "object",
+    "description": "If the port was disconnected due to an error, this will be set to an object with a string property message, giving you more information about the error. See onDisconnect.",
+    "optional": true,
+    "properties": {
+      "message": {"type": "string"}
+    }
+  },
   "types.$Port.properties.onDisconnect": {
     "isEvent": true,
     "name": "onDisconnect",
