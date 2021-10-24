@@ -1,0 +1,3 @@
+{
+  "types.$OptionalPermission.choices.#1.enum.+[]": ["identity.email"]
+}

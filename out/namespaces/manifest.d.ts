@@ -297,7 +297,8 @@ export namespace Manifest {
         | "tabs"
         | "tabHide"
         | "topSites"
-        | "webNavigation";
+        | "webNavigation"
+        | "identity.email";
 
     type OptionalPermissionOrOrigin = OptionalPermission | MatchPattern;
 
