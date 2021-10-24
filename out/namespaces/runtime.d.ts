@@ -257,7 +257,7 @@ export namespace Runtime {
          *
          * @returns The manifest details.
          */
-        getManifest(): Manifest.ManifestBase;
+        getManifest(): Manifest.WebExtensionManifest;
 
         /**
          * Converts a relative path within an app/extension install directory to a fully-qualified URL.

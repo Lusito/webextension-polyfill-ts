@@ -1,6 +1,6 @@
 {
   "functions.%getManifest.returns": {
-    "$ref": "Manifest.ManifestBase",
+    "$ref": "Manifest.WebExtensionManifest",
     "description": "The manifest details."
   },
   "functions.%connect.parameters.%extensionId.skipableParameter": true,
