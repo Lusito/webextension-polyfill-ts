@@ -88,8 +88,5 @@ export function readSchemaFile(folder: string, file: string) {
 export type SchemaFileData = ReturnType<typeof readSchemaFile>;
 
 export function readAllSchemaFiles() {
-    return [
-        ...fs.readdirSync("./schemas").map((file) => readSchemaFile("schemas", file)),
-        ...fs.readdirSync("./schemasAdditional").map((file) => readSchemaFile("schemasAdditional", file)),
-    ];
+    return fs.readdirSync("./schemas").map((file) => readSchemaFile("schemas", file));
 }
