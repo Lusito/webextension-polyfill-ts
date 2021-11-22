@@ -1,3 +1,8 @@
 {
-  "types.$OptionalPermission.choices.#1.enum.+[]": ["identity.email"]
+  "types.$OptionalPermission.choices.#1.enum.+[]": ["identity.email"],
+  "types.$ManifestBase.properties.version_name": {
+    "type": "string",
+    "description": "In addition to the version field, which is used for update purposes, version_name can be set to a descriptive version string and will be used for display purposes if present. If no version_name is present, the version field will be used for display purposes as well.",
+    "optional": true
+  }
 }
