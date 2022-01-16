@@ -268,6 +268,14 @@ export namespace Runtime {
         getURL(path: string): string;
 
         /**
+         * Get the frameId of any window global or frame element.
+         *
+         * @param target A WindowProxy or a Browsing Context container element (IFrame, Frame, Embed, Object) for the target frame.
+         * @returns The frameId of the target frame, or -1 if it doesn't exist.
+         */
+        getFrameId(target: any): number;
+
+        /**
          * Sets the URL to be visited upon uninstallation. This may be used to clean up server-side data, do analytics,
          * and implement surveys. Maximum 255 characters.
          *

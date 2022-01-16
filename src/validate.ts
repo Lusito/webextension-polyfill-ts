@@ -295,6 +295,7 @@ class SchemaFunctionPropertyValidator extends SchemaBasePropertyValidator {
                 "extraParameters",
                 "returns",
                 "allowAmbiguousOptionalArguments",
+                "allowCrossOriginArguments",
                 "filters",
                 "options",
             ]);
@@ -314,6 +315,7 @@ class SchemaFunctionPropertyValidator extends SchemaBasePropertyValidator {
         assert.typeOf(json.returns, "object", "undefined");
         if (json.returns) validateSchemaPropertyWithoutExtend(assert, json.returns);
         assert.typeOf(json.allowAmbiguousOptionalArguments, "boolean", "undefined");
+        assert.typeOf(json.allowCrossOriginArguments, "boolean", "undefined");
         assert.typeOf(json.filters, "array", "undefined");
         workArray(json.filters, (e) => validateSchemaPropertyWithoutExtend(assert, e));
         assert.typeOf(json.options, "object", "undefined");

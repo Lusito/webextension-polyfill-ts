@@ -94,6 +94,7 @@ export interface SchemaFunctionProperty extends SchemaBaseProperty {
     extraParameters?: SchemaProperty[];
     returns?: SchemaProperty;
     allowAmbiguousOptionalArguments?: boolean;
+    allowCrossOriginArguments?: boolean;
     filters?: SchemaProperty[];
     assignableEvent?: boolean; // used for fixes/*.json only
     options?: {

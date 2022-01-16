@@ -19,7 +19,6 @@ export namespace GeckoProfiler {
         | "screenshots"
         | "seqstyle"
         | "stackwalk"
-        | "threads"
         | "jstracer"
         | "jsallocations"
         | "nostacksampling"
@@ -32,6 +31,7 @@ export namespace GeckoProfiler {
         | "cpuallthreads"
         | "samplingallthreads"
         | "markersallthreads"
+        | "unregisteredthreads"
         | "responsiveness";
 
     type supports = "windowLength";
