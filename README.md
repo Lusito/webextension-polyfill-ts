@@ -60,7 +60,7 @@ I don't recommend that use-case, but if you are looking for types in this scenar
 import type { Browser } from "webextension-polyfill";
 
 declare global {
-    const browser: Browser.Browser;
+    const browser: Browser;
 }
 ```
 
