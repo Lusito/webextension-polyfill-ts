@@ -32,6 +32,7 @@ export namespace GeckoProfiler {
         | "samplingallthreads"
         | "markersallthreads"
         | "unregisteredthreads"
+        | "processcpu"
         | "responsiveness";
 
     type supports = "windowLength";

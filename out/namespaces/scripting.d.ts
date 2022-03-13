@@ -10,6 +10,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+import { Manifest } from "./manifest";
+import { ExtensionTypes } from "./extensionTypes";
+
 export namespace Scripting {
     /**
      * Details of a script injection
@@ -23,7 +26,7 @@ export namespace Scripting {
         args?: any[];
 
         /**
-         * The path of the JS or CSS files to inject, relative to the extension's root directory. Exactly one of <code>files</code>
+         * The path of the JS files to inject, relative to the extension's root directory. Exactly one of <code>files</code>
          * and <code>func</code> must be specified.
          * Optional.
          */
@@ -61,6 +64,12 @@ export namespace Scripting {
         result?: any;
 
         /**
+         * When the injection has failed, the error is exposed to the caller with this property.
+         * Optional.
+         */
+        error?: InjectionResultErrorType;
+
+        /**
          * Whether the script should inject into all frames within the tab. Defaults to false.
          * This must not be true if frameIds is specified.
          * Optional.
@@ -79,16 +88,98 @@ export namespace Scripting {
         frameIds?: number[];
 
         /**
-         * The ID of the tab into which to inject.
-         */
-        tabId: number;
-
-        /**
          * Whether the script should inject into all frames within the tab. Defaults to false.
          * This must not be true if frameIds is specified.
          * Optional.
          */
         allFrames?: boolean;
+
+        /**
+         * The ID of the tab into which to inject.
+         */
+        tabId: number;
+    }
+
+    interface CSSInjection {
+        /**
+         * A string containing the CSS to inject. Exactly one of <code>files</code> and <code>css</code> must be specified.
+         * Optional.
+         */
+        css?: string;
+
+        /**
+         * The path of the CSS files to inject, relative to the extension's root directory. Exactly one of <code>files</code>
+         * and <code>css</code> must be specified.
+         * Optional.
+         */
+        files?: string[];
+
+        /**
+         * The style origin for the injection. Defaults to <code>'AUTHOR'</code>.
+         * Optional.
+         */
+        origin?: CSSInjectionOriginEnum;
+
+        /**
+         * Details specifying the target into which to inject the CSS.
+         */
+        target: InjectionTarget;
+    }
+
+    interface ContentScriptFilter {
+        /**
+         * The IDs of specific scripts to retrieve with <code>getRegisteredContentScripts()</code> or to unregister with <code>
+         * unregisterContentScripts()</code>.
+         * Optional.
+         */
+        ids?: string[];
+    }
+
+    interface RegisteredContentScript {
+        /**
+         * If specified true, it will inject into all frames, even if the frame is not the top-most frame in the tab.
+         * Each frame is checked independently for URL requirements; it will not inject into child frames if the URL requirements
+         * are not met. Defaults to false, meaning that only the top frame is matched.
+         * Optional.
+         */
+        allFrames?: boolean;
+
+        /**
+         * Excludes pages that this content script would otherwise be injected into.
+         * Optional.
+         */
+        excludeMatches?: string[];
+
+        /**
+         * The id of the content script, specified in the API call.
+         */
+        id: string;
+
+        /**
+         * The list of JavaScript files to be injected into matching pages. These are injected in the order they appear in this
+         * array.
+         * Optional.
+         */
+        js?: Manifest.ExtensionURL[];
+
+        /**
+         * Specifies which pages this content script will be injected into. Must be specified for <code>registerContentScripts()
+         * </code>.
+         * Optional.
+         */
+        matches?: string[];
+
+        /**
+         * Specifies when JavaScript files are injected into the web page. The preferred and default value is <code>
+         * document_idle</code>.
+         * Optional.
+         */
+        runAt?: ExtensionTypes.RunAt;
+
+        /**
+         * Specifies if this content script will persist into future sessions. This is currently NOT supported.
+         */
+        persistAcrossSessions: boolean;
     }
 
     /**
@@ -131,6 +222,21 @@ export namespace Scripting {
         target: InjectionTarget;
     }
 
+    /**
+     * When the injection has failed, the error is exposed to the caller with this property.
+     */
+    interface InjectionResultErrorType {
+        /**
+         * A message explaining why the injection has failed.
+         */
+        message: string;
+    }
+
+    /**
+     * The style origin for the injection. Defaults to <code>'AUTHOR'</code>.
+     */
+    type CSSInjectionOriginEnum = "USER" | "AUTHOR";
+
     interface Static {
         /**
          * Injects a script into a target context. The script will be run at <code>document_idle</code>.
@@ -140,6 +246,50 @@ export namespace Scripting {
          * where the injection succeeded.
          */
         executeScript(injection: ScriptInjection): Promise<InjectionResult[]>;
+
+        /**
+         * Inserts a CSS stylesheet into a target context. If multiple frames are specified, unsuccessful injections are ignored.
+         *
+         * @param injection The details of the styles to insert.
+         * @returns Invoked upon completion of the injection.
+         */
+        insertCSS(injection: CSSInjection): Promise<void>;
+
+        /**
+         * Removes a CSS stylesheet that was previously inserted by this extension from a target context.
+         *
+         * @param injection The details of the styles to remove. Note that the <code>css</code>, <code>files</code>, and <code>
+         * origin</code> properties must exactly match the stylesheet inserted through <code>insertCSS</code>.
+         * Attempting to remove a non-existent stylesheet is a no-op.
+         * @returns Invoked upon completion of the injection.
+         */
+        removeCSS(injection: CSSInjection): Promise<void>;
+
+        /**
+         * Registers one or more content scripts for this extension.
+         *
+         * @param scripts Contains a list of scripts to be registered. If there are errors during script parsing/file validation,
+         * or if the IDs specified already exist, then no scripts are registered.
+         * @returns Invoked upon completion of the registration.
+         */
+        registerContentScripts(scripts: RegisteredContentScript[]): Promise<void>;
+
+        /**
+         * Returns all dynamically registered content scripts for this extension that match the given filter.
+         *
+         * @param filter Optional. An object to filter the extension's dynamically registered scripts.
+         * @returns The resulting array contains the registered content scripts.
+         */
+        getRegisteredContentScripts(filter?: ContentScriptFilter): Promise<RegisteredContentScript[]>;
+
+        /**
+         * Unregisters one or more content scripts for this extension.
+         *
+         * @param filter Optional. If specified, only unregisters dynamic content scripts which match the filter. Otherwise,
+         * all of the extension's dynamic content scripts are unregistered.
+         * @returns Invoked upon completion of the unregistration.
+         */
+        unregisterContentScripts(filter?: ContentScriptFilter): Promise<void>;
 
         /**
          * Injects CSS into a page. For details, see the $(topic:content_scripts)[programmatic injection]

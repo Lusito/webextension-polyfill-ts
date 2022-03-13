@@ -132,7 +132,9 @@
                   "page": { "$ref": "ExtensionURL" },
                   "persistent": {
                     "optional": true,
-                    "$ref": "PersistentBackgroundProperty"
+                    "type": "boolean",
+                    "max_manifest_version": 2,
+                    "default": true
                   }
                 },
                 "additionalProperties": { "$ref": "UnrecognizedProperty" }
@@ -146,7 +148,9 @@
                   },
                   "persistent": {
                     "optional": true,
-                    "$ref": "PersistentBackgroundProperty"
+                    "type": "boolean",
+                    "max_manifest_version": 2,
+                    "default": true
                   }
                 },
                 "additionalProperties": { "$ref": "UnrecognizedProperty" }
@@ -244,6 +248,12 @@
                 }
               }
             ]
+          },
+
+          "granted_host_permissions": {
+            "type": "boolean",
+            "optional": true,
+            "default": false
           },
 
           "host_permissions": {
@@ -722,20 +732,6 @@
         "id": "UnrecognizedProperty",
         "type": "any",
         "deprecated": "An unexpected property was found in the WebExtension manifest."
-      },
-      {
-        "id": "PersistentBackgroundProperty",
-        "choices": [
-          {
-            "type": "boolean",
-            "enum": [true]
-          },
-          {
-            "type": "boolean",
-            "enum": [false],
-            "deprecated": "Event pages are not currently supported. This will run as a persistent background page."
-          }
-        ]
       }
     ]
   }

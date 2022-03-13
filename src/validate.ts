@@ -252,7 +252,7 @@ class SchemaNumberPropertyValidator extends SchemaBasePropertyValidator {
 
 class SchemaBooleanPropertyValidator extends SchemaBasePropertyValidator {
     public static getValidKeys() {
-        return super.getValidKeys().concat(["type", "default"]);
+        return super.getValidKeys().concat(["type", "default", "enum"]);
     }
 
     public static validate(json: any) {
@@ -261,6 +261,8 @@ class SchemaBooleanPropertyValidator extends SchemaBasePropertyValidator {
         assert.validOjectKeys(json, this.getValidKeys());
         assert.equal(json.type, "boolean");
         assert.typeOf(json.default, "boolean", "undefined");
+        assert.typeOf(json.enum, "array", "undefined");
+        json.enum?.forEach((value: any) => assert.typeOf(value, "boolean"));
     }
 }
 

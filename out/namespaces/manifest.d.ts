@@ -137,6 +137,11 @@ export namespace Manifest {
         /**
          * Optional.
          */
+        granted_host_permissions?: boolean;
+
+        /**
+         * Optional.
+         */
         host_permissions?: MatchPattern[];
 
         /**
@@ -463,8 +468,6 @@ export namespace Manifest {
     type IconPath = Record<string, ExtensionFileUrl> | ExtensionFileUrl;
 
     type IconImageData = Record<string, ImageData> | ImageData;
-
-    type PersistentBackgroundProperty = boolean;
 
     interface ActionManifest {
         /**
