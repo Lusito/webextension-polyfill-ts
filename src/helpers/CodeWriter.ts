@@ -48,6 +48,14 @@ export class CodeWriter {
     public comment(line: string) {
         line = line.trim();
         if (!line) return;
+        for (const line2 of line.split("\n")) {
+            this.commentSingleLine(line2);
+        }
+    }
+
+    private commentSingleLine(line: string) {
+        line = line.trim();
+        if (!line) return;
         this.writeInstructionCount++;
         if (this.commentLines === 0) {
             this.lines.push(`${this.indentation}/**`);
