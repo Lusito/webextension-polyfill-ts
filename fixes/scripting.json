@@ -66,47 +66,5 @@
         }
       }
     }
-  ],
-  "functions.+[]": [
-    {
-      "name": "insertCSS",
-      "type": "function",
-      "description": "Injects CSS into a page. For details, see the $(topic:content_scripts)[programmatic injection] section of the content scripts doc.",
-      "async": "callback",
-      "parameters": [
-        {
-          "$ref": "CSSInjection",
-          "name": "injection",
-          "description": "Details of the CSS text to insert."
-        },
-        {
-          "type": "function",
-          "name": "callback",
-          "optional": true,
-          "description": "Called when all the CSS has been inserted.",
-          "parameters": []
-        }
-      ]
-    },
-    {
-      "name": "removeCSS",
-      "type": "function",
-      "description": "Removes injected CSS from a page. For details, see the $(topic:content_scripts)[programmatic injection] section of the content scripts doc.",
-      "async": "callback",
-      "parameters": [
-        {
-          "$ref": "CSSInjection",
-          "name": "injection",
-          "description": "Details of the CSS text to insert."
-        },
-        {
-          "type": "function",
-          "name": "callback",
-          "optional": true,
-          "description": "Called when all the CSS has been removed.",
-          "parameters": []
-        }
-      ]
-    }
   ]
 }

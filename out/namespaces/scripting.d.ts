@@ -324,23 +324,5 @@ export namespace Scripting {
          * @returns Invoked when scripts have been updated.
          */
         updateContentScripts(scripts: UpdateContentScriptsScriptsItemType[]): Promise<void>;
-
-        /**
-         * Injects CSS into a page. For details, see the $(topic:content_scripts)[programmatic injection]
-         * section of the content scripts doc.
-         *
-         * @param injection Details of the CSS text to insert.
-         * @returns Called when all the CSS has been inserted.
-         */
-        insertCSS(injection: CSSInjection): Promise<void>;
-
-        /**
-         * Removes injected CSS from a page. For details, see the $(topic:content_scripts)[programmatic injection]
-         * section of the content scripts doc.
-         *
-         * @param injection Details of the CSS text to insert.
-         * @returns Called when all the CSS has been removed.
-         */
-        removeCSS(injection: CSSInjection): Promise<void>;
     }
 }
