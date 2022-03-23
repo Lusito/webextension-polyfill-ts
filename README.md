@@ -57,7 +57,7 @@ If you are loading the polyfill using native ES6 module loader, it will export a
 I don't recommend that use-case, but if you are looking for types in this scenario, you can make the types work by creating a file `global.d.ts` with this content:
 
 ```typescript
-import type { Browser } from "webextension-polyfill";
+import type Browser from "webextension-polyfill";
 
 declare global {
     const browser: Browser.Browser;
