@@ -46,6 +46,11 @@ export namespace Scripting {
          * Details specifying the target into which to inject the script.
          */
         target: InjectionTarget;
+
+        /**
+         * Optional.
+         */
+        world?: ExecutionWorld;
     }
 
     /**
@@ -135,6 +140,11 @@ export namespace Scripting {
         ids?: string[];
     }
 
+    /**
+     * The JavaScript world for a script to execute within. We currently only support the <code>'ISOLATED'</code> world.
+     */
+    type ExecutionWorld = "ISOLATED";
+
     interface RegisteredContentScript {
         /**
          * If specified true, it will inject into all frames, even if the frame is not the top-most frame in the tab.
@@ -178,8 +188,15 @@ export namespace Scripting {
 
         /**
          * Specifies if this content script will persist into future sessions. This is currently NOT supported.
+         * Optional.
          */
-        persistAcrossSessions: boolean;
+        persistAcrossSessions?: boolean;
+
+        /**
+         * The list of CSS files to be injected into matching pages. These are injected in the order they appear in this array.
+         * Optional.
+         */
+        css?: Manifest.ExtensionURL[];
     }
 
     /**
@@ -220,6 +237,14 @@ export namespace Scripting {
          * Details specifying the target into which to insert the CSS.
          */
         target: InjectionTarget;
+    }
+
+    interface UpdateContentScriptsScriptsItemType extends RegisteredContentScript {
+        /**
+         * Specifies if this content script will persist into future sessions. This is currently NOT supported.
+         * Optional.
+         */
+        persistAcrossSessions?: boolean;
     }
 
     /**
@@ -290,6 +315,15 @@ export namespace Scripting {
          * @returns Invoked upon completion of the unregistration.
          */
         unregisterContentScripts(filter?: ContentScriptFilter): Promise<void>;
+
+        /**
+         * Updates one or more content scripts for this extension.
+         *
+         * @param scripts Contains a list of scripts to be updated. If there are errors during script parsing/file validation,
+         * or if the IDs specified do not already exist, then no scripts are updated.
+         * @returns Invoked when scripts have been updated.
+         */
+        updateContentScripts(scripts: UpdateContentScriptsScriptsItemType[]): Promise<void>;
 
         /**
          * Injects CSS into a page. For details, see the $(topic:content_scripts)[programmatic injection]

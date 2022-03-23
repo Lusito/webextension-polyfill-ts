@@ -1208,6 +1208,10 @@ export namespace Manifest {
 
     type ThemeTypePropertiesAdditionalBackgroundsTilingItemEnum = "no-repeat" | "repeat" | "repeat-x" | "repeat-y";
 
+    type ThemeTypePropertiesColorSchemeEnum = "auto" | "light" | "dark" | "system";
+
+    type ThemeTypePropertiesContentColorSchemeEnum = "auto" | "light" | "dark" | "system";
+
     interface ThemeTypePropertiesType {
         /**
          * Optional.
@@ -1218,6 +1222,16 @@ export namespace Manifest {
          * Optional.
          */
         additional_backgrounds_tiling?: ThemeTypePropertiesAdditionalBackgroundsTilingItemEnum[];
+
+        /**
+         * Optional.
+         */
+        color_scheme?: ThemeTypePropertiesColorSchemeEnum;
+
+        /**
+         * Optional.
+         */
+        content_color_scheme?: ThemeTypePropertiesContentColorSchemeEnum;
     }
 
     interface Static {

@@ -17,6 +17,12 @@
     "type": "any",
     "description": "The return value"
   },
+  "types.$RegisteredContentScript.properties.persistAcrossSessions":{
+    "type": "boolean",
+    "enum": [false],
+    "optional": true,
+    "description": "Specifies if this content script will persist into future sessions. This is currently NOT supported."
+  },
   "types.+[]": [
     {
       "id": "StyleOrigin",
