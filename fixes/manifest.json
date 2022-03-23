@@ -4,5 +4,10 @@
     "type": "string",
     "description": "In addition to the version field, which is used for update purposes, version_name can be set to a descriptive version string and will be used for display purposes if present. If no version_name is present, the version field will be used for display purposes as well.",
     "optional": true
+  },
+  "types.$WebExtensionManifest.properties.content_security_policy.choices.#1.properties.sandbox": {
+    "type":"string",
+    "description": "In addition, Manifest V3 disallows certain CSP modifications for `extension_pages` that were permitted in Manifest V2.\nThe `script-src`, `object-src`, and `worker-src` directives may only have the following values:\n\t\t\t\t\t- `self`\n- `none` - Any localhost source, (`http://localhost`, `http://127.0.0.1`, or any port on those domains)",
+    "optional":true
   }
 }
