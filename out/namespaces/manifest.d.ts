@@ -685,6 +685,16 @@ export namespace Manifest {
          * Optional.
          */
         extension_pages?: string;
+
+        /**
+         * In addition, Manifest V3 disallows certain CSP modifications for `extension_pages` that were permitted in Manifest V2.
+         * The `script-src`, `object-src`, and `worker-src` directives may only have the following values:
+					- `self`
+- `none`
+         * - Any localhost source, (`http://localhost`, `http://127.0.0.1`, or any port on those domains)
+         * Optional.
+         */
+        sandbox?: string;
     }
 
     interface WebExtensionManifestWebAccessibleResourcesC2ItemType {
@@ -1198,6 +1208,10 @@ export namespace Manifest {
 
     type ThemeTypePropertiesAdditionalBackgroundsTilingItemEnum = "no-repeat" | "repeat" | "repeat-x" | "repeat-y";
 
+    type ThemeTypePropertiesColorSchemeEnum = "auto" | "light" | "dark" | "system";
+
+    type ThemeTypePropertiesContentColorSchemeEnum = "auto" | "light" | "dark" | "system";
+
     interface ThemeTypePropertiesType {
         /**
          * Optional.
@@ -1208,6 +1222,16 @@ export namespace Manifest {
          * Optional.
          */
         additional_backgrounds_tiling?: ThemeTypePropertiesAdditionalBackgroundsTilingItemEnum[];
+
+        /**
+         * Optional.
+         */
+        color_scheme?: ThemeTypePropertiesColorSchemeEnum;
+
+        /**
+         * Optional.
+         */
+        content_color_scheme?: ThemeTypePropertiesContentColorSchemeEnum;
     }
 
     interface Static {
