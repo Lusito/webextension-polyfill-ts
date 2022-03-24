@@ -56,7 +56,7 @@ The tree might look something like this:
         "types": [
             { "id": "IconPath", ... },
             { "id": "IconImageData", ... },
-            { "id": "IconImage", ... }
+            { "id": "ImageData", ... }
         ]
     }
 }
