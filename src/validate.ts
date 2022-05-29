@@ -17,6 +17,7 @@ class SchemaBasePropertyValidator {
             "skipableParameter",
             "unsupported",
             "deprecated",
+            "privileged",
             "permissions",
             "allowedContexts",
             "onError",
@@ -40,6 +41,7 @@ class SchemaBasePropertyValidator {
         assert.typeOf(json.skipableParameter, "boolean", "undefined");
         assert.oneOf(json.unsupported, true, false, "true", "false", undefined);
         assert.typeOf(json.deprecated, "boolean", "string", "undefined");
+        assert.typeOf(json.privileged, "boolean", "undefined");
         assert.typeOf(json.permissions, "array", "undefined");
         workArray(json.permissions, (s) => assert.typeOf(s, "string"));
         assert.typeOf(json.allowedContexts, "array", "undefined");

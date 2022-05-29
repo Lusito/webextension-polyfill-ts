@@ -10,8 +10,7 @@
         "$extend": "OptionalPermissionNoPrompt",
         "choices": [{
           "type": "string",
-          "enum": ["scripting"],
-          "min_manifest_version": 3
+          "enum": ["scripting"]
         }]
       }
     ]
@@ -20,7 +19,6 @@
     "namespace": "scripting",
     "description": "Use the scripting API to execute script in different contexts.",
     "permissions": ["scripting"],
-    "min_manifest_version": 3,
     "types": [
       {
         "id": "ScriptInjection",
@@ -52,6 +50,11 @@
           "world": {
             "$ref": "ExecutionWorld",
             "optional": true
+          },
+          "injectImmediately": {
+            "type": "boolean",
+            "optional": true,
+            "description": "Whether the injection should be triggered in the target as soon as possible (but not necessarily prior to page load)."
           }
         }
       },
