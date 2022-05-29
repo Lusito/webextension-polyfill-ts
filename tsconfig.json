@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2015",
-    "module": "commonjs",
+    "module": "ESNext",
     "lib": ["es2015", "dom"],
     "noEmit": true,
     "strict": true,

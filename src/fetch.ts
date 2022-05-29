@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 /* eslint-disable import/no-extraneous-dependencies */
+// eslint-disable-next-line import/no-unresolved
 import got from "got";
 import fs from "fs";
 import rimraf from "rimraf";

@@ -17,10 +17,12 @@
   },
   "license": "Zlib",
   "author": "Santo Pfingsten",
+  "type": "module",
   "scripts": {
     "all": "npm run fetch && npm run validate:schemas && npm run build && npm run validate:out",
-    "build": "ts-node src/build.ts && npm run format:out",
-    "fetch": "ts-node src/fetch.ts",
+    "build": "node --experimental-specifier-resolution=node --loader ts-node/esm src/build.ts && npm run format:out",
+    "fetch": "node --experimental-specifier-resolution=node --loader ts-node/esm src/fetch.ts",
+    "format:out": "prettier \"out/**/*.d.ts\" --write",
     "lint": "npm run lint:es && npm run lint:package && npm run lint:style",
     "lint:es": "eslint \"src/**/*.ts\" --ext .ts --ignore-path .prettierignore",
     "lint:es:fix": "npm run lint:es -- --fix",
@@ -30,20 +32,18 @@
     "lint:style": "npm run lint:style:base -- --check",
     "lint:style:base": "prettier \"{src,_locales}/**/*.{ts,js,json}\" \"./*.{ts,js,json}\" --quote-props consistent",
     "lint:style:fix": "npm run lint:style:base -- --write",
-    "format:out": "prettier \"out/**/*.d.ts\" --write",
     "validate:out": "tsc -p tsconfig-out.json",
-    "validate:schemas": "ts-node src/validate.ts"
+    "validate:schemas": "node --experimental-specifier-resolution=node --loader ts-node/esm src/validate.ts"
   },
   "devDependencies": {
-    "@lusito/eslint-config": "^1.7.0",
-    "@lusito/prettier-config": "^1.7.0",
-    "@lusito/stylelint-config": "^1.6.0",
-    "@types/node": "^16.11.1",
+    "@lusito/eslint-config": "^2.0.3",
+    "@lusito/prettier-config": "^2.0.0",
+    "@types/node": "^17.0.36",
     "@types/rimraf": "^3.0.2",
-    "got": "^11.8.2",
+    "got": "^12.1.0",
     "rimraf": "^3.0.2",
-    "sort-package-json": "^1.52.0",
-    "ts-node": "^10.3.0",
-    "typescript": "^4.4.4"
+    "sort-package-json": "^1.57.0",
+    "ts-node": "^10.8.0",
+    "typescript": "^4.7.2"
   }
 }

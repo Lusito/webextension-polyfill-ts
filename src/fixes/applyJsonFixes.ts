@@ -89,7 +89,7 @@ function visitor(entry: SchemaEntry, directory: string) {
             }
             if (index === -1) throw new Error(`Could not find ${lastPart}`);
             base.splice(index, 1);
-        // special case for $ref
+            // special case for $ref
         } else if (lastPart === "$ref") {
             base[lastPart] = value;
         } else if (lastPart[0] === "$") {
