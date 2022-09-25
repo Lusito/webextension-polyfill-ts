@@ -247,7 +247,7 @@ export namespace Scripting {
 
     interface UpdateContentScriptsScriptsItemType extends RegisteredContentScript {
         /**
-         * Specifies if this content script will persist into future sessions. This is currently NOT supported.
+         * Specifies if this content script will persist into future sessions.
          * Optional.
          */
         persistAcrossSessions?: boolean;

@@ -342,6 +342,8 @@ export namespace Manifest {
         | "unlimitedStorage"
         | "captivePortal"
         | "contextualIdentities"
+        | "declarativeNetRequestFeedback"
+        | "declarativeNetRequestWithHostAccess"
         | "dns"
         | "geckoProfiler"
         | "identity"
@@ -349,7 +351,7 @@ export namespace Manifest {
         | "contextMenus"
         | "theme";
 
-    type Permission = PermissionNoPrompt | OptionalPermission | string;
+    type Permission = PermissionNoPrompt | OptionalPermission | "declarativeNetRequest" | string;
 
     type PermissionOrOrigin = Permission | MatchPattern;
 
@@ -697,7 +699,15 @@ export namespace Manifest {
     interface WebExtensionManifestWebAccessibleResourcesC2ItemType {
         resources: string[];
 
-        matches: MatchPatternRestricted[];
+        /**
+         * Optional.
+         */
+        matches?: MatchPattern[];
+
+        /**
+         * Optional.
+         */
+        extension_ids?: Array<ExtensionID | "*">;
     }
 
     interface WebExtensionManifestChromeSettingsOverridesSearchProviderParamsItemType {

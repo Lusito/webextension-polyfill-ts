@@ -9,5 +9,6 @@
     "type":"string",
     "description": "In addition, Manifest V3 disallows certain CSP modifications for `extension_pages` that were permitted in Manifest V2.\nThe `script-src`, `object-src`, and `worker-src` directives may only have the following values:\n\t\t\t\t\t- `self`\n- `none` - Any localhost source, (`http://localhost`, `http://127.0.0.1`, or any port on those domains)",
     "optional":true
-  }
+  },
+  "types.$WebExtensionManifest.properties.web_accessible_resources.choices.#1.items.properties.extension_ids.items.type": "choices"
 }
