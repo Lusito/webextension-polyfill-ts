@@ -21,6 +21,42 @@
           "enum": ["declarativeNetRequestFeedback", "declarativeNetRequestWithHostAccess"],
           "min_manifest_version": 3
         }]
+      },
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "declarative_net_request": {
+            "type": "object",
+            "min_manifest_version": 3,
+            "optional": true,
+            "additionalProperties": { "$ref": "UnrecognizedProperty" },
+            "properties": {
+              "rule_resources": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": { "$ref": "UnrecognizedProperty" },
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[^_]",
+                      "description": "A non-empty string uniquely identifying the ruleset. IDs beginning with '_' are reserved for internal use."
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "description": "Whether the ruleset is enabled by default."
+                    },
+                    "path": {
+                      "$ref": "manifest.ExtensionURL",
+                      "description": "The path of the JSON ruleset relative to the extension directory."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     ]
   },
@@ -67,6 +103,96 @@
           "rulesetId": {
             "type": "string",
             "description": "ID of the Ruleset this rule belongs to."
+          },
+          "extensionId": {
+            "type": "string",
+            "description": "ID of the extension, if this rule belongs to a different extension.",
+            "optional": true
+          }
+        }
+      },
+      {
+        "id": "URLTransform",
+        "type": "object",
+        "description": "Describes the type of the Rule.action.redirect.transform property.",
+        "properties": {
+          "scheme": {
+            "type": "string",
+            "optional": true,
+            "description": "The new scheme for the request.",
+            "enum": ["http", "https", "moz-extension"]
+          },
+          "username": {
+            "type": "string",
+            "optional": true,
+            "description": "The new username for the request."
+          },
+          "password": {
+            "type": "string",
+            "optional": true,
+            "description": "The new password for the request."
+          },
+          "host": {
+            "type": "string",
+            "optional": true,
+            "description": "The new host name for the request."
+          },
+          "port": {
+            "type": "string",
+            "optional": true,
+            "description": "The new port for the request. If empty, the existing port is cleared."
+          },
+          "path": {
+            "type": "string",
+            "optional": true,
+            "description": "The new path for the request. If empty, the existing path is cleared."
+          },
+          "query": {
+            "type": "string",
+            "optional": true,
+            "description": "The new query for the request. Should be either empty, in which case the existing query is cleared; or should begin with '?'. Cannot be specified if 'queryTransform' is specified."
+          },
+          "queryTransform": {
+            "type": "object",
+            "optional": true,
+            "description": "Add, remove or replace query key-value pairs. Cannot be specified if 'query' is specified.",
+            "properties": {
+              "removeParams": {
+                "type": "array",
+                "optional": true,
+                "description": "The list of query keys to be removed.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "addOrReplaceParams": {
+                "type": "array",
+                "optional": true,
+                "description": "The list of query key-value pairs to be added or replaced.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    },
+                    "replaceOnly": {
+                      "type": "boolean",
+                      "optional": true,
+                      "description": "If true, the query key is replaced only if it's already present. Otherwise, the key is also added if it's missing.",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "fragment": {
+            "type": "string",
+            "optional": true,
+            "description": "The new fragment for the request. Should be either empty, in which case the existing fragment is cleared; or should begin with '#'."
           }
         }
       },
@@ -112,7 +238,7 @@
                 "minItems": 1,
                 "items": {
                   "type": "string",
-                  "description": "TODO: describe domain format."
+                  "format": "canonicalDomain"
                 }
               },
               "excludedInitiatorDomains": {
@@ -121,7 +247,7 @@
                 "description": "The rule will not match network requests originating from the list of 'initiatorDomains'. If the list is empty or omitted, no domains are excluded. This takes precedence over 'initiatorDomains'.",
                 "items": {
                   "type": "string",
-                  "description": "TODO: describe domain format."
+                  "format": "canonicalDomain"
                 }
               },
               "requestDomains": {
@@ -131,7 +257,7 @@
                 "minItems": 1,
                 "items": {
                   "type": "string",
-                  "description": "TODO: describe domain format."
+                  "format": "canonicalDomain"
                 }
               },
               "excludedRequestDomains": {
@@ -140,7 +266,7 @@
                 "description": "The rule will not match network requests when the domains matches one from the list of 'excludedRequestDomains'. If the list is empty or omitted, no domains are excluded. This takes precedence over 'requestDomains'.",
                 "items": {
                   "type": "string",
-                  "description": "TODO: describe domain format."
+                  "format": "canonicalDomain"
                 }
               },
               "resourceTypes": {
@@ -156,7 +282,6 @@
                 "type": "array",
                 "optional": true,
                 "description": "List of resource types which the rule won't match. Cannot be specified if 'resourceTypes' is specified. If neither of them is specified, all resource types except 'main_frame' are matched.",
-                "minItems": 1,
                 "items": {
                   "$ref": "ResourceType"
                 }
@@ -174,7 +299,6 @@
                 "type": "array",
                 "optional": true,
                 "description": "List of request methods which the rule won't match. Cannot be specified if 'requestMethods' is specified. If neither of them is specified, all request methods are matched.",
-                "minItems": 1,
                 "items": {
                   "type": "string"
                 }
@@ -223,12 +347,13 @@
                     "description": "Path relative to the extension directory. Should start with '/'."
                   },
                   "transform": {
-                    "type": "object",
+                    "$ref": "URLTransform",
                     "optional": true,
-                    "description": "TODO: URLTransform - Url transformations to perform."
+                    "description": "Url transformations to perform."
                   },
                   "url": {
                     "type": "string",
+                    "format": "url",
                     "optional": true,
                     "description": "The redirect url. Redirects to JavaScript urls are not allowed."
                   },
@@ -240,44 +365,52 @@
                 }
               },
               "requestHeaders": {
-                "type": "object",
+                "type": "array",
                 "optional": true,
                 "description": "The request headers to modify for the request. Only valid when type is 'modifyHeaders'.",
-                "properties": {
-                  "header": {
-                    "type": "string",
-                    "description": "The name of the request header to be modified."
-                  },
-                  "operation": {
-                    "type": "string",
-                    "description": "The operation to be performed on a header. The 'append' operation is not supported for request headers.",
-                    "enum": ["set", "remove"]
-                  },
-                  "value": {
-                    "type": "string",
-                    "optional": true,
-                    "description": "The new value for the header. Must be specified for the 'set' operation."
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "string",
+                      "description": "The name of the request header to be modified."
+                    },
+                    "operation": {
+                      "type": "string",
+                      "description": "The operation to be performed on a header.",
+                      "enum": ["append", "set", "remove"]
+                    },
+                    "value": {
+                      "type": "string",
+                      "optional": true,
+                      "description": "The new value for the header. Must be specified for the 'append' and 'set' operations."
+                    }
                   }
                 }
               },
               "responseHeaders": {
-                "type": "object",
+                "type": "array",
                 "optional": true,
                 "description": "The response headers to modify for the request. Only valid when type is 'modifyHeaders'.",
-                "properties": {
-                  "header": {
-                    "type": "string",
-                    "description": "The name of the response header to be modified."
-                  },
-                  "operation": {
-                    "type": "string",
-                    "description": "The operation to be performed on a header.",
-                    "enum": ["append", "set", "remove"]
-                  },
-                  "value": {
-                    "type": "string",
-                    "optional": true,
-                    "description": "The new value for the header. Must be specified for the 'append' and 'set' operations."
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "string",
+                      "description": "The name of the response header to be modified."
+                    },
+                    "operation": {
+                      "type": "string",
+                      "description": "The operation to be performed on a header.",
+                      "enum": ["append", "set", "remove"]
+                    },
+                    "value": {
+                      "type": "string",
+                      "optional": true,
+                      "description": "The new value for the header. Must be specified for the 'append' and 'set' operations."
+                    }
                   }
                 }
               }
@@ -287,6 +420,42 @@
       }
     ],
     "functions": [
+      {
+        "name": "updateDynamicRules",
+        "type": "function",
+        "description": "Modifies the current set of dynamic rules for the extension. The rules with IDs listed in options.removeRuleIds are first removed, and then the rules given in options.addRules are added. These rules are persisted across browser sessions and extension updates.",
+        "async": "callback",
+        "parameters": [
+          {
+            "name": "options",
+            "type": "object",
+            "properties": {
+              "removeRuleIds": {
+                "type": "array",
+                "optional": true,
+                "description": "IDs of the rules to remove. Any invalid IDs will be ignored.",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "addRules": {
+                "type": "array",
+                "optional": true,
+                "description": "Rules to add.",
+                "items": {
+                  "$ref": "Rule"
+                }
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "description": "Called when the dynamic rules have been updated",
+            "parameters": []
+          }
+        ]
+      },
       {
         "name": "updateSessionRules",
         "type": "function",
@@ -324,6 +493,95 @@
         ]
       },
       {
+        "name": "getEnabledRulesets",
+        "type": "function",
+        "description": "Returns the ids for the current set of enabled static rulesets.",
+        "async": "callback",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "type": "array",
+                "name": "rulesetIds",
+                "items": { "type": "string" }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "updateEnabledRulesets",
+        "type": "function",
+        "description": "Returns the ids for the current set of enabled static rulesets.",
+        "async": "callback",
+        "parameters": [
+          {
+            "name": "updateRulesetOptions",
+            "type": "object",
+            "properties": {
+              "disableRulesetIds": {
+                "type": "array",
+                "items": { "type": "string" },
+                "optional": true,
+                "default": []
+              },
+              "enableRulesetIds": {
+                "type": "array",
+                "items": { "type": "string" },
+                "optional": true,
+                "default": []
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "getAvailableStaticRuleCount",
+        "type": "function",
+        "description": "Returns the remaining number of static rules an extension can enable",
+        "async": "callback",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "count",
+                "type": "integer"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getDynamicRules",
+        "type": "function",
+        "description": "Returns the current set of dynamic rules for the extension.",
+        "async": "callback",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "dynamicRules",
+                "type": "array",
+                "items": {
+                  "$ref": "Rule"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "name": "getSessionRules",
         "type": "function",
         "description": "Returns the current set of session scoped rules for the extension.",
@@ -334,6 +592,7 @@
             "type": "function",
             "parameters": [
               {
+                "name": "sessionRules",
                 "type": "array",
                 "items": {
                   "$ref": "Rule"
@@ -379,6 +638,18 @@
                 "description": "The ID of the tab in which the hypothetical request takes place. Does not need to correspond to a real tab ID. Default is -1, meaning that the request isn't related to a tab.",
                 "optional": true,
                 "default": -1
+              }
+            }
+          },
+          {
+            "name": "options",
+            "type": "object",
+            "optional": true,
+            "properties": {
+              "includeOtherExtensions": {
+                "type": "boolean",
+                "description": "Whether to account for rules from other installed extensions during rule evaluation.",
+                "optional": true
               }
             }
           },

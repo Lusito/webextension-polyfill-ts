@@ -19,7 +19,6 @@ import { Commands as ImportedCommands } from "./namespaces/commands";
 import { ContentScripts as ImportedContentScripts } from "./namespaces/contentScripts";
 import { ContextualIdentities as ImportedContextualIdentities } from "./namespaces/contextualIdentities";
 import { Cookies as ImportedCookies } from "./namespaces/cookies";
-import { DeclarativeContent as ImportedDeclarativeContent } from "./namespaces/declarativeContent";
 import { DeclarativeNetRequest as ImportedDeclarativeNetRequest } from "./namespaces/declarativeNetRequest";
 import { Devtools as ImportedDevtools } from "./namespaces/devtools";
 import { Dns as ImportedDns } from "./namespaces/dns";
@@ -77,7 +76,6 @@ declare namespace Browser {
     const contentScripts: ContentScripts.Static;
     const contextualIdentities: ContextualIdentities.Static;
     const cookies: Cookies.Static;
-    const declarativeContent: DeclarativeContent.Static;
     const declarativeNetRequest: DeclarativeNetRequest.Static;
     const devtools: Devtools.Static;
     const dns: Dns.Static;
@@ -135,7 +133,6 @@ declare namespace Browser {
         contentScripts: ContentScripts.Static;
         contextualIdentities: ContextualIdentities.Static;
         cookies: Cookies.Static;
-        declarativeContent: DeclarativeContent.Static;
         declarativeNetRequest: DeclarativeNetRequest.Static;
         devtools: Devtools.Static;
         dns: Dns.Static;
@@ -194,7 +191,6 @@ declare namespace Browser {
     export import ContentScripts = ImportedContentScripts;
     export import ContextualIdentities = ImportedContextualIdentities;
     export import Cookies = ImportedCookies;
-    export import DeclarativeContent = ImportedDeclarativeContent;
     export import DeclarativeNetRequest = ImportedDeclarativeNetRequest;
     export import Devtools = ImportedDevtools;
     export import Dns = ImportedDns;

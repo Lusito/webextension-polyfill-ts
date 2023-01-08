@@ -182,6 +182,11 @@ export namespace Manifest {
         /**
          * Optional.
          */
+        declarative_net_request?: WebExtensionManifestDeclarativeNetRequestType;
+
+        /**
+         * Optional.
+         */
         devtools_page?: ExtensionURL;
 
         /**
@@ -876,6 +881,27 @@ export namespace Manifest {
          * Optional.
          */
         description?: string;
+    }
+
+    interface WebExtensionManifestDeclarativeNetRequestRuleResourcesItemType {
+        /**
+         * A non-empty string uniquely identifying the ruleset. IDs beginning with '_' are reserved for internal use.
+         */
+        id: string;
+
+        /**
+         * Whether the ruleset is enabled by default.
+         */
+        enabled: boolean;
+
+        /**
+         * The path of the JSON ruleset relative to the extension directory.
+         */
+        path: ExtensionURL;
+    }
+
+    interface WebExtensionManifestDeclarativeNetRequestType {
+        rule_resources: WebExtensionManifestDeclarativeNetRequestRuleResourcesItemType[];
     }
 
     interface WebExtensionManifestExperimentApisType {

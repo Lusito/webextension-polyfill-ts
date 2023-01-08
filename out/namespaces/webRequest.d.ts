@@ -206,6 +206,12 @@ export namespace WebRequest {
         keaGroupName?: string;
 
         /**
+         * The length (in bits) of the secret key.
+         * Optional.
+         */
+        secretKeyLength?: number;
+
+        /**
          * The signature scheme used in this request if state is "secure".
          * Optional.
          */

@@ -46,6 +46,73 @@ export namespace DeclarativeNetRequest {
          * ID of the Ruleset this rule belongs to.
          */
         rulesetId: string;
+
+        /**
+         * ID of the extension, if this rule belongs to a different extension.
+         * Optional.
+         */
+        extensionId?: string;
+    }
+
+    /**
+     * Describes the type of the Rule.action.redirect.transform property.
+     */
+    interface URLTransform {
+        /**
+         * The new scheme for the request.
+         * Optional.
+         */
+        scheme?: URLTransformSchemeEnum;
+
+        /**
+         * The new username for the request.
+         * Optional.
+         */
+        username?: string;
+
+        /**
+         * The new password for the request.
+         * Optional.
+         */
+        password?: string;
+
+        /**
+         * The new host name for the request.
+         * Optional.
+         */
+        host?: string;
+
+        /**
+         * The new port for the request. If empty, the existing port is cleared.
+         * Optional.
+         */
+        port?: string;
+
+        /**
+         * The new path for the request. If empty, the existing path is cleared.
+         * Optional.
+         */
+        path?: string;
+
+        /**
+         * The new query for the request. Should be either empty, in which case the existing query is cleared; or should begin with
+         * '?'. Cannot be specified if 'queryTransform' is specified.
+         * Optional.
+         */
+        query?: string;
+
+        /**
+         * Add, remove or replace query key-value pairs. Cannot be specified if 'query' is specified.
+         * Optional.
+         */
+        queryTransform?: URLTransformQueryTransformType;
+
+        /**
+         * The new fragment for the request. Should be either empty, in which case the existing fragment is cleared; or should
+         * begin with '#'.
+         * Optional.
+         */
+        fragment?: string;
     }
 
     interface Rule {
@@ -71,6 +138,20 @@ export namespace DeclarativeNetRequest {
         action: RuleActionType;
     }
 
+    interface UpdateDynamicRulesOptionsType {
+        /**
+         * IDs of the rules to remove. Any invalid IDs will be ignored.
+         * Optional.
+         */
+        removeRuleIds?: number[];
+
+        /**
+         * Rules to add.
+         * Optional.
+         */
+        addRules?: Rule[];
+    }
+
     interface UpdateSessionRulesOptionsType {
         /**
          * IDs of the rules to remove. Any invalid IDs will be ignored.
@@ -83,6 +164,18 @@ export namespace DeclarativeNetRequest {
          * Optional.
          */
         addRules?: Rule[];
+    }
+
+    interface UpdateEnabledRulesetsUpdateRulesetOptionsType {
+        /**
+         * Optional.
+         */
+        disableRulesetIds?: string[];
+
+        /**
+         * Optional.
+         */
+        enableRulesetIds?: string[];
     }
 
     /**
@@ -119,11 +212,53 @@ export namespace DeclarativeNetRequest {
         tabId?: number;
     }
 
+    interface TestMatchOutcomeOptionsType {
+        /**
+         * Whether to account for rules from other installed extensions during rule evaluation.
+         * Optional.
+         */
+        includeOtherExtensions?: boolean;
+    }
+
     interface TestMatchOutcomeCallbackResultType {
         /**
          * The rules (if any) that match the hypothetical request.
          */
         matchedRules: MatchedRule[];
+    }
+
+    /**
+     * The new scheme for the request.
+     */
+    type URLTransformSchemeEnum = "http" | "https" | "moz-extension";
+
+    interface URLTransformQueryTransformAddOrReplaceParamsItemType {
+        key: string;
+
+        value: string;
+
+        /**
+         * If true, the query key is replaced only if it's already present. Otherwise, the key is also added if it's missing.
+         * Optional.
+         */
+        replaceOnly?: boolean;
+    }
+
+    /**
+     * Add, remove or replace query key-value pairs. Cannot be specified if 'query' is specified.
+     */
+    interface URLTransformQueryTransformType {
+        /**
+         * The list of query keys to be removed.
+         * Optional.
+         */
+        removeParams?: string[];
+
+        /**
+         * The list of query key-value pairs to be added or replaced.
+         * Optional.
+         */
+        addOrReplaceParams?: URLTransformQueryTransformAddOrReplaceParamsItemType[];
     }
 
     /**
@@ -237,13 +372,6 @@ export namespace DeclarativeNetRequest {
     type RuleActionTypeEnum = "block" | "redirect" | "allow" | "upgradeScheme" | "modifyHeaders" | "allowAllRequests";
 
     /**
-     * TODO: URLTransform - Url transformations to perform.
-     */
-    interface RuleActionRedirectTransformType {
-        [s: string]: unknown;
-    }
-
-    /**
      * Describes how the redirect should be performed. Only valid when type is 'redirect'.
      */
     interface RuleActionRedirectType {
@@ -254,10 +382,10 @@ export namespace DeclarativeNetRequest {
         extensionPath?: string;
 
         /**
-         * TODO: URLTransform - Url transformations to perform.
+         * Url transformations to perform.
          * Optional.
          */
-        transform?: RuleActionRedirectTransformType;
+        transform?: URLTransform;
 
         /**
          * The redirect url. Redirects to JavaScript urls are not allowed.
@@ -272,41 +400,25 @@ export namespace DeclarativeNetRequest {
         regexSubstitution?: string;
     }
 
-    /**
-     * The operation to be performed on a header. The 'append' operation is not supported for request headers.
-     */
-    type RuleActionRequestHeadersOperationEnum = "set" | "remove";
-
-    /**
-     * The request headers to modify for the request. Only valid when type is 'modifyHeaders'.
-     */
-    interface RuleActionRequestHeadersType {
+    interface RuleActionRequestHeadersItemType {
         /**
          * The name of the request header to be modified.
          */
         header: string;
 
         /**
-         * The operation to be performed on a header. The 'append' operation is not supported for request headers.
+         * The operation to be performed on a header.
          */
-        operation: RuleActionRequestHeadersOperationEnum;
+        operation: "append" | "set" | "remove";
 
         /**
-         * The new value for the header. Must be specified for the 'set' operation.
+         * The new value for the header. Must be specified for the 'append' and 'set' operations.
          * Optional.
          */
         value?: string;
     }
 
-    /**
-     * The operation to be performed on a header.
-     */
-    type RuleActionResponseHeadersOperationEnum = "append" | "set" | "remove";
-
-    /**
-     * The response headers to modify for the request. Only valid when type is 'modifyHeaders'.
-     */
-    interface RuleActionResponseHeadersType {
+    interface RuleActionResponseHeadersItemType {
         /**
          * The name of the response header to be modified.
          */
@@ -315,7 +427,7 @@ export namespace DeclarativeNetRequest {
         /**
          * The operation to be performed on a header.
          */
-        operation: RuleActionResponseHeadersOperationEnum;
+        operation: "append" | "set" | "remove";
 
         /**
          * The new value for the header. Must be specified for the 'append' and 'set' operations.
@@ -340,16 +452,26 @@ export namespace DeclarativeNetRequest {
          * The request headers to modify for the request. Only valid when type is 'modifyHeaders'.
          * Optional.
          */
-        requestHeaders?: RuleActionRequestHeadersType;
+        requestHeaders?: RuleActionRequestHeadersItemType[];
 
         /**
          * The response headers to modify for the request. Only valid when type is 'modifyHeaders'.
          * Optional.
          */
-        responseHeaders?: RuleActionResponseHeadersType;
+        responseHeaders?: RuleActionResponseHeadersItemType[];
     }
 
     interface Static {
+        /**
+         * Modifies the current set of dynamic rules for the extension. The rules with IDs listed in options.
+         * removeRuleIds are first removed, and then the rules given in options.addRules are added.
+         * These rules are persisted across browser sessions and extension updates.
+         *
+         * @param options
+         * @returns Called when the dynamic rules have been updated
+         */
+        updateDynamicRules(options: UpdateDynamicRulesOptionsType): Promise<void>;
+
         /**
          * Modifies the current set of session scoped rules for the extension. The rules with IDs listed in options.
          * removeRuleIds are first removed, and then the rules given in options.addRules are added.
@@ -361,6 +483,28 @@ export namespace DeclarativeNetRequest {
         updateSessionRules(options: UpdateSessionRulesOptionsType): Promise<void>;
 
         /**
+         * Returns the ids for the current set of enabled static rulesets.
+         */
+        getEnabledRulesets(): Promise<string[]>;
+
+        /**
+         * Returns the ids for the current set of enabled static rulesets.
+         *
+         * @param updateRulesetOptions
+         */
+        updateEnabledRulesets(updateRulesetOptions: UpdateEnabledRulesetsUpdateRulesetOptionsType): Promise<void>;
+
+        /**
+         * Returns the remaining number of static rules an extension can enable
+         */
+        getAvailableStaticRuleCount(): Promise<number>;
+
+        /**
+         * Returns the current set of dynamic rules for the extension.
+         */
+        getDynamicRules(): Promise<Rule[]>;
+
+        /**
          * Returns the current set of session scoped rules for the extension.
          */
         getSessionRules(): Promise<Rule[]>;
@@ -369,8 +513,12 @@ export namespace DeclarativeNetRequest {
          * Checks if any of the extension's declarativeNetRequest rules would match a hypothetical request.
          *
          * @param request The details of the request to test.
+         * @param options Optional.
          * @returns Called with the details of matched rules.
          */
-        testMatchOutcome(request: TestMatchOutcomeRequestType): Promise<TestMatchOutcomeCallbackResultType>;
+        testMatchOutcome(
+            request: TestMatchOutcomeRequestType,
+            options?: TestMatchOutcomeOptionsType
+        ): Promise<TestMatchOutcomeCallbackResultType>;
     }
 }
