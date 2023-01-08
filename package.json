@@ -32,6 +32,7 @@
     "lint:style": "npm run lint:style:base -- --check",
     "lint:style:base": "prettier \"{src,_locales}/**/*.{ts,js,json}\" \"./*.{ts,js,json}\" --quote-props consistent",
     "lint:style:fix": "npm run lint:style:base -- --write",
+    "copy": "rimraf ../DefinitelyTyped/types/webextension-polyfill/**/*.d.ts && copyfiles -u 1 out/**/*.d.ts out/index.d.ts ../DefinitelyTyped/types/webextension-polyfill",
     "validate:out": "tsc -p tsconfig-out.json",
     "validate:schemas": "node --experimental-specifier-resolution=node --loader ts-node/esm src/validate.ts"
   },
@@ -40,6 +41,7 @@
     "@lusito/prettier-config": "^2.0.0",
     "@types/node": "^18.7.21",
     "@types/rimraf": "^3.0.2",
+    "copyfiles": "^2.4.1",
     "got": "^12.5.0",
     "rimraf": "^3.0.2",
     "sort-package-json": "^1.57.0",

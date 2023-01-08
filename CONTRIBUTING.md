@@ -19,6 +19,7 @@ Run these commands:
 * `npm run build` -> generates one .d.ts per namespace and one index.d.ts file in the out folder.
 * `npm run validate:out` -> to test if the generated files are valid TypeScript.
 * `npm run all` -> execute all of the above (except npm install) in order.
+* `npm run copy` -> copies out files into ../DefinitelyTyped/types/webextension-polyfill in order to prepare a PR.
 
 ## Linting commands:
 
