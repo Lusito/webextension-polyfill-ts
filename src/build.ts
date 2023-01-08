@@ -223,8 +223,13 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
         if (description) writer.comment(`@returns ${description}`);
 
         if (!asyncParam.parameters || !asyncParam.parameters.length) returnType = "void";
-        else if (asyncParam.parameters.length === 1) returnType = getType(asyncParam.parameters[0]);
-        else returnType = `[${asyncParam.parameters.map(getType).join(", ")}]`;
+        else if (asyncParam.parameters.length === 1) {
+            const param = asyncParam.parameters[0];
+            returnType = getType(param);
+            if (param.optional) {
+                returnType += param.optionalNull ? " | null" : " | undefined";
+            }
+        } else returnType = `[${asyncParam.parameters.map(getType).join(", ")}]`;
         returnType = `Promise<${returnType}>`;
     } else if (func.returns) {
         const description = func.returns.description ? func.returns.description.trim() : "";

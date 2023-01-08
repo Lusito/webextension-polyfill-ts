@@ -1,3 +1,6 @@
 {
-  "functions.%getAll.parameters.%details.properties.firstPartyDomain.type": "string | null"
+  "functions.%getAll.parameters.%details.properties.firstPartyDomain.type": "string | null",
+  "functions.%set.parameters.%callback.parameters.%cookie.optional": false,
+  "functions.%get.parameters.%callback.parameters.%cookie.optionalNull": true,
+  "functions.%remove.parameters.%callback.parameters.%details.optionalNull": true
 }

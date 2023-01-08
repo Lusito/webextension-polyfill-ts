@@ -12,6 +12,7 @@ function convertToRef(prop: SchemaProperty, id: string, entry: SchemaEntry): Sch
     if (prop.description) newProp.description = prop.description;
     if (!entry.types) entry.types = [];
     if (prop.optional) newProp.optional = prop.optional;
+    if (prop.optionalNull) newProp.optionalNull = prop.optionalNull;
     delete prop.name;
     prop.id = id;
     entry.types.push(prop);
@@ -31,6 +32,7 @@ function convertToNestedRef(prop: SchemaProperty, id: string, entry: SchemaEntry
     if (prop.description) newProp.description = prop.description;
     if (!entry.types) entry.types = [];
     if (prop.optional) newProp.optional = prop.optional;
+    if (prop.optionalNull) newProp.optionalNull = prop.optionalNull;
     delete prop.name;
     prop.id = id;
     entry.types.push(prop);

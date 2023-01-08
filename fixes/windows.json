@@ -1,4 +1,5 @@
 {
+  "functions.%create.parameters.%callback.parameters.%window.optional": false,
   "functions.%create.parameters.%createData.properties.focused": {
     "type": "boolean",
     "optional": true,

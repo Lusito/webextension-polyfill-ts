@@ -1,0 +1,4 @@
+{
+  "functions.%getFrame.parameters.%callback.parameters.%details.optionalNull": true,
+  "functions.%getAllFrames.parameters.%callback.parameters.%details.optionalNull": true
+}

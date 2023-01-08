@@ -5,6 +5,7 @@ export interface SchemaBaseProperty {
     $extend?: string; // only on namespace.types
     description?: string;
     optional?: boolean | "true" | "false" | "omit-key-if-missing";
+    optionalNull?: boolean;
     skipableParameter?: boolean;
     unsupported?: boolean | "true" | "false";
     deprecated?: boolean | string;

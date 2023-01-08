@@ -1,4 +1,5 @@
 {
+  "functions.%getBackgroundPage.parameters.%callback.parameters.%backgroundPage.optional": false,
   "functions.%getManifest.returns": {
     "$ref": "Manifest.WebExtensionManifest",
     "description": "The manifest details."
