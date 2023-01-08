@@ -658,6 +658,13 @@ export namespace Manifest {
 
     interface WebExtensionManifestBackgroundC3Type {
         service_worker: ExtensionURL;
+
+        /**
+         * Even though Manifest V3, does not support multiple background scripts, you can optionally declare the service worker as
+         * an ES Module by specifying "type": "module", which allows you to import further code.
+         * Optional.
+         */
+        type?: "module";
     }
 
     interface WebExtensionManifestOptionsUiType {
