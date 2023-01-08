@@ -107,12 +107,6 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
         let extendsClass = "";
         if (type.$import) {
             extendsClass = ` extends ${fixRef(type.$import)}`;
-        } else if (
-            type.additionalProperties &&
-            typeof type.additionalProperties === "object" &&
-            type.additionalProperties.$ref
-        ) {
-            extendsClass = ` extends ${fixRef(type.additionalProperties.$ref)}`;
         } else if (type.isInstanceOf) {
             extendsClass = ` extends ${type.isInstanceOf}`;
         }
@@ -129,11 +123,18 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
         type.functions?.forEach((func) => addFunction(func, func.parameters, writer));
         type.events?.forEach((event) => addEvent(event, writer));
 
-        // Empty interface, add index signature for unknown
+        // Empty interface, add index signature
         if (writeInstructions === writer.getWriteInstructionCount()) {
-            writer.code(`[s: string]: unknown`);
+            if (
+                type.additionalProperties &&
+                typeof type.additionalProperties === "object" &&
+                type.additionalProperties.$ref
+            ) {
+                writer.code(`[s: string]: ${fixRef(type.additionalProperties.$ref)}`);
+            } else {
+                writer.code(`[s: string]: unknown`);
+            }
         }
-
         writer.end("}");
     } else if (type.type === "string" && type.enum) {
         writer.code(`type ${type.id} = ${getEnumType(type.enum)};`);

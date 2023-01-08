@@ -878,8 +878,8 @@ export namespace Manifest {
         description?: string;
     }
 
-    interface WebExtensionManifestExperimentApisType extends Experiments.ExperimentAPI {
-        [s: string]: unknown;
+    interface WebExtensionManifestExperimentApisType {
+        [s: string]: Experiments.ExperimentAPI;
     }
 
     interface WebExtensionManifestOmniboxType {

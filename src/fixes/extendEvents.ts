@@ -26,14 +26,10 @@ export const extendEvents: SchemaVisitorFactory = (namespace, namespaces) => {
                 if (e.extraParameters) {
                     const id = `${e.name}Event`;
                     const extendedAddListener = JSON.parse(JSON.stringify(addListener));
-                    const ref = `Events.Event<(${getParameters(e.parameters, false)}) => ${getReturnType(e)}>`;
                     const extended: SchemaObjectProperty = {
                         id,
                         type: "object",
-                        additionalProperties: {
-                            $ref: ref,
-                            type: "ref",
-                        },
+                        isInstanceOf: `Events.Event<(${getParameters(e.parameters, false)}) => ${getReturnType(e)}>`,
                         description: e.description,
                         functions: [extendedAddListener],
                     };

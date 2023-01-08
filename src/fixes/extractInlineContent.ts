@@ -187,7 +187,7 @@ function visitor(entry: SchemaEntry) {
             const id = combineNamePrefix(toUpperCamelCase(key), prop.$ref);
             const newProp: SchemaObjectProperty = {
                 type: "object",
-                additionalProperties: { type: "ref", $ref: prop.$ref },
+                isInstanceOf: prop.$ref,
                 properties: (prop as any).properties,
             };
             return convertToRef(newProp, id, entry);
