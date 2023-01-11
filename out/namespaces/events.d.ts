@@ -68,11 +68,6 @@ export namespace Events {
          * @returns True if <em>callback</em> is registered to the event.
          */
         hasListener(callback: T): boolean;
-
-        /**
-         * @returns True if any event listeners are registered to the event.
-         */
-        hasListeners(): boolean;
     }
 
     /**
