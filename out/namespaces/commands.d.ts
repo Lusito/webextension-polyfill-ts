@@ -56,6 +56,23 @@ export namespace Commands {
         shortcut?: string;
     }
 
+    interface OnChangedChangeInfoType {
+        /**
+         * The name of the shortcut.
+         */
+        name: string;
+
+        /**
+         * The new shortcut active for this command, or blank if not active.
+         */
+        newShortcut: string;
+
+        /**
+         * The old shortcut which is no longer active for this command, or blank if the shortcut was previously inactive.
+         */
+        oldShortcut: string;
+    }
+
     interface Static {
         /**
          * Update the details of an already defined command.
@@ -85,5 +102,12 @@ export namespace Commands {
          * @param tab Optional.
          */
         onCommand: Events.Event<(command: string, tab: Tabs.Tab | undefined) => void>;
+
+        /**
+         * Fired when a registered command's shortcut is changed.
+         *
+         * @param changeInfo
+         */
+        onChanged: Events.Event<(changeInfo: OnChangedChangeInfoType) => void>;
     }
 }

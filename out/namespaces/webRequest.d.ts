@@ -258,6 +258,30 @@ export namespace WebRequest {
          * Optional.
          */
         weaknessReasons?: TransportWeaknessReasons[];
+
+        /**
+         * True if the TLS connection used Encrypted Client Hello.
+         * Optional.
+         */
+        usedEch?: boolean;
+
+        /**
+         * True if the TLS connection used Delegated Credentials.
+         * Optional.
+         */
+        usedDelegatedCredentials?: boolean;
+
+        /**
+         * True if the TLS connection made OCSP requests.
+         * Optional.
+         */
+        usedOcsp?: boolean;
+
+        /**
+         * True if the TLS connection used a privacy-preserving DNS transport like DNS-over-HTTPS.
+         * Optional.
+         */
+        usedPrivateDns?: boolean;
     }
 
     /**

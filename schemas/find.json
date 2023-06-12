@@ -8,12 +8,12 @@
     "types": [
       {
         "$extend": "OptionalPermission",
-        "choices": [{
-          "type": "string",
-          "enum": [
-            "find"
-          ]
-        }]
+        "choices": [
+          {
+            "type": "string",
+            "enum": ["find"]
+          }
+        ]
       }
     ]
   },
@@ -48,6 +48,11 @@
               "caseSensitive": {
                 "type": "boolean",
                 "description": "Find only ranges with case sensitive match.",
+                "optional": true
+              },
+              "matchDiacritics": {
+                "type": "boolean",
+                "description": "Find only ranges with diacritic sensitive match.",
                 "optional": true
               },
               "entireWord": {

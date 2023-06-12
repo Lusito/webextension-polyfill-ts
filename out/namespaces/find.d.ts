@@ -133,6 +133,12 @@ export namespace Find {
         caseSensitive?: boolean;
 
         /**
+         * Find only ranges with diacritic sensitive match.
+         * Optional.
+         */
+        matchDiacritics?: boolean;
+
+        /**
          * Find only ranges that match entire word.
          * Optional.
          */
