@@ -166,7 +166,7 @@ class SchemaNullPropertyValidator extends SchemaBasePropertyValidator {
 
 class SchemaValuePropertyValidator extends SchemaBasePropertyValidator {
     public static getValidKeys() {
-        return super.getValidKeys().concat(["value"]);
+        return super.getValidKeys().concat(["type", "value"]);
     }
 
     public static validate(json: any) {

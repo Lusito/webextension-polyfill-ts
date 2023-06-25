@@ -212,5 +212,11 @@ export namespace Storage {
         local: LocalStorageArea;
 
         managed: ManagedStorageArea;
+
+        /**
+         * Items in the <code>session</code> storage area are kept in memory, and only until the either browser or extension is
+         * closed or reloaded.
+         */
+        session: StorageArea;
     }
 }
