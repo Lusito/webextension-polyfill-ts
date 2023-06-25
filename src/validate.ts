@@ -174,6 +174,7 @@ class SchemaValuePropertyValidator extends SchemaBasePropertyValidator {
         const assert = new Assert("SchemaValuePropertyValidator");
         assert.validOjectKeys(json, this.getValidKeys());
         if (typeof json.value === "undefined") throw new Error("Value expected");
+        if (json.type && json.type !== "string") throw new Error(`"string" or undefined expected for type`);
     }
 }
 
