@@ -1,6 +1,9 @@
+//////////////////////////////////////////////////////
+// BEWARE: DO NOT EDIT MANUALLY! Changes will be lost!
+//////////////////////////////////////////////////////
+
 /**
  * Namespace: browser.action
- * Generated from Mozilla sources. Do not manually edit!
  *
  * Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon,
  * a browser action can also have a tooltip, a badge, and a popup.

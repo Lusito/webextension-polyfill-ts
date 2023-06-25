@@ -1,6 +1,9 @@
+//////////////////////////////////////////////////////
+// BEWARE: DO NOT EDIT MANUALLY! Changes will be lost!
+//////////////////////////////////////////////////////
+
 /**
  * Namespace: browser.webNavigation
- * Generated from Mozilla sources. Do not manually edit!
  *
  * Use the <code>browser.webNavigation</code> API to receive notifications about the status of navigation requests
  * in-flight.

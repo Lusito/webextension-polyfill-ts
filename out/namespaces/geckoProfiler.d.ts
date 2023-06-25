@@ -1,6 +1,9 @@
+//////////////////////////////////////////////////////
+// BEWARE: DO NOT EDIT MANUALLY! Changes will be lost!
+//////////////////////////////////////////////////////
+
 /**
  * Namespace: browser.geckoProfiler
- * Generated from Mozilla sources. Do not manually edit!
  *
  * Exposes the browser's profiler.
  * Permissions: "geckoProfiler"

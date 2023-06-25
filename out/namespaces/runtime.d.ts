@@ -1,6 +1,9 @@
+//////////////////////////////////////////////////////
+// BEWARE: DO NOT EDIT MANUALLY! Changes will be lost!
+//////////////////////////////////////////////////////
+
 /**
  * Namespace: browser.runtime
- * Generated from Mozilla sources. Do not manually edit!
  *
  * Use the <code>browser.runtime</code> API to retrieve the background page, return details about the manifest,
  * and listen for and respond to events in the app or extension lifecycle. You can also use this API to convert the

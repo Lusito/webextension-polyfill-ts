@@ -1,6 +1,9 @@
+//////////////////////////////////////////////////////
+// BEWARE: DO NOT EDIT MANUALLY! Changes will be lost!
+//////////////////////////////////////////////////////
+
 /**
  * Namespace: browser.commands
- * Generated from Mozilla sources. Do not manually edit!
  *
  * Use the commands API to add keyboard shortcuts that trigger actions in your extension, for example,
  * an action to open the browser action or send a command to the xtension.

@@ -1,6 +1,9 @@
+//////////////////////////////////////////////////////
+// BEWARE: DO NOT EDIT MANUALLY! Changes will be lost!
+//////////////////////////////////////////////////////
+
 /**
  * Namespace: browser.search
- * Generated from Mozilla sources. Do not manually edit!
  *
  * Use browser.search to interact with search engines.
  * Permissions: "search"

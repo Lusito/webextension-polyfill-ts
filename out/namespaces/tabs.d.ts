@@ -1,6 +1,9 @@
+//////////////////////////////////////////////////////
+// BEWARE: DO NOT EDIT MANUALLY! Changes will be lost!
+//////////////////////////////////////////////////////
+
 /**
  * Namespace: browser.tabs
- * Generated from Mozilla sources. Do not manually edit!
  *
  * Use the <code>browser.tabs</code> API to interact with the browser's tab system. You can use this API to create, modify,
  * and rearrange tabs in the browser.

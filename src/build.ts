@@ -251,6 +251,12 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
     }
 }
 
+const doNotEditWarning = `
+//////////////////////////////////////////////////////
+// BEWARE: DO NOT EDIT MANUALLY! Changes will be lost!
+//////////////////////////////////////////////////////
+`.trim();
+
 function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
     try {
         const { entry } = namespace;
@@ -261,7 +267,6 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
         const writer = new CodeWriter();
 
         writer.comment(`Namespace: browser.${entry.namespace}`);
-        writer.comment("Generated from Mozilla sources. Do not manually edit!");
         if (entry.description || entry.permissions) writer.emptyLine();
         if (entry.description) writer.comment(entry.description.trim());
         if (entry.permissions)
@@ -313,7 +318,7 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
 
         writer.end("}");
         writer.end("}");
-        fs.writeFileSync(`out/${filename}`, writer.toString());
+        fs.writeFileSync(`out/${filename}`, `${doNotEditWarning}\n\n${writer.toString()}`);
     } catch (e) {
         console.error(`Error reading ${namespace.file}: `, e);
         throw e;
@@ -362,7 +367,7 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     writer.end("}");
 
     const template = fs.readFileSync("./src/indexTemplate.d.ts", { encoding: "utf-8" });
-    fs.writeFileSync("out/index.d.ts", template.replace("declare namespace Browser {}", writer.toString().trim()));
+    fs.writeFileSync("out/index.d.ts", template.replace("declare namespace Browser {}", `${doNotEditWarning}\n\n${writer.toString().trim()}`));
 }
 
 try {

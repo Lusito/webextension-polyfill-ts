@@ -1,6 +1,9 @@
+//////////////////////////////////////////////////////
+// BEWARE: DO NOT EDIT MANUALLY! Changes will be lost!
+//////////////////////////////////////////////////////
+
 /**
  * Namespace: browser.declarativeNetRequest
- * Generated from Mozilla sources. Do not manually edit!
  *
  * Use the declarativeNetRequest API to block or modify network requests by specifying declarative rules.
  * Permissions: "declarativeNetRequest", "declarativeNetRequestWithHostAccess"
