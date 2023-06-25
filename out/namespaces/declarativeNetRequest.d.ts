@@ -571,7 +571,7 @@ export namespace DeclarativeNetRequest {
         /**
          * Ruleset ID for the dynamic rules added by the extension.
          */
-        DYNAMIC_RULESET_ID: string;
+        DYNAMIC_RULESET_ID: "_dynamic";
 
         /**
          * The minimum number of static rules guaranteed to an extension across its enabled static rulesets.
@@ -605,6 +605,6 @@ export namespace DeclarativeNetRequest {
         /**
          * Ruleset ID for the session-scoped rules added by the extension.
          */
-        SESSION_RULESET_ID: string;
+        SESSION_RULESET_ID: "_session";
     }
 }

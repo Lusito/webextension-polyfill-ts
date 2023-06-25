@@ -126,6 +126,12 @@ export namespace Tabs {
         audible?: boolean;
 
         /**
+         * Whether the tab can be discarded automatically by the browser when resources are low.
+         * Optional.
+         */
+        autoDiscardable?: boolean;
+
+        /**
          * Current tab muted state and the reason for the last state change.
          * Optional.
          */
@@ -228,12 +234,6 @@ export namespace Tabs {
          * Optional.
          */
         successorTabId?: number;
-
-        /**
-         * Whether the tab can be discarded automatically by the browser when resources are low.
-         * Optional.
-         */
-        autoDiscardable?: boolean;
 
         /**
          * The URL the tab is navigating to, before it has committed. This property is only present if the extension's manifest
@@ -455,6 +455,7 @@ export namespace Tabs {
     type UpdatePropertyName =
         | "attention"
         | "audible"
+        | "autoDiscardable"
         | "discarded"
         | "favIconUrl"
         | "hidden"
@@ -631,6 +632,12 @@ export namespace Tabs {
         audible?: boolean;
 
         /**
+         * Whether the tabs can be discarded automatically by the browser when resources are low.
+         * Optional.
+         */
+        autoDiscardable?: boolean;
+
+        /**
          * Whether the tabs are muted.
          * Optional.
          */
@@ -731,12 +738,6 @@ export namespace Tabs {
          * Optional.
          */
         microphone?: boolean;
-
-        /**
-         * Whether the tabs can be discarded automatically by the browser when resources are low.
-         * Optional.
-         */
-        autoDiscardable?: boolean;
     }
 
     interface HighlightHighlightInfoType {
@@ -775,6 +776,12 @@ export namespace Tabs {
         active?: boolean;
 
         /**
+         * Whether the tab should be discarded automatically by the browser when resources are low.
+         * Optional.
+         */
+        autoDiscardable?: boolean;
+
+        /**
          * Adds or removes the tab from the current selection.
          * Optional.
          */
@@ -809,12 +816,6 @@ export namespace Tabs {
          * Optional.
          */
         successorTabId?: number;
-
-        /**
-         * Whether the tab should be discarded automatically by the browser when resources are low.
-         * Optional.
-         */
-        autoDiscardable?: boolean;
     }
 
     interface MoveMovePropertiesType {
@@ -871,6 +872,12 @@ export namespace Tabs {
          * Optional.
          */
         audible?: boolean;
+
+        /**
+         * The tab's new autoDiscardable state.
+         * Optional.
+         */
+        autoDiscardable?: boolean;
 
         /**
          * True while the tab is not loaded with content.
