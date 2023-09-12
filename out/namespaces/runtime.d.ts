@@ -448,7 +448,7 @@ export namespace Runtime {
          * will keep the message channel open to the other end until <code>sendResponse</code> is called).
          */
         onMessage: Events.Event<
-            (message: any, sender: MessageSender, sendResponse: () => void) => Promise<any> | true | void
+            (message: any, sender: MessageSender, sendResponse: (message: any) => void) => Promise<any> | true | void
         >;
 
         /**
