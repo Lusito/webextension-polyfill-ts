@@ -74,7 +74,7 @@ export namespace Types {
         /**
          * The value of the setting after the change.
          */
-        value: any;
+        value: unknown;
 
         /**
          * The level of control of the setting.
@@ -107,7 +107,7 @@ export namespace Types {
         /**
          * The value of the setting.
          */
-        value: any;
+        value: unknown;
 
         /**
          * The level of control of the setting.
@@ -130,7 +130,7 @@ export namespace Types {
          * The value of the setting. <br/>Note that every setting has a specific value type, which is described together with the
          * setting. An extension should <em>not</em> set a value of a different type.
          */
-        value: any;
+        value: unknown;
 
         /**
          * Where to set the setting (default: regular).

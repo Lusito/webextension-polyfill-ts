@@ -33,12 +33,12 @@ export namespace Events {
         /**
          * List of conditions that can trigger the actions.
          */
-        conditions: any[];
+        conditions: unknown[];
 
         /**
          * List of actions that are triggered if one of the condtions is fulfilled.
          */
-        actions: any[];
+        actions: unknown[];
 
         /**
          * Optional priority of this rule. Defaults to 100.
@@ -57,7 +57,7 @@ export namespace Events {
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
          * @param ...params Further parameters, depending on the event.
          */
-        addListener(callback: T, ...params: any[]): void;
+        addListener(callback: T, ...params: unknown[]): void;
 
         /**
          * Deregisters an event listener <em>callback</em> from an event.

@@ -56,7 +56,7 @@ export namespace DevtoolsInspectedWindow {
          * contains the array of the values that may be substituted into the description string to provide more information about
          * the cause of the error.
          */
-        details: any[];
+        details: unknown[];
 
         /**
          * Set if the evaluated code produces an unhandled exception.
@@ -109,7 +109,7 @@ export namespace DevtoolsInspectedWindow {
          * @param options Optional. The options parameter can contain one or more options.
          * @returns A function called when evaluation completes.
          */
-        eval(expression: string, options?: EvalOptionsType): Promise<[any, EvalCallbackExceptionInfoType]>;
+        eval(expression: string, options?: EvalOptionsType): Promise<[unknown, EvalCallbackExceptionInfoType]>;
 
         /**
          * Reloads the inspected page.
