@@ -12,9 +12,8 @@ async function getJsonFileList(url: string) {
         return lines
             .filter((l) => l.endsWith(".json") && !l.endsWith(" telemetry.json"))
             .map((l) => url + l.split(" ")[2]);
-    } catch (error: any) {
-        console.error(error.response.body);
-        return null;
+    } catch (error) {
+        throw new Error(`Error downloading file list from ${url}: ${(error as any)?.response?.body || String(error)}`);
     }
 }
 
@@ -26,8 +25,8 @@ async function downloadFile(url: string) {
         const response = await got(url);
         fs.writeFileSync(`./schemas/${filename}`, response.body);
         console.log(`${filename} saved`);
-    } catch (error: any) {
-        console.error(`Error downloading ${filename}: ${error.response.body}`);
+    } catch (error) {
+        throw new Error(`Error downloading ${url}: ${(error as any)?.response?.body || String(error)}`);
     }
 }
 
@@ -40,25 +39,31 @@ async function downloadChromeFile(url: string) {
         const buffer = Buffer.from(response.body, "base64");
         fs.writeFileSync(`./schemas/${filename}`, buffer.toString("utf8"));
         console.log(`${filename} saved`);
-    } catch (error: any) {
-        console.error(`Error downloading ${filename}: ${error.response?.body || error.message}`);
+    } catch (error) {
+        throw new Error(`Error downloading ${url}: ${(error as any)?.response?.body || String(error)}`);
     }
 }
 
 const baseURL = "https://hg.mozilla.org/integration/autoland/raw-file/tip/";
 const baseChromeURL =
-    "https://chromium.googlesource.com/chromium/src/+/master/chrome/common/extensions/api/{FILENAME}?format=TEXT";
+    "https://chromium.googlesource.com/chromium/src/+/main/chrome/common/extensions/api/{FILENAME}?format=TEXT";
 const chromeFiles = ["declarative_content.json"].map((filename) => baseChromeURL.replace("{FILENAME}", filename));
 
-Promise.all([
-    getJsonFileList(`${baseURL}toolkit/components/extensions/schemas/`),
-    getJsonFileList(`${baseURL}browser/components/extensions/schemas/`),
-]).then((result) => {
-    const files = result.reduce<string[]>((dest, files2) => (files2 ? dest.concat(files2) : dest), []);
+async function run() {
+    try {
+        const result = await Promise.all([
+            getJsonFileList(`${baseURL}toolkit/components/extensions/schemas/`),
+            getJsonFileList(`${baseURL}browser/components/extensions/schemas/`),
+        ]);
 
-    rimraf.sync("./schemas");
-    fs.mkdirSync("./schemas");
-    Promise.all([...files.map(downloadFile), ...chromeFiles.map(downloadChromeFile)]).then(() => {
+        rimraf.sync("./schemas");
+        fs.mkdirSync("./schemas");
+        await Promise.all([...result.flat().map(downloadFile), ...chromeFiles.map(downloadChromeFile)]);
         console.log("done");
-    });
-});
+    } catch (e) {
+        console.log("Failed fetching files", e);
+        process.exit(-1);
+    }
+}
+
+run();
