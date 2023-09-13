@@ -3,7 +3,7 @@
 // eslint-disable-next-line import/no-unresolved
 import got from "got";
 import fs from "fs";
-import rimraf from "rimraf";
+import { rimraf } from "rimraf";
 
 async function getJsonFileList(url: string) {
     try {

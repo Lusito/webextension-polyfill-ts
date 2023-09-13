@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 // eslint-disable-next-line import/no-extraneous-dependencies
-import rimraf from "rimraf";
+import { rimraf } from "rimraf";
 import fs from "fs";
 
 import { SchemaEntry, SchemaProperty, SchemaFunctionProperty } from "./helpers/types";
@@ -367,7 +367,10 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     writer.end("}");
 
     const template = fs.readFileSync("./src/indexTemplate.d.ts", { encoding: "utf-8" });
-    fs.writeFileSync("out/index.d.ts", template.replace("declare namespace Browser {}", `${doNotEditWarning}\n\n${writer.toString().trim()}`));
+    fs.writeFileSync(
+        "out/index.d.ts",
+        template.replace("declare namespace Browser {}", `${doNotEditWarning}\n\n${writer.toString().trim()}`)
+    );
 }
 
 try {
