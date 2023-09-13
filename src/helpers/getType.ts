@@ -39,7 +39,7 @@ export function fixRef(ref: string) {
     if (ref.startsWith(currentNsPrefix)) ref = ref.substr(currentNsPrefix.length);
     return ref;
 }
-export function getType(e: SchemaProperty): string {
+function getRawType(e: SchemaProperty): string {
     if (e.$ref === "extensionTypes.Date") return "ExtensionTypes.DateType";
     if (e.type === "object" && e.isInstanceOf) return e.isInstanceOf;
     let propType = typeMap[e.type] || e.type;
@@ -73,7 +73,7 @@ export function getType(e: SchemaProperty): string {
         e.additionalProperties.$ref &&
         !e.properties
     ) {
-        return `Record<string, ${e.additionalProperties.$ref}>`;
+        return `Record<string, ${anyToUnknown(e.additionalProperties.$ref)}>`;
     } else if (e.type === "object" && e.patternProperties) {
         const names = Object.keys(e.patternProperties);
         if (names.length !== 1) throw new Error("Pattern properties expected to be 1 in length");
@@ -82,6 +82,15 @@ export function getType(e: SchemaProperty): string {
         return `Record<string, ${type}>`;
     }
     return propType;
+}
+
+// Ensure, we make all any types to unknown
+function anyToUnknown(type: string): string {
+    return type === "any" ? "unknown" : type;
+}
+
+export function getType(e: SchemaProperty): string {
+    return anyToUnknown(getRawType(e));
 }
 
 export function getReturnType(e: SchemaFunctionProperty): string {
@@ -97,16 +106,16 @@ export interface MinimumTuple<T> extends Array<T> {
 export function getArrayType(e: SchemaArrayProperty): string {
     if (e.items) {
         let propType: string;
-        if (e.items.type === "choices" && e.items.choices) propType = `Array<${getUnionType(e.items.choices)}>`;
+        if (e.items.type === "choices" && e.items.choices) return `Array<${getUnionType(e.items.choices)}>`;
         else {
             if (e.items.$ref) propType = fixRef(e.items.$ref);
             else if (e.items.type === "object" && e.items.isInstanceOf) propType = e.items.isInstanceOf;
-            else propType = typeMap[e.items.type] || e.items.type;
+            else propType = anyToUnknown(typeMap[e.items.type] || e.items.type);
             // fixme: arrays of minimum size can't be done easily anymore since TypeScript 2.7.. find another way.
             // fixed size:
             if (e.minItems && e.maxItems === e.minItems) propType = `[${Array(e.minItems).fill(propType).join(", ")}]`;
             else if (propType.includes("<")) propType = `Array<${propType}>`;
-            else propType = `${propType}[]`;
+            else propType = `${anyToUnknown(propType)}[]`;
         }
         return propType;
     }
@@ -114,7 +123,7 @@ export function getArrayType(e: SchemaArrayProperty): string {
 }
 
 export function safeUndefined(propType: string) {
-    if (propType === "any") return "any";
+    if (propType === "unknown") return "unknown";
     return `${propType} | undefined`;
 }
 

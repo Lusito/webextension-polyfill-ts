@@ -26,7 +26,7 @@ export namespace Scripting {
          * These arguments must be JSON-serializable.
          * Optional.
          */
-        args?: any[];
+        args?: unknown[];
 
         /**
          * The path of the JS files to inject, relative to the extension's root directory. Exactly one of <code>files</code>
@@ -43,7 +43,7 @@ export namespace Scripting {
          * @param ...args The arguments
          * @returns The return value
          */
-        func?(...args: any[]): any;
+        func?(...args: unknown[]): unknown;
 
         /**
          * Details specifying the target into which to inject the script.
@@ -75,7 +75,7 @@ export namespace Scripting {
          * The result of the script execution.
          * Optional.
          */
-        result?: any;
+        result?: unknown;
 
         /**
          * The error property is set when the script execution failed. The value is typically an (Error)
@@ -83,7 +83,7 @@ export namespace Scripting {
          * if the script threw or rejected with such a value.
          * Optional.
          */
-        error?: any;
+        error?: unknown;
 
         /**
          * Whether the script should inject into all frames within the tab. Defaults to false.

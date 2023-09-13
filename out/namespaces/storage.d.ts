@@ -21,13 +21,13 @@ export namespace Storage {
          * The old value of the item, if there was an old value.
          * Optional.
          */
-        oldValue?: any;
+        oldValue?: unknown;
 
         /**
          * The new value of the item, if there is a new value.
          * Optional.
          */
-        newValue?: any;
+        newValue?: unknown;
     }
 
     interface StorageArea {
@@ -39,7 +39,7 @@ export namespace Storage {
          * to get the entire contents of storage.
          * @returns Callback with storage items, or on failure (in which case $(ref:runtime.lastError) will be set).
          */
-        get(keys?: null | string | string[] | Record<string, any>): Promise<Record<string, any>>;
+        get(keys?: null | string | string[] | Record<string, unknown>): Promise<Record<string, unknown>>;
 
         /**
          * Sets multiple items.
@@ -51,7 +51,7 @@ export namespace Storage {
          * (serialize using their <code>String</code> representation).</p>
          * @returns Callback on success, or on failure (in which case $(ref:runtime.lastError) will be set).
          */
-        set(items: Record<string, any>): Promise<void>;
+        set(items: Record<string, unknown>): Promise<void>;
 
         /**
          * Removes one or more items from storage.
@@ -85,7 +85,7 @@ export namespace Storage {
          * to get the entire contents of storage.
          * @returns Callback with storage items, or on failure (in which case $(ref:runtime.lastError) will be set).
          */
-        get(keys?: null | string | string[] | Record<string, any>): Promise<Record<string, any>>;
+        get(keys?: null | string | string[] | Record<string, unknown>): Promise<Record<string, unknown>>;
 
         /**
          * Gets the amount of space (in bytes) being used by one or more items.
@@ -107,7 +107,7 @@ export namespace Storage {
          * (serialize using their <code>String</code> representation).</p>
          * @returns Callback on success, or on failure (in which case $(ref:runtime.lastError) will be set).
          */
-        set(items: Record<string, any>): Promise<void>;
+        set(items: Record<string, unknown>): Promise<void>;
 
         /**
          * Removes one or more items from storage.

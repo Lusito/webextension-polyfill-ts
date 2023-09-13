@@ -45,7 +45,7 @@ export namespace Theme {
          *
          * @param windowId Optional. The window for which we want the theme.
          */
-        getCurrent(windowId?: number): Promise<any>;
+        getCurrent(windowId?: number): Promise<unknown>;
 
         /**
          * Make complete updates to the theme. Resolves when the update has completed.

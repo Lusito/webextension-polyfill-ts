@@ -67,7 +67,7 @@ export namespace ActivityLog {
          * A list of arguments passed to the call.
          * Optional.
          */
-        args?: any[];
+        args?: unknown[];
 
         /**
          * The result of the call.
