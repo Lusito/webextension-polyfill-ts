@@ -49,7 +49,7 @@ export namespace Management {
      * : The extension was installed by other software on the machine,<br><var>other</var>
      * : The extension was installed by other means.
      */
-    type ExtensionInstallType = "development" | "normal" | "sideload" | "other";
+    type ExtensionInstallType = "development" | "normal" | "sideload" | "other" | "admin";
 
     /**
      * Information about an installed extension.

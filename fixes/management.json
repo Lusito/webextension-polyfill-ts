@@ -1,0 +1,5 @@
+{
+    "types.$ExtensionInstallType.enum.+[]": [
+        "admin"
+    ]
+}
