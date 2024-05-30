@@ -17,11 +17,10 @@
   },
   "license": "Zlib",
   "author": "Santo Pfingsten",
-  "type": "module",
   "scripts": {
     "all": "npm run fetch && npm run validate:schemas && npm run build && npm run validate:out",
-    "build": "node --experimental-specifier-resolution=node --loader ts-node/esm src/build.ts && npm run format:out",
-    "fetch": "node --experimental-specifier-resolution=node --loader ts-node/esm src/fetch.ts",
+    "build": "node -r esbuild-register src/build.ts && npm run format:out",
+    "fetch": "node -r esbuild-register src/fetch.ts",
     "format:out": "prettier \"out/**/*.d.ts\" --write",
     "lint": "npm run lint:es && npm run lint:package && npm run lint:style",
     "lint:es": "eslint \"src/**/*.ts\" --ext .ts --ignore-path .prettierignore",
@@ -34,7 +33,7 @@
     "lint:style:fix": "npm run lint:style:base -- --write",
     "copy": "rimraf ../DefinitelyTyped/types/webextension-polyfill/**/*.d.ts && copyfiles -u 1 out/**/*.d.ts out/index.d.ts ../DefinitelyTyped/types/webextension-polyfill",
     "validate:out": "tsc -p tsconfig-out.json",
-    "validate:schemas": "node --experimental-specifier-resolution=node --loader ts-node/esm src/validate.ts"
+    "validate:schemas": "node -r esbuild-register src/validate.ts"
   },
   "devDependencies": {
     "@lusito/eslint-config": "^3.0.1",
@@ -42,10 +41,11 @@
     "@types/node": "^20.12.13",
     "@types/rimraf": "^4.0.5",
     "copyfiles": "^2.4.1",
+    "esbuild": "^0.21.4",
+    "esbuild-register": "^3.5.0",
     "got": "^14.3.0",
     "rimraf": "^5.0.7",
     "sort-package-json": "^2.10.0",
-    "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
   "volta": {
