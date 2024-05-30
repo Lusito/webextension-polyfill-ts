@@ -210,8 +210,6 @@ export namespace Proxy {
 
         /**
          * Notifies about errors caused by the invalid use of the proxy API.
-         *
-         * @param error
          */
         onError: Events.Event<(error: OnErrorErrorType) => void>;
 

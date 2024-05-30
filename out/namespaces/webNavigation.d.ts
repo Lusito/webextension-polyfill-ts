@@ -527,8 +527,6 @@ export namespace WebNavigation {
 
         /**
          * Fired when the contents of the tab is replaced by a different (usually previously pre-rendered) tab.
-         *
-         * @param details
          */
         onTabReplaced: Events.Event<(details: OnTabReplacedDetailsType) => void>;
 

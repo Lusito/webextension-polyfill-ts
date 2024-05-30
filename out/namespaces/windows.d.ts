@@ -284,7 +284,6 @@ export namespace Windows {
         /**
          * Gets details about a window.
          *
-         * @param windowId
          * @param getInfo Optional.
          */
         get(windowId: number, getInfo?: GetInfo): Promise<Window>;
@@ -321,16 +320,11 @@ export namespace Windows {
         /**
          * Updates the properties of a window. Specify only the properties that you want to change; unspecified properties will be
          * left unchanged.
-         *
-         * @param windowId
-         * @param updateInfo
          */
         update(windowId: number, updateInfo: UpdateUpdateInfoType): Promise<Window>;
 
         /**
          * Removes (closes) a window, and all the tabs inside it.
-         *
-         * @param windowId
          */
         remove(windowId: number): Promise<void>;
 

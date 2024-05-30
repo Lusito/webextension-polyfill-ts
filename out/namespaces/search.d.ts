@@ -88,15 +88,11 @@ export namespace Search {
 
         /**
          * Perform a search.
-         *
-         * @param searchProperties
          */
         search(searchProperties: SearchSearchPropertiesType): void;
 
         /**
          * Use the chrome.search API to search via the default provider.
-         *
-         * @param queryInfo
          */
         query(queryInfo: QueryQueryInfoType): Promise<void>;
     }

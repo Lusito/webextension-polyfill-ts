@@ -91,8 +91,6 @@ export namespace ContentScripts {
     interface Static {
         /**
          * Register a content script programmatically
-         *
-         * @param contentScriptOptions
          */
         register(contentScriptOptions: RegisteredContentScriptOptions): Promise<RegisteredContentScript>;
     }

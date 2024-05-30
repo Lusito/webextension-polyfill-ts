@@ -76,8 +76,6 @@ export namespace GeckoProfiler {
     interface Static {
         /**
          * Starts the profiler with the specified settings.
-         *
-         * @param settings
          */
         start(settings: StartSettingsType): void;
 

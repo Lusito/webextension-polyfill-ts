@@ -440,8 +440,6 @@ export namespace Cookies {
          * two step process: the cookie to be updated is first removed entirely, generating a notification with "cause" of
          * "overwrite" .  Afterwards, a new cookie is written with the updated values, generating a second notification with
          * "cause" "explicit".
-         *
-         * @param changeInfo
          */
         onChanged: Events.Event<(changeInfo: OnChangedChangeInfoType) => void>;
     }

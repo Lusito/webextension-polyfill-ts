@@ -382,9 +382,6 @@ export namespace WebRequest {
 
         /**
          * Creates a stream filter for the given add-on and the given extension ID.
-         *
-         * @param requestId
-         * @param addonId
          */
         create(requestId: number, addonId: string): void;
 
@@ -413,38 +410,28 @@ export namespace WebRequest {
 
         /**
          * Writes a chunk of data to the output stream. This may not be called before the "start" event has been received.
-         *
-         * @param data
          */
         write(data: ArrayBuffer | Uint8Array): void;
 
         /**
          * Dispatched with a StreamFilterDataEvent whenever incoming data is available on the stream.
          * This data will not be delivered to the output stream unless it is explicitly written via a write() call.
-         *
-         * @param data
          */
         ondata?: (data: StreamFilterEventData) => void;
 
         /**
          * Dispatched when the stream is opened, and is about to begin delivering data.
-         *
-         * @param data
          */
         onstart?: (data: StreamFilterEventData) => void;
 
         /**
          * Dispatched when the stream has closed, and has no more data to deliver. The output stream remains open and writable
          * until close() is called.
-         *
-         * @param data
          */
         onstop?: (data: StreamFilterEventData) => void;
 
         /**
          * Dispatched when an error has occurred. No further data may be read or written after this point.
-         *
-         * @param data
          */
         onerror?: (data: StreamFilterEventData) => void;
     }
@@ -1689,15 +1676,12 @@ export namespace WebRequest {
 
         /**
          * ...
-         *
-         * @param requestId
          */
         filterResponseData(requestId: string): StreamFilter;
 
         /**
          * Retrieves the security information for the request.  Returns a promise that will resolve to a SecurityInfo object.
          *
-         * @param requestId
          * @param options Optional.
          */
         getSecurityInfo(requestId: string, options?: GetSecurityInfoOptionsType): Promise<SecurityInfo>;

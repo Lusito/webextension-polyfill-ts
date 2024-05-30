@@ -295,7 +295,6 @@ export namespace Menus {
         visible?: boolean;
 
         /**
-         * @param info
          * @param tab The details of the tab where the click took place. Note: this parameter only present for extensions.
          */
         onclick?(info: OnClickData, tab: Tabs.Tab): void;
@@ -426,7 +425,6 @@ export namespace Menus {
          * Creates a new context menu item. Note that if an error occurs during creation, you may not find out until the creation
          * callback fires (the details will be in $(ref:runtime.lastError)).
          *
-         * @param createProperties
          * @param callback Optional. Called when the item has been created in the browser. If there were any problems creating the
          * item, details will be available in $(ref:runtime.lastError).
          * @returns The ID of the newly created item.
@@ -460,8 +458,6 @@ export namespace Menus {
         /**
          * Show the matching menu items from this extension instead of the default menu. This should be called during a
          * 'contextmenu' DOM event handler, and only applies to the menu that opens after this event.
-         *
-         * @param contextOptions
          */
         overrideContext(contextOptions: OverrideContextContextOptionsType): void;
 

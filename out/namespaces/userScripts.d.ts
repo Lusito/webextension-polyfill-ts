@@ -84,8 +84,6 @@ export namespace UserScripts {
         /**
          * Register a user script programmatically given its $(ref:userScripts.UserScriptOptions),
          * and resolves to a $(ref:userScripts.RegisteredUserScript) instance
-         *
-         * @param userScriptOptions
          */
         register(userScriptOptions: UserScriptOptions): void;
     }

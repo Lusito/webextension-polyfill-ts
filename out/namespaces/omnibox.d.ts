@@ -75,16 +75,12 @@ export namespace Omnibox {
         /**
          * User has changed what is typed into the omnibox.
          *
-         * @param text
          * @param suggest A callback passed to the onInputChanged event used for sending suggestions back to the browser.
          */
         onInputChanged: Events.Event<(text: string, suggest: (suggestResults: SuggestResult[]) => void) => void>;
 
         /**
          * User has accepted what is typed into the omnibox.
-         *
-         * @param text
-         * @param disposition
          */
         onInputEntered: Events.Event<(text: string, disposition: OnInputEnteredDisposition) => void>;
 
@@ -95,8 +91,6 @@ export namespace Omnibox {
 
         /**
          * User has deleted a suggested result.
-         *
-         * @param text
          */
         onDeleteSuggestion: Events.Event<(text: string) => void>;
     }

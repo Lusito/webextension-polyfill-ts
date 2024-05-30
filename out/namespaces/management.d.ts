@@ -193,8 +193,6 @@ export namespace Management {
 
         /**
          * Installs and enables a theme extension from the given url.
-         *
-         * @param options
          */
         install(options: InstallOptionsType): Promise<InstallCallbackResultType>;
 
@@ -222,29 +220,21 @@ export namespace Management {
 
         /**
          * Fired when an addon has been disabled.
-         *
-         * @param info
          */
         onDisabled: Events.Event<(info: ExtensionInfo) => void>;
 
         /**
          * Fired when an addon has been enabled.
-         *
-         * @param info
          */
         onEnabled: Events.Event<(info: ExtensionInfo) => void>;
 
         /**
          * Fired when an addon has been installed.
-         *
-         * @param info
          */
         onInstalled: Events.Event<(info: ExtensionInfo) => void>;
 
         /**
          * Fired when an addon has been uninstalled.
-         *
-         * @param info
          */
         onUninstalled: Events.Event<(info: ExtensionInfo) => void>;
     }
