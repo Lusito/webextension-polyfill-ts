@@ -26,7 +26,7 @@ export interface SchemaVisitorInfo {
 
 export type SchemaVisitorFactory = (
     namespace: ImportedNamespace,
-    namespaces: ImportedNamespace[]
+    namespaces: ImportedNamespace[],
 ) => SchemaVisitorInfo | null;
 
 function handleVisit(context: WalkerContext, original: any, visitorKey: SchemaVisitorKey) {

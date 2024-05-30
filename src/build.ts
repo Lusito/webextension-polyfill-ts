@@ -58,7 +58,7 @@ function getImports(entry: SchemaEntry, subNamespaces: string[]) {
 function addProperties(
     id: string | undefined,
     properties: Record<string, SchemaProperty> | undefined,
-    writer: CodeWriter
+    writer: CodeWriter,
 ) {
     const assert = new Assert(`build/addProperties(${id})`);
     workMap(properties, (prop, key) => {
@@ -191,7 +191,7 @@ function addEvent(event: SchemaFunctionProperty, writer: CodeWriter) {
             writer.code(`${name}: ${event.$extend};`);
         } else {
             writer.code(
-                `${name}: Events.Event<(${getParameters(event.parameters, false)}) => ${getReturnType(event)}>;`
+                `${name}: Events.Event<(${getParameters(event.parameters, false)}) => ${getReturnType(event)}>;`,
             );
         }
     }
@@ -276,7 +276,7 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
             writer.comment(
                 `Permissions: ${
                     entry.permissions.length === 0 ? "-" : entry.permissions.map((s) => JSON.stringify(s)).join(", ")
-                }`
+                }`,
             );
         writer.emptyLine();
         if (namespace.comments.length) {
@@ -372,7 +372,7 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     const template = fs.readFileSync("./src/indexTemplate.d.ts", { encoding: "utf-8" });
     fs.writeFileSync(
         "out/index.d.ts",
-        template.replace("declare namespace Browser {}", `${doNotEditWarning}\n\n${writer.toString().trim()}`)
+        template.replace("declare namespace Browser {}", `${doNotEditWarning}\n\n${writer.toString().trim()}`),
     );
 }
 
@@ -389,7 +389,7 @@ try {
             const prefix = `${ns.entry.namespace}.`;
             writeNamespace(
                 ns,
-                namespaceKeys.filter((key) => key.startsWith(prefix))
+                namespaceKeys.filter((key) => key.startsWith(prefix)),
             );
         });
         writeIndexFile(namespaces);

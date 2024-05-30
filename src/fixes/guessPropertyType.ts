@@ -12,8 +12,7 @@ function fixPropertyType(original: any) {
         else if ("value" in prop) prop.type = "value";
         else if ("$ref" in prop) prop.type = "ref";
         else throw new Error(`Could not guess type for ${JSON.stringify(original)}`);
-    }
-    else if (original.type === "string" && "value" in original) {
+    } else if (original.type === "string" && "value" in original) {
         const prop = original as SchemaValueProperty;
         prop.value = JSON.stringify(prop.value);
         prop.type = "value";

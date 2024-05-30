@@ -49,7 +49,7 @@ function convertToRefIfObject(
     prop: SchemaProperty,
     propName: string,
     namePrefix: string | undefined,
-    entry: SchemaEntry
+    entry: SchemaEntry,
 ) {
     if (
         prop.type === "object" &&
@@ -76,7 +76,7 @@ function convertToRefIfObject(
             prop.choices[0] = convertToRefIfObject(prop.choices[0], propName, namePrefix, entry);
         else {
             modifyArray(prop.choices, (choice, i) =>
-                convertToRefIfObject(choice, `${propName}C${i + 1}`, namePrefix, entry)
+                convertToRefIfObject(choice, `${propName}C${i + 1}`, namePrefix, entry),
             );
         }
     } else if (prop.type === "array" && prop.items && (prop.items.type !== "object" || !prop.items.isInstanceOf)) {
@@ -102,7 +102,7 @@ function extractParameterObjectType(
     prop: SchemaProperty,
     namePrefix: string,
     isRoot: boolean,
-    entry: SchemaEntry
+    entry: SchemaEntry,
 ): SchemaProperty {
     if (prop.type === "object") {
         if (
@@ -114,16 +114,16 @@ function extractParameterObjectType(
             extractParameterObjectType(prop.additionalProperties, namePrefix, true, entry);
         }
         modifyMap(prop.properties, (prop2, key) =>
-            extractParameterObjectType(prop2, combineNamePrefix(namePrefix, key), false, entry)
+            extractParameterObjectType(prop2, combineNamePrefix(namePrefix, key), false, entry),
         );
         modifyMap(prop.patternProperties, (prop2) =>
-            extractParameterObjectType(prop2, `${namePrefix}Pattern`, false, entry)
+            extractParameterObjectType(prop2, `${namePrefix}Pattern`, false, entry),
         );
         modifyArray<SchemaProperty>(prop.events, (evt) =>
-            extractParameterObjectType(evt, combineNamePrefix(namePrefix, evt.name), false, entry)
+            extractParameterObjectType(evt, combineNamePrefix(namePrefix, evt.name), false, entry),
         );
         modifyArray<SchemaProperty>(prop.functions, (func) =>
-            extractParameterObjectType(func, combineNamePrefix(namePrefix, func.name), false, entry)
+            extractParameterObjectType(func, combineNamePrefix(namePrefix, func.name), false, entry),
         );
 
         if (!isRoot && !prop.isInstanceOf) {
@@ -164,14 +164,14 @@ function extractParameterObjectType(
             prop.choices[0] = extractParameterObjectType(prop.choices[0], namePrefix, false, entry);
         else
             modifyArray(prop.choices, (choice, i) =>
-                extractParameterObjectType(choice, `${namePrefix}C${i + 1}`, false, entry)
+                extractParameterObjectType(choice, `${namePrefix}C${i + 1}`, false, entry),
             );
     } else if (prop.type === "function") {
         modifyArray(prop.parameters, (param) =>
-            extractParameterObjectType(param, combineNamePrefix(namePrefix, param.name), false, entry)
+            extractParameterObjectType(param, combineNamePrefix(namePrefix, param.name), false, entry),
         );
         modifyArray(prop.extraParameters, (param) =>
-            extractParameterObjectType(param, combineNamePrefix(namePrefix, param.name), false, entry)
+            extractParameterObjectType(param, combineNamePrefix(namePrefix, param.name), false, entry),
         );
         if (prop.returns) prop.returns = extractParameterObjectType(prop.returns, "Return", false, entry);
     }

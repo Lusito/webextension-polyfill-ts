@@ -403,7 +403,7 @@ function updateTypeById(data: SchemaFileData) {
 
 // Sigh.. don't have the nerve to create a generic fix for all of these typos
 function fixWrongRefs() {
-    typeById['tags.Tab'] = typeById['tabs.Tab'];
+    typeById["tags.Tab"] = typeById["tabs.Tab"];
 }
 
 // fixme: apply fixes before validation
