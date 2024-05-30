@@ -45,6 +45,7 @@ export namespace Events {
     /**
      * An object which allows the addition and removal of listeners for a Chrome event.
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     interface Event<T extends (...args: any[]) => any> {
         /**
          * Registers an event listener <em>callback</em> to an event.

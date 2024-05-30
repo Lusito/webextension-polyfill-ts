@@ -110,6 +110,9 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
         } else if (type.isInstanceOf) {
             extendsClass = ` extends ${type.isInstanceOf}`;
         }
+        if (templateParam.includes("any")) {
+            writer.code("// eslint-disable-next-line @typescript-eslint/no-explicit-any");
+        }
         writer.begin(`interface ${type.id}${templateParam}${extendsClass} {`);
         const writeInstructions = writer.getWriteInstructionCount();
 
