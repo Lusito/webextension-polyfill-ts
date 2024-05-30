@@ -7,11 +7,6 @@
  *
  * Use the scripting API to execute script in different contexts.
  * Permissions: "scripting"
- *
- * Comments found in source JSON schema files:
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 import { Manifest } from "./manifest";
 import { ExtensionTypes } from "./extensionTypes";
@@ -189,6 +184,15 @@ export namespace Scripting {
          * Optional.
          */
         matches?: string[];
+
+        /**
+         * If matchOriginAsFallback is true, then the code is also injected in about:, data:,
+         * blob: when their origin matches the pattern in 'matches', even if the actual document origin is opaque (due to the use
+         * of CSP sandbox or iframe sandbox). Match patterns in 'matches' must specify a wildcard path glob. By default it is <code>
+         * false</code>.
+         * Optional.
+         */
+        matchOriginAsFallback?: boolean;
 
         /**
          * Specifies when JavaScript files are injected into the web page. The preferred and default value is <code>

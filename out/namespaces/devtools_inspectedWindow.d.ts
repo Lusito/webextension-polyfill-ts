@@ -8,11 +8,6 @@
  * Use the <code>chrome.devtools.inspectedWindow</code> API to interact with the inspected window: obtain the tab ID for
  * the inspected page, evaluate the code in the context of the inspected window, reload the page,
  * or obtain the list of resources within the page.
- *
- * Comments found in source JSON schema files:
- * Copyright (c) 2012 The Chromium Authors. All rights reserved.
- * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
  */
 export namespace DevtoolsInspectedWindow {
     /**

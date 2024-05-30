@@ -8,11 +8,6 @@
  * Use the <code>browser.bookmarks</code> API to create, organize, and otherwise manipulate bookmarks.
  * Also see $(topic:override)[Override Pages], which you can use to create a custom Bookmark Manager page.
  * Permissions: "bookmarks"
- *
- * Comments found in source JSON schema files:
- * Copyright (c) 2012 The Chromium Authors. All rights reserved.
- * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
  */
 import { Events } from "./events";
 

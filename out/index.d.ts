@@ -21,6 +21,7 @@ import { Commands as ImportedCommands } from "./namespaces/commands";
 import { ContentScripts as ImportedContentScripts } from "./namespaces/contentScripts";
 import { ContextualIdentities as ImportedContextualIdentities } from "./namespaces/contextualIdentities";
 import { Cookies as ImportedCookies } from "./namespaces/cookies";
+import { DeclarativeContent as ImportedDeclarativeContent } from "./namespaces/declarativeContent";
 import { DeclarativeNetRequest as ImportedDeclarativeNetRequest } from "./namespaces/declarativeNetRequest";
 import { Devtools as ImportedDevtools } from "./namespaces/devtools";
 import { Dns as ImportedDns } from "./namespaces/dns";
@@ -58,7 +59,6 @@ import { Tabs as ImportedTabs } from "./namespaces/tabs";
 import { Theme as ImportedTheme } from "./namespaces/theme";
 import { TopSites as ImportedTopSites } from "./namespaces/topSites";
 import { Types as ImportedTypes } from "./namespaces/types";
-import { Urlbar as ImportedUrlbar } from "./namespaces/urlbar";
 import { UserScripts as ImportedUserScripts } from "./namespaces/userScripts";
 import { WebNavigation as ImportedWebNavigation } from "./namespaces/webNavigation";
 import { WebRequest as ImportedWebRequest } from "./namespaces/webRequest";
@@ -78,6 +78,7 @@ declare namespace Browser {
     const contentScripts: ContentScripts.Static;
     const contextualIdentities: ContextualIdentities.Static;
     const cookies: Cookies.Static;
+    const declarativeContent: DeclarativeContent.Static;
     const declarativeNetRequest: DeclarativeNetRequest.Static;
     const devtools: Devtools.Static;
     const dns: Dns.Static;
@@ -115,7 +116,6 @@ declare namespace Browser {
     const theme: Theme.Static;
     const topSites: TopSites.Static;
     const types: Types.Static;
-    const urlbar: Urlbar.Static;
     const userScripts: UserScripts.Static;
     const webNavigation: WebNavigation.Static;
     const webRequest: WebRequest.Static;
@@ -135,6 +135,7 @@ declare namespace Browser {
         contentScripts: ContentScripts.Static;
         contextualIdentities: ContextualIdentities.Static;
         cookies: Cookies.Static;
+        declarativeContent: DeclarativeContent.Static;
         declarativeNetRequest: DeclarativeNetRequest.Static;
         devtools: Devtools.Static;
         dns: Dns.Static;
@@ -172,7 +173,6 @@ declare namespace Browser {
         theme: Theme.Static;
         topSites: TopSites.Static;
         types: Types.Static;
-        urlbar: Urlbar.Static;
         userScripts: UserScripts.Static;
         webNavigation: WebNavigation.Static;
         webRequest: WebRequest.Static;
@@ -193,6 +193,7 @@ declare namespace Browser {
     export import ContentScripts = ImportedContentScripts;
     export import ContextualIdentities = ImportedContextualIdentities;
     export import Cookies = ImportedCookies;
+    export import DeclarativeContent = ImportedDeclarativeContent;
     export import DeclarativeNetRequest = ImportedDeclarativeNetRequest;
     export import Devtools = ImportedDevtools;
     export import Dns = ImportedDns;
@@ -230,7 +231,6 @@ declare namespace Browser {
     export import Theme = ImportedTheme;
     export import TopSites = ImportedTopSites;
     export import Types = ImportedTypes;
-    export import Urlbar = ImportedUrlbar;
     export import UserScripts = ImportedUserScripts;
     export import WebNavigation = ImportedWebNavigation;
     export import WebRequest = ImportedWebRequest;

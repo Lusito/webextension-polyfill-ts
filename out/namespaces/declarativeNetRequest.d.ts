@@ -7,11 +7,6 @@
  *
  * Use the declarativeNetRequest API to block or modify network requests by specifying declarative rules.
  * Permissions: "declarativeNetRequest", "declarativeNetRequestWithHostAccess"
- *
- * Comments found in source JSON schema files:
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 export namespace DeclarativeNetRequest {
     /**
@@ -146,6 +141,14 @@ export namespace DeclarativeNetRequest {
         action: RuleActionType;
     }
 
+    interface GetRulesFilter {
+        /**
+         * If specified, only rules with matching IDs are included.
+         * Optional.
+         */
+        ruleIds?: number[];
+    }
+
     interface UpdateDynamicRulesOptionsType {
         /**
          * IDs of the rules to remove. Any invalid IDs will be ignored.
@@ -184,6 +187,24 @@ export namespace DeclarativeNetRequest {
          * Optional.
          */
         enableRulesetIds?: string[];
+    }
+
+    interface UpdateStaticRulesOptionsType {
+        rulesetId: string;
+
+        /**
+         * Optional.
+         */
+        disableRuleIds?: number[];
+
+        /**
+         * Optional.
+         */
+        enableRuleIds?: number[];
+    }
+
+    interface GetDisabledRuleIdsOptionsType {
+        rulesetId: string;
     }
 
     interface IsRegexSupportedRegexOptionsType {
@@ -531,11 +552,19 @@ export namespace DeclarativeNetRequest {
         getEnabledRulesets(): Promise<string[]>;
 
         /**
-         * Returns the ids for the current set of enabled static rulesets.
+         * Modifies the static rulesets enabled/disabled state.
          *
          * @param updateRulesetOptions
          */
         updateEnabledRulesets(updateRulesetOptions: UpdateEnabledRulesetsUpdateRulesetOptionsType): Promise<void>;
+
+        /**
+         * Modified individual static rules enabled/disabled state. Changes to rules belonging to a disabled ruleset will take
+         * effect when the ruleset becomes enabled.
+         *
+         * @param options
+         */
+        updateStaticRules(options: UpdateStaticRulesOptionsType): Promise<void>;
 
         /**
          * Returns the remaining number of static rules an extension can enable
@@ -543,14 +572,25 @@ export namespace DeclarativeNetRequest {
         getAvailableStaticRuleCount(): Promise<number>;
 
         /**
-         * Returns the current set of dynamic rules for the extension.
+         * Returns the list of individual disabled static rules from a given static ruleset id.
+         *
+         * @param options
          */
-        getDynamicRules(): Promise<Rule[]>;
+        getDisabledRuleIds(options: GetDisabledRuleIdsOptionsType): Promise<number[]>;
+
+        /**
+         * Returns the current set of dynamic rules for the extension.
+         *
+         * @param filter Optional. An object to filter the set of dynamic rules for the extension.
+         */
+        getDynamicRules(filter?: GetRulesFilter): Promise<Rule[]>;
 
         /**
          * Returns the current set of session scoped rules for the extension.
+         *
+         * @param filter Optional. An object to filter the set of session scoped rules for the extension.
          */
-        getSessionRules(): Promise<Rule[]>;
+        getSessionRules(filter?: GetRulesFilter): Promise<Rule[]>;
 
         /**
          * Checks if the given regular expression will be supported as a 'regexFilter' rule condition.
@@ -568,7 +608,7 @@ export namespace DeclarativeNetRequest {
          */
         testMatchOutcome(
             request: TestMatchOutcomeRequestType,
-            options?: TestMatchOutcomeOptionsType
+            options?: TestMatchOutcomeOptionsType,
         ): Promise<TestMatchOutcomeCallbackResultType>;
 
         /**
@@ -588,16 +628,30 @@ export namespace DeclarativeNetRequest {
         MAX_NUMBER_OF_STATIC_RULESETS: number;
 
         /**
+         * The maximum number of static rules that can be disabled on each static ruleset.
+         */
+        MAX_NUMBER_OF_DISABLED_STATIC_RULES: number;
+
+        /**
          * The maximum number of static Rulesets an extension can enable at any one time.
          */
         MAX_NUMBER_OF_ENABLED_STATIC_RULESETS: number;
 
         /**
-         * The maximum number of dynamic and session rules an extension can add. NOTE: in the Firefox we are enforcing this limit
-         * to the session and dynamic rules count separately, instead of enforcing it to the rules count for both combined as the
-         * Chrome implementation does.
+         * Deprecated property returning the maximum number of dynamic and session rules an extension can add,
+         * replaced by MAX_NUMBER_OF_DYNAMIC_RULES/MAX_NUMBER_OF_SESSION_RULES.
          */
         MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES: number;
+
+        /**
+         * The maximum number of dynamic session rules an extension can add.
+         */
+        MAX_NUMBER_OF_DYNAMIC_RULES: number;
+
+        /**
+         * The maximum number of dynamic session rules an extension can add.
+         */
+        MAX_NUMBER_OF_SESSION_RULES: number;
 
         /**
          * The maximum number of regular expression rules that an extension can add. This limit is evaluated separately for the set

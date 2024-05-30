@@ -183,12 +183,12 @@ function visitor(entry: SchemaEntry) {
     entry.functions?.forEach((func) => extractParameterObjectFunction(func, entry));
     entry.events?.forEach((evt) => extractParameterObjectFunction(evt, entry));
     modifyMap(entry.properties, (prop, key) => {
-        if (prop.$ref && "properties" in prop) {
+        if (prop.$ref && "properties" in prop && prop.properties) {
             const id = combineNamePrefix(toUpperCamelCase(key), prop.$ref);
             const newProp: SchemaObjectProperty = {
                 type: "object",
                 isInstanceOf: prop.$ref,
-                properties: (prop as any).properties,
+                properties: prop.properties,
             };
             return convertToRef(newProp, id, entry);
         }

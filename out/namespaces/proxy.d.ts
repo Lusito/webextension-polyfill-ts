@@ -72,7 +72,8 @@ export namespace Proxy {
         autoLogin?: boolean;
 
         /**
-         * Proxy DNS when using SOCKS v5.
+         * Proxy DNS when using SOCKS. DNS queries get leaked to the network when set to false. True by default for SOCKS v5.
+         * False by default for SOCKS v4.
          * Optional.
          */
         proxyDNS?: boolean;
@@ -197,7 +198,7 @@ export namespace Proxy {
         addListener(
             callback: (details: OnRequestDetailsType) => void,
             filter: WebRequest.RequestFilter,
-            extraInfoSpec?: string[]
+            extraInfoSpec?: string[],
         ): void;
     }
 

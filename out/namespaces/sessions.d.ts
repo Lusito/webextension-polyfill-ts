@@ -7,11 +7,6 @@
  *
  * Use the <code>chrome.sessions</code> API to query and restore tabs and windows from a browsing session.
  * Permissions: "sessions"
- *
- * Comments found in source JSON schema files:
- * Copyright 2013 The Chromium Authors. All rights reserved.
- * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
  */
 import { Tabs } from "./tabs";
 import { Windows } from "./windows";

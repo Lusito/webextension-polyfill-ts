@@ -8,17 +8,114 @@
  * Use the <code>browser.runtime</code> API to retrieve the background page, return details about the manifest,
  * and listen for and respond to events in the app or extension lifecycle. You can also use this API to convert the
  * relative path of URLs to fully-qualified URLs.
- *
- * Comments found in source JSON schema files:
- * Copyright 2014 The Chromium Authors. All rights reserved.
- * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
  */
 import { Tabs } from "./tabs";
 import { Manifest } from "./manifest";
 import { Events } from "./events";
 
 export namespace Runtime {
+    /**
+     * A filter to match against existing extension context. Matching contexts must match all specified filters.
+     */
+    interface ContextFilter {
+        /**
+         * Optional.
+         */
+        contextIds?: string[];
+
+        /**
+         * Optional.
+         */
+        contextTypes?: ContextType[];
+
+        /**
+         * Optional.
+         */
+        documentIds?: string[];
+
+        /**
+         * Optional.
+         */
+        documentOrigins?: string[];
+
+        /**
+         * Optional.
+         */
+        documentUrls?: string[];
+
+        /**
+         * Optional.
+         */
+        frameIds?: number[];
+
+        /**
+         * Optional.
+         */
+        tabIds?: number[];
+
+        /**
+         * Optional.
+         */
+        windowIds?: number[];
+
+        /**
+         * Optional.
+         */
+        incognito?: boolean;
+    }
+
+    /**
+     * The type of extension view.
+     */
+    type ContextType = "BACKGROUND" | "POPUP" | "SIDE_PANEL" | "TAB";
+
+    /**
+     * A context hosting extension content
+     */
+    interface ExtensionContext {
+        /**
+         * An unique identifier associated to this context
+         */
+        contextId: string;
+
+        /**
+         * The type of the context
+         */
+        contextType: ContextType;
+
+        /**
+         * The origin of the document associated with this context, or undefined if it is not hosted in a document
+         * Optional.
+         */
+        documentOrigin?: string;
+
+        /**
+         * The URL of the document associated with this context, or undefined if it is not hosted in a document
+         * Optional.
+         */
+        documentUrl?: string;
+
+        /**
+         * Whether the context is associated with an private browsing context.
+         */
+        incognito: boolean;
+
+        /**
+         * The frame ID for this context, or -1 if it is not hosted in a frame.
+         */
+        frameId: number;
+
+        /**
+         * The tab ID for this context, or -1 if it is not hosted in a tab.
+         */
+        tabId: number;
+
+        /**
+         * The window ID for this context, or -1 if it is not hosted in a window.
+         */
+        windowId: number;
+    }
+
     /**
      * An object which allows two way communication with other pages.
      */
@@ -162,6 +259,16 @@ export namespace Runtime {
     type OnRestartRequiredReason = "app_update" | "os_update" | "periodic";
 
     /**
+     * The performance warning event category, e.g. 'content_script'.
+     */
+    type OnPerformanceWarningCategory = "content_script";
+
+    /**
+     * The performance warning event severity. Will be 'high' for serious and user-visible issues.
+     */
+    type OnPerformanceWarningSeverity = "low" | "medium" | "high";
+
+    /**
      * If an update is available, this contains more information about the available update.
      */
     interface RequestUpdateCheckCallbackDetailsType {
@@ -219,6 +326,29 @@ export namespace Runtime {
         version: string;
     }
 
+    interface OnPerformanceWarningDetailsType {
+        /**
+         * The performance warning event category, e.g. 'content_script'.
+         */
+        category: OnPerformanceWarningCategory;
+
+        /**
+         * The performance warning event severity, e.g. 'high'.
+         */
+        severity: OnPerformanceWarningSeverity;
+
+        /**
+         * The $(ref:tabs.Tab) that the performance warning relates to, if any.
+         * Optional.
+         */
+        tabId?: number;
+
+        /**
+         * An explanation of what the warning means, and hopefully how to address it.
+         */
+        description: string;
+    }
+
     /**
      * This will be defined during an API method callback if there was an error
      */
@@ -245,6 +375,13 @@ export namespace Runtime {
          * If there is no background page, an error is set.
          */
         getBackgroundPage(): Promise<Window>;
+
+        /**
+         * Fetches information about active contexts associated with this extension
+         *
+         * @param filter A filter to find matching context.
+         */
+        getContexts(filter: ContextFilter): Promise<ExtensionContext[]>;
 
         /**
          * <p>Open your Extension's options page, if possible.</p><p>The precise behavior may depend on your manifest's <code>
@@ -477,6 +614,14 @@ export namespace Runtime {
                 sendResponse: (message: unknown) => void
             ) => Promise<unknown> | true | void
         >;
+
+        /**
+         * Fired when a runtime performance issue is detected with the extension. Observe this event to be proactively notified of
+         * runtime performance problems with the extension.
+         *
+         * @param details
+         */
+        onPerformanceWarning: Events.Event<(details: OnPerformanceWarningDetailsType) => void>;
 
         /**
          * This will be defined during an API method callback if there was an error

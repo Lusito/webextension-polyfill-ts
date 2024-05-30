@@ -8,11 +8,6 @@
  * Use the browser.menus API to add items to the browser's menus. You can choose what types of objects your context menu
  * additions apply to, such as images, hyperlinks, and pages.
  * Permissions: "menus"
- *
- * Comments found in source JSON schema files:
- * Copyright (c) 2012 The Chromium Authors. All rights reserved.
- * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
  */
 import { Extension } from "./extension";
 import { Tabs } from "./tabs";

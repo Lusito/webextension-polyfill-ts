@@ -49,7 +49,7 @@
   "events.%onBeforeSendHeaders.returns.$ref": "BlockingResponseOrPromise",
   "events.%onHeadersReceived.returns.$ref": "BlockingResponseOrPromise",
   "events.%onAuthRequired.returns.$ref": "BlockingResponseOrPromise",
-  "events.%onAuthRequired.parameters.-[]": ["%callback"],
+  "events.%onAuthRequired.parameters.-[]": ["%asyncCallback"],
   "events.%onErrorOccurred.extraParameters.+[]": [
     {
       "type": "array",

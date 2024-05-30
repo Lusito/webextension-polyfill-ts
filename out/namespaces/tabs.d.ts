@@ -7,11 +7,6 @@
  *
  * Use the <code>browser.tabs</code> API to interact with the browser's tab system. You can use this API to create, modify,
  * and rearrange tabs in the browser.
- *
- * Comments found in source JSON schema files:
- * Copyright (c) 2012 The Chromium Authors. All rights reserved.
- * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
  */
 import { Runtime } from "./runtime";
 import { Windows } from "./windows";
@@ -1031,7 +1026,7 @@ export namespace Tabs {
          */
         addListener(
             callback: (tabId: number, changeInfo: OnUpdatedChangeInfoType, tab: Tab) => void,
-            filter?: UpdateFilter
+            filter?: UpdateFilter,
         ): void;
     }
 
@@ -1178,8 +1173,8 @@ export namespace Tabs {
         captureTab(tabId?: number, options?: ExtensionTypes.ImageDetails): Promise<string>;
 
         /**
-         * Captures an area of the currently active tab in the specified window. You must have $(topic:declare_permissions)
-         * [&lt;all_urls&gt;] permission to use this method.
+         * Captures an area of the currently active tab in the specified window. You must have &lt;all_urls&gt; or activeTab
+         * permission to use this method.
          *
          * @param windowId Optional. The target window. Defaults to the $(topic:current-window)[current window].
          * @param options Optional.

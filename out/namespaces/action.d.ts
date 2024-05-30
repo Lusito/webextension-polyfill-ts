@@ -8,11 +8,6 @@
  * Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon,
  * a browser action can also have a tooltip, a badge, and a popup.
  * Permissions: "manifest:action", "manifest:browser_action"
- *
- * Comments found in source JSON schema files:
- * Copyright (c) 2012 The Chromium Authors. All rights reserved.
- * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
  */
 import { Tabs } from "./tabs";
 import { Events } from "./events";

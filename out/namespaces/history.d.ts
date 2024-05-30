@@ -9,11 +9,6 @@
  * and query for URLs in the browser's history. To override the history page with your own version, see $(topic:override)
  * [Override Pages].
  * Permissions: "history"
- *
- * Comments found in source JSON schema files:
- * Copyright (c) 2012 The Chromium Authors. All rights reserved.
- * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
  */
 import { ExtensionTypes } from "./extensionTypes";
 import { Events } from "./events";

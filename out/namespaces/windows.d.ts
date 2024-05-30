@@ -7,11 +7,6 @@
  *
  * Use the <code>browser.windows</code> API to interact with browser windows. You can use this API to create, modify,
  * and rearrange windows in the browser.
- *
- * Comments found in source JSON schema files:
- * Copyright (c) 2012 The Chromium Authors. All rights reserved.
- * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
  */
 import { Tabs } from "./tabs";
 import { Events } from "./events";

@@ -396,6 +396,7 @@ try {
     }
 } catch (e) {
     console.error(e);
+    process.exit(1);
 }
 
 // fixme: remove export namespace?
