@@ -59,7 +59,6 @@ import { Tabs as ImportedTabs } from "./namespaces/tabs";
 import { Theme as ImportedTheme } from "./namespaces/theme";
 import { TopSites as ImportedTopSites } from "./namespaces/topSites";
 import { Types as ImportedTypes } from "./namespaces/types";
-import { Urlbar as ImportedUrlbar } from "./namespaces/urlbar";
 import { UserScripts as ImportedUserScripts } from "./namespaces/userScripts";
 import { WebNavigation as ImportedWebNavigation } from "./namespaces/webNavigation";
 import { WebRequest as ImportedWebRequest } from "./namespaces/webRequest";
@@ -117,7 +116,6 @@ declare namespace Browser {
     const theme: Theme.Static;
     const topSites: TopSites.Static;
     const types: Types.Static;
-    const urlbar: Urlbar.Static;
     const userScripts: UserScripts.Static;
     const webNavigation: WebNavigation.Static;
     const webRequest: WebRequest.Static;
@@ -175,7 +173,6 @@ declare namespace Browser {
         theme: Theme.Static;
         topSites: TopSites.Static;
         types: Types.Static;
-        urlbar: Urlbar.Static;
         userScripts: UserScripts.Static;
         webNavigation: WebNavigation.Static;
         webRequest: WebRequest.Static;
@@ -234,7 +231,6 @@ declare namespace Browser {
     export import Theme = ImportedTheme;
     export import TopSites = ImportedTopSites;
     export import Types = ImportedTypes;
-    export import Urlbar = ImportedUrlbar;
     export import UserScripts = ImportedUserScripts;
     export import WebNavigation = ImportedWebNavigation;
     export import WebRequest = ImportedWebRequest;

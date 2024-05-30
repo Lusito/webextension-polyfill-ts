@@ -8,11 +8,6 @@
  * Use the <code>browser.pageAction</code> API to put icons inside the address bar. Page actions represent actions that can
  * be taken on the current page, but that aren't applicable to all pages.
  * Permissions: "manifest:page_action"
- *
- * Comments found in source JSON schema files:
- * Copyright (c) 2012 The Chromium Authors. All rights reserved.
- * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
  */
 import { Tabs } from "./tabs";
 import { Events } from "./events";

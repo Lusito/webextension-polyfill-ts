@@ -7,11 +7,6 @@
  *
  * Use the <code>browser.storage</code> API to store, retrieve, and track changes to user data.
  * Permissions: "storage"
- *
- * Comments found in source JSON schema files:
- * Copyright 2014 The Chromium Authors. All rights reserved.
- * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
  */
 import { Events } from "./events";
 

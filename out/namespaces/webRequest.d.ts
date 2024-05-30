@@ -8,11 +8,6 @@
  * Use the <code>browser.webRequest</code> API to observe and analyze traffic and to intercept, block,
  * or modify requests in-flight.
  * Permissions: "webRequest"
- *
- * Comments found in source JSON schema files:
- * Copyright (c) 2012 The Chromium Authors. All rights reserved.
- * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
  */
 import { Events } from "./events";
 
@@ -1529,7 +1524,7 @@ export namespace WebRequest {
         addListener(
             callback: (details: OnBeforeRequestDetailsType) => BlockingResponseOrPromise | void,
             filter: RequestFilter,
-            extraInfoSpec?: OnBeforeRequestOptions[]
+            extraInfoSpec?: OnBeforeRequestOptions[],
         ): void;
     }
 
@@ -1549,7 +1544,7 @@ export namespace WebRequest {
         addListener(
             callback: (details: OnBeforeSendHeadersDetailsType) => BlockingResponseOrPromise | void,
             filter: RequestFilter,
-            extraInfoSpec?: OnBeforeSendHeadersOptions[]
+            extraInfoSpec?: OnBeforeSendHeadersOptions[],
         ): void;
     }
 
@@ -1568,7 +1563,7 @@ export namespace WebRequest {
         addListener(
             callback: (details: OnSendHeadersDetailsType) => void,
             filter: RequestFilter,
-            extraInfoSpec?: OnSendHeadersOptions[]
+            extraInfoSpec?: OnSendHeadersOptions[],
         ): void;
     }
 
@@ -1587,7 +1582,7 @@ export namespace WebRequest {
         addListener(
             callback: (details: OnHeadersReceivedDetailsType) => BlockingResponseOrPromise | void,
             filter: RequestFilter,
-            extraInfoSpec?: OnHeadersReceivedOptions[]
+            extraInfoSpec?: OnHeadersReceivedOptions[],
         ): void;
     }
 
@@ -1608,7 +1603,7 @@ export namespace WebRequest {
         addListener(
             callback: (details: OnAuthRequiredDetailsType) => BlockingResponseOrPromise | void,
             filter: RequestFilter,
-            extraInfoSpec?: OnAuthRequiredOptions[]
+            extraInfoSpec?: OnAuthRequiredOptions[],
         ): void;
     }
 
@@ -1627,7 +1622,7 @@ export namespace WebRequest {
         addListener(
             callback: (details: OnResponseStartedDetailsType) => void,
             filter: RequestFilter,
-            extraInfoSpec?: OnResponseStartedOptions[]
+            extraInfoSpec?: OnResponseStartedOptions[],
         ): void;
     }
 
@@ -1645,7 +1640,7 @@ export namespace WebRequest {
         addListener(
             callback: (details: OnBeforeRedirectDetailsType) => void,
             filter: RequestFilter,
-            extraInfoSpec?: OnBeforeRedirectOptions[]
+            extraInfoSpec?: OnBeforeRedirectOptions[],
         ): void;
     }
 
@@ -1663,7 +1658,7 @@ export namespace WebRequest {
         addListener(
             callback: (details: OnCompletedDetailsType) => void,
             filter: RequestFilter,
-            extraInfoSpec?: OnCompletedOptions[]
+            extraInfoSpec?: OnCompletedOptions[],
         ): void;
     }
 
@@ -1681,7 +1676,7 @@ export namespace WebRequest {
         addListener(
             callback: (details: OnErrorOccurredDetailsType) => void,
             filter: RequestFilter,
-            extraInfoSpec?: OnErrorOccurredOptions[]
+            extraInfoSpec?: OnErrorOccurredOptions[],
         ): void;
     }
 

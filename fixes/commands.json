@@ -1,11 +1,5 @@
 {
   "functions.%update.!fixAsync": null,
   "functions.%reset.!fixAsync": null,
-  "events.%onCommand.parameters.+[]": [
-    {
-      "name": "tab",
-      "$ref": "Tabs.Tab",
-      "optional": true
-    }
-  ]
+  "events.%onCommand.parameters.%tab.$ref": "tabs.Tab"
 }
