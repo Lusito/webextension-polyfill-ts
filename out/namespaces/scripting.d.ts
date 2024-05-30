@@ -149,7 +149,7 @@ export namespace Scripting {
     /**
      * The JavaScript world for a script to execute within. We currently only support the <code>'ISOLATED'</code> world.
      */
-    type ExecutionWorld = "ISOLATED";
+    type ExecutionWorld = "ISOLATED" | "MAIN";
 
     interface RegisteredContentScript {
         /**
