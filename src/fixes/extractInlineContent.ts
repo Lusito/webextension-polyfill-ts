@@ -132,8 +132,7 @@ function extractParameterObjectType(
                 prop.additionalProperties &&
                 prop.additionalProperties !== true &&
                 prop.additionalProperties.type === "array" &&
-                prop.additionalProperties.items &&
-                prop.additionalProperties.items.type
+                prop.additionalProperties.items?.type
             ) {
                 // special case for a map type.. not extracted, will be handled in getType
             } else if (prop.patternProperties) {

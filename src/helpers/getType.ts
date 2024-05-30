@@ -61,8 +61,7 @@ export function getType(e: SchemaProperty): string {
         e.additionalProperties &&
         e.additionalProperties !== true &&
         e.additionalProperties.type === "array" &&
-        e.additionalProperties.items &&
-        e.additionalProperties.items.type
+        e.additionalProperties.items?.type
     ) {
         const type = getType(e.additionalProperties.items);
         return `Record<string, ${type}>`;
