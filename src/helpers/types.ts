@@ -91,6 +91,7 @@ export interface SchemaFunctionProperty extends SchemaBaseProperty {
     type: "function";
     async?: "callback" | "responseCallback" | boolean;
     requireUserInput?: boolean;
+    templateParams?: string; // used for fixes/*.json only
     parameters?: SchemaProperty[];
     extraParameters?: SchemaProperty[];
     returns?: SchemaProperty;

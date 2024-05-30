@@ -473,11 +473,11 @@ export namespace Runtime {
          * $(topic:manifest/externally_connectable)[web messaging].
          * @param options Optional.
          */
-        sendMessage(
+        sendMessage<TMessage = unknown, TResponse = unknown>(
             extensionId: string | undefined,
-            message: unknown,
+            message: TMessage,
             options?: SendMessageOptionsType,
-        ): Promise<unknown>;
+        ): Promise<TResponse>;
 
         /**
          * Sends a single message to event listeners within your extension/app or a different extension/app.
@@ -488,7 +488,10 @@ export namespace Runtime {
          *
          * @param options Optional.
          */
-        sendMessage(message: unknown, options?: SendMessageOptionsType): Promise<unknown>;
+        sendMessage<TMessage = unknown, TResponse = unknown>(
+            message: TMessage,
+            options?: SendMessageOptionsType,
+        ): Promise<TResponse>;
 
         /**
          * Send a single message to a native application.
@@ -496,7 +499,10 @@ export namespace Runtime {
          * @param application The name of the native messaging host.
          * @param message The message that will be passed to the native messaging host.
          */
-        sendNativeMessage(application: string, message: unknown): Promise<unknown>;
+        sendNativeMessage<TMessage = unknown, TResponse = unknown>(
+            application: string,
+            message: TMessage,
+        ): Promise<TResponse>;
 
         /**
          * Returns information about the current browser.

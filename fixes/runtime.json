@@ -5,6 +5,12 @@
     "description": "The manifest details."
   },
   "functions.%connect.parameters.%extensionId.skipableParameter": true,
+  "functions.%sendMessage.templateParams": "<TMessage = unknown, TResponse = unknown>",
+  "functions.%sendMessage.parameters.%message.type": "TMessage",
+  "functions.%sendMessage.parameters.%responseCallback.parameters.%response.type": "TResponse",
+  "functions.%sendNativeMessage.templateParams": "<TMessage = unknown, TResponse = unknown>",
+  "functions.%sendNativeMessage.parameters.%message.type": "TMessage",
+  "functions.%sendNativeMessage.parameters.%responseCallback.parameters.%response.type": "TResponse",
   "types.$Port.properties.error": {
     "type": "object",
     "description": "If the port was disconnected due to an error, this will be set to an object with a string property message, giving you more information about the error. See onDisconnect.",

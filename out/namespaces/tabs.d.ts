@@ -1060,7 +1060,11 @@ export namespace Tabs {
          *
          * @param options Optional.
          */
-        sendMessage(tabId: number, message: unknown, options?: SendMessageOptionsType): Promise<unknown>;
+        sendMessage<TMessage = unknown, TResponse = unknown>(
+            tabId: number,
+            message: TMessage,
+            options?: SendMessageOptionsType,
+        ): Promise<TResponse>;
 
         /**
          * Creates a new tab.

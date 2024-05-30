@@ -9,6 +9,9 @@
   "functions.%captureTab.!fixAsync": "dataUrl:string",
   "functions.%show.!fixAsync": null,
   "functions.%hide.!fixAsync": "hiddenTabIds:number[]",
+  "functions.%sendMessage.templateParams": "<TMessage = unknown, TResponse = unknown>",
+  "functions.%sendMessage.parameters.%message.type": "TMessage",
+  "functions.%sendMessage.parameters.%responseCallback.parameters.%response.type": "TResponse",
   "functions.%update.parameters.%updateProperties.properties.autoDiscardable": {
     "type": "boolean",
     "optional": true,
