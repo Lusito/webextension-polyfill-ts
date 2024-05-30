@@ -132,15 +132,11 @@ export namespace SidebarAction {
     interface Static {
         /**
          * Sets the title of the sidebar action. This shows up in the tooltip.
-         *
-         * @param details
          */
         setTitle(details: SetTitleDetailsType): Promise<void>;
 
         /**
          * Gets the title of the sidebar action.
-         *
-         * @param details
          */
         getTitle(details: GetTitleDetailsType): Promise<string>;
 
@@ -148,22 +144,16 @@ export namespace SidebarAction {
          * Sets the icon for the sidebar action. The icon can be specified either as the path to an image file or as the pixel data
          * from a canvas element, or as dictionary of either one of those. Either the <strong>path</strong> or the <strong>
          * imageData</strong> property must be specified.
-         *
-         * @param details
          */
         setIcon(details: SetIconDetailsType): Promise<void>;
 
         /**
          * Sets the url to the html document to be opened in the sidebar when the user clicks on the sidebar action's icon.
-         *
-         * @param details
          */
         setPanel(details: SetPanelDetailsType): Promise<void>;
 
         /**
          * Gets the url to the html document set as the panel for this sidebar action.
-         *
-         * @param details
          */
         getPanel(details: GetPanelDetailsType): Promise<string>;
 
@@ -184,8 +174,6 @@ export namespace SidebarAction {
 
         /**
          * Checks whether the sidebar action is open.
-         *
-         * @param details
          */
         isOpen(details: IsOpenDetailsType): Promise<boolean>;
     }

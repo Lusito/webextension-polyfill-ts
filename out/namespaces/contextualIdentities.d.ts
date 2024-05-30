@@ -168,22 +168,16 @@ export namespace ContextualIdentities {
 
         /**
          * Fired when a container is updated.
-         *
-         * @param changeInfo
          */
         onUpdated: Events.Event<(changeInfo: OnUpdatedChangeInfoType) => void>;
 
         /**
          * Fired when a new container is created.
-         *
-         * @param changeInfo
          */
         onCreated: Events.Event<(changeInfo: OnCreatedChangeInfoType) => void>;
 
         /**
          * Fired when a container is removed.
-         *
-         * @param changeInfo
          */
         onRemoved: Events.Event<(changeInfo: OnRemovedChangeInfoType) => void>;
     }

@@ -61,8 +61,7 @@ function getRawType(e: SchemaProperty): string {
         e.additionalProperties &&
         e.additionalProperties !== true &&
         e.additionalProperties.type === "array" &&
-        e.additionalProperties.items &&
-        e.additionalProperties.items.type
+        e.additionalProperties.items?.type
     ) {
         const type = getType(e.additionalProperties.items);
         return `Record<string, ${type}>`;
@@ -105,18 +104,18 @@ export interface MinimumTuple<T> extends Array<T> {
 
 export function getArrayType(e: SchemaArrayProperty): string {
     if (e.items) {
-        let propType: string;
         if (e.items.type === "choices" && e.items.choices) return `Array<${getUnionType(e.items.choices)}>`;
-        else {
-            if (e.items.$ref) propType = fixRef(e.items.$ref);
-            else if (e.items.type === "object" && e.items.isInstanceOf) propType = e.items.isInstanceOf;
-            else propType = anyToUnknown(typeMap[e.items.type] || e.items.type);
-            // fixme: arrays of minimum size can't be done easily anymore since TypeScript 2.7.. find another way.
-            // fixed size:
-            if (e.minItems && e.maxItems === e.minItems) propType = `[${Array(e.minItems).fill(propType).join(", ")}]`;
-            else if (propType.includes("<")) propType = `Array<${propType}>`;
-            else propType = `${anyToUnknown(propType)}[]`;
-        }
+
+        let propType: string;
+        if (e.items.$ref) propType = fixRef(e.items.$ref);
+        else if (e.items.type === "object" && e.items.isInstanceOf) propType = e.items.isInstanceOf;
+        else propType = anyToUnknown(typeMap[e.items.type] || e.items.type);
+        // fixme: arrays of minimum size can't be done easily anymore since TypeScript 2.7.. find another way.
+        // fixed size:
+        if (e.minItems && e.maxItems === e.minItems) propType = `[${Array(e.minItems).fill(propType).join(", ")}]`;
+        else if (propType.includes("<")) propType = `Array<${propType}>`;
+        else propType = `${anyToUnknown(propType)}[]`;
+
         return propType;
     }
     return typeMap[e.type] || e.type;

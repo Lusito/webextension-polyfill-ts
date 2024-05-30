@@ -33,8 +33,6 @@ export namespace Idle {
         /**
          * Fired when the system changes to an active or idle state. The event fires with "idle" if the the user has not generated
          * any input for a specified number of seconds, and "active" when the user generates input on an idle system.
-         *
-         * @param newState
          */
         onStateChanged: Events.Event<(newState: IdleState) => void>;
     }

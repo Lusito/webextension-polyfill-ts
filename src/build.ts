@@ -90,7 +90,7 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
     if (type.description || (type.type === "string" && type.enum)) {
         if (type.description) {
             writer.comment(type.description.trim());
-            if (type.type === "string" && type.enum && type.enum.length) writer.emptyLine();
+            if (type.type === "string" && type.enum?.length) writer.emptyLine();
         }
         if (type.type === "string") {
             type.enum?.forEach((e) => {
@@ -158,7 +158,10 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
 
 function formatParamComment(param: SchemaProperty) {
     const description = param.description ? `${param.description}` : "";
-    const fullDescription = param.optional ? `Optional. ${description}` : description;
+    const fullDescription = (param.optional ? `Optional. ${description}` : description).trim();
+    if (!fullDescription) {
+        return "";
+    }
     return `@param ${param.name} ${fullDescription.trim()}`;
 }
 
@@ -223,7 +226,7 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
         const description = asyncParam.description ? asyncParam.description.trim() : "";
         if (description) writer.comment(`@returns ${description}`);
 
-        if (!asyncParam.parameters || !asyncParam.parameters.length) returnType = "void";
+        if (!asyncParam.parameters?.length) returnType = "void";
         else if (asyncParam.parameters.length === 1) {
             const param = asyncParam.parameters[0];
             returnType = getType(param);
@@ -296,7 +299,7 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
 
         // Constructors
         entry.types?.forEach((type) => {
-            if (type.type === "object" && type.properties && type.properties.instanceType) {
+            if (type.type === "object" && type.properties?.instanceType) {
                 writer.code(`${type.id}: { new(options?: ${type.id}): ${type.id} };`);
                 writer.emptyLine();
             }

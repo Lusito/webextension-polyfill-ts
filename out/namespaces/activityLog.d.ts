@@ -96,7 +96,6 @@ export namespace ActivityLog {
          * Registers an event listener <em>callback</em> to an event.
          *
          * @param callback Called when an event occurs. The parameters of this function depend on the type of event.
-         * @param id
          */
         addListener(callback: (details: OnExtensionActivityDetailsType) => void, id: string): void;
     }

@@ -124,23 +124,14 @@ export namespace Runtime {
 
         disconnect(): void;
 
-        /**
-         * @param port
-         */
         onDisconnect: Events.Event<(port: Port) => void>;
 
-        /**
-         * @param message
-         * @param port
-         */
         onMessage: Events.Event<(message: unknown, port: Port) => void>;
 
         /**
          * Send a message to the other end. This takes one argument, which is a JSON object representing the message to send.
          * It will be delivered to any script listening to the port's onMessage event, or to the native application if this port
          * is connected to a native application.
-         *
-         * @param message
          */
         postMessage(message: unknown): void;
 
@@ -480,13 +471,12 @@ export namespace Runtime {
          * @param extensionId Optional. The ID of the extension/app to send the message to. If omitted,
          * the message will be sent to your own extension/app. Required if sending messages from a web page for
          * $(topic:manifest/externally_connectable)[web messaging].
-         * @param message
          * @param options Optional.
          */
         sendMessage(
             extensionId: string | undefined,
             message: unknown,
-            options?: SendMessageOptionsType
+            options?: SendMessageOptionsType,
         ): Promise<unknown>;
 
         /**
@@ -496,7 +486,6 @@ export namespace Runtime {
          * onMessageExternal), if a different extension. Note that extensions cannot send messages to content scripts using this
          * method. To send messages to content scripts, use $(ref:tabs.sendMessage).
          *
-         * @param message
          * @param options Optional.
          */
         sendMessage(message: unknown, options?: SendMessageOptionsType): Promise<unknown>;
@@ -531,8 +520,6 @@ export namespace Runtime {
         /**
          * Fired when the extension is first installed, when the extension is updated to a new version,
          * and when the browser is updated to a new version.
-         *
-         * @param details
          */
         onInstalled: Events.Event<(details: OnInstalledDetailsType) => void>;
 
@@ -565,15 +552,11 @@ export namespace Runtime {
 
         /**
          * Fired when a connection is made from either an extension process or a content script.
-         *
-         * @param port
          */
         onConnect: Events.Event<(port: Port) => void>;
 
         /**
          * Fired when a connection is made from another extension.
-         *
-         * @param port
          */
         onConnectExternal: Events.Event<(port: Port) => void>;
 
@@ -581,7 +564,6 @@ export namespace Runtime {
          * Fired when a message is sent from either an extension process or a content script.
          *
          * @param message Optional. The message sent by the calling script.
-         * @param sender
          * @param sendResponse Function to call (at most once) when you have a response. This is an alternative to returning a
          * Promise. The argument should be any JSON-ifiable object. If you have more than one <code>onMessage</code>
          * listener in the same document, then only one may send a response. This function becomes invalid when the event listener
@@ -592,7 +574,7 @@ export namespace Runtime {
             (
                 message: unknown,
                 sender: MessageSender,
-                sendResponse: (message: unknown) => void
+                sendResponse: (message: unknown) => void,
             ) => Promise<unknown> | true | void
         >;
 
@@ -600,7 +582,6 @@ export namespace Runtime {
          * Fired when a message is sent from another extension/app. Cannot be used in a content script.
          *
          * @param message Optional. The message sent by the calling script.
-         * @param sender
          * @param sendResponse Function to call (at most once) when you have a response. This is an alternative to returning a
          * Promise. The argument should be any JSON-ifiable object. If you have more than one <code>onMessage</code>
          * listener in the same document, then only one may send a response. This function becomes invalid when the event listener
@@ -611,15 +592,13 @@ export namespace Runtime {
             (
                 message: unknown,
                 sender: MessageSender,
-                sendResponse: (message: unknown) => void
+                sendResponse: (message: unknown) => void,
             ) => Promise<unknown> | true | void
         >;
 
         /**
          * Fired when a runtime performance issue is detected with the extension. Observe this event to be proactively notified of
          * runtime performance problems with the extension.
-         *
-         * @param details
          */
         onPerformanceWarning: Events.Event<(details: OnPerformanceWarningDetailsType) => void>;
 

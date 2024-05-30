@@ -1033,8 +1033,6 @@ export namespace Tabs {
     interface Static {
         /**
          * Retrieves details about the specified tab.
-         *
-         * @param tabId
          */
         get(tabId: number): Promise<Tab>;
 
@@ -1049,7 +1047,6 @@ export namespace Tabs {
          * event is fired in each content script running in the specified tab for the current extension. For more details,
          * see $(topic:messaging)[Content Script Messaging].
          *
-         * @param tabId
          * @param connectInfo Optional.
          * @returns A port that can be used to communicate with the content scripts running in the specified tab.
          * The port's $(ref:runtime.Port) event is fired if the tab closes or does not exist.
@@ -1061,16 +1058,12 @@ export namespace Tabs {
          * is sent back.  The $(ref:runtime.onMessage) event is fired in each content script running in the specified tab for the
          * current extension.
          *
-         * @param tabId
-         * @param message
          * @param options Optional.
          */
         sendMessage(tabId: number, message: unknown, options?: SendMessageOptionsType): Promise<unknown>;
 
         /**
          * Creates a new tab.
-         *
-         * @param createProperties
          */
         create(createProperties: CreateCreatePropertiesType): Promise<Tab>;
 
@@ -1084,15 +1077,11 @@ export namespace Tabs {
 
         /**
          * Gets all tabs that have the specified properties, or all tabs if no properties are specified.
-         *
-         * @param queryInfo
          */
         query(queryInfo: QueryQueryInfoType): Promise<Tab[]>;
 
         /**
          * Highlights the given tabs.
-         *
-         * @param highlightInfo
          */
         highlight(highlightInfo: HighlightHighlightInfoType): Promise<Windows.Window>;
 
@@ -1100,14 +1089,11 @@ export namespace Tabs {
          * Modifies the properties of a tab. Properties that are not specified in <var>updateProperties</var> are not modified.
          *
          * @param tabId Optional. Defaults to the selected tab of the $(topic:current-window)[current window].
-         * @param updateProperties
          */
         update(tabId: number | undefined, updateProperties: UpdateUpdatePropertiesType): Promise<Tab>;
 
         /**
          * Modifies the properties of a tab. Properties that are not specified in <var>updateProperties</var> are not modified.
-         *
-         * @param updateProperties
          */
         update(updateProperties: UpdateUpdatePropertiesType): Promise<Tab>;
 
@@ -1116,7 +1102,6 @@ export namespace Tabs {
          * from normal (window.type === "normal") windows.
          *
          * @param tabIds The tab or list of tabs to move.
-         * @param moveProperties
          */
         move(tabIds: number | number[], moveProperties: MoveMovePropertiesType): Promise<Tab | Tab[]>;
 
@@ -1377,63 +1362,42 @@ export namespace Tabs {
          * Fired when a tab is moved within a window. Only one move event is fired, representing the tab the user directly moved.
          * Move events are not fired for the other tabs that must move in response. This event is not fired when a tab is moved
          * between windows. For that, see $(ref:tabs.onDetached).
-         *
-         * @param tabId
-         * @param moveInfo
          */
         onMoved: Events.Event<(tabId: number, moveInfo: OnMovedMoveInfoType) => void>;
 
         /**
          * Fires when the active tab in a window changes. Note that the tab's URL may not be set at the time this event fired,
          * but you can listen to onUpdated events to be notified when a URL is set.
-         *
-         * @param activeInfo
          */
         onActivated: Events.Event<(activeInfo: OnActivatedActiveInfoType) => void>;
 
         /**
          * Fired when the highlighted or selected tabs in a window changes.
-         *
-         * @param highlightInfo
          */
         onHighlighted: Events.Event<(highlightInfo: OnHighlightedHighlightInfoType) => void>;
 
         /**
          * Fired when a tab is detached from a window, for example because it is being moved between windows.
-         *
-         * @param tabId
-         * @param detachInfo
          */
         onDetached: Events.Event<(tabId: number, detachInfo: OnDetachedDetachInfoType) => void>;
 
         /**
          * Fired when a tab is attached to a window, for example because it was moved between windows.
-         *
-         * @param tabId
-         * @param attachInfo
          */
         onAttached: Events.Event<(tabId: number, attachInfo: OnAttachedAttachInfoType) => void>;
 
         /**
          * Fired when a tab is closed.
-         *
-         * @param tabId
-         * @param removeInfo
          */
         onRemoved: Events.Event<(tabId: number, removeInfo: OnRemovedRemoveInfoType) => void>;
 
         /**
          * Fired when a tab is replaced with another tab due to prerendering or instant.
-         *
-         * @param addedTabId
-         * @param removedTabId
          */
         onReplaced: Events.Event<(addedTabId: number, removedTabId: number) => void>;
 
         /**
          * Fired when a tab is zoomed.
-         *
-         * @param ZoomChangeInfo
          */
         onZoomChange: Events.Event<(ZoomChangeInfo: OnZoomChangeZoomChangeInfoType) => void>;
 

@@ -531,7 +531,6 @@ export namespace DeclarativeNetRequest {
          * removeRuleIds are first removed, and then the rules given in options.addRules are added.
          * These rules are persisted across browser sessions and extension updates.
          *
-         * @param options
          * @returns Called when the dynamic rules have been updated
          */
         updateDynamicRules(options: UpdateDynamicRulesOptionsType): Promise<void>;
@@ -541,7 +540,6 @@ export namespace DeclarativeNetRequest {
          * removeRuleIds are first removed, and then the rules given in options.addRules are added.
          * These rules are not persisted across sessions and are backed in memory.
          *
-         * @param options
          * @returns Called when the session rules have been updated
          */
         updateSessionRules(options: UpdateSessionRulesOptionsType): Promise<void>;
@@ -553,16 +551,12 @@ export namespace DeclarativeNetRequest {
 
         /**
          * Modifies the static rulesets enabled/disabled state.
-         *
-         * @param updateRulesetOptions
          */
         updateEnabledRulesets(updateRulesetOptions: UpdateEnabledRulesetsUpdateRulesetOptionsType): Promise<void>;
 
         /**
          * Modified individual static rules enabled/disabled state. Changes to rules belonging to a disabled ruleset will take
          * effect when the ruleset becomes enabled.
-         *
-         * @param options
          */
         updateStaticRules(options: UpdateStaticRulesOptionsType): Promise<void>;
 
@@ -573,8 +567,6 @@ export namespace DeclarativeNetRequest {
 
         /**
          * Returns the list of individual disabled static rules from a given static ruleset id.
-         *
-         * @param options
          */
         getDisabledRuleIds(options: GetDisabledRuleIdsOptionsType): Promise<number[]>;
 
@@ -594,8 +586,6 @@ export namespace DeclarativeNetRequest {
 
         /**
          * Checks if the given regular expression will be supported as a 'regexFilter' rule condition.
-         *
-         * @param regexOptions
          */
         isRegexSupported(regexOptions: IsRegexSupportedRegexOptionsType): Promise<IsRegexSupportedCallbackResultType>;
 

@@ -59,8 +59,6 @@ export namespace Types {
 
         /**
          * Fired after the setting changes.
-         *
-         * @param details
          */
         onChange: Events.Event<(details: SettingOnChangeDetailsType) => void>;
     }

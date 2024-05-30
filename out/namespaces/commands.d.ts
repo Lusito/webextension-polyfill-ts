@@ -96,15 +96,12 @@ export namespace Commands {
         /**
          * Fired when a registered command is activated using a keyboard shortcut.
          *
-         * @param command
          * @param tab Optional. Details of the $(ref:tabs.Tab) where the command was activated.
          */
         onCommand: Events.Event<(command: string, tab: Tabs.Tab | undefined) => void>;
 
         /**
          * Fired when a registered command's shortcut is changed.
-         *
-         * @param changeInfo
          */
         onChanged: Events.Event<(changeInfo: OnChangedChangeInfoType) => void>;
     }
