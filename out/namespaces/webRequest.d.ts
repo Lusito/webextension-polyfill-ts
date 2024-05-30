@@ -290,7 +290,7 @@ export namespace WebRequest {
          * An ArrayBuffer with a copy of the data.
          * Optional.
          */
-        bytes?: any;
+        bytes?: unknown;
 
         /**
          * A string with the file's path and name.

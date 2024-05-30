@@ -5,7 +5,7 @@ import { SchemaVisitorFactory } from "../helpers/visitor";
 // This fix replaces the values of the following $ref ids with a new value
 
 const REF_MAPPINGS: Record<string, string> = {
-    UnrecognizedProperty: "any",
+    UnrecognizedProperty: "unknown",
     PersistentBackgroundProperty: "boolean",
 };
 

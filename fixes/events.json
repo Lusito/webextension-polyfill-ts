@@ -2,7 +2,7 @@
   "types.$Event.functions.%addListener.parameters.+[]": [
     {
       "name": "...params",
-      "type": "any[]",
+      "type": "unknown[]",
       "description": "Further parameters, depending on the event."
     }
   ],

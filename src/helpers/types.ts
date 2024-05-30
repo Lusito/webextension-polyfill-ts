@@ -27,7 +27,7 @@ export interface SchemaChoicesProperty extends SchemaBaseProperty {
 }
 
 export interface SchemaAnyProperty extends SchemaBaseProperty {
-    type: "any";
+    type: "unknown";
 }
 
 export interface SchemaRefProperty extends SchemaBaseProperty {

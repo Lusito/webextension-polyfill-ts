@@ -126,14 +126,14 @@ export namespace Runtime {
 
         onDisconnect: Events.Event<(port: Port) => void>;
 
-        onMessage: Events.Event<(message: any, port: Port) => void>;
+        onMessage: Events.Event<(message: unknown, port: Port) => void>;
 
         /**
          * Send a message to the other end. This takes one argument, which is a JSON object representing the message to send.
          * It will be delivered to any script listening to the port's onMessage event, or to the native application if this port
          * is connected to a native application.
          */
-        postMessage(message: any): void;
+        postMessage(message: unknown): void;
 
         /**
          * This property will <b>only</b> be present on ports passed to onConnect/onConnectExternal listeners.
@@ -404,7 +404,7 @@ export namespace Runtime {
          * @param target A WindowProxy or a Browsing Context container element (IFrame, Frame, Embed, Object) for the target frame.
          * @returns The frameId of the target frame, or -1 if it doesn't exist.
          */
-        getFrameId(target: any): number;
+        getFrameId(target: unknown): number;
 
         /**
          * Sets the URL to be visited upon uninstallation. This may be used to clean up server-side data, do analytics,
@@ -473,7 +473,11 @@ export namespace Runtime {
          * $(topic:manifest/externally_connectable)[web messaging].
          * @param options Optional.
          */
-        sendMessage(extensionId: string | undefined, message: any, options?: SendMessageOptionsType): Promise<any>;
+        sendMessage(
+            extensionId: string | undefined,
+            message: unknown,
+            options?: SendMessageOptionsType,
+        ): Promise<unknown>;
 
         /**
          * Sends a single message to event listeners within your extension/app or a different extension/app.
@@ -484,7 +488,7 @@ export namespace Runtime {
          *
          * @param options Optional.
          */
-        sendMessage(message: any, options?: SendMessageOptionsType): Promise<any>;
+        sendMessage(message: unknown, options?: SendMessageOptionsType): Promise<unknown>;
 
         /**
          * Send a single message to a native application.
@@ -492,7 +496,7 @@ export namespace Runtime {
          * @param application The name of the native messaging host.
          * @param message The message that will be passed to the native messaging host.
          */
-        sendNativeMessage(application: string, message: any): Promise<any>;
+        sendNativeMessage(application: string, message: unknown): Promise<unknown>;
 
         /**
          * Returns information about the current browser.
@@ -567,7 +571,11 @@ export namespace Runtime {
          * will keep the message channel open to the other end until <code>sendResponse</code> is called).
          */
         onMessage: Events.Event<
-            (message: any, sender: MessageSender, sendResponse: (message: any) => void) => Promise<any> | true | void
+            (
+                message: unknown,
+                sender: MessageSender,
+                sendResponse: (message: unknown) => void,
+            ) => Promise<unknown> | true | void
         >;
 
         /**
@@ -581,7 +589,11 @@ export namespace Runtime {
          * will keep the message channel open to the other end until <code>sendResponse</code> is called).
          */
         onMessageExternal: Events.Event<
-            (message: any, sender: MessageSender, sendResponse: (message: any) => void) => Promise<any> | true | void
+            (
+                message: unknown,
+                sender: MessageSender,
+                sendResponse: (message: unknown) => void,
+            ) => Promise<unknown> | true | void
         >;
 
         /**

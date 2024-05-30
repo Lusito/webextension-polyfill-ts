@@ -1060,7 +1060,7 @@ export namespace Tabs {
          *
          * @param options Optional.
          */
-        sendMessage(tabId: number, message: any, options?: SendMessageOptionsType): Promise<any>;
+        sendMessage(tabId: number, message: unknown, options?: SendMessageOptionsType): Promise<unknown>;
 
         /**
          * Creates a new tab.
@@ -1174,7 +1174,7 @@ export namespace Tabs {
          * @param details Details of the script to run.
          * @returns Called after all the JavaScript has been executed.
          */
-        executeScript(tabId: number | undefined, details: ExtensionTypes.InjectDetails): Promise<any[]>;
+        executeScript(tabId: number | undefined, details: ExtensionTypes.InjectDetails): Promise<unknown[]>;
 
         /**
          * Injects JavaScript code into a page. For details, see the $(topic:content_scripts)[programmatic injection]
@@ -1183,7 +1183,7 @@ export namespace Tabs {
          * @param details Details of the script to run.
          * @returns Called after all the JavaScript has been executed.
          */
-        executeScript(details: ExtensionTypes.InjectDetails): Promise<any[]>;
+        executeScript(details: ExtensionTypes.InjectDetails): Promise<unknown[]>;
 
         /**
          * Injects CSS into a page. For details, see the $(topic:content_scripts)[programmatic injection]
