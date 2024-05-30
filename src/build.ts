@@ -245,7 +245,9 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
         returnType = getType(func.returns);
     }
     const optionalPart = func.optional ? "?" : "";
-    writer.code(`${func.name + optionalPart}${func.templateParams ?? ''}(${getParameters(parametersWithoutAsync, true)}): ${returnType};`);
+    writer.code(
+        `${func.name + optionalPart}${func.templateParams ?? ""}(${getParameters(parametersWithoutAsync, true)}): ${returnType};`,
+    );
     writer.emptyLine();
 
     if (parameters) {
