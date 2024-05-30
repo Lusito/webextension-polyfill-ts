@@ -20,6 +20,7 @@
   "scripts": {
     "all": "npm run fetch && npm run validate:schemas && npm run build && npm run validate:out",
     "build": "node -r esbuild-register src/build.ts && npm run format:out",
+    "copy": "rimraf ../DefinitelyTyped/types/webextension-polyfill/**/*.d.ts && copyfiles -u 1 out/**/*.d.ts out/index.d.ts ../DefinitelyTyped/types/webextension-polyfill",
     "fetch": "node -r esbuild-register src/fetch.ts",
     "format:out": "prettier \"out/**/*.d.ts\" --write",
     "lint": "npm run lint:es && npm run lint:package && npm run lint:style",
@@ -31,7 +32,6 @@
     "lint:style": "npm run lint:style:base -- --check",
     "lint:style:base": "prettier \"{src,_locales}/**/*.{ts,js,json}\" \"./*.{ts,js,json}\" --quote-props consistent",
     "lint:style:fix": "npm run lint:style:base -- --write",
-    "copy": "rimraf ../DefinitelyTyped/types/webextension-polyfill/**/*.d.ts && copyfiles -u 1 out/**/*.d.ts out/index.d.ts ../DefinitelyTyped/types/webextension-polyfill",
     "validate:out": "tsc -p tsconfig-out.json",
     "validate:schemas": "node -r esbuild-register src/validate.ts"
   },
