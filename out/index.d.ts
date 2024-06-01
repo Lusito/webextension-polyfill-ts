@@ -1,16 +1,11 @@
-// Project: https://github.com/mozilla/webextension-polyfill
-// Definitions by: Santo Pfingsten <https://github.com/Lusito>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// Generated using https://github.com/Lusito/webextension-polyfill-ts
-
 //////////////////////////////////////////////////////
 // BEWARE: DO NOT EDIT MANUALLY! Changes will be lost!
 //////////////////////////////////////////////////////
 
+import { Action as ImportedAction } from "./namespaces/action";
 import { ActivityLog as ImportedActivityLog } from "./namespaces/activityLog";
 import { Alarms as ImportedAlarms } from "./namespaces/alarms";
 import { Bookmarks as ImportedBookmarks } from "./namespaces/bookmarks";
-import { Action as ImportedAction } from "./namespaces/action";
 import { BrowserAction as ImportedBrowserAction } from "./namespaces/browserAction";
 import { BrowserSettings as ImportedBrowserSettings } from "./namespaces/browserSettings";
 import { BrowsingData as ImportedBrowsingData } from "./namespaces/browsingData";
@@ -18,6 +13,7 @@ import { CaptivePortal as ImportedCaptivePortal } from "./namespaces/captivePort
 import { Clipboard as ImportedClipboard } from "./namespaces/clipboard";
 import { Commands as ImportedCommands } from "./namespaces/commands";
 import { ContentScripts as ImportedContentScripts } from "./namespaces/contentScripts";
+import { ContextMenus as ImportedContextMenus } from "./namespaces/contextMenus";
 import { ContextualIdentities as ImportedContextualIdentities } from "./namespaces/contextualIdentities";
 import { Cookies as ImportedCookies } from "./namespaces/cookies";
 import { DeclarativeContent as ImportedDeclarativeContent } from "./namespaces/declarativeContent";
@@ -37,7 +33,6 @@ import { Identity as ImportedIdentity } from "./namespaces/identity";
 import { Idle as ImportedIdle } from "./namespaces/idle";
 import { Management as ImportedManagement } from "./namespaces/management";
 import { Manifest as ImportedManifest } from "./namespaces/manifest";
-import { ContextMenus as ImportedContextMenus } from "./namespaces/contextMenus";
 import { Menus as ImportedMenus } from "./namespaces/menus";
 import { NetworkStatus as ImportedNetworkStatus } from "./namespaces/networkStatus";
 import { NormandyAddonStudy as ImportedNormandyAddonStudy } from "./namespaces/normandyAddonStudy";

@@ -8,10 +8,10 @@
  * Use the <code>browser.tabs</code> API to interact with the browser's tab system. You can use this API to create, modify,
  * and rearrange tabs in the browser.
  */
+import { Events } from "./events";
+import { ExtensionTypes } from "./extensionTypes";
 import { Runtime } from "./runtime";
 import { Windows } from "./windows";
-import { ExtensionTypes } from "./extensionTypes";
-import { Events } from "./events";
 
 export namespace Tabs {
     /**
@@ -1017,7 +1017,8 @@ export namespace Tabs {
      * Fired when a tab is updated.
      */
     interface onUpdatedEvent
-        extends Events.Event<(tabId: number, changeInfo: OnUpdatedChangeInfoType, tab: Tab) => void> {
+        extends Events.Event<(tabId: number, changeInfo: OnUpdatedChangeInfoType, tab: Tab) => void>
+    {
         /**
          * Registers an event listener <em>callback</em> to an event.
          *
