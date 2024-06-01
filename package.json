@@ -18,7 +18,7 @@
   "license": "Zlib",
   "author": "Santo Pfingsten",
   "scripts": {
-    "all": "npm run fetch && npm run validate:schemas && npm run build && npm run validate:out && npm run lint:out",
+    "all": "npm run fetch && npm run validate:schemas && npm run build && npm run validate:out",
     "build": "node -r esbuild-register src/build.ts && npm run format:out",
     "copy": "rimraf ../DefinitelyTyped/types/webextension-polyfill/**/*.d.ts && copyfiles -u 1 out/**/*.d.ts out/index.d.ts ../DefinitelyTyped/types/webextension-polyfill",
     "fetch": "node -r esbuild-register src/fetch.ts",
@@ -33,10 +33,11 @@
     "lint:style": "npm run lint:style:base -- --check",
     "lint:style:base": "prettier \"{src,_locales}/**/*.{ts,js,json}\" \"./*.{ts,js,json}\" --quote-props consistent",
     "lint:style:fix": "npm run lint:style:base -- --write",
-    "validate:out": "tsc -p tsconfig-out.json",
+    "validate:out": "tsc -p tsconfig-out.json && npm run lint:out",
     "validate:schemas": "node -r esbuild-register src/validate.ts"
   },
   "devDependencies": {
+    "@definitelytyped/eslint-plugin": "^0.1.12",
     "@lusito/eslint-config": "^3.0.1",
     "@lusito/prettier-config": "^3.0.0",
     "@types/node": "^20.12.13",

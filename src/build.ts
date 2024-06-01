@@ -244,6 +244,9 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
 
         returnType = getType(func.returns);
     }
+    if (func.templateParams) {
+        writer.code("// eslint-disable-next-line @definitelytyped/no-unnecessary-generics");
+    }
     const optionalPart = func.optional ? "?" : "";
     writer.code(
         `${func.name + optionalPart}${func.templateParams ?? ""}(${getParameters(parametersWithoutAsync, true)}): ${returnType};`,
@@ -340,6 +343,7 @@ function namespacePath(ns: ImportedNamespace) {
 function writeIndexFile(namespaces: ImportedNamespace[]) {
     console.log("- index.d.ts");
     const writer = new CodeWriter();
+    writer.code(`${doNotEditWarning}\n\n`);
     namespaces.forEach((ns) => {
         if (!ns.entry.namespace.includes(".")) {
             const name = toUpperCamelCase(ns.entry.namespace);
@@ -364,21 +368,19 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     writer.end("}");
     writer.emptyLine();
 
-    writer.code("/* tslint:disable:strict-export-declare-modifiers */");
     namespaces.forEach((ns) => {
         if (!ns.entry.namespace.includes(".")) {
             const name = toUpperCamelCase(ns.entry.namespace);
             writer.code(`export import ${name} = Imported${name};`);
         }
     });
-    writer.code("/* tslint:enable:strict-export-declare-modifiers */");
     writer.end("}");
 
-    const template = fs.readFileSync("./src/indexTemplate.d.ts", { encoding: "utf-8" });
-    fs.writeFileSync(
-        "out/index.d.ts",
-        template.replace("declare namespace Browser {}", `${doNotEditWarning}\n\n${writer.toString().trim()}`),
-    );
+    writer.emptyLine();
+    writer.code("// eslint-disable-next-line @definitelytyped/export-just-namespace");
+    writer.code("export = Browser;");
+
+    fs.writeFileSync("out/index.d.ts", writer.toString().trim());
 }
 
 try {

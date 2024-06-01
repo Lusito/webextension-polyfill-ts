@@ -94,7 +94,7 @@ export function getType(e: SchemaProperty): string {
 
 export function getReturnType(e: SchemaFunctionProperty): string {
     let returnType = e.returns ? getType(e.returns) : "void";
-    if (e.returns?.optional) returnType += " | void";
+    if (e.returns?.optional) returnType += " | undefined";
     return returnType;
 }
 

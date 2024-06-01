@@ -8,11 +8,13 @@ module.exports = {
     },
     overrides: [
         {
+            extends: ["plugin:@definitelytyped/all"],
             files: ["out/**/*.ts"],
             rules: {
                 "@typescript-eslint/no-explicit-any": "error",
                 "spaced-comment": "off",
                 "@typescript-eslint/no-unused-vars": "off",
+                "@definitelytyped/no-single-element-tuple-type": "off",
             },
             parserOptions: {
                 project: "./tsconfig-out.json",
