@@ -1,5 +1,5 @@
 {
-  "functions.%getCurrent.!fixAsync": "theme:any",
+  "functions.%getCurrent.!fixAsync": "theme:Manifest.ThemeType",
   "functions.%update.!fixAsync": null,
   "functions.%reset.!fixAsync": null
 }
