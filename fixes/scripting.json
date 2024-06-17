@@ -66,6 +66,5 @@
         }
       }
     }
-  ],
-  "types.$ExecutionWorld.enum.+[]": ["MAIN"]
+  ]
 }
