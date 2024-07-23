@@ -44,6 +44,18 @@ async function downloadChromeFile(url: string) {
     }
 }
 
+async function addCustomSchemas() {
+    try {
+        const files = fs.readdirSync("./schemas-custom");
+        for (const file of files) {
+            console.log(`copying ${file} to schemas/`);
+            fs.copyFileSync(`./schemas-custom/${file}`, `./schemas/${file}`);
+        }
+    } catch (error) {
+        throw new Error(`Error copying custom schemas: ${(error as any)?.response?.body || String(error)}`);
+    }
+}
+
 const baseURL = "https://hg.mozilla.org/integration/autoland/raw-file/tip/";
 const baseChromeURL =
     "https://chromium.googlesource.com/chromium/src/+/main/chrome/common/extensions/api/{FILENAME}?format=TEXT";
@@ -58,7 +70,11 @@ async function run() {
 
         rimraf.sync("./schemas");
         fs.mkdirSync("./schemas");
-        await Promise.all([...result.flat().map(downloadFile), ...chromeFiles.map(downloadChromeFile)]);
+        await Promise.all([
+            ...result.flat().map(downloadFile),
+            ...chromeFiles.map(downloadChromeFile),
+            addCustomSchemas(),
+        ]);
         console.log("done");
     } catch (e) {
         console.log("Failed fetching files", e);
