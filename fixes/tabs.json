@@ -22,6 +22,53 @@
     "optional": true,
     "description": "Whether the tabs can be discarded automatically by the browser when resources are low."
   },
+  "functions.+[]": [{
+    "name": "group",
+    "type": "function",
+    "description": "Adds one or more tabs to a specified group, or if no group is specified, adds the given tabs to a newly created group.",
+    "async": "callback",
+    "parameters": [
+      {
+        "type": "object",
+        "name": "options",
+        "description": "The options to add the tab(s) to a group.",
+        "properties": {
+          "createProperties": {
+            "type": "object",
+            "optional": true,
+            "description": "Configurations for creating a group. Cannot be used if groupId is already specified.",
+            "properties": {
+              "windowId": {
+                "type": "number",
+                "optional": true,
+                "description": "The window of the new group. Defaults to the current window."
+              }
+            }
+          },
+          "groupId": {
+            "type": "number",
+            "optional": true,
+            "description": "The ID of the group to add the tabs to. If not specified, a new group will be created."
+          },
+          "tabIds": {
+            "type": "number | number[]",
+            "description": "The tab ID or list of tab IDs to add to the specified group."
+          }
+        }
+      },
+      {
+        "type": "function",
+        "name": "callback",
+        "parameters": [
+          {
+            "name": "result",
+            "type": "number",
+            "description": "The ID of the group that the tabs were added to."
+          }
+        ]
+      }
+    ]
+  }],
   "types.$Tab.properties.autoDiscardable": {
     "type": "boolean",
     "optional": true,
@@ -31,5 +78,10 @@
     "type": "string",
     "optional": true,
     "description": "The URL the tab is navigating to, before it has committed. This property is only present if the extension's manifest includes the \"tabs\" permission and there is a pending navigation."
+  },
+  "types.$Tab.properties.groupId": {
+    "type": "number",
+    "optional": true,
+    "description": "The ID of the group that the tab belongs to."
   }
 }
