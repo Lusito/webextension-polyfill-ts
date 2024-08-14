@@ -107,7 +107,6 @@ declare namespace Browser {
     const sessions: Sessions.Static;
     const sidebarAction: SidebarAction.Static;
     const storage: Storage.Static;
-    const tabGroups: TabGroups.Static;
     const tabs: Tabs.Static;
     const theme: Theme.Static;
     const topSites: TopSites.Static;
@@ -116,6 +115,7 @@ declare namespace Browser {
     const webNavigation: WebNavigation.Static;
     const webRequest: WebRequest.Static;
     const windows: Windows.Static;
+    const tabGroups: TabGroups.Static;
 
     interface Browser {
         activityLog: ActivityLog.Static;
@@ -165,7 +165,6 @@ declare namespace Browser {
         sessions: Sessions.Static;
         sidebarAction: SidebarAction.Static;
         storage: Storage.Static;
-        tabGroups: TabGroups.Static;
         tabs: Tabs.Static;
         theme: Theme.Static;
         topSites: TopSites.Static;
@@ -174,6 +173,7 @@ declare namespace Browser {
         webNavigation: WebNavigation.Static;
         webRequest: WebRequest.Static;
         windows: Windows.Static;
+        tabGroups: TabGroups.Static;
     }
 
     export import ActivityLog = ImportedActivityLog;
@@ -223,7 +223,6 @@ declare namespace Browser {
     export import Sessions = ImportedSessions;
     export import SidebarAction = ImportedSidebarAction;
     export import Storage = ImportedStorage;
-    export import TabGroups = ImportedTabGroups;
     export import Tabs = ImportedTabs;
     export import Theme = ImportedTheme;
     export import TopSites = ImportedTopSites;
@@ -232,6 +231,7 @@ declare namespace Browser {
     export import WebNavigation = ImportedWebNavigation;
     export import WebRequest = ImportedWebRequest;
     export import Windows = ImportedWindows;
+    export import TabGroups = ImportedTabGroups;
 }
 
 // eslint-disable-next-line @definitelytyped/export-just-namespace

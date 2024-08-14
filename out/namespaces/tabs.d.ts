@@ -1391,11 +1391,12 @@ export namespace Tabs {
         goBack(tabId?: number): Promise<void>;
 
         /**
+         * Chrome API (only available for Chrome)
          * Adds one or more tabs to a specified group, or if no group is specified, adds the given tabs to a newly created group.
          *
          * @param options The options to add the tab(s) to a group.
          */
-        group(options: GroupOptionsType): Promise<number>;
+        group?(options: GroupOptionsType): Promise<number>;
 
         /**
          * Fired when a tab is created. Note that the tab's URL may not be set at the time this event fired,

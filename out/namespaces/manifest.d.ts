@@ -315,11 +315,11 @@ export namespace Manifest {
         | "proxy"
         | "nativeMessaging"
         | "sessions"
-        | "tabGroups"
         | "tabs"
         | "tabHide"
         | "topSites"
         | "webNavigation"
+        | "tabGroups"
         | "identity.email";
 
     type OptionalPermissionOrOrigin = OptionalPermission | MatchPattern;

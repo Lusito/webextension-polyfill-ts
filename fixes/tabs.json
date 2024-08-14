@@ -25,7 +25,8 @@
   "functions.+[]": [{
     "name": "group",
     "type": "function",
-    "description": "Adds one or more tabs to a specified group, or if no group is specified, adds the given tabs to a newly created group.",
+    "optional": true,
+    "description": "Chrome API (only available for Chrome)\n Adds one or more tabs to a specified group, or if no group is specified, adds the given tabs to a newly created group.",
     "async": "callback",
     "parameters": [
       {
