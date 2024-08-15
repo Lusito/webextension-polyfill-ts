@@ -340,6 +340,7 @@ class SchemaEntryValidator {
     public static getValidKeys() {
         return [
             "namespace",
+            "optional",
             "description",
             "permissions",
             "types",
@@ -350,16 +351,21 @@ class SchemaEntryValidator {
             "defaultContexts",
             "nocompile",
             "$import",
+            "min_manifest_version",
+            "max_manifest_version"
         ];
     }
 
     public static validate(json: any) {
         const assert = new Assert("SchemaEntryValidator");
         assert.typeOf(json, "object");
+        assert.validOjectKeys(json, this.getValidKeys());
         assert.typeOf(json.namespace, "string");
         currentNamespace = json.namespace;
         assert.typeOf(json.description, "string", "undefined");
         assert.typeOf(json.permissions, "array", "undefined");
+        assert.typeOf(json.min_manifest_version, "number", "undefined");
+        assert.typeOf(json.max_manifest_version, "number", "undefined");
         workArray(json.permissions, (e) => assert.typeOf(e, "string"));
         assert.typeOf(json.types, "array", "undefined");
         workArray(json.types, (e) => validateSchemaProperty(assert, e));
@@ -385,7 +391,7 @@ class SchemaEntryValidator {
 function validateJson(data: SchemaFileData) {
     try {
         console.log(data.file);
-        workArray(data.json, SchemaEntryValidator.validate);
+        workArray(data.json, (json) => SchemaEntryValidator.validate(json));
     } catch (e) {
         console.error(`Error reading ${data.file}: `, e);
         throw e;

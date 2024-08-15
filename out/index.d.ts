@@ -115,7 +115,7 @@ declare namespace Browser {
     const webNavigation: WebNavigation.Static;
     const webRequest: WebRequest.Static;
     const windows: Windows.Static;
-    const tabGroups: TabGroups.Static;
+    const tabGroups: TabGroups.Static | undefined;
 
     interface Browser {
         activityLog: ActivityLog.Static;
@@ -173,7 +173,7 @@ declare namespace Browser {
         webNavigation: WebNavigation.Static;
         webRequest: WebRequest.Static;
         windows: Windows.Static;
-        tabGroups: TabGroups.Static;
+        tabGroups?: TabGroups.Static;
     }
 
     export import ActivityLog = ImportedActivityLog;

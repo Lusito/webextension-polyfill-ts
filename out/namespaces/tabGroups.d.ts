@@ -5,6 +5,7 @@
 /**
  * Namespace: browser.tabGroups
  *
+ * Chrome API (only available for Chrome)
  * Use the <code>chrome.tabGroups</code> API to interact with the browser's tab grouping system.
  * You can use this API to modify and rearrange tab groups in the browser. To group and ungroup tabs,
  * or to query what tabs are in groups, use the <code>browser.tabs</code> API.

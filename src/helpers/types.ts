@@ -122,6 +122,7 @@ export type SchemaProperty =
 
 export interface SchemaEntry {
     namespace: string;
+    optional?: boolean;
     description?: string;
     permissions?: string[];
     types?: SchemaProperty[];
@@ -132,4 +133,6 @@ export interface SchemaEntry {
     defaultContexts?: string[];
     nocompile?: boolean;
     $import?: string;
+    min_manifest_version?: number;
+    max_manifest_version?: number;
 }

@@ -355,15 +355,18 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     writer.begin("declare namespace Browser {");
     namespaces.forEach((ns) => {
         if (!ns.entry.namespace.includes(".")) {
-            writer.code(`const ${ns.entry.namespace}: ${toUpperCamelCase(ns.entry.namespace)}.Static;`);
+            const orUndefined = ns.entry.optional ? " | undefined" : "";
+            writer.code(`const ${ns.entry.namespace}: ${toUpperCamelCase(ns.entry.namespace)}.Static${orUndefined};`);
         }
     });
     writer.emptyLine();
 
     writer.begin("interface Browser {");
     namespaces.forEach((ns) => {
-        if (!ns.entry.namespace.includes("."))
-            writer.code(`${ns.entry.namespace}: ${toUpperCamelCase(ns.entry.namespace)}.Static;`);
+        if (!ns.entry.namespace.includes(".")) {
+            const optional = ns.entry.optional ? "?" : "";
+            writer.code(`${ns.entry.namespace}${optional}: ${toUpperCamelCase(ns.entry.namespace)}.Static;`);
+        }
     });
     writer.end("}");
     writer.emptyLine();
