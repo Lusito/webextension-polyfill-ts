@@ -324,6 +324,19 @@ function namespacePath(ns: ImportedNamespace) {
     return `namespaces/${ns.entry.namespace.replace(/\./g, "_")}`;
 }
 
+function writeNsComment(ns: ImportedNamespace, writer: CodeWriter) {
+    if (ns.entry.description) writer.comment(ns.entry.description.trim());
+    if (ns.entry.optional) writer.comment("Optional.");
+    if (ns.entry.permissions) {
+        if (ns.entry.description || ns.entry.optional) writer.emptyLine();
+
+        writer.comment(
+            `Permissions: ${
+                ns.entry.permissions.length === 0 ? "-" : ns.entry.permissions.map((s) => JSON.stringify(s)).join(", ")
+            }`,
+        );
+    }
+}
 function writeIndexFile(namespaces: ImportedNamespace[]) {
     console.log("- index.d.ts");
     const writer = new CodeWriter();
@@ -339,19 +352,7 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     writer.begin("declare namespace Browser {");
     namespaces.forEach((ns) => {
         if (!ns.entry.namespace.includes(".")) {
-            if (ns.entry.description) writer.comment(ns.entry.description.trim());
-            if (ns.entry.optional) writer.comment("Optional.");
-            if (ns.entry.permissions) {
-                if (ns.entry.description || ns.entry.optional) writer.emptyLine();
-
-                writer.comment(
-                    `Permissions: ${
-                        ns.entry.permissions.length === 0
-                            ? "-"
-                            : ns.entry.permissions.map((s) => JSON.stringify(s)).join(", ")
-                    }`,
-                );
-            }
+            writeNsComment(ns, writer);
             const orUndefined = ns.entry.optional ? " | undefined" : "";
             writer.code(`const ${ns.entry.namespace}: ${toUpperCamelCase(ns.entry.namespace)}.Static${orUndefined};`);
             writer.emptyLine();
@@ -362,8 +363,10 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     writer.begin("interface Browser {");
     namespaces.forEach((ns) => {
         if (!ns.entry.namespace.includes(".")) {
+            writeNsComment(ns, writer);
             const optional = ns.entry.optional ? "?" : "";
             writer.code(`${ns.entry.namespace}${optional}: ${toUpperCamelCase(ns.entry.namespace)}.Static;`);
+            writer.emptyLine();
         }
     });
     writer.end("}");
