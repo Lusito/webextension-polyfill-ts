@@ -185,16 +185,16 @@ declare namespace Browser {
     const experiments: Experiments.Static;
 
     /**
+     * The <code>browser.extensionTypes</code> API contains type declarations for WebExtensions.
+     */
+    const extensionTypes: ExtensionTypes.Static;
+
+    /**
      * The <code>browser.extension</code> API has utilities that can be used by any extension page.
      * It includes support for exchanging messages between an extension and its content scripts or between extensions,
      * as described in detail in $(topic:messaging)[Message Passing].
      */
     const extension: Extension.Static;
-
-    /**
-     * The <code>browser.extensionTypes</code> API contains type declarations for WebExtensions.
-     */
-    const extensionTypes: ExtensionTypes.Static;
 
     /**
      * Use the <code>browser.find</code> API to interact with the browser's <code>Find</code> interface.
@@ -363,6 +363,15 @@ declare namespace Browser {
     const storage: Storage.Static;
 
     /**
+     * Chrome API (only available for Chrome)
+     * Use the <code>chrome.tabGroups</code> API to interact with the browser's tab grouping system.
+     * You can use this API to modify and rearrange tab groups in the browser. To group and ungroup tabs,
+     * or to query what tabs are in groups, use the <code>browser.tabs</code> API.
+     * Optional.
+     */
+    const tabGroups: TabGroups.Static | undefined;
+
+    /**
      * Use the <code>browser.tabs</code> API to interact with the browser's tab system. You can use this API to create, modify,
      * and rearrange tabs in the browser.
      */
@@ -411,15 +420,6 @@ declare namespace Browser {
      * and rearrange windows in the browser.
      */
     const windows: Windows.Static;
-
-    /**
-     * Chrome API (only available for Chrome)
-     * Use the <code>chrome.tabGroups</code> API to interact with the browser's tab grouping system.
-     * You can use this API to modify and rearrange tab groups in the browser. To group and ungroup tabs,
-     * or to query what tabs are in groups, use the <code>browser.tabs</code> API.
-     * Optional.
-     */
-    const tabGroups: TabGroups.Static | undefined;
 
     interface Browser {
         /**
@@ -547,16 +547,16 @@ declare namespace Browser {
         experiments: Experiments.Static;
 
         /**
+         * The <code>browser.extensionTypes</code> API contains type declarations for WebExtensions.
+         */
+        extensionTypes: ExtensionTypes.Static;
+
+        /**
          * The <code>browser.extension</code> API has utilities that can be used by any extension page.
          * It includes support for exchanging messages between an extension and its content scripts or between extensions,
          * as described in detail in $(topic:messaging)[Message Passing].
          */
         extension: Extension.Static;
-
-        /**
-         * The <code>browser.extensionTypes</code> API contains type declarations for WebExtensions.
-         */
-        extensionTypes: ExtensionTypes.Static;
 
         /**
          * Use the <code>browser.find</code> API to interact with the browser's <code>Find</code> interface.
@@ -725,6 +725,15 @@ declare namespace Browser {
         storage: Storage.Static;
 
         /**
+         * Chrome API (only available for Chrome)
+         * Use the <code>chrome.tabGroups</code> API to interact with the browser's tab grouping system.
+         * You can use this API to modify and rearrange tab groups in the browser. To group and ungroup tabs,
+         * or to query what tabs are in groups, use the <code>browser.tabs</code> API.
+         * Optional.
+         */
+        tabGroups?: TabGroups.Static;
+
+        /**
          * Use the <code>browser.tabs</code> API to interact with the browser's tab system. You can use this API to create, modify,
          * and rearrange tabs in the browser.
          */
@@ -773,15 +782,6 @@ declare namespace Browser {
          * and rearrange windows in the browser.
          */
         windows: Windows.Static;
-
-        /**
-         * Chrome API (only available for Chrome)
-         * Use the <code>chrome.tabGroups</code> API to interact with the browser's tab grouping system.
-         * You can use this API to modify and rearrange tab groups in the browser. To group and ungroup tabs,
-         * or to query what tabs are in groups, use the <code>browser.tabs</code> API.
-         * Optional.
-         */
-        tabGroups?: TabGroups.Static;
     }
 
     export import ActivityLog = ImportedActivityLog;
@@ -804,8 +804,8 @@ declare namespace Browser {
     export import Downloads = ImportedDownloads;
     export import Events = ImportedEvents;
     export import Experiments = ImportedExperiments;
-    export import Extension = ImportedExtension;
     export import ExtensionTypes = ImportedExtensionTypes;
+    export import Extension = ImportedExtension;
     export import Find = ImportedFind;
     export import GeckoProfiler = ImportedGeckoProfiler;
     export import History = ImportedHistory;
@@ -831,6 +831,7 @@ declare namespace Browser {
     export import Sessions = ImportedSessions;
     export import SidebarAction = ImportedSidebarAction;
     export import Storage = ImportedStorage;
+    export import TabGroups = ImportedTabGroups;
     export import Tabs = ImportedTabs;
     export import Theme = ImportedTheme;
     export import TopSites = ImportedTopSites;
@@ -839,7 +840,6 @@ declare namespace Browser {
     export import WebNavigation = ImportedWebNavigation;
     export import WebRequest = ImportedWebRequest;
     export import Windows = ImportedWindows;
-    export import TabGroups = ImportedTabGroups;
 }
 
 // eslint-disable-next-line @definitelytyped/export-just-namespace

@@ -91,5 +91,5 @@ export function readAllSchemaFiles() {
     return [
         ...fs.readdirSync("./schemas").map((file) => readSchemaFile("schemas", file)),
         ...fs.readdirSync("./schemas-additional").map((file) => readSchemaFile("schemas-additional", file)),
-    ];
+    ].sort((a, b) => a.file.localeCompare(b.file));
 }

@@ -352,7 +352,7 @@ class SchemaEntryValidator {
             "nocompile",
             "$import",
             "min_manifest_version",
-            "max_manifest_version"
+            "max_manifest_version",
         ];
     }
 
