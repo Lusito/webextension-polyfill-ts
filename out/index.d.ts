@@ -49,6 +49,7 @@ import { Search as ImportedSearch } from "./namespaces/search";
 import { Sessions as ImportedSessions } from "./namespaces/sessions";
 import { SidebarAction as ImportedSidebarAction } from "./namespaces/sidebarAction";
 import { Storage as ImportedStorage } from "./namespaces/storage";
+import { TabGroups as ImportedTabGroups } from "./namespaces/tabGroups";
 import { Tabs as ImportedTabs } from "./namespaces/tabs";
 import { Theme as ImportedTheme } from "./namespaces/theme";
 import { TopSites as ImportedTopSites } from "./namespaces/topSites";
@@ -114,6 +115,7 @@ declare namespace Browser {
     const webNavigation: WebNavigation.Static;
     const webRequest: WebRequest.Static;
     const windows: Windows.Static;
+    const tabGroups: TabGroups.Static;
 
     interface Browser {
         activityLog: ActivityLog.Static;
@@ -171,6 +173,7 @@ declare namespace Browser {
         webNavigation: WebNavigation.Static;
         webRequest: WebRequest.Static;
         windows: Windows.Static;
+        tabGroups: TabGroups.Static;
     }
 
     export import ActivityLog = ImportedActivityLog;
@@ -228,6 +231,7 @@ declare namespace Browser {
     export import WebNavigation = ImportedWebNavigation;
     export import WebRequest = ImportedWebRequest;
     export import Windows = ImportedWindows;
+    export import TabGroups = ImportedTabGroups;
 }
 
 // eslint-disable-next-line @definitelytyped/export-just-namespace

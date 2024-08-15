@@ -62,6 +62,8 @@ export function importAndFixAll() {
         console.error("Error:", e);
         return null;
     }
+    // sort by namespace if necessary
+    // namespaces.sort((prev, curr) => prev.entry.namespace.localeCompare(curr.entry.namespace));
     console.log("--------------------");
     const modified = applyFixes(namespaces, fixes);
     console.log("--------------------");
