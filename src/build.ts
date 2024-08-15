@@ -277,28 +277,12 @@ function writeNamespace(namespace: ImportedNamespace, subNamespaces: string[]) {
 
         const writer = new CodeWriter();
 
-        writer.comment(`Namespace: browser.${entry.namespace}`);
-        if (entry.description || entry.permissions) writer.emptyLine();
-        if (entry.description) writer.comment(entry.description.trim());
-        if (entry.permissions)
-            writer.comment(
-                `Permissions: ${
-                    entry.permissions.length === 0 ? "-" : entry.permissions.map((s) => JSON.stringify(s)).join(", ")
-                }`,
-            );
-        writer.emptyLine();
-        if (namespace.comments.length) {
-            writer.comment("Comments found in source JSON schema files:");
-            namespace.comments.split("\n").forEach((line) => {
-                writer.comment(line);
-            });
-        }
-
         getImports(entry, subNamespaces)
             .map((e) => `import { ${toUpperCamelCase(e)} } from "./${lowerFirstChar(e)}";`)
             .forEach((e) => writer.code(e));
         writer.emptyLine();
 
+        writer.comment(`Namespace: browser.${entry.namespace}`);
         writer.begin(`export namespace ${toUpperCamelCase(entry.namespace)} {`);
         entry.types?.forEach((type) => addType(type, writer));
         const extendsPart = entry.$import ? ` extends ${toUpperCamelCase(entry.$import)}.Static` : "";
@@ -355,8 +339,22 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     writer.begin("declare namespace Browser {");
     namespaces.forEach((ns) => {
         if (!ns.entry.namespace.includes(".")) {
+            if (ns.entry.description) writer.comment(ns.entry.description.trim());
+            if (ns.entry.optional) writer.comment("Optional.");
+            if (ns.entry.permissions) {
+                if (ns.entry.description || ns.entry.optional) writer.emptyLine();
+
+                writer.comment(
+                    `Permissions: ${
+                        ns.entry.permissions.length === 0
+                            ? "-"
+                            : ns.entry.permissions.map((s) => JSON.stringify(s)).join(", ")
+                    }`,
+                );
+            }
             const orUndefined = ns.entry.optional ? " | undefined" : "";
             writer.code(`const ${ns.entry.namespace}: ${toUpperCamelCase(ns.entry.namespace)}.Static${orUndefined};`);
+            writer.emptyLine();
         }
     });
     writer.emptyLine();

@@ -2,17 +2,14 @@
 // BEWARE: DO NOT EDIT MANUALLY! Changes will be lost!
 //////////////////////////////////////////////////////
 
-/**
- * Namespace: browser.tabs
- *
- * Use the <code>browser.tabs</code> API to interact with the browser's tab system. You can use this API to create, modify,
- * and rearrange tabs in the browser.
- */
 import { Events } from "./events";
 import { ExtensionTypes } from "./extensionTypes";
 import { Runtime } from "./runtime";
 import { Windows } from "./windows";
 
+/**
+ * Namespace: browser.tabs
+ */
 export namespace Tabs {
     /**
      * An event that caused a muted state change.
