@@ -34,6 +34,16 @@ export namespace Storage {
         get(keys?: null | string | string[] | Record<string, unknown>): Promise<Record<string, unknown>>;
 
         /**
+         * Gets the amount of space (in bytes) being used by one or more items.
+         *
+         * @param keys Optional. A single key or list of keys to get the total usage for. An empty list will return 0.
+         * Pass in <code>null</code> to get the total usage of all of storage.
+         * @returns Callback with the amount of space being used by storage, or on failure (in which case $(ref:runtime.lastError)
+         * will be set).
+         */
+        getBytesInUse(keys?: string | string[]): Promise<number>;
+
+        /**
          * Sets multiple items.
          *
          * @param items <p>An object which gives each key/value pair to update storage with. Any other key/value pairs in storage

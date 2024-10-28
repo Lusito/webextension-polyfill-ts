@@ -63,7 +63,6 @@
           },
           {
             "name": "getBytesInUse",
-            "unsupported": true,
             "type": "function",
             "description": "Gets the amount of space (in bytes) being used by one or more items.",
             "async": "callback",
