@@ -44,7 +44,7 @@
     "@types/rimraf": "^4.0.5",
     "copyfiles": "^2.4.1",
     "dprint": "^0.46.1",
-    "esbuild": "^0.21.4",
+    "esbuild": "^0.25.0",
     "esbuild-register": "^3.5.0",
     "got": "^14.3.0",
     "rimraf": "^5.0.7",
