@@ -26,7 +26,7 @@ function visitor(entry: SchemaEntry, entryToExtend: SchemaEntry) {
             assert.validOjectKeys(t, ["type", "$extend", "properties"]);
             t.type = "object";
         } else {
-            throw new Error(`Unknown extension type ${t.$extend}`);
+            throw new Error(`Unknown extension type ${t.type} for ${t.$extend}`);
         }
 
         if (t.type === "choices" && t.choices && extended.type === "choices" && extended.choices) {

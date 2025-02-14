@@ -30,7 +30,7 @@ function visitor(entry: SchemaEntry, directory: string) {
             } else if (part[0] === "#") {
                 assert.typeOf(base, "array");
                 const index = parseInt(part.substr(1));
-                if (index >= base.length || index < 0) throw new Error("Index out of bounds");
+                if (index >= base.length || index < 0) throw new Error(`Index (${index}) out of bounds (0-${base.length})`);
                 base = base[index];
             } else {
                 base = base[part];
