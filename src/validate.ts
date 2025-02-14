@@ -78,6 +78,7 @@ function validateSchemaProperty(assert: Assert, json: any) {
 
     if (json.choices) SchemaChoicesPropertyValidator.validate(json);
     else if (json.value) SchemaValuePropertyValidator.validate(json);
+    else if (!json.type) SchemaBasePropertyValidator.validate(json);
     else {
         switch (json.type) {
             case "number":
