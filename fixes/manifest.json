@@ -1,9 +1,4 @@
 {
-  "types.$WebExtensionManifest.properties.background.choices.#2.properties.type": {
-    "optional": true,
-    "description": "Even though Manifest V3, does not support multiple background scripts, you can optionally declare the service worker as an ES Module by specifying \"type\": \"module\", which allows you to import further code.",
-    "type": "\"module\""
-  },
   "types.$OptionalPermission.choices.#1.enum.+[]": ["identity.email"],
   "types.$ManifestBase.properties.version_name": {
     "type": "string",

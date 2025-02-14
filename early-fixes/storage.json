@@ -1,0 +1,10 @@
+{
+  "properties.sync.type": "ref",
+  "properties.sync.properties": null,
+  "properties.local.type": "ref",
+  "properties.local.properties": null,
+  "properties.managed.type": "ref",
+  "properties.managed.properties": null,
+  "properties.session.type": "ref",
+  "properties.session.properties": null
+}

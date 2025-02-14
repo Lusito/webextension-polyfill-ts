@@ -89,8 +89,8 @@ function visitor(entry: SchemaEntry, directory: string) {
             }
             if (index === -1) throw new Error(`Could not find ${lastPart}`);
             base.splice(index, 1);
-            // special case for $ref
-        } else if (lastPart === "$ref") {
+            // special case for $ref and $import
+        } else if (lastPart === "$ref" || lastPart === "$import") {
             base[lastPart] = value;
         } else if (lastPart[0] === "$") {
             const id = lastPart.substr(1);

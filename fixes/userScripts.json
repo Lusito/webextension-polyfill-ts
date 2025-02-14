@@ -1,0 +1,3 @@
+{
+  "functions.%update.parameters.%scripts.items.$import": "Omit<RegisteredUserScript, \"js\">"
+}
