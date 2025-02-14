@@ -7,8 +7,9 @@ The goal of webextension-polyfill-ts is to have TypeScript types and JS-Doc docu
 Mozilla provides schema (json) files, which describe the webextension API. We parse these schemas in order to gain information to generate the types.
 
 We are currently using these files:
-* [toolkit](https://hg.mozilla.org/integration/autoland/raw-file/tip/toolkit/components/extensions/schemas/)
-* [browser](https://hg.mozilla.org/integration/autoland/raw-file/tip/browser/components/extensions/schemas/)
+
+* toolkit: [GitHub mirror](https://github.com/mozilla/gecko-dev/tree/master/browser/components/extensions/schemas) / [Mozilla source](https://hg.mozilla.org/integration/autoland/raw-file/tip/toolkit/components/extensions/schemas/)
+* browser: [Github mirror](https://github.com/mozilla/gecko-dev/tree/master/browser/components/extensions/schemas) / [Mozilla source](https://hg.mozilla.org/integration/autoland/raw-file/tip/browser/components/extensions/schemas/)
 
 **Warning:** I don't know any official documentation for these files. I gathered all of the information by looking at the schema files, so this might not be a complete or correct documentation.
 

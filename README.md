@@ -4,8 +4,9 @@
 
 This project supplies the TypeScript types for the [WebExtension browser API Polyfill](https://github.com/mozilla/webextension-polyfill) by Mozilla.
 [@types/webextension-polyfill](https://www.npmjs.com/package/@types/webextension-polyfill) is not manually written, it is generated from these mozilla schema (.json) files:
-  * [toolkit](https://hg.mozilla.org/integration/autoland/raw-file/tip/toolkit/components/extensions/schemas/)
-  * [browser](https://hg.mozilla.org/integration/autoland/raw-file/tip/browser/components/extensions/schemas/)
+  * toolkit: [GitHub mirror](https://github.com/mozilla/gecko-dev/tree/master/browser/components/extensions/schemas) / [Mozilla source](https://hg.mozilla.org/integration/autoland/raw-file/tip/toolkit/components/extensions/schemas/)
+  * browser: [Github mirror](https://github.com/mozilla/gecko-dev/tree/master/browser/components/extensions/schemas) / [Mozilla source](https://hg.mozilla.org/integration/autoland/raw-file/tip/browser/components/extensions/schemas/)
+
 
 ## Migration Guide From webextension-polyfill-ts
 
