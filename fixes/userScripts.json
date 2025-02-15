@@ -1,3 +1,4 @@
 {
+  "functions.%register.parameters.%callback.parameters.%legacyRegisteredUserScript.properties.unregister.!fixAsync": null,
   "functions.%update.parameters.%scripts.items.$import": "Omit<RegisteredUserScript, \"js\">"
 }

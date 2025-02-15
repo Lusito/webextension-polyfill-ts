@@ -186,7 +186,7 @@ export namespace UserScripts {
         /**
          * Unregister a user script registered programmatically
          */
-        unregister(): void;
+        unregister(): Promise<void>;
     }
 
     interface UpdateScriptsItemType extends Omit<RegisteredUserScript, "js"> {

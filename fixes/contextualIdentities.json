@@ -3,5 +3,6 @@
   "functions.%query.!fixAsync": "contextualIdentity:ContextualIdentity[]",
   "functions.%create.!fixAsync": "contextualIdentity:ContextualIdentity",
   "functions.%update.!fixAsync": "contextualIdentity:ContextualIdentity",
+  "functions.%move.!fixAsync": null,
   "functions.%remove.!fixAsync": "contextualIdentity:ContextualIdentity"
 }

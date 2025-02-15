@@ -6,5 +6,6 @@
   "functions.%getPanel.!fixAsync": "url:string",
   "functions.%open.!fixAsync": null,
   "functions.%close.!fixAsync": null,
+  "functions.%toggle.!fixAsync": null,
   "functions.%isOpen.!fixAsync": "open:boolean"
 }
