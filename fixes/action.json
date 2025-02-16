@@ -1,4 +1,6 @@
 {
+  "functions.%setBadgeTextColor.!fixAsync": null,
+  "functions.%getBadgeTextColor.!fixAsync": "badgeTextColor:ColorArray",
   "functions.%isEnabled.!fixAsync": "enabled:boolean",
   "functions.%openPopup.!fixAsync": null
 }

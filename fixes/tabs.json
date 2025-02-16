@@ -4,6 +4,7 @@
   "functions.%executeScript.parameters.%callback.parameters.%result.optional": false,
   "functions.%getCurrent.parameters.%callback.parameters.%tab.optional": false,
   "functions.%update.parameters.%callback.parameters.%tab.optional": false,
+  "functions.%warmup.!fixAsync": null,
   "functions.%discard.!fixAsync": null,
   "functions.%toggleReaderMode.!fixAsync": null,
   "functions.%captureTab.!fixAsync": "dataUrl:string",

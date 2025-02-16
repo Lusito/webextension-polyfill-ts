@@ -1,0 +1,4 @@
+{
+    "functions.%getState.!fixAsync": "state:\"unknown\" | \"not_captive\" | \"unlocked_portal\" | \"locked_portal\"",
+    "functions.%getLastChecked.!fixAsync": "state:number"
+}

@@ -1,5 +1,6 @@
 {
   "types.$ExtensionPanel.events.%onShown.parameters.%window.type": "Window",
   "types.$ExtensionSidebarPane.events.%onShown.parameters.%window.type": "Window",
-  "types.$ExtensionSidebarPane.functions.%setObject.parameters.%jsonObject.type": "string | unknown[] | Record<string, unknown>"
+  "types.$ExtensionSidebarPane.functions.%setObject.parameters.%jsonObject.type": "string | unknown[] | Record<string, unknown>",
+  "types.$ExtensionSidebarPane.functions.%setPage.!fixAsync": null
 }
