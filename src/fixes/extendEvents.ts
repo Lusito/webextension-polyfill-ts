@@ -1,6 +1,7 @@
 import { SchemaObjectProperty } from "../helpers/types";
 import { SchemaVisitorFactory } from "../helpers/visitor";
 import { getParameters, getReturnType } from "../helpers/getType";
+import { toUpperCamelCase } from "../helpers/utils";
 
 // Some events have an extra parameter when adding a listener.
 // This fix creates new type definitions to be used instead of Events.Event.
@@ -24,7 +25,9 @@ export const extendEvents: SchemaVisitorFactory = (namespace, namespaces) => {
         visitors: {
             Event(e) {
                 if (e.extraParameters) {
-                    const id = `${e.name}Event`;
+                    if (!e.name) throw new Error("Missing event name");
+
+                    const id = `${toUpperCamelCase(e.name)}Event`;
                     const extendedAddListener = JSON.parse(JSON.stringify(addListener));
                     const extended: SchemaObjectProperty = {
                         id,

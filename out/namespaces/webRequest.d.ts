@@ -1497,7 +1497,7 @@ export namespace WebRequest {
     /**
      * Fired when a request is about to occur.
      */
-    interface onBeforeRequestEvent
+    interface OnBeforeRequestEvent
         extends Events.Event<(details: OnBeforeRequestDetailsType) => BlockingResponseOrPromiseOrVoid>
     {
         /**
@@ -1518,7 +1518,7 @@ export namespace WebRequest {
      * Fired before sending an HTTP request, once the request headers are available. This may occur after a TCP connection is
      * made to the server, but before any HTTP data is sent.
      */
-    interface onBeforeSendHeadersEvent
+    interface OnBeforeSendHeadersEvent
         extends Events.Event<(details: OnBeforeSendHeadersDetailsType) => BlockingResponseOrPromiseOrVoid>
     {
         /**
@@ -1539,7 +1539,7 @@ export namespace WebRequest {
      * Fired just before a request is going to be sent to the server (modifications of previous onBeforeSendHeaders callbacks
      * are visible by the time onSendHeaders is fired).
      */
-    interface onSendHeadersEvent extends Events.Event<(details: OnSendHeadersDetailsType) => void> {
+    interface OnSendHeadersEvent extends Events.Event<(details: OnSendHeadersDetailsType) => void> {
         /**
          * Registers an event listener <em>callback</em> to an event.
          *
@@ -1557,7 +1557,7 @@ export namespace WebRequest {
     /**
      * Fired when HTTP response headers of a request have been received.
      */
-    interface onHeadersReceivedEvent
+    interface OnHeadersReceivedEvent
         extends Events.Event<(details: OnHeadersReceivedDetailsType) => BlockingResponseOrPromiseOrVoid>
     {
         /**
@@ -1579,7 +1579,7 @@ export namespace WebRequest {
      * credentials, it can cancel the request and display the error page, or it can take no action on the challenge.
      * If bad user credentials are provided, this may be called multiple times for the same request.
      */
-    interface onAuthRequiredEvent
+    interface OnAuthRequiredEvent
         extends Events.Event<(details: OnAuthRequiredDetailsType) => BlockingResponseOrPromiseOrVoid>
     {
         /**
@@ -1600,7 +1600,7 @@ export namespace WebRequest {
      * Fired when the first byte of the response body is received. For HTTP requests, this means that the status line and
      * response headers are available.
      */
-    interface onResponseStartedEvent extends Events.Event<(details: OnResponseStartedDetailsType) => void> {
+    interface OnResponseStartedEvent extends Events.Event<(details: OnResponseStartedDetailsType) => void> {
         /**
          * Registers an event listener <em>callback</em> to an event.
          *
@@ -1618,7 +1618,7 @@ export namespace WebRequest {
     /**
      * Fired when a server-initiated redirect is about to occur.
      */
-    interface onBeforeRedirectEvent extends Events.Event<(details: OnBeforeRedirectDetailsType) => void> {
+    interface OnBeforeRedirectEvent extends Events.Event<(details: OnBeforeRedirectDetailsType) => void> {
         /**
          * Registers an event listener <em>callback</em> to an event.
          *
@@ -1636,7 +1636,7 @@ export namespace WebRequest {
     /**
      * Fired when a request is completed.
      */
-    interface onCompletedEvent extends Events.Event<(details: OnCompletedDetailsType) => void> {
+    interface OnCompletedEvent extends Events.Event<(details: OnCompletedDetailsType) => void> {
         /**
          * Registers an event listener <em>callback</em> to an event.
          *
@@ -1654,7 +1654,7 @@ export namespace WebRequest {
     /**
      * Fired when an error occurs.
      */
-    interface onErrorOccurredEvent extends Events.Event<(details: OnErrorOccurredDetailsType) => void> {
+    interface OnErrorOccurredEvent extends Events.Event<(details: OnErrorOccurredDetailsType) => void> {
         /**
          * Registers an event listener <em>callback</em> to an event.
          *
@@ -1691,52 +1691,52 @@ export namespace WebRequest {
         /**
          * Fired when a request is about to occur.
          */
-        onBeforeRequest: onBeforeRequestEvent;
+        onBeforeRequest: OnBeforeRequestEvent;
 
         /**
          * Fired before sending an HTTP request, once the request headers are available. This may occur after a TCP connection is
          * made to the server, but before any HTTP data is sent.
          */
-        onBeforeSendHeaders: onBeforeSendHeadersEvent;
+        onBeforeSendHeaders: OnBeforeSendHeadersEvent;
 
         /**
          * Fired just before a request is going to be sent to the server (modifications of previous onBeforeSendHeaders callbacks
          * are visible by the time onSendHeaders is fired).
          */
-        onSendHeaders: onSendHeadersEvent;
+        onSendHeaders: OnSendHeadersEvent;
 
         /**
          * Fired when HTTP response headers of a request have been received.
          */
-        onHeadersReceived: onHeadersReceivedEvent;
+        onHeadersReceived: OnHeadersReceivedEvent;
 
         /**
          * Fired when an authentication failure is received. The listener has three options: it can provide authentication
          * credentials, it can cancel the request and display the error page, or it can take no action on the challenge.
          * If bad user credentials are provided, this may be called multiple times for the same request.
          */
-        onAuthRequired: onAuthRequiredEvent;
+        onAuthRequired: OnAuthRequiredEvent;
 
         /**
          * Fired when the first byte of the response body is received. For HTTP requests, this means that the status line and
          * response headers are available.
          */
-        onResponseStarted: onResponseStartedEvent;
+        onResponseStarted: OnResponseStartedEvent;
 
         /**
          * Fired when a server-initiated redirect is about to occur.
          */
-        onBeforeRedirect: onBeforeRedirectEvent;
+        onBeforeRedirect: OnBeforeRedirectEvent;
 
         /**
          * Fired when a request is completed.
          */
-        onCompleted: onCompletedEvent;
+        onCompleted: OnCompletedEvent;
 
         /**
          * Fired when an error occurs.
          */
-        onErrorOccurred: onErrorOccurredEvent;
+        onErrorOccurred: OnErrorOccurredEvent;
 
         /**
          * The maximum number of times that <code>handlerBehaviorChanged</code> can be called per 10 minute sustained interval.
