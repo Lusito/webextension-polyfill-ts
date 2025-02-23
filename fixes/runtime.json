@@ -58,22 +58,77 @@
       }
     ]
   },
-  "events.%onMessage.parameters.%sendResponse.description": "Function to call (at most once) when you have a response. This is an alternative to returning a Promise. The argument should be any JSON-ifiable object. If you have more than one <code>onMessage</code> listener in the same document, then only one may send a response. This function becomes invalid when the event listener returns, unless you return true from the event listener to indicate you wish to send a response asynchronously (this will keep the message channel open to the other end until <code>sendResponse</code> is called).",
-  "events.%onMessage.parameters.%sendResponse.parameters": [
-    { "type": "any", "name": "message" }
-  ],
-  "events.%onMessage.returns": {
-    "type": "Promise<unknown> | true",
-    "optional": true,
-    "description": "Return a <code>Promise</code> from the listener function and resolve the promise when the response is ready. Alternatively, return true and call sendResponse."
-  },
-  "events.%onMessageExternal.parameters.%sendResponse.description": "Function to call (at most once) when you have a response. This is an alternative to returning a Promise. The argument should be any JSON-ifiable object. If you have more than one <code>onMessage</code> listener in the same document, then only one may send a response. This function becomes invalid when the event listener returns, unless you return true from the event listener to indicate you wish to send a response asynchronously (this will keep the message channel open to the other end until <code>sendResponse</code> is called).",
-  "events.%onMessageExternal.parameters.%sendResponse.parameters": [
-    { "type": "any", "name": "message" }
-  ],
-  "events.%onMessageExternal.returns": {
-    "type": "Promise<unknown> | true",
-    "optional": true,
-    "description": "Return a <code>Promise</code> from the listener function and resolve the promise when the response is ready. Alternatively, return true and call sendResponse."
-  }
+  "types.+[]": [{
+    "id": "OnMessageListenerCallback",
+    "type": "function",
+    "description": "The third parameter is a function to call (at most once) when you have a response. The argument should be any JSON-ifiable object. If you have more than one <code>onMessage</code> listener in the same document, then only one may send a response. <code>sendResponse</code> becomes invalid when the event listener returns, unless you return true from the event listener to indicate you wish to send a response asynchronously (this will keep the message channel open to the other end until <code>sendResponse</code> is called).",
+    "parameters": [
+      {
+        "name": "message",
+        "type": "unknown",
+        "optional": true,
+        "description": "The message sent by the calling script."
+      },
+      {
+        "name": "sender",
+        "$ref": "MessageSender"
+      },
+      {
+        "name": "sendResponse",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "response",
+            "type": "unknown"
+          }
+        ]
+      }
+    ],
+    "returns": {
+      "type": "value",
+      "value": "true"
+    }
+  }, {
+    "id": "OnMessageListenerAsync",
+    "type": "function",
+    "description": "The return value should be a promise of any JSON-ifiable object. If you have more than one <code>onMessage</code> listener in the same document, then only one may send a response.",
+    "parameters": [
+      {
+        "name": "message",
+        "type": "unknown"
+      },
+      {
+        "name": "sender",
+        "$ref": "MessageSender"
+      }
+    ],
+    "returns": {
+      "type": "value",
+      "value": "Promise<unknown>"
+    }
+  }, {
+    "id": "OnMessageListenerNoResponse",
+    "type": "function",
+    "parameters": [
+      {
+        "name": "message",
+        "type": "unknown"
+      },
+      {
+        "name": "sender",
+        "$ref": "MessageSender"
+      }
+    ]
+  }, {
+    "id": "OnMessageListener",
+    "type": "choices",
+    "choices": [
+      { "type": "OnMessageListenerCallback" },
+      { "type": "OnMessageListenerAsync" },
+      { "type": "OnMessageListenerNoResponse" }
+    ]
+  }],
+  "events.%onMessage.eventType": "OnMessageListener",
+  "events.%onMessageExternal.eventType": "OnMessageListener",
+  "events.%onUserScriptMessage.eventType": "OnMessageListener"
 }

@@ -55,6 +55,11 @@ function getImports(entry: SchemaEntry, subNamespaces: string[]) {
     return imports.filter(filterUnique);
 }
 
+function addEslintDisableLine(writer: CodeWriter, ...disables: Array<string | undefined>) {
+    const combined = disables.filter((v) => !!v).join(" ");
+    if (combined) writer.code(`// eslint-disable-next-line ${combined}`);
+}
+
 function addProperties(
     id: string | undefined,
     properties: Record<string, SchemaProperty> | undefined,
@@ -77,6 +82,7 @@ function addProperties(
             if (prop.description) writer.comment(prop.description.trim());
             if (prop.optional) writer.comment("Optional.");
         }
+        addEslintDisableLine(writer, prop.eslintDisableLine);
         writer.code(`${getProperty(key, prop, true)};`);
         writer.emptyLine();
     });
@@ -98,6 +104,9 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
             });
         }
     }
+
+    if (type.type !== "object") addEslintDisableLine(writer, type.eslintDisableLine);
+
     if (type.type === "object") {
         const templateMap: Record<string, string> = {
             Event: "<T extends (...args: any[]) => any>",
@@ -111,7 +120,7 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
             extendsClass = ` extends ${type.isInstanceOf}`;
         }
         if (templateParam.includes("any")) {
-            writer.code("// eslint-disable-next-line @typescript-eslint/no-explicit-any");
+            addEslintDisableLine(writer, "@typescript-eslint/no-explicit-any");
         }
         writer.begin(`interface ${type.id}${templateParam}${extendsClass} {`);
         const writeInstructions = writer.getWriteInstructionCount();
@@ -152,6 +161,8 @@ function addType(type: SchemaProperty, writer: CodeWriter) {
     } else if (type.type === "array" && type.items) {
         const suffix = type.optional ? "|undefined;" : ";";
         writer.code(`type ${type.id} = ${getArrayType(type)}${suffix}`);
+    } else if (type.type === "function") {
+        writer.code(`type ${type.id} = ${getType(type)};`);
     } else {
         writer.code(`// unknown type: ${type.type}`);
     }
@@ -182,7 +193,9 @@ function addEvent(event: SchemaFunctionProperty, writer: CodeWriter) {
         if (event.parameters?.length) writer.emptyLine();
     }
 
-    if (event.options?.supportsRules) {
+    if (event.eventType) {
+        writer.code(`${name}: Events.Event<${event.eventType}>;`);
+    } else if (event.options?.supportsRules) {
         const toType = (values: string[]) => values.map((value) => value.split(".")[1] || value).join(" | ");
         writer.code(`${name}: RuleEvent<${toType(event.options.conditions)}, ${toType(event.options.actions)}>;`);
     } else {
@@ -234,7 +247,7 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
             const param = asyncParam.parameters[0];
             returnType = getType(param);
             if (param.optional) {
-                returnType += param.optionalNull ? " | null" : " | undefined";
+                returnType += param.optionalNull ? " | null" : " | undefined"; // fixme?
             }
         } else returnType = `[${asyncParam.parameters.map(getType).join(", ")}]`;
         returnType = `Promise<${returnType}>`;
@@ -244,9 +257,12 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
 
         returnType = getType(func.returns);
     }
-    if (func.templateParams) {
-        writer.code("// eslint-disable-next-line @definitelytyped/no-unnecessary-generics");
-    }
+
+    addEslintDisableLine(
+        writer,
+        func.eslintDisableLine,
+        func.templateParams ? "@definitelytyped/no-unnecessary-generics" : undefined,
+    );
     const optionalPart = func.optional ? "?" : "";
     writer.code(
         `${func.name + optionalPart}${func.templateParams ?? ""}(${getParameters(parametersWithoutAsync, true)}): ${returnType};`,
@@ -381,7 +397,7 @@ function writeIndexFile(namespaces: ImportedNamespace[]) {
     writer.end("}");
 
     writer.emptyLine();
-    writer.code("// eslint-disable-next-line @definitelytyped/export-just-namespace");
+    addEslintDisableLine(writer, "@definitelytyped/export-just-namespace");
     writer.code("export = Browser;");
 
     fs.writeFileSync("out/index.d.ts", writer.toString().trim());

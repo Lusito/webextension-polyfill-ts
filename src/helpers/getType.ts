@@ -19,7 +19,7 @@ const typeMap: Record<string, string> = {
 };
 
 export function getUnionType(list: SchemaProperty[]) {
-    return list.map(getType).filter(filterUnique).join(" | ");
+    return list.map(getType).filter(filterUnique).map(v => v.includes("=>") ? `(${v})` : v).join(" | ");
 }
 
 export function getEnumType(list: SchemaEnumValue[]) {
@@ -94,7 +94,7 @@ export function getType(e: SchemaProperty): string {
 
 export function getReturnType(e: SchemaFunctionProperty): string {
     let returnType = e.returns ? getType(e.returns) : "void";
-    if (e.returns?.optional) returnType += " | undefined";
+    if (e.returns?.optional) returnType += " | void";
     return returnType;
 }
 

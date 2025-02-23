@@ -3,6 +3,7 @@ export interface SchemaBaseProperty {
     name?: string;
     $ref?: string;
     $extend?: string; // only on namespace.types
+    eslintDisableLine?: string; // used for fixes/*.json only
     description?: string;
     optional?: boolean | "true" | "false" | "omit-key-if-missing";
     optionalNull?: boolean;
@@ -99,6 +100,7 @@ export interface SchemaFunctionProperty extends SchemaBaseProperty {
     allowCrossOriginArguments?: boolean;
     filters?: SchemaProperty[];
     assignableEvent?: boolean; // used for fixes/*.json only
+    eventType?: string; // used for fixes/*.json only
     options?: {
         supportsListeners: boolean;
         supportsRules: boolean;

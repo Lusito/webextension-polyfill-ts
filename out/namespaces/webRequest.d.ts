@@ -337,7 +337,8 @@ export namespace WebRequest {
     /**
      * A BlockingResponse or a Promise<BlockingResponse>
      */
-    type BlockingResponseOrPromise = BlockingResponse | Promise<BlockingResponse>;
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+    type BlockingResponseOrPromiseOrVoid = BlockingResponse | Promise<BlockingResponse> | void;
 
     /**
      * "uninitialized": The StreamFilter is not fully initialized. No methods may be called until a "start" event has been
@@ -1497,7 +1498,7 @@ export namespace WebRequest {
      * Fired when a request is about to occur.
      */
     interface onBeforeRequestEvent
-        extends Events.Event<(details: OnBeforeRequestDetailsType) => BlockingResponseOrPromise | undefined>
+        extends Events.Event<(details: OnBeforeRequestDetailsType) => BlockingResponseOrPromiseOrVoid>
     {
         /**
          * Registers an event listener <em>callback</em> to an event.
@@ -1507,7 +1508,7 @@ export namespace WebRequest {
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
         addListener(
-            callback: (details: OnBeforeRequestDetailsType) => BlockingResponseOrPromise | undefined,
+            callback: (details: OnBeforeRequestDetailsType) => BlockingResponseOrPromiseOrVoid,
             filter: RequestFilter,
             extraInfoSpec?: OnBeforeRequestOptions[],
         ): void;
@@ -1518,7 +1519,7 @@ export namespace WebRequest {
      * made to the server, but before any HTTP data is sent.
      */
     interface onBeforeSendHeadersEvent
-        extends Events.Event<(details: OnBeforeSendHeadersDetailsType) => BlockingResponseOrPromise | undefined>
+        extends Events.Event<(details: OnBeforeSendHeadersDetailsType) => BlockingResponseOrPromiseOrVoid>
     {
         /**
          * Registers an event listener <em>callback</em> to an event.
@@ -1528,7 +1529,7 @@ export namespace WebRequest {
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
         addListener(
-            callback: (details: OnBeforeSendHeadersDetailsType) => BlockingResponseOrPromise | undefined,
+            callback: (details: OnBeforeSendHeadersDetailsType) => BlockingResponseOrPromiseOrVoid,
             filter: RequestFilter,
             extraInfoSpec?: OnBeforeSendHeadersOptions[],
         ): void;
@@ -1557,7 +1558,7 @@ export namespace WebRequest {
      * Fired when HTTP response headers of a request have been received.
      */
     interface onHeadersReceivedEvent
-        extends Events.Event<(details: OnHeadersReceivedDetailsType) => BlockingResponseOrPromise | undefined>
+        extends Events.Event<(details: OnHeadersReceivedDetailsType) => BlockingResponseOrPromiseOrVoid>
     {
         /**
          * Registers an event listener <em>callback</em> to an event.
@@ -1567,7 +1568,7 @@ export namespace WebRequest {
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
         addListener(
-            callback: (details: OnHeadersReceivedDetailsType) => BlockingResponseOrPromise | undefined,
+            callback: (details: OnHeadersReceivedDetailsType) => BlockingResponseOrPromiseOrVoid,
             filter: RequestFilter,
             extraInfoSpec?: OnHeadersReceivedOptions[],
         ): void;
@@ -1579,7 +1580,7 @@ export namespace WebRequest {
      * If bad user credentials are provided, this may be called multiple times for the same request.
      */
     interface onAuthRequiredEvent
-        extends Events.Event<(details: OnAuthRequiredDetailsType) => BlockingResponseOrPromise | undefined>
+        extends Events.Event<(details: OnAuthRequiredDetailsType) => BlockingResponseOrPromiseOrVoid>
     {
         /**
          * Registers an event listener <em>callback</em> to an event.
@@ -1589,7 +1590,7 @@ export namespace WebRequest {
          * @param extraInfoSpec Optional. Array of extra information that should be passed to the listener function.
          */
         addListener(
-            callback: (details: OnAuthRequiredDetailsType) => BlockingResponseOrPromise | undefined,
+            callback: (details: OnAuthRequiredDetailsType) => BlockingResponseOrPromiseOrVoid,
             filter: RequestFilter,
             extraInfoSpec?: OnAuthRequiredOptions[],
         ): void;
