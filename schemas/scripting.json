@@ -202,6 +202,10 @@
             "optional": true,
             "description": "The list of CSS files to be injected into matching pages. These are injected in the order they appear in this array.",
             "items": { "$ref": "manifest.ExtensionURL" }
+          },
+          "cssOrigin": {
+            "$ref": "extensionTypes.CSSOrigin",
+            "optional": true
           }
         }
       }

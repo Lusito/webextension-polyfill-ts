@@ -40,7 +40,6 @@
           "script",
           "image",
           "object",
-          "object_subrequest",
           "xmlhttprequest",
           "xslt",
           "ping",
@@ -409,7 +408,9 @@
           "tracking_content",
           "any_basic_tracking",
           "any_strict_tracking",
-          "any_social_tracking"
+          "any_social_tracking",
+          "consentmanager",
+          "antifraud"
         ],
         "description": "Tracking flags that match our internal tracking classification"
       },

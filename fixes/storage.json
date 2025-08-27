@@ -5,11 +5,5 @@
   "types.$StorageArea.functions.%get.parameters.%callback.parameters.%items.type": "Record<string, unknown>",
   "types.$StorageArea.functions.%get.parameters.%callback.parameters.%items.additionalProperties": null,
   "types.$StorageArea.functions.%set.parameters.%items.type": "Record<string, unknown>",
-  "types.$StorageAreaWithUsage.functions.%get.parameters.%keys.choices.#0.type": "null | string",
-  "types.$StorageAreaWithUsage.functions.%get.parameters.%keys.choices.#2.type": "Record<string, unknown>",
-  "types.$StorageAreaWithUsage.functions.%get.parameters.%keys.choices.#2.additionalProperties": null,
-  "types.$StorageAreaWithUsage.functions.%get.parameters.%callback.parameters.%items.type": "Record<string, unknown>",
-  "types.$StorageAreaWithUsage.functions.%get.parameters.%callback.parameters.%items.additionalProperties": null,
-  "types.$StorageAreaWithUsage.functions.%set.parameters.%items.type": "Record<string, unknown>",
-  "types.$StorageAreaWithUsage.functions.%getBytesInUse.parameters.%keys.choices.#0.type": "null | string"
+  "types.$StorageArea.functions.%getBytesInUse.parameters.%keys.choices.#0.type": "null | string"
 }
