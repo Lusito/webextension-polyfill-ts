@@ -45,9 +45,15 @@ export namespace TabGroups {
     }
 
     interface MoveMovePropertiesType {
+        /**
+         * The position in the window to move the group to. After moving, the first tab in the group is at this index. <code>
+         * -1</code> moves the group to the end of the window.
+         */
         index: number;
 
         /**
+         * The ID of the window to move the group to. If not specified, the group is left in its current window.
+         * Groups can only be moved to "normal" window types.
          * Optional.
          */
         windowId?: number;
@@ -70,6 +76,7 @@ export namespace TabGroups {
         title?: string;
 
         /**
+         * The ID of the parent window, or <code>windows.WINDOW_ID_CURRENT</code> for the current window.
          * Optional.
          */
         windowId?: number;
