@@ -29,7 +29,7 @@
 
           "name": {
             "type": "string",
-            "description": "Name must be at least 2, at should be at most 75 characters",
+            "description": "Name must be at least 2, and should be at most 75 characters",
             "optional": false,
             "preprocess": "localize"
           },
@@ -508,6 +508,47 @@
         ]
       },
       {
+        "id": "CommonDataCollectionPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "authenticationInfo",
+              "bookmarksInfo",
+              "browsingActivity",
+              "financialAndPaymentInfo",
+              "healthInfo",
+              "locationInfo",
+              "personalCommunications",
+              "personallyIdentifyingInfo",
+              "searchTerms",
+              "websiteActivity",
+              "websiteContent"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "DataCollectionPermission",
+        "choices": [
+          { "$ref": "CommonDataCollectionPermission" },
+          {
+            "type": "string",
+            "enum": ["none"]
+          }
+        ]
+      },
+      {
+        "id": "OptionalDataCollectionPermission",
+        "choices": [
+          { "$ref": "CommonDataCollectionPermission" },
+          {
+            "type": "string",
+            "enum": ["technicalAndInteraction"]
+          }
+        ]
+      },
+      {
         "id": "PermissionNoPrompt",
         "choices": [
           { "$ref": "OptionalPermissionNoPrompt" },
@@ -593,6 +634,37 @@
           "admin_install_only": {
             "type": "boolean",
             "optional": true
+          },
+
+          "data_collection_permissions": {
+            "type": "object",
+            "optional": true,
+            "properties": {
+              "required": {
+                "type": "array",
+                "items": {
+                  "$ref": "DataCollectionPermission",
+                  "onError": "warn"
+                },
+                "optional": true,
+                "default": [],
+                "postprocess": "checkValidRequiredDataCollection"
+              },
+              "optional": {
+                "type": "array",
+                "items": {
+                  "$ref": "OptionalDataCollectionPermission",
+                  "onError": "warn"
+                },
+                "optional": true,
+                "default": []
+              },
+              "has_previous_consent": {
+                "type": "boolean",
+                "optional": true,
+                "default": false
+              }
+            }
           }
         },
         "additionalProperties": { "$ref": "UnrecognizedProperty" }
@@ -715,6 +787,11 @@
             "optional": true,
             "description": "The list of CSS files to inject",
             "items": { "$ref": "ExtensionURL" }
+          },
+          "css_origin": {
+            "$ref": "extensionTypes.CSSOrigin",
+            "default": "author",
+            "optional": true
           },
           "js": {
             "type": "array",

@@ -56,7 +56,7 @@ async function downloadChromeFile(url: string) {
 }
 
 const maxDownloadWorkers = 10;
-const baseURL = "https://api.github.com/repos/mozilla/gecko-dev/contents/";
+const baseURL = "https://api.github.com/repos/mozilla-firefox/firefox/contents/";
 const baseChromeURL =
     "https://chromium.googlesource.com/chromium/src/+/main/chrome/common/extensions/api/{FILENAME}?format=TEXT";
 const chromeFiles = ["declarative_content.json"].map((filename) => baseChromeURL.replace("{FILENAME}", filename));

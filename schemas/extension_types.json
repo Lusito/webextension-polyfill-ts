@@ -65,7 +65,8 @@
         "id": "CSSOrigin",
         "type": "string",
         "enum": ["user", "author"],
-        "description": "The origin of the CSS to inject, this affects the cascading order (priority) of the stylesheet."
+        "description": "The origin of the CSS to inject, this affects the cascading order (priority) of the stylesheet.",
+        "preprocess": "stringToLowerCase"
       },
       {
         "id": "InjectDetails",
@@ -107,6 +108,7 @@
           "cssOrigin": {
             "$ref": "CSSOrigin",
             "optional": true,
+            "default": "author",
             "description": "The css origin of the stylesheet to inject. Defaults to \"author\"."
           }
         }

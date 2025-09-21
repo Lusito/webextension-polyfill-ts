@@ -67,6 +67,11 @@
             "optional": true,
             "description": "The JavaScript world for a script to execute within. Defaults to \"ISOLATED\"."
           },
+          "cssOrigin": {
+            "$ref": "extensionTypes.CSSOrigin",
+            "optional": true,
+            "description": "The css origin of the stylesheet to inject. Defaults to \"author\"."
+          },
           "cookieStoreId": {
             "choices": [
               {
