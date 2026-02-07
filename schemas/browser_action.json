@@ -475,7 +475,15 @@
         "parameters": [
           {
             "name": "details",
-            "$ref": "Details"
+            "optional": true,
+            "choices": [
+              { "$ref": "Details" },
+              {
+                "type": "integer",
+                "minimum": 0,
+                "description": "The id of the tab for which you want to query its enabled state."
+              }
+            ]
           }
         ]
       },

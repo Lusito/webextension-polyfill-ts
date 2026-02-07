@@ -256,6 +256,11 @@ function addFunction(func: SchemaFunctionProperty, parameters: SchemaProperty[] 
         if (description) writer.comment(`@returns ${description}`);
 
         returnType = getType(func.returns);
+    } else if (func.async) {
+        // This is a somewhat special case for new-style functions that only
+        // return a promise and don't accept a callback. For example,
+        // browser.tabs.ungroup().
+        returnType = "Promise<void>";
     }
 
     addEslintDisableLine(
