@@ -126,7 +126,12 @@ export function safeUndefined(propType: string) {
     return `${propType} | undefined`;
 }
 
+const VALID_JS_IDENTIFIER = /^[a-zA-Z0-9_$]+$/;
+
 export function getProperty(name: string, prop: SchemaProperty, allowOptional: boolean) {
+    if (!name.match(VALID_JS_IDENTIFIER)) {
+        name = `${JSON.stringify(name)}`;
+    }
     let propType = getType(prop);
     const isOptional = prop.optional && prop.optional !== "false";
     if (!isOptional) return `${name}: ${propType}`;
@@ -145,6 +150,7 @@ function remainingParametersOptional(parameters: SchemaProperty[], after: number
 export function getParameters(parameters: SchemaProperty[] | undefined, allowOptional: boolean) {
     if (!parameters) return "";
     return parameters
-        .map((p, i) => getProperty(p.name || "", p, allowOptional && remainingParametersOptional(parameters, i + 1)))
+        .map((p, i) => ("splat" in p && p.splat ? "..." : "") +
+            getProperty(p.name || "", p, allowOptional && remainingParametersOptional(parameters, i + 1)))
         .join(", ");
 }

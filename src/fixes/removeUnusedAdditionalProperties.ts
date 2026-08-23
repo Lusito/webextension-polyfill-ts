@@ -4,7 +4,7 @@ import { SchemaVisitorFactory, VisitorAction } from "../helpers/visitor";
 // There are quite a few additionalProperties that are not useful at all.
 // This fix removes these from the data.
 
-const IGNORE_ADDITIONAL_PROPERTIES = ["UnrecognizedProperty", "ImageDataOrExtensionURL", "ThemeColor"];
+const IGNORE_ADDITIONAL_PROPERTIES = ["UnrecognizedProperty", "ImageDataOrExtensionURL"];
 
 function visitor(value: SchemaProperty) {
     if ("additionalProperties" in value && typeof value.additionalProperties === "object") {

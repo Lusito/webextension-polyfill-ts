@@ -238,6 +238,94 @@
             "description": "Whether the runtime.sendMessage and runtime.connect methods are exposed. Defaults to not exposing these messaging APIs."
           }
         }
+      },
+      {
+        "id": "UserScriptInjection",
+        "min_manifest_version": 3,
+        "type": "object",
+        "description": "Details of a user script injection",
+        "properties": {
+          "injectImmediately": {
+            "type": "boolean",
+            "optional": true,
+            "description": "Whether the injection should be triggered in the target as soon as possible. Note that this is not a guarantee that injection will occur prior to page load, as the page may have already loaded by the time the script reaches the target."
+          },
+          "js": {
+            "type": "array",
+            "optional": false,
+            "description": "The list of ScriptSource objects defining sources of scripts to be injected into matching pages.",
+            "items": { "$ref": "ScriptSource" }
+          },
+          "target": {
+            "$ref": "InjectionTarget",
+            "description": "Details specifying the target into which to inject the script."
+          },
+          "world": {
+            "$ref": "ExecutionWorld",
+            "optional": true,
+            "description": "The JavaScript \"world\" to run the script in. The default is `USER_SCRIPT`."
+          },
+          "worldId": {
+            "type": "string",
+            "optional": true,
+            "description": "A specific user script world ID to execute in. Only valid if `world` is omitted or is `USER_SCRIPT`. If `worldId` is omitted, the default value is an empty string (\"\") and the script will execute in the default world."
+          }
+        }
+      },
+      {
+        "id": "InjectionTarget",
+        "min_manifest_version": 3,
+        "type": "object",
+        "description": "Details specifying the target into which to inject the script.",
+        "properties": {
+          "allFrames": {
+            "type": "boolean",
+            "optional": true,
+            "description": "Whether the script should inject into all frames within the tab. Defaults to false. This must not be true if `frameIds` is specified."
+          },
+          "documentIds": {
+            "type": "array",
+            "optional": true,
+            "description": "The IDs of specific documentIds to inject into. This must not be set if frameIds is set.",
+            "items": { "type": "string" }
+          },
+          "frameIds": {
+            "type": "array",
+            "optional": true,
+            "description": "The IDs of specific frames to inject into.",
+            "items": { "type": "number" }
+          },
+          "tabId": {
+            "type": "number",
+            "description": "The ID of the tab into which to inject."
+          }
+        }
+      },
+      {
+        "id": "InjectionResult",
+        "min_manifest_version": 3,
+        "type": "object",
+        "description": "Result of a user script injection.",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "description": "Document ID associated with the injection."
+          },
+          "frameId": {
+            "type": "integer",
+            "description": "Frame ID associated with the injection."
+          },
+          "result": {
+            "type": "any",
+            "optional": true,
+            "description": "Result of the script injection if any. This is mutually exclusive with error."
+          },
+          "error": {
+            "type": "any",
+            "optional": true,
+            "description": "Error message if any. This is mutually exclusive with result. The value is typically an (Error) object with a message property, but could be any value (including primitives and undefined) if the user script threw or rejected with such a value."
+          }
+        }
       }
     ],
     "functions": [
@@ -401,6 +489,32 @@
                 "type": "array",
                 "items": { "$ref": "WorldProperties" },
                 "description": "All configurations registered with configureWorld()."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "execute",
+        "min_manifest_version": 3,
+        "type": "function",
+        "description": "Executes one or more ephemeral user scripts into a specific tab.",
+        "async": "callback",
+        "parameters": [
+          {
+            "name": "injection",
+            "$ref": "UserScriptInjection",
+            "description": "The details of the user script which to inject."
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "description": "Invoked upon completion of the injection. The resulting array contains the result of execution for each frame where the injection succeeded.",
+            "parameters": [
+              {
+                "name": "results",
+                "type": "array",
+                "items": { "$ref": "InjectionResult" }
               }
             ]
           }

@@ -48,6 +48,21 @@
             "description": "The cookie store ID of the contextual identity."
           }
         }
+      },
+      {
+        "id": "SiteAssociation",
+        "type": "object",
+        "description": "Represents the association between a site and a contextual identity.",
+        "properties": {
+          "site": {
+            "type": "string",
+            "description": "The associated host, normalized to lower case and encoded as ASCII."
+          },
+          "cookieStoreId": {
+            "type": "string",
+            "description": "The cookie store ID of the contextual identity the host is associated with."
+          }
+        }
       }
     ],
     "functions": [
@@ -81,6 +96,68 @@
                 "description": "Filters the contextual identity by name."
               }
             }
+          }
+        ]
+      },
+      {
+        "name": "getSupportedColors",
+        "type": "function",
+        "description": "Retrieves the list of colors supported by contextual identities.",
+        "async": "callback",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "colors",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "color": {
+                      "type": "string",
+                      "description": "The color name, as accepted by the color property of create and update."
+                    },
+                    "colorCode": {
+                      "type": "string",
+                      "description": "The color hash for this color name."
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getSupportedIcons",
+        "type": "function",
+        "description": "Retrieves the list of icons supported by contextual identities.",
+        "async": "callback",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "icons",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "icon": {
+                      "type": "string",
+                      "description": "The icon name, as accepted by the icon property of create and update."
+                    },
+                    "iconUrl": {
+                      "type": "string",
+                      "description": "The icon url for this icon name."
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       },
@@ -182,6 +259,113 @@
             "description": "The ID of the contextual identity cookie store. "
           }
         ]
+      },
+      {
+        "name": "setSiteAssociation",
+        "type": "function",
+        "description": "Associates a site with a container. Top-level navigations to that site will load in the given container.",
+        "async": true,
+        "parameters": [
+          {
+            "type": "object",
+            "name": "details",
+            "description": "Details about the site association.",
+            "properties": {
+              "site": {
+                "type": "string",
+                "description": "The host to associate with the container (matched as an exact host)."
+              },
+              "cookieStoreId": {
+                "type": "string",
+                "description": "The cookie store ID of the container to associate the site with."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "removeSiteAssociation",
+        "type": "function",
+        "description": "Removes the container association for a site.",
+        "async": true,
+        "parameters": [
+          {
+            "type": "object",
+            "name": "details",
+            "description": "Details about the site association to remove.",
+            "properties": {
+              "site": {
+                "type": "string",
+                "description": "The host whose container association should be removed."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "getSiteAssociation",
+        "type": "function",
+        "description": "Retrieves the association of a site, or null if the site is not associated with any container.",
+        "async": "callback",
+        "parameters": [
+          {
+            "type": "object",
+            "name": "details",
+            "description": "Details about the site to look up.",
+            "properties": {
+              "site": {
+                "type": "string",
+                "description": "The host to look up."
+              }
+            }
+          },
+          {
+            "type": "function",
+            "name": "callback",
+            "parameters": [
+              {
+                "name": "association",
+                "$ref": "SiteAssociation",
+                "optional": true,
+                "description": "The association of the site, null if the site is not associated with any container."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "querySiteAssociations",
+        "type": "function",
+        "description": "Retrieves the list of site-to-container associations.",
+        "async": "callback",
+        "parameters": [
+          {
+            "type": "object",
+            "name": "details",
+            "description": "Information to filter the associations being retrieved.",
+            "properties": {
+              "cookieStoreId": {
+                "type": "string",
+                "optional": true,
+                "description": "If provided, only associations for this container are returned."
+              }
+            }
+          },
+          {
+            "type": "function",
+            "name": "callback",
+            "parameters": [
+              {
+                "name": "associations",
+                "type": "array",
+                "items": {
+                  "$ref": "SiteAssociation"
+                },
+                "description": "The site-to-container associations."
+              }
+            ]
+          }
+        ]
       }
     ],
     "events": [
@@ -231,6 +415,28 @@
               "contextualIdentity": {
                 "$ref": "ContextualIdentity",
                 "description": "Contextual identity that has been removed"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "onSiteAssociationChanged",
+        "type": "function",
+        "description": "Fired when a site-to-container association is added, changed, or removed.",
+        "parameters": [
+          {
+            "type": "object",
+            "name": "changeInfo",
+            "properties": {
+              "site": {
+                "type": "string",
+                "description": "The host whose association changed."
+              },
+              "cookieStoreId": {
+                "type": "string",
+                "optional": true,
+                "description": "The cookie store ID of the now-associated container, or omitted if the association was removed."
               }
             }
           }

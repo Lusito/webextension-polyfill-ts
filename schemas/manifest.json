@@ -213,7 +213,6 @@
 
           "content_security_policy": {
             "optional": true,
-            "onError": "warn",
             "choices": [
               {
                 "max_manifest_version": 2,
@@ -232,10 +231,38 @@
                     "optional": true,
                     "format": "contentSecurityPolicy",
                     "description": "The Content Security Policy used for extension pages."
+                  },
+                  "sandbox": {
+                    "type": "string",
+                    "optional": true,
+                    "format": "contentSecurityPolicySandbox",
+                    "description": "The content security policy used for sandboxed extension pages."
                   }
                 }
               }
             ]
+          },
+
+          "sandbox": {
+            "type": "object",
+            "optional": true,
+            "additionalProperties": {
+              "$ref": "UnrecognizedProperty"
+            },
+            "properties": {
+              "pages": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "The list of pages in the form of globs to serve as sandboxed extension pages."
+              },
+              "content_security_policy": {
+                "type": "string",
+                "optional": true,
+                "max_manifest_version": 2,
+                "format": "contentSecurityPolicySandbox",
+                "description": "The content security policy used for sandboxed extension pages."
+              }
+            }
           },
 
           "permissions": {

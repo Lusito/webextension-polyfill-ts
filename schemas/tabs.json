@@ -233,6 +233,12 @@
             "optional": true,
             "minimum": -1,
             "description": "The ID of the group that the tab belongs to. $(ref:tabGroups.TAB_GROUP_ID_NONE) (-1) if the tab does not belong to a tab group."
+          },
+          "splitViewId": {
+            "type": "integer",
+            "optional": true,
+            "minimum": -1,
+            "description": "The ID of the Split View that the tab belongs to. $(ref:tabs.SPLIT_VIEW_ID_NONE) if the tab does not belong to a split view."
           }
         }
       },
@@ -441,6 +447,7 @@
           "mutedInfo",
           "pinned",
           "sharingState",
+          "splitViewId",
           "status",
           "title",
           "url"
@@ -476,6 +483,10 @@
       "TAB_ID_NONE": {
         "value": -1,
         "description": "An ID which represents the absence of a browser tab."
+      },
+      "SPLIT_VIEW_ID_NONE": {
+        "value": -1,
+        "description": "A value for use with splitViewId to represent that the tab is not a member of a Split View."
       }
     },
     "functions": [
@@ -540,6 +551,11 @@
                 "optional": true,
                 "minimum": 0,
                 "description": "Open a port to a specific $(topic:frame_ids)[frame] identified by <code>frameId</code> instead of all frames in the tab."
+              },
+              "documentId": {
+                "type": "string",
+                "optional": true,
+                "description": "Open a port to a specific document identified by <code>documentId</code> instead of all frames in the tab."
               }
             },
             "optional": true
@@ -574,6 +590,11 @@
                 "optional": true,
                 "minimum": 0,
                 "description": "Send a message to a specific $(topic:frame_ids)[frame] identified by <code>frameId</code> instead of all frames in the tab."
+              },
+              "documentId": {
+                "type": "string",
+                "optional": true,
+                "description": "Send a message to a specific document identified by <code>documentId</code> instead of all frames in the tab."
               }
             },
             "optional": true
@@ -845,6 +866,12 @@
                 "minimum": -1,
                 "optional": true,
                 "description": "The ID of the group that the tabs are in, or $(ref:tabGroups.TAB_GROUP_ID_NONE) (-1) for ungrouped tabs."
+              },
+              "splitViewId": {
+                "type": "integer",
+                "minimum": -1,
+                "optional": true,
+                "description": "The ID of the Split View that the tab belongs to. $(ref:tabs.SPLIT_VIEW_ID_NONE) if the tab does not belong to a split view."
               },
               "screen": {
                 "choices": [
@@ -1764,6 +1791,12 @@
                 "$ref": "SharingState",
                 "optional": true,
                 "description": "The tab's new sharing state for screen, microphone and camera."
+              },
+              "splitViewId": {
+                "type": "integer",
+                "optional": true,
+                "minimum": -1,
+                "description": "The ID of the Split View that the tab belongs to. $(ref:tabs.SPLIT_VIEW_ID_NONE) if the tab does not belong to a split view."
               },
               "status": {
                 "type": "string",

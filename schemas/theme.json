@@ -69,6 +69,55 @@
         }
       },
       {
+        "id": "ThemeCSSGradient",
+        "description": "A CSS gradient that can be used as a theme background, in addition to image assets. The single property name selects the gradient function, and its value holds the gradient's arguments, e.g. `{ \"linear-gradient\": \"to bottom, #FF6BBA, #FFC999\" }`.",
+        "choices": [
+          {
+            "type": "object",
+            "postprocess": "validCSSGradient",
+            "properties": { "linear-gradient": { "type": "string" } },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "postprocess": "validCSSGradient",
+            "properties": { "radial-gradient": { "type": "string" } },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "postprocess": "validCSSGradient",
+            "properties": { "conic-gradient": { "type": "string" } },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "postprocess": "validCSSGradient",
+            "properties": { "repeating-linear-gradient": { "type": "string" } },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "postprocess": "validCSSGradient",
+            "properties": { "repeating-radial-gradient": { "type": "string" } },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "postprocess": "validCSSGradient",
+            "properties": { "repeating-conic-gradient": { "type": "string" } },
+            "additionalProperties": false
+          }
+        ]
+      },
+      {
+        "id": "ThemeBackground",
+        "choices": [
+          { "$ref": "ImageDataOrExtensionURL" },
+          { "$ref": "ThemeCSSGradient" }
+        ]
+      },
+      {
         "id": "ThemeType",
         "type": "object",
         "properties": {
@@ -78,7 +127,7 @@
             "properties": {
               "additional_backgrounds": {
                 "type": "array",
-                "items": { "$ref": "ImageDataOrExtensionURL" },
+                "items": { "$ref": "ThemeBackground" },
                 "maxItems": 15,
                 "optional": true
               },
@@ -88,7 +137,7 @@
                 "deprecated": "Unsupported images property, use 'theme.images.theme_frame', this alias is ignored in Firefox >= 70."
               },
               "theme_frame": {
-                "$ref": "ImageDataOrExtensionURL",
+                "$ref": "ThemeBackground",
                 "optional": true
               }
             },
@@ -306,6 +355,14 @@
                 "items": {
                   "type": "string",
                   "enum": ["no-repeat", "repeat", "repeat-x", "repeat-y"]
+                },
+                "maxItems": 15,
+                "optional": true
+              },
+              "additional_backgrounds_size": {
+                "type": "array",
+                "items": {
+                  "type": "string"
                 },
                 "maxItems": 15,
                 "optional": true
