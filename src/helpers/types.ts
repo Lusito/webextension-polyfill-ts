@@ -86,9 +86,10 @@ export interface SchemaArrayProperty extends SchemaBaseProperty {
     minItems?: number;
     maxItems?: number;
     default?: any[];
-    /** Our extension to note that an array parameter is actually a splat (i.e.
-     * the array should contain all remaining arguments to the function). */
-    splat?: boolean;
+    /** Our extension, which notes that an array parameter is actually a
+     * rest-parameter (i.e. the array should contain all remaining arguments to
+     * the function). */
+    rest?: boolean;
 }
 
 export interface SchemaFunctionProperty extends SchemaBaseProperty {

@@ -4,7 +4,7 @@
       "name": "params",
       "type": "unknown[]",
       "description": "Further parameters, depending on the event.",
-      "splat": true
+      "rest": true
     }
   ],
   "types.$Event.functions.%hasListeners": null

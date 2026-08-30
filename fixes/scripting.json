@@ -18,7 +18,7 @@
         "type": "any"
       },
       "description": "The arguments",
-      "splat": true
+      "rest": true
     }
   ],
   "types.$ScriptInjection.properties.func.returns": {

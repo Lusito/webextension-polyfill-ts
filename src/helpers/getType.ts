@@ -150,7 +150,7 @@ function remainingParametersOptional(parameters: SchemaProperty[], after: number
 export function getParameters(parameters: SchemaProperty[] | undefined, allowOptional: boolean) {
     if (!parameters) return "";
     return parameters
-        .map((p, i) => ("splat" in p && p.splat ? "..." : "") +
+        .map((p, i) => ("rest" in p && p.rest ? "..." : "") +
             getProperty(p.name || "", p, allowOptional && remainingParametersOptional(parameters, i + 1)))
         .join(", ");
 }
