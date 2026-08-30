@@ -17,6 +17,7 @@ module.exports = {
                 "@definitelytyped/no-single-element-tuple-type": "off",
             },
             parserOptions: {
+                tsconfigRootDir: __dirname,
                 project: "./tsconfig-out.json",
             },
         },

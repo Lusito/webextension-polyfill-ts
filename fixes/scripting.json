@@ -11,7 +11,15 @@
     "description": "Whether the script should inject into all frames within the tab. Defaults to false. This must not be true if frameIds is specified."
   },
   "types.$ScriptInjection.properties.func.parameters": [
-    { "name": "...args", "type": "array", "items": { "type": "any" }, "description": "The arguments" }
+    {
+      "name": "args",
+      "type": "array",
+      "items": {
+        "type": "any"
+      },
+      "description": "The arguments",
+      "rest": true
+    }
   ],
   "types.$ScriptInjection.properties.func.returns": {
     "type": "any",

@@ -1,0 +1,110 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": ["publicSuffix"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "publicSuffix",
+    "description": "API to obtain the registrable domain / eTLD+1 from a domain name.",
+    "permissions": ["publicSuffix"],
+    "types": [
+      {
+        "id": "DomainEncoding",
+        "type": "string",
+        "description": "The available encoding types for the returned domain.",
+        "enum": ["punycode", "display"]
+      }
+    ],
+    "functions": [
+      {
+        "name": "isKnownSuffix",
+        "type": "function",
+        "description": "Checks if the given hostname is itself a known public suffix / eTLD (i.e. in the PSL).",
+        "parameters": [
+          {
+            "name": "hostname",
+            "type": "string"
+          }
+        ],
+        "returns": {
+          "type": "boolean",
+          "description": "True if the given hostname is itself a known eTLD."
+        }
+      },
+      {
+        "name": "getKnownSuffix",
+        "type": "function",
+        "description": "Gets the known public suffix / eTLD (i.e. in the PSL), if any, of a given hostname.",
+        "parameters": [
+          {
+            "name": "hostname",
+            "type": "string"
+          }
+        ],
+        "returns": {
+          "type": "string",
+          "optional": true,
+          "description": "The known eTLD of the given hostname, or null if no such known eTLD exists."
+        }
+      },
+      {
+        "name": "getDomain",
+        "type": "function",
+        "description": "Gets the eTLD+1 of a given hostname, or a variant such as IP address if the options allow.",
+        "parameters": [
+          {
+            "name": "hostname",
+            "type": "string"
+          },
+          {
+            "name": "options",
+            "type": "object",
+            "properties": {
+              "encoding": {
+                "$ref": "DomainEncoding",
+                "optional": true,
+                "default": "punycode",
+                "description": "Determines how the returned domain should be encoded."
+              },
+              "allowIPAddress": {
+                "type": "boolean",
+                "optional": true,
+                "default": false,
+                "description": "If true, and the input hostname is an IP address, then this is returned as-is."
+              },
+              "allowPlainSuffix": {
+                "type": "boolean",
+                "optional": true,
+                "default": false,
+                "description": "If true, and the input hostname is itself a known eTLD (without a preceding label) then this is returned as-is."
+              },
+              "allowUnknownSuffix": {
+                "type": "boolean",
+                "optional": true,
+                "default": false,
+                "description": "If true, and the input hostname lacks a known eTLD, and is neither itself a known eTLD nor an IP address, then the returned domain consists of the penultimate two domain labels of the input."
+              }
+            },
+            "optional": true,
+            "default": {}
+          }
+        ],
+        "returns": {
+          "type": "string",
+          "optional": true,
+          "description": "The eTLD+1 (or a variant such as IP address if allowed) of the given hostname, or null if no such eTLD+1 (variant) exists."
+        }
+      }
+    ]
+  }
+]

@@ -1,9 +1,10 @@
 {
   "types.$Event.functions.%addListener.parameters.+[]": [
     {
-      "name": "...params",
+      "name": "params",
       "type": "unknown[]",
-      "description": "Further parameters, depending on the event."
+      "description": "Further parameters, depending on the event.",
+      "rest": true
     }
   ],
   "types.$Event.functions.%hasListeners": null

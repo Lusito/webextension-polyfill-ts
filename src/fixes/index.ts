@@ -8,7 +8,6 @@ import { removeUnusedNamespaces } from "./removeUnusedNamespaces";
 import { applyEarlyJsonFixes, applyJsonFixes } from "./applyJsonFixes";
 import { extractInlineContent } from "./extractInlineContent";
 import { extendEvents } from "./extendEvents";
-import { removeUnusedAdditionalProperties } from "./removeUnusedAdditionalProperties";
 import { convertBinaryToObject } from "./convertBinaryToObject";
 import { removeInstanceTypes } from "./removeInstanceTypes";
 import { detectSkipableParameters } from "./detectSkipableParameter";
@@ -22,12 +21,22 @@ export const fixes: SchemaVisitorFactory[] = [
     applyExtensionNamespace,
     applyEarlyJsonFixes,
     guessPropertyType(true),
-    removeUnusedAdditionalProperties,
+
+    // First pass of removeUnsupported is to remove the officially-unsupported
+    // types and the ones from early-fixes/*.json.
+    removeUnsupported,
+
     cleanupRefs,
     applyJsonFixes,
     extractInlineContent,
     flattenChoiceEnum,
+
+    // flattenChoiceEnum above inlines certain union types for better
+    // readability, and then marks those types as deprecated with the
+    // expectation that removeUnsupported will remove them. This second pass of
+    // removeUnsupported is to remove those types.
     removeUnsupported,
+
     extendEvents,
 ];
 

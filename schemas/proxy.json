@@ -124,6 +124,16 @@
                 "type": "integer",
                 "description": "ID of frame that wraps the frame which sent the request. Set to -1 if no parent frame exists."
               },
+              "documentId": {
+                "type": "string",
+                "optional": true,
+                "description": "The UUID of the document making the request."
+              },
+              "parentDocumentId": {
+                "type": "string",
+                "optional": true,
+                "description": "The UUID of the parent document owning this frame. This is not set if there is no parent."
+              },
               "incognito": {
                 "type": "boolean",
                 "optional": true,
