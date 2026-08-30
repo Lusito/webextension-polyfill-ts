@@ -130,7 +130,7 @@ const VALID_JS_IDENTIFIER = /^[a-zA-Z0-9_$]+$/;
 
 export function getProperty(name: string, prop: SchemaProperty, allowOptional: boolean) {
     if (!name.match(VALID_JS_IDENTIFIER)) {
-        name = `${JSON.stringify(name)}`;
+        name = JSON.stringify(name);
     }
     let propType = getType(prop);
     const isOptional = prop.optional && prop.optional !== "false";
