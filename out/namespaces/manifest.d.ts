@@ -1336,6 +1336,8 @@ export namespace Manifest {
         toolbar_field_highlight_text?: ThemeColor;
     }
 
+    type ThemeTypePropertiesBackgroundsAreaEnum = "auto" | "window" | "top_toolbars";
+
     type ThemeTypePropertiesAdditionalBackgroundsAlignmentItemEnum =
         | "bottom"
         | "center"
@@ -1359,6 +1361,11 @@ export namespace Manifest {
     type ThemeTypePropertiesContentColorSchemeEnum = "auto" | "light" | "dark" | "system";
 
     interface ThemeTypePropertiesType {
+        /**
+         * Optional.
+         */
+        backgrounds_area?: ThemeTypePropertiesBackgroundsAreaEnum;
+
         /**
          * Optional.
          */

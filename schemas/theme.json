@@ -326,6 +326,11 @@
             "type": "object",
             "optional": true,
             "properties": {
+              "backgrounds_area": {
+                "type": "string",
+                "enum": ["auto", "window", "top_toolbars"],
+                "optional": true
+              },
               "additional_backgrounds_alignment": {
                 "type": "array",
                 "items": {
