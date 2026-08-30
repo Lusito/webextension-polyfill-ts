@@ -21,12 +21,22 @@ export const fixes: SchemaVisitorFactory[] = [
     applyExtensionNamespace,
     applyEarlyJsonFixes,
     guessPropertyType(true),
+
+    // First pass of removeUnsupported is to remove the officially-unsupported
+    // types.
     removeUnsupported,
+
     cleanupRefs,
     applyJsonFixes,
     extractInlineContent,
     flattenChoiceEnum,
+
+    // flattenChoiceEnum above inlines certain union types for better
+    // readability, and then marks those types as deprecated with the
+    // expectation that removeUnsupported will remove them. This second pass of
+    // removeUnsupported is to remove those types.
     removeUnsupported,
+
     extendEvents,
 ];
 
