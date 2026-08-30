@@ -8,7 +8,6 @@ import { removeUnusedNamespaces } from "./removeUnusedNamespaces";
 import { applyEarlyJsonFixes, applyJsonFixes } from "./applyJsonFixes";
 import { extractInlineContent } from "./extractInlineContent";
 import { extendEvents } from "./extendEvents";
-import { removeUnusedAdditionalProperties } from "./removeUnusedAdditionalProperties";
 import { convertBinaryToObject } from "./convertBinaryToObject";
 import { removeInstanceTypes } from "./removeInstanceTypes";
 import { detectSkipableParameters } from "./detectSkipableParameter";
@@ -22,7 +21,7 @@ export const fixes: SchemaVisitorFactory[] = [
     applyExtensionNamespace,
     applyEarlyJsonFixes,
     guessPropertyType(true),
-    removeUnusedAdditionalProperties,
+    removeUnsupported,
     cleanupRefs,
     applyJsonFixes,
     extractInlineContent,
