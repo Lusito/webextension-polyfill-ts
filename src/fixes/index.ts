@@ -23,7 +23,7 @@ export const fixes: SchemaVisitorFactory[] = [
     guessPropertyType(true),
 
     // First pass of removeUnsupported is to remove the officially-unsupported
-    // types.
+    // types and the ones from early-fixes/*.json.
     removeUnsupported,
 
     cleanupRefs,
